@@ -8,13 +8,13 @@ This library consists of a data fetch class and associated React hooks to load N
 
 
 Install:
-```
+```bash
 yarn add @zoralabs/nft-hooks
 ```
 
 Then you can import and use the hooks in your react application:
 
-```
+```ts
 import {useNFT, useNFTMetadata} from "@zoralabs/nft-hooks";
 
 function MyNFT() {
@@ -39,6 +39,21 @@ function MyNFT() {
 | [useNFTMetadata](docs/useNFTMetadata.md) | Fetches NFT metadata from a URL |
 | [useNFTContent](docs/useNFTContent.md) | Fetches text content from server for rendering from content URL |
 
+### Configuration:
+
+To set the network configuration, wrap the hooks used with the `NFTFetchConfiguration` component.
+
+```ts
+import {Networks, NFTFetchConfiguration} from '@zoralabs/nft-hooks';
+
+function NFTGallery() {
+  return (
+    <NFTFetchConfiguration network={Networks.MAINNET}>
+      <NFTList>
+    </NFTFetchConfiguration>
+  );
+}
+```
 
 ### Development:
 
