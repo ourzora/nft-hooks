@@ -1,6 +1,6 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "0.0.1-pre",
+  "version": "0.1.0-pre",
   "description": "Generic Rendering Component for zNFTs",
   "repository": "https://github.com/our-zora/nft-hooks",
   "homepage": "https://github.com/our-zora/nft-hooks#README",
@@ -10,6 +10,9 @@
   "typings": "dist/src/index.d.ts",
   "source": "src/index.ts",
   "main": "dist/src/index.js",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.4",
     "@graphql-codegen/typescript": "^1.22.0",
