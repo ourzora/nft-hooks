@@ -13,10 +13,6 @@
   "files": [
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:ourzora/nft-hooks.git"
-  ],
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.4",
     "@graphql-codegen/typescript": "^1.22.0",
