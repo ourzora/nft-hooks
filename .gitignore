@@ -1,5 +1,4 @@
 dist/
-graph-schemas/*.graphql
 yarn-error.log
 node_modules/
 .DS_Store
