@@ -1,0 +1,67 @@
+{
+  "name": "@zoralabs/nft-hooks",
+  "version": "0.0.1-pre",
+  "description": "Generic Rendering Component for zNFTs",
+  "repository": "https://github.com/our-zora/nft-hooks",
+  "homepage": "https://github.com/our-zora/nft-hooks#README",
+  "author": "Zora",
+  "license": "MIT",
+  "private": false,
+  "typings": "dist/src/index.d.ts",
+  "source": "src/index.ts",
+  "main": "dist/src/index.js",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.4",
+    "@graphql-codegen/typescript": "^1.22.0",
+    "@graphql-codegen/typescript-graphql-request": "^3.1.1",
+    "@graphql-codegen/typescript-operations": "^1.17.16",
+    "@graphql-tools/mock": "^8.1.1",
+    "@graphql-tools/schema": "^7.1.4",
+    "@jagi/jest-transform-graphql": "^1.0.2",
+    "@testing-library/react-hooks": "^5.1.2",
+    "@types/big.js": "^6.0.2",
+    "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.4",
+    "fetch-mock-jest": "^1.5.1",
+    "graphql-tools": "^7.0.4",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "jest-serial-runner": "^1.1.0",
+    "jest-transform-graphql": "^2.1.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.5",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "gen-graphql-types": "graphql-code-generator",
+    "test": "jest",
+    "clean": "rm -rf ./dist",
+    "load-schemas": "./graph-schemas/get-schemas.sh",
+    "prepack": "yarn clean && tsc",
+    "build": "yarn run prepack",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,md}": "prettier src --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@graphql-tools/mock": "^8.1.1",
+    "@zoralabs/media-metadata-schemas": "^0.1.2",
+    "big.js": "^6.1.0",
+    "cross-fetch": "^3.1.4",
+    "dataloader": "^2.0.0",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "react": "^17.0.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 90
+  }
+}

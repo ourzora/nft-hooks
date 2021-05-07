@@ -1,0 +1,76 @@
+env_defaults: &env_defaults
+  working_directory: ~
+  docker:
+    - image: circleci/node:14.15.1
+
+version: 2.1
+jobs:
+  prepare:
+    <<: *env_defaults
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1.0-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1.0-dependencies-
+
+      - node/install-packages:
+          pkg-manager: yarn
+
+      - run: yarn install
+
+      - run: yarn add jest-junit -W
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1.0-dependencies-{{ checksum "yarn.lock" }}
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  test:
+    <<: *env_defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          command: yarn run jest --ci --testResultsProcessor="jest-junit" --coverage --coverageDirectory ~/coverage
+          name: Run Tests
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: "~/reports/nft-hooks"
+      - store_test_results: {path: "~/reports/nft-hooks"}
+      - store_artifacts: {path: "~/coverage"}
+  build:
+    <<: *env_defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          command: yarn run build
+          name: Build Typescript Package
+
+orbs:
+  node: circleci/node@4.1.0
+workflows:
+  test:
+    jobs:
+      - prepare:
+          pre-steps:
+            - run:
+                command: echo "registry=https://registry.npmjs.org/" > ~/.npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+      - build:
+          requires:
+            - prepare
+      - test:
+          requires:
+            - build
+
+
