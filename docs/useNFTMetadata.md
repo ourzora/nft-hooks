@@ -5,6 +5,8 @@ There is a chance this request could fail when the server does not allow cross-o
 Requests are set with a 10 second timeout to allow showing the user an error message instead of an 
 indefinite loader.
 Metadata information can be found in the [zora metadata schema repo](https://github.com/ourzora/media-metadata-schemas).
+Metadata validation can be ignored optionally by passing in a second argument `{allowInvalid: true}`, otherwise, an 
+error will be thrown for invalid metadata.
 
 Hook result type:
 ```ts

@@ -17,14 +17,17 @@ export type useNFTMetadataType = {
  * @param uri URI of metadata to fetch
  * @returns @type useNFTMetadataType
  */
-export function useNFTMetadata(uri: string): useNFTMetadataType {
+export function useNFTMetadata(
+  uri: string,
+  { allowInvalid } = { allowInvalid: false }
+): useNFTMetadataType {
   const [metadata, setMetadata] = useState<any>();
   const [error, setError] = useState<string | undefined>();
 
   useCallbackFetch(uri, async (fetchAgent, uri) => {
     try {
       const { metadata, valid } = await fetchAgent.loadMetadata(uri);
-      if (!valid) {
+      if (!allowInvalid && !valid) {
         throw new RequestError('Metadata Invalid: Metadata could not be validated.');
       }
       setMetadata(metadata);
