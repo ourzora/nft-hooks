@@ -1,4 +1,6 @@
 import fetch from 'cross-fetch';
+import AbortController from 'node-abort-controller';
+
 import { RequestError } from './RequestError';
 
 /**
