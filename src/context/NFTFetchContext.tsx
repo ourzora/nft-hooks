@@ -17,7 +17,7 @@ type NFTFetchConfigurationProps = {
 export const NFTFetchConfiguration = ({
   networkId,
   children,
-}: NFTFetchConfigurationProps) => {
+}: NFTFetchConfigurationProps): ReactNode => {
   const lastFetchContext = useContext(NFTFetchContext);
   const fetchAgent = useMemo(() => {
     if (lastFetchContext.networkId === networkId) {
