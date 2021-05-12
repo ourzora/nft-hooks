@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import type {ReactNode} from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Networks, NetworkIDs } from '../constants/networks';
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
 
@@ -7,17 +6,18 @@ export type FetchContext = InstanceType<typeof MediaFetchAgent>;
 
 export const defaultFetchAgent = new MediaFetchAgent(Networks.MAINNET);
 
-export const NFTFetchContext = createContext(defaultFetchAgent);
+export const NFTFetchContext = React.createContext(defaultFetchAgent);
 
 type NFTFetchConfigurationProps = {
   networkId: NetworkIDs;
-  children: ReactNode;
+  // TODO(iain): fix children type
+  children: React.ReactNode;
 };
 
 export const NFTFetchConfiguration = ({
   networkId,
   children,
-}: NFTFetchConfigurationProps): ReactNode => {
+}: NFTFetchConfigurationProps) => {
   const lastFetchContext = useContext(NFTFetchContext);
   const fetchAgent = useMemo(() => {
     if (lastFetchContext.networkId === networkId) {

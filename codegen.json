@@ -1,11 +1,11 @@
 {
   "generates": {
-    "./src/graph-queries/zora-types.d.ts": {
+    "./src/graph-queries/zora-types.ts": {
       "schema": "./graph-schemas/zora.graphql",
       "documents": "./src/graph-queries/zora.ts",
       "plugins": ["typescript", "typescript-operations"]
     },
-    "./src/graph-queries/uniswap-types.d.ts": {
+    "./src/graph-queries/uniswap-types.ts": {
       "schema": "./graph-schemas/uniswap.graphql",
       "documents": "./src/graph-queries/uniswap.ts",
       "plugins": ["typescript", "typescript-operations"]
