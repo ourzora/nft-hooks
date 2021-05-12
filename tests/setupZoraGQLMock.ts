@@ -28,6 +28,9 @@ async function makeQuery(
     BigInt: () => "12974",
     BigDecimal: () => "13874.2323",
     Bytes: () => "ByTeSStrInG",
+    // Randomly chosen by mock
+    //  breaks consistent testing
+    ReserveAuctionBidType: () => "Final",
     ID: () => (currentID++).toString(),
     Currency: () => ({
       name: "Wrapped Ether",

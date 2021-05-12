@@ -7,6 +7,7 @@ export const GET_MEDIA_QUERY = gql`
     symbol
     decimals
   }
+
   fragment BidDataPartial on Bid {
     id
     bidder {
@@ -18,6 +19,28 @@ export const GET_MEDIA_QUERY = gql`
       ...CurrencyShort
     }
   }
+
+  fragment PreviousReserveBid on InactiveReserveAuctionBid {
+    id
+    bidder {
+      id
+    }
+    createdAtTimestamp
+    amount
+    bidType
+    bidInactivatedAtTimestamp
+    bidInactivatedAtBlockNumber
+  }
+
+  fragment CurrentReserveBid on ReserveAuctionBid {
+    bidType
+    amount
+    createdAtTimestamp
+    bidder {
+      id
+    }
+  }
+
   fragment AskPrice on Ask {
     id
     currency {
@@ -26,6 +49,7 @@ export const GET_MEDIA_QUERY = gql`
     amount
     createdAtTimestamp
   }
+
   fragment NFTMedia on Media {
     id
     owner {
@@ -42,6 +66,7 @@ export const GET_MEDIA_QUERY = gql`
     contentURI
     contentHash
   }
+
   fragment ReserveAuctionPartial on ReserveAuction {
     id
     tokenId
@@ -53,11 +78,10 @@ export const GET_MEDIA_QUERY = gql`
       ...CurrencyShort
     }
     currentBid {
-      amount
-      createdAtTimestamp
-      bidder {
-        id
-      }
+      ...CurrentReserveBid
+    }
+    previousBids {
+      ...PreviousReserveBid
     }
     duration
     expectedEndTimestamp

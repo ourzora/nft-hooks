@@ -4,13 +4,15 @@ import { Maybe } from 'graphql/jsutils/Maybe';
 import type {
   AskPriceFragment,
   BidDataPartialFragment,
+  Currency,
   CurrencyShortFragment,
   GetMediaAndAuctionsQuery,
+  PreviousReserveBidFragment,
 } from '../graph-queries/zora-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultTypes';
 import { RequestError } from './RequestError';
-import { CurrencyLookupType } from './AuctionInfoTypes';
+import { CurrencyLookupType, PastReserveBid } from './AuctionInfoTypes';
 
 function transformCurrencyEth(currency: CurrencyShortFragment) {
   let updatedCurrency = { ...currency };
@@ -32,6 +34,7 @@ export function transformMediaForKey(result: GetMediaAndAuctionsQuery, key: stri
     throw new RequestError('No media in response');
   }
   const { currentBids, currentAsk, ...nft } = media;
+
   // Since auctions are sorted by last created, the first auction will be the active auction
   // If the auction is not active it still will be created but will not be added to the current
   // auction information.
@@ -88,7 +91,7 @@ export function addAuctionInformation(
     };
   };
 
-  const handleBid = (bidRaw: BidDataPartialFragment) => {
+  const handlePerpetualBid = (bidRaw: BidDataPartialFragment) => {
     const { amount, currency, ...bid } = bidRaw;
     return {
       ...bid,
@@ -97,6 +100,24 @@ export function addAuctionInformation(
         amount,
         prettyAmount: setCurrencyDecimal(amount, currency.decimals),
         computedValue: getCurrencyComputedValue(currency.id, amount),
+      },
+    };
+  };
+
+  const handleReserveBid = ({
+    amount,
+    ...bidRaw
+  }: PreviousReserveBidFragment): PastReserveBid => {
+    const currency = chainNFT.pricing.reserve?.auctionCurrency as Currency;
+    return {
+      ...bidRaw,
+      pricing: {
+        currency,
+        amount,
+        prettyAmount: setCurrencyDecimal(amount, currency?.decimals),
+        computedValue: currency
+          ? getCurrencyComputedValue(currency.id, amount)
+          : undefined,
       },
     };
   };
@@ -213,12 +234,24 @@ export function addAuctionInformation(
   const { pricing, nft } = chainNFT;
   return {
     pricing: {
-      ...pricing,
+      reserve: pricing.reserve
+        ? {
+            ...pricing.reserve,
+            previousBids:
+              pricing.reserve?.previousBids
+                ?.map((previousBid) => handleReserveBid(previousBid))
+                .sort((bidA, bidB) =>
+                  bidA.bidInactivatedAtBlockNumber > bidB.bidInactivatedAtBlockNumber
+                    ? -1
+                    : 1
+                ) || [],
+          }
+        : undefined,
       perpetual: {
         ask: pricing.perpetual.ask
           ? transformAskCurrency(pricing.perpetual.ask)
           : undefined,
-        bids: pricing.perpetual.bids.map((bid) => handleBid(bid)),
+        bids: pricing.perpetual.bids.map((bid) => handlePerpetualBid(bid)),
       },
     },
     nft,

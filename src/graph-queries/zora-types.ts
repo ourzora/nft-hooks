@@ -2236,6 +2236,24 @@ export type BidDataPartialFragment = (
   ) }
 );
 
+export type PreviousReserveBidFragment = (
+  { __typename?: 'InactiveReserveAuctionBid' }
+  & Pick<InactiveReserveAuctionBid, 'id' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type CurrentReserveBidFragment = (
+  { __typename?: 'ReserveAuctionBid' }
+  & Pick<ReserveAuctionBid, 'bidType' | 'amount' | 'createdAtTimestamp'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
 export type AskPriceFragment = (
   { __typename?: 'Ask' }
   & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
@@ -2268,12 +2286,11 @@ export type ReserveAuctionPartialFragment = (
     & CurrencyShortFragment
   ), currentBid?: Maybe<(
     { __typename?: 'ReserveAuctionBid' }
-    & Pick<ReserveAuctionBid, 'amount' | 'createdAtTimestamp'>
-    & { bidder: (
-      { __typename?: 'User' }
-      & Pick<User, 'id'>
-    ) }
-  )> }
+    & CurrentReserveBidFragment
+  )>, previousBids?: Maybe<Array<(
+    { __typename?: 'InactiveReserveAuctionBid' }
+    & PreviousReserveBidFragment
+  )>> }
 );
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{
