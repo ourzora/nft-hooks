@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { Networks, NetworkIDs } from '../constants/networks';
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
 
