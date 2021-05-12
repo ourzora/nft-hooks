@@ -238,9 +238,13 @@ export function addAuctionInformation(
         ? {
             ...pricing.reserve,
             previousBids:
-              pricing.reserve?.previousBids?.map((previousBid) =>
-                handleReserveBid(previousBid)
-              ) || [],
+              pricing.reserve?.previousBids
+                ?.map((previousBid) => handleReserveBid(previousBid))
+                .sort((bidA, bidB) =>
+                  bidA.bidInactivatedAtBlockNumber > bidB.bidInactivatedAtBlockNumber
+                    ? -1
+                    : 1
+                ) || [],
           }
         : undefined,
       perpetual: {
