@@ -2,6 +2,7 @@ import {
   AskPriceFragment,
   BidDataPartialFragment,
   CurrencyShortFragment,
+  PreviousReserveBidFragment,
 } from '../graph-queries/zora-types';
 import { ChainCurrencyType } from '../fetcher/FetchResultTypes';
 
@@ -12,13 +13,17 @@ export type PricingInfo = {
   computedValue?: PricingInfoValue;
 };
 
-export type PerpetualBid = Omit<BidDataPartialFragment, 'currency' | 'amount'> & {
+type BidPricingInfo = {
   pricing: PricingInfo;
 };
 
-export type PerpetualAsk = Pick<AskPriceFragment, 'id' | 'createdAtTimestamp'> & {
-  pricing: PricingInfo;
-};
+export type PastReserveBid = Omit<PreviousReserveBidFragment, 'amount'> & BidPricingInfo;
+
+export type PerpetualBid = Omit<BidDataPartialFragment, 'currency' | 'amount'> &
+  BidPricingInfo;
+
+export type PerpetualAsk = Pick<AskPriceFragment, 'id' | 'createdAtTimestamp'> &
+  BidPricingInfo;
 
 export type PricingInfoValue = {
   inUSD: string;

@@ -1,12 +1,13 @@
 import { Maybe } from 'graphql/jsutils/Maybe';
-import { TokenShortFragment } from 'src/graph-queries/uniswap-types';
+
+import { TokenShortFragment } from '../graph-queries/uniswap-types';
 import {
   AskPriceFragment,
   BidDataPartialFragment,
   NftMediaFragment,
   ReserveAuctionPartialFragment,
-} from 'src/graph-queries/zora-types';
-import { AuctionInfoData, PerpetualAsk, PerpetualBid } from './AuctionInfoTypes';
+} from '../graph-queries/zora-types';
+import { AuctionInfoData, PastReserveBid, PerpetualAsk, PerpetualBid } from './AuctionInfoTypes';
 
 export type MediaContentType =
   | { uri: string; type: 'uri'; mimeType: string }
@@ -28,6 +29,10 @@ export type NFTMediaDataType = {
   };
 };
 
+type ReserveAuctionBidsWithCurrency = Omit<ReserveAuctionPartialFragment, 'previousBids'> & {
+  previousBids: PastReserveBid[],
+};
+
 export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & {
   auction: AuctionInfoData;
   pricing: {
@@ -35,7 +40,7 @@ export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & {
       bids: PerpetualBid[];
       ask: Maybe<PerpetualAsk>;
     };
-    reserve: Maybe<ReserveAuctionPartialFragment>;
+    reserve: Maybe<ReserveAuctionBidsWithCurrency>;
   };
 };
 
