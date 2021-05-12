@@ -6,12 +6,14 @@ import { NFTFetchConfiguration } from './context/NFTFetchContext';
 import { MediaFetchAgent } from './fetcher/MediaFetchAgent';
 import { NFTDataType, ChainCurrencyType } from './fetcher/FetchResultTypes';
 import * as ExtractResultData from './fetcher/TransformFetchResults';
+import { useAuctionHouse } from './hooks/useAuctionHouse';
 
 export {
   // Hooks
   useNFT,
   useNFTContent,
   useNFTMetadata,
+  useAuctionHouse,
   // Configuration
   NFTFetchConfiguration,
   // Fetch Agent underlying helper
