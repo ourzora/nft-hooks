@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Networks, NetworkIDs } from '../constants/networks';
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
 
@@ -6,12 +6,12 @@ export type FetchContext = InstanceType<typeof MediaFetchAgent>;
 
 export const defaultFetchAgent = new MediaFetchAgent(Networks.MAINNET);
 
-export const NFTFetchContext = createContext(defaultFetchAgent);
+export const NFTFetchContext = React.createContext(defaultFetchAgent);
 
 type NFTFetchConfigurationProps = {
   networkId: NetworkIDs;
   // TODO(iain): fix children type
-  children: any;
+  children: React.ReactNode;
 };
 
 export const NFTFetchConfiguration = ({
