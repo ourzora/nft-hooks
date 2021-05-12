@@ -2231,6 +2231,31 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type CuratorReserveAuctionPartialFragment = (
+  { __typename?: 'ReserveAuction' }
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'approved' | 'duration' | 'expectedEndTimestamp' | 'createdAtTimestamp' | 'createdAtBlockNumber' | 'finalizedAtTimestamp' | 'finalizedAtBlockNumber'>
+  & { curator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), tokenOwner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type GetReserveAuctionQueryVariables = Exact<{
+  curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type GetReserveAuctionQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & CuratorReserveAuctionPartialFragment
+  )> }
+);
+
 export type CurrencyShortFragment = (
   { __typename?: 'Currency' }
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>

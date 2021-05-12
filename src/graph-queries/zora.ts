@@ -42,9 +42,14 @@ fragment ReserveAuctionPartial on ReserveAuction {
   id
   tokenId
   status
+  approved
   reservePrice
   firstBidTime
   createdAtTimestamp
+  curator {
+    id
+  }
+  curatorFeePercentage
   tokenOwner {
     id
   }
@@ -64,13 +69,34 @@ fragment ReserveAuctionPartial on ReserveAuction {
 
 `
 
-export const GET_AUCTION_QUERY = gql`
+export const GET_AUCTION_BY_CURATOR = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctions($auctionIds: [ID!]) {
-    reserveAuctions(where:{
-      id_in: $auctionIds
-    }) {
+  query getAuctions($curators: [ID!], $approved_states: [Boolean!], $first: Number, $skip: Number) {
+    reserveAuctions(where:
+      {
+        curator_in: $curators,
+        approved_in: $approved
+      }
+      first: $first
+      skip: $skip
+    ) {
+      ...ReserveAuctionPartial
+    }
+  }
+`;
+
+export const GET_ALL_AUCTIONS = gql`
+  ${AUCTION_PARTIALS}
+
+  query getAuctions($approved_states: [Boolean!], $first: Number, $skip: Number) {
+    reserveAuctions(
+      where: {
+        approved_in: $approved
+      }
+      first: $first
+      skip: $skip
+    ) {
       ...ReserveAuctionPartial
     }
   }

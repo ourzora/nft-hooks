@@ -4,6 +4,7 @@ import { TokenShortFragment } from '../graph-queries/uniswap-types';
 import {
   AskPriceFragment,
   BidDataPartialFragment,
+  CuratorReserveAuctionPartialFragment,
   NftMediaFragment,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
@@ -22,6 +23,8 @@ export type MediaContentType =
 export type MetadataResultType = {
   metadata: any;
 };
+
+export type AuctionsResult = CuratorReserveAuctionPartialFragment[];
 
 export type NFTMediaDataType = {
   nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'> & {
