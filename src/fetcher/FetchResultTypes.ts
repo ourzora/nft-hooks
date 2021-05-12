@@ -1,11 +1,11 @@
 import { Maybe } from 'graphql/jsutils/Maybe';
-import { TokenShortFragment } from 'src/graph-queries/uniswap-types';
+import { TokenShortFragment } from '../graph-queries/uniswap-types';
 import {
   AskPriceFragment,
   BidDataPartialFragment,
   NftMediaFragment,
   ReserveAuctionPartialFragment,
-} from 'src/graph-queries/zora-types';
+} from '../graph-queries/zora-types';
 import { AuctionInfoData, PerpetualAsk, PerpetualBid } from './AuctionInfoTypes';
 
 export type MediaContentType =
