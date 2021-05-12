@@ -39,6 +39,13 @@ type NFTDataType = {
       expectedEndTimestamp: string;
       createdAtTimestamp: string;
       finalizedAtTimestamp: string;
+      previousBids: {
+        createdAtTimestamp: string
+        bidType: "Active" | "Refunded" | "Final";
+        bidInactivatedAtTimestamp: string
+        bidInactivatedAtBlockNumber: number
+        pricing: PricingInfo,
+      }[],
     },
   };
 

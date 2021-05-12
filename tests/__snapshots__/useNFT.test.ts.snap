@@ -509,7 +509,7 @@ Object {
       "createdAtTimestamp": "12974",
       "currentBid": Object {
         "amount": "12974",
-        "bidType": "Refunded",
+        "bidType": "Final",
         "bidder": Object {
           "id": "29",
         },
@@ -548,7 +548,7 @@ Object {
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
-          "bidType": "Refunded",
+          "bidType": "Final",
           "bidder": Object {
             "id": "33",
           },
@@ -687,7 +687,7 @@ Object {
       "createdAtTimestamp": "12974",
       "currentBid": Object {
         "amount": "12974",
-        "bidType": "Refunded",
+        "bidType": "Final",
         "bidder": Object {
           "id": "29",
         },
@@ -726,7 +726,7 @@ Object {
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
-          "bidType": "Refunded",
+          "bidType": "Final",
           "bidder": Object {
             "id": "33",
           },
@@ -1184,7 +1184,7 @@ Object {
       "createdAtTimestamp": "12974",
       "currentBid": Object {
         "amount": "12974",
-        "bidType": "Active",
+        "bidType": "Final",
         "bidder": Object {
           "id": "9",
         },
@@ -1220,7 +1220,7 @@ Object {
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
-          "bidType": "Active",
+          "bidType": "Final",
           "bidder": Object {
             "id": "13",
           },
