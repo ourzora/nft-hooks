@@ -207,6 +207,7 @@ export class MediaFetchAgent {
     const currencies = (await client.request(GET_TOKEN_VALUES_QUERY, {
       currencyContracts,
     })) as GetTokenPricesQuery;
+    
     return currencyContracts.map((key) => transformCurrencyForKey(currencies, key));
   }
 

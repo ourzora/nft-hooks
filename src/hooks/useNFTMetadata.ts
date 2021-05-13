@@ -18,7 +18,7 @@ export type useNFTMetadataType = {
  * @returns @type useNFTMetadataType
  */
 export function useNFTMetadata(
-  uri: string,
+  uri?: string,
   { allowInvalid } = { allowInvalid: false }
 ): useNFTMetadataType {
   const [metadata, setMetadata] = useState<any>();

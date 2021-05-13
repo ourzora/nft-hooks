@@ -18,11 +18,14 @@ export type useNFTContentType = {
  * @param mimeType MIME type expected for content
  * @returns useNFTContentType
  */
-export function useNFTContent(uri: string, mimeType?: string): useNFTContentType {
+export function useNFTContent(uri?: string, mimeType?: string): useNFTContentType {
   const [content, setContent] = useState<MediaContentType | undefined>();
   const [error, setError] = useState<string | undefined>();
 
-  useCallbackFetch(uri, async (fetchAgent, uri) => {
+  useCallbackFetch([uri, mimeType], async (fetchAgent, [uri, mimeType]) => {
+    if (!uri) {
+      return;
+    }
     try {
       if (!mimeType) {
         mimeType = await fetchAgent.fetchContentMimeType(uri);
