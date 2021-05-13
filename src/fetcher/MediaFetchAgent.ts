@@ -1,6 +1,5 @@
 import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
-import { Validator } from '@zoralabs/media-metadata-schemas';
 
 import { RequestError } from './RequestError';
 import {
@@ -104,14 +103,7 @@ export class MediaFetchAgent {
   async loadMetadata(url: string): Promise<MetadataResultType> {
     const metadata = await this.loaders.metadataLoader.load(url);
 
-    let valid = false;
-    try {
-      const validator = new Validator(metadata.version);
-      valid = validator.validate(metadata);
-    } catch (e) {
-      // skip validator errors
-    }
-    return { metadata, valid };
+    return {metadata};
   }
 
   /**

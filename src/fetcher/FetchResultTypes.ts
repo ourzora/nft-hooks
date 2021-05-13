@@ -15,7 +15,6 @@ export type MediaContentType =
 
 export type MetadataResultType = {
   metadata: any;
-  valid: boolean;
 };
 
 export type NFTMediaDataType = {

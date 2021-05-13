@@ -35,38 +35,6 @@ describe('useNFTContent', () => {
     });
   });
 
-  it('throws an error for invalid metadata', async () => {
-    fetchMock.get('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', { name: 'test' });
-
-    const { waitFor, result } = renderHook(() =>
-      useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE')
-    );
-
-    await waitFor(() => result.current.loading === false);
-
-    expect(result.current.error).toEqual(
-      'RequestError: Metadata Invalid: Metadata could not be validated.'
-    );
-    expect(result.current.loading).toBeFalsy();
-    expect(result.current.metadata).toBeUndefined();
-  });
-
-  it('allows invalid metadata when validation exception disabled', async () => {
-    fetchMock.get('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', { name: 'test' });
-
-    const { waitFor, result } = renderHook(() =>
-      useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', { allowInvalid: true })
-    );
-
-    await waitFor(() => result.current.loading === false);
-
-    expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
-    expect(result.current.metadata).toEqual({
-      name: 'test',
-    });
-  });
-
   it('returns error when metadata does not exist', async () => {
     fetchMock.get('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'Not Found', {
       response: { status: 404 },
