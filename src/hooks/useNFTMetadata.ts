@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { RequestError } from '../fetcher/RequestError';
 import { useCallbackFetch } from './useCallbackFetch';
 
 export type useNFTMetadataType = {
@@ -19,17 +18,13 @@ export type useNFTMetadataType = {
  */
 export function useNFTMetadata(
   uri?: string,
-  { allowInvalid } = { allowInvalid: false }
 ): useNFTMetadataType {
   const [metadata, setMetadata] = useState<any>();
   const [error, setError] = useState<string | undefined>();
 
   useCallbackFetch(uri, async (fetchAgent, uri) => {
     try {
-      const { metadata, valid } = await fetchAgent.loadMetadata(uri);
-      if (!allowInvalid && !valid) {
-        throw new RequestError('Metadata Invalid: Metadata could not be validated.');
-      }
+      const {metadata} = await fetchAgent.loadMetadata(uri);
       setMetadata(metadata);
     } catch (err) {
       setError(err.toString());
