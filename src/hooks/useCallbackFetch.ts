@@ -11,14 +11,14 @@ import type { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
  */
 export function useCallbackFetch<T>(
   datapoint: T,
-  fetchFn: (agent: MediaFetchAgent, data: T) => void
+  fetchFn: (agent: MediaFetchAgent, data: NonNullable<T>) => void
 ) {
   const fetchAgent = useContext(NFTFetchContext);
 
   const fetch = useCallback(fetchFn, []);
   useEffect(() => {
     if (datapoint) {
-      fetch(fetchAgent, datapoint);
+      fetch(fetchAgent, datapoint as NonNullable<T>);
     }
-  }, [datapoint]);
+  }, Array.isArray(datapoint) ? datapoint : [datapoint]);
 }

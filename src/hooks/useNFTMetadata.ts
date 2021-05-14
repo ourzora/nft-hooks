@@ -17,7 +17,7 @@ export type useNFTMetadataType = {
  * @returns @type useNFTMetadataType
  */
 export function useNFTMetadata(
-  uri: string,
+  uri?: string,
 ): useNFTMetadataType {
   const [metadata, setMetadata] = useState<any>();
   const [error, setError] = useState<string | undefined>();

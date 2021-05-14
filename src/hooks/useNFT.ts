@@ -19,7 +19,7 @@ export type useNFTType = {
  *                         token value to ETH and USD equivalent
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
-export function useNFT(id: string, loadCurrencyInfo: boolean = false): useNFTType {
+export function useNFT(id?: string, loadCurrencyInfo: boolean = false): useNFTType {
   const [data, setData] = useState<NFTDataType>();
   const [currencyLoaded, setCurrencyLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();

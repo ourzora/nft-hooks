@@ -14,9 +14,11 @@ import { ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultT
 import { RequestError } from './RequestError';
 import { CurrencyLookupType, PastReserveBid } from './AuctionInfoTypes';
 
-function transformCurrencyEth(currency: CurrencyShortFragment) {
+const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
+
+export function transformCurrencyEth(currency: CurrencyShortFragment) {
   let updatedCurrency = { ...currency };
-  if (currency.id === '0x0000000000000000000000000000000000000000') {
+  if (currency.id === NULL_ETH_CURRENCY_ID) {
     updatedCurrency.decimals = 18;
     updatedCurrency.name = 'Ethereum';
     updatedCurrency.symbol = 'ETH';
@@ -61,6 +63,19 @@ export function transformCurrencyForKey(
   key: string
 ): ChainCurrencyType {
   const currency = result.tokens.find((token) => token.id === key);
+  // Special case ETH
+  if (key === NULL_ETH_CURRENCY_ID) {
+    return {
+      ethToUsd: result.bundle?.ethPrice,
+      token: {
+        symbol: 'ETH',
+        name: 'Ethereum',
+        id: NULL_ETH_CURRENCY_ID,
+        decimals: 18,
+        derivedETH: 1,
+      },
+    };
+  }
   if (!currency) {
     throw new RequestError('No currency in response');
   }
