@@ -7,7 +7,13 @@ import {
   NftMediaFragment,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
-import { AuctionInfoData, PastReserveBid, PerpetualAsk, PerpetualBid } from './AuctionInfoTypes';
+import {
+  AuctionInfoData,
+  CurrentReserveBid,
+  PastReserveBid,
+  PerpetualAsk,
+  PerpetualBid,
+} from './AuctionInfoTypes';
 
 export type MediaContentType =
   | { uri: string; type: 'uri'; mimeType: string }
@@ -18,7 +24,9 @@ export type MetadataResultType = {
 };
 
 export type NFTMediaDataType = {
-  nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'>;
+  nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'> & {
+    creatorBidSharePercentage: number;
+  };
   pricing: {
     perpetual: {
       bids: BidDataPartialFragment[];
@@ -28,11 +36,15 @@ export type NFTMediaDataType = {
   };
 };
 
-type ReserveAuctionBidsWithCurrency = Omit<ReserveAuctionPartialFragment, 'previousBids'> & {
-  previousBids: PastReserveBid[],
+type ReserveAuctionBidsWithCurrency = Omit<
+  ReserveAuctionPartialFragment,
+  'previousBids' | 'currentBid'
+> & {
+  previousBids: PastReserveBid[];
+  currentBid?: CurrentReserveBid;
 };
 
-export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & {
+export type NFTAuctionType = {
   auction: AuctionInfoData;
   pricing: {
     perpetual: {
@@ -42,6 +54,8 @@ export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & {
     reserve: Maybe<ReserveAuctionBidsWithCurrency>;
   };
 };
+
+export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & NFTAuctionType;
 
 export type ZoraUsernameFetchResult = {
   name: string;

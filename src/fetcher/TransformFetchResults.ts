@@ -7,12 +7,11 @@ import type {
   Currency,
   CurrencyShortFragment,
   GetMediaAndAuctionsQuery,
-  PreviousReserveBidFragment,
 } from '../graph-queries/zora-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultTypes';
 import { RequestError } from './RequestError';
-import { CurrencyLookupType, PastReserveBid } from './AuctionInfoTypes';
+import { BidPricingInfo, CurrencyLookupType } from './AuctionInfoTypes';
 
 const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
 
@@ -35,14 +34,20 @@ export function transformMediaForKey(result: GetMediaAndAuctionsQuery, key: stri
   if (!media) {
     throw new RequestError('No media in response');
   }
-  const { currentBids, currentAsk, ...nft } = media;
+  const { reserveAuctions, currentBids, currentAsk, ...nft } = media;
 
   // Since auctions are sorted by last created, the first auction will be the active auction
   // If the auction is not active it still will be created but will not be added to the current
   // auction information.
-  let auctionData = result.reserveAuctions.find((auction) => auction.tokenId === key);
+  let auctionData =
+    reserveAuctions && reserveAuctions.length > 0 ? reserveAuctions[0] : undefined;
   return {
-    nft,
+    nft: {
+      ...nft,
+      creatorBidSharePercentage: new Big(nft.creatorBidShare)
+        .div(new Big(10).pow(18))
+        .toNumber(),
+    },
     pricing: {
       perpetual: {
         bids: currentBids || [],
@@ -121,13 +126,9 @@ export function addAuctionInformation(
     };
   };
 
-  const handleReserveBid = ({
-    amount,
-    ...bidRaw
-  }: PreviousReserveBidFragment): PastReserveBid => {
+  const getBidPricing = (amount: string): BidPricingInfo => {
     const currency = chainNFT.pricing.reserve?.auctionCurrency as Currency;
     return {
-      ...bidRaw,
       pricing: {
         currency,
         amount,
@@ -154,7 +155,7 @@ export function addAuctionInformation(
   };
 
   const getReservePrice = () => {
-    if (hasActiveReserveAuction) {
+    if (!hasActiveReserveAuction) {
       const { ask } = chainNFT.pricing.perpetual;
       if (ask) {
         return {
@@ -246,19 +247,34 @@ export function addAuctionInformation(
     return;
   };
   const highestBid = getHighestBid();
-  const likelyHasEnded = chainNFT.pricing.reserve
-    ? parseInt(chainNFT.pricing.reserve?.expectedEndTimestamp, 10) <
-      new Date().getTime() / 1000
-    : true;
+  const likelyHasEnded = hasActiveReserveAuction
+    ? chainNFT.pricing.reserve
+      ? parseInt(chainNFT.pricing.reserve?.expectedEndTimestamp, 10) <
+        new Date().getTime() / 1000
+      : true
+    : false;
   const { pricing, nft } = chainNFT;
   return {
     pricing: {
       reserve: pricing.reserve
         ? {
             ...pricing.reserve,
+            currentBid: (() => {
+              if (!pricing.reserve.currentBid) {
+                return undefined;
+              }
+              const { amount, ...bidRaw } = pricing.reserve?.currentBid;
+              return {
+                ...bidRaw,
+                ...getBidPricing(amount),
+              };
+            })(),
             previousBids:
               pricing.reserve?.previousBids
-                ?.map((previousBid) => handleReserveBid(previousBid))
+                ?.map(({ amount, ...previousBid }) => ({
+                  ...previousBid,
+                  ...getBidPricing(amount),
+                }))
                 .sort((bidA, bidB) =>
                   bidA.bidInactivatedAtBlockNumber > bidB.bidInactivatedAtBlockNumber
                     ? -1

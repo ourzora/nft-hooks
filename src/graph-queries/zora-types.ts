@@ -843,6 +843,8 @@ export type Media = {
   inactiveAsks?: Maybe<Array<InactiveAsk>>;
   /** The InactiveBids of the Media */
   inactiveBids?: Maybe<Array<InactiveBid>>;
+  /** The ReserveAuctions of the Media */
+  reserveAuctions?: Maybe<Array<ReserveAuction>>;
 };
 
 
@@ -870,6 +872,15 @@ export type MediaInactiveBidsArgs = {
   orderBy?: Maybe<InactiveBid_OrderBy>;
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveBid_Filter>;
+};
+
+
+export type MediaReserveAuctionsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ReserveAuction_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ReserveAuction_Filter>;
 };
 
 export type Media_Filter = {
@@ -1055,7 +1066,8 @@ export enum Media_OrderBy {
   CurrentAsk = 'currentAsk',
   CurrentBids = 'currentBids',
   InactiveAsks = 'inactiveAsks',
-  InactiveBids = 'inactiveBids'
+  InactiveBids = 'inactiveBids',
+  ReserveAuctions = 'reserveAuctions'
 }
 
 export enum OrderDirection {
@@ -2224,18 +2236,6 @@ export type CurrencyShortFragment = (
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
 );
 
-export type BidDataPartialFragment = (
-  { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'amount'>
-  & { bidder: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
 export type PreviousReserveBidFragment = (
   { __typename?: 'InactiveReserveAuctionBid' }
   & Pick<InactiveReserveAuctionBid, 'id' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
@@ -2263,9 +2263,40 @@ export type AskPriceFragment = (
   ) }
 );
 
+export type ReserveAuctionPartialFragment = (
+  { __typename?: 'ReserveAuction' }
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & { tokenOwner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), auctionCurrency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ), currentBid?: Maybe<(
+    { __typename?: 'ReserveAuctionBid' }
+    & CurrentReserveBidFragment
+  )>, previousBids?: Maybe<Array<(
+    { __typename?: 'InactiveReserveAuctionBid' }
+    & PreviousReserveBidFragment
+  )>> }
+);
+
+export type GetAuctionsQueryVariables = Exact<{
+  auctionIds?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+}>;
+
+
+export type GetAuctionsQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )> }
+);
+
 export type NftMediaFragment = (
   { __typename?: 'Media' }
-  & Pick<Media, 'id' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
   & { owner: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2278,24 +2309,20 @@ export type NftMediaFragment = (
   )> }
 );
 
-export type ReserveAuctionPartialFragment = (
-  { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
-  & { auctionCurrency: (
+export type BidDataPartialFragment = (
+  { __typename?: 'Bid' }
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'amount'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currency: (
     { __typename?: 'Currency' }
     & CurrencyShortFragment
-  ), currentBid?: Maybe<(
-    { __typename?: 'ReserveAuctionBid' }
-    & CurrentReserveBidFragment
-  )>, previousBids?: Maybe<Array<(
-    { __typename?: 'InactiveReserveAuctionBid' }
-    & PreviousReserveBidFragment
-  )>> }
+  ) }
 );
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{
   ids_id?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
-  ids_bigint?: Maybe<Array<Scalars['BigInt']> | Scalars['BigInt']>;
 }>;
 
 
@@ -2306,10 +2333,10 @@ export type GetMediaAndAuctionsQuery = (
     & { currentBids?: Maybe<Array<(
       { __typename?: 'Bid' }
       & BidDataPartialFragment
+    )>>, reserveAuctions?: Maybe<Array<(
+      { __typename?: 'ReserveAuction' }
+      & ReserveAuctionPartialFragment
     )>> }
     & NftMediaFragment
-  )>, reserveAuctions: Array<(
-    { __typename?: 'ReserveAuction' }
-    & ReserveAuctionPartialFragment
   )> }
 );

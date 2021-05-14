@@ -4,15 +4,25 @@ exports[`useNFT caches multiple NFTs being loaded 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
+      "auctionType": "reserve",
+      "endingAt": "12974",
       "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "111",
+      "placedBy": "143",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -29,21 +39,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "107",
+      "id": "133",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "1",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "106",
+      "id": "132",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "108",
+        "id": "134",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -59,10 +72,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "111",
+            "id": "137",
           },
           "createdAtTimestamp": "12974",
-          "id": "109",
+          "id": "135",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -77,10 +90,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "112",
+            "id": "138",
           },
           "createdAtTimestamp": "12974",
-          "id": "110",
+          "id": "136",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -95,7 +108,88 @@ Object {
         },
       ],
     },
-    "reserve": undefined,
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "143",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "139",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "146",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "144",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "147",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "145",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "141",
+      },
+    },
   },
 }
 `;
@@ -104,15 +198,25 @@ exports[`useNFT caches multiple NFTs being loaded 2`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
+      "auctionType": "reserve",
+      "endingAt": "12974",
       "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "118",
+      "placedBy": "166",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -129,21 +233,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "114",
+      "id": "156",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "2",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "113",
+      "id": "155",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "115",
+        "id": "157",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -159,10 +266,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "118",
+            "id": "160",
           },
           "createdAtTimestamp": "12974",
-          "id": "116",
+          "id": "158",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -177,10 +284,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "119",
+            "id": "161",
           },
           "createdAtTimestamp": "12974",
-          "id": "117",
+          "id": "159",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -195,7 +302,88 @@ Object {
         },
       ],
     },
-    "reserve": undefined,
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "166",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "162",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "169",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "167",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "170",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "168",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "164",
+      },
+    },
   },
 }
 `;
@@ -204,15 +392,25 @@ exports[`useNFT caches multiple NFTs being loaded 3`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
+      "auctionType": "reserve",
+      "endingAt": "12974",
       "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "111",
+      "placedBy": "143",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -229,21 +427,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "107",
+      "id": "133",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "1",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "106",
+      "id": "132",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "108",
+        "id": "134",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -259,10 +460,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "111",
+            "id": "137",
           },
           "createdAtTimestamp": "12974",
-          "id": "109",
+          "id": "135",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -277,10 +478,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "112",
+            "id": "138",
           },
           "createdAtTimestamp": "12974",
-          "id": "110",
+          "id": "136",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -295,7 +496,88 @@ Object {
         },
       ],
     },
-    "reserve": undefined,
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "143",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "139",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "146",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "144",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "147",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "145",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "141",
+      },
+    },
   },
 }
 `;
@@ -304,15 +586,25 @@ exports[`useNFT caches multiple NFTs being loaded 4`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
+      "auctionType": "reserve",
+      "endingAt": "12974",
       "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "118",
+      "placedBy": "166",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -329,21 +621,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "114",
+      "id": "156",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "2",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "113",
+      "id": "155",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "115",
+        "id": "157",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -359,10 +654,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "118",
+            "id": "160",
           },
           "createdAtTimestamp": "12974",
-          "id": "116",
+          "id": "158",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -377,10 +672,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "119",
+            "id": "161",
           },
           "createdAtTimestamp": "12974",
-          "id": "117",
+          "id": "159",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -395,7 +690,88 @@ Object {
         },
       ],
     },
-    "reserve": undefined,
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "166",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "162",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "169",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "167",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "170",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "168",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "164",
+      },
+    },
   },
 }
 `;
@@ -409,10 +785,10 @@ Object {
       "likelyHasEnded": true,
       "reserveMet": true,
       "reservePrice": Object {
-        "amount": "12974",
+        "amount": "1000000",
         "computedValue": Object {
-          "inETH": "1.800042898602e-10",
-          "inUSD": "0.00000249742133251694932446",
+          "inETH": "1.38742323e-8",
+          "inUSD": "0.00019249432191436329",
         },
         "currency": Object {
           "decimals": 18,
@@ -420,12 +796,12 @@ Object {
           "name": "Wrapped Ether",
           "symbol": "WETH",
         },
-        "prettyAmount": "1.2974e-14",
+        "prettyAmount": "1e-12",
       },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "29",
+      "placedBy": "32",
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
@@ -445,21 +821,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "https://zora.co/content",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "23",
+      "id": "25",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "2974",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "22",
+      "id": "24",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "24",
+        "id": "26",
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
@@ -481,7 +860,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "25",
+          "id": "27",
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
@@ -508,28 +887,41 @@ Object {
       },
       "createdAtTimestamp": "12974",
       "currentBid": Object {
-        "amount": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "29",
+          "id": "32",
         },
         "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": Object {
+            "inETH": "1.800042898602e-10",
+            "inUSD": "0.00000249742133251694932446",
+          },
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "26",
+      "id": "28",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "32",
+            "id": "35",
           },
           "createdAtTimestamp": "12974",
-          "id": "30",
+          "id": "33",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -550,10 +942,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "33",
+            "id": "36",
           },
           "createdAtTimestamp": "12974",
-          "id": "31",
+          "id": "34",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -573,6 +965,9 @@ Object {
       "reservePrice": "1000000",
       "status": "Active",
       "tokenId": "2974",
+      "tokenOwner": Object {
+        "id": "30",
+      },
     },
   },
 }
@@ -587,10 +982,10 @@ Object {
       "likelyHasEnded": true,
       "reserveMet": true,
       "reservePrice": Object {
-        "amount": "12974",
+        "amount": "1000000",
         "computedValue": Object {
-          "inETH": "1.800042898602e-10",
-          "inUSD": "0.00000249742133251694932446",
+          "inETH": "1.38742323e-8",
+          "inUSD": "0.00019249432191436329",
         },
         "currency": Object {
           "decimals": 18,
@@ -598,12 +993,12 @@ Object {
           "name": "Wrapped Ether",
           "symbol": "WETH",
         },
-        "prettyAmount": "1.2974e-14",
+        "prettyAmount": "1e-12",
       },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "29",
+      "placedBy": "32",
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
@@ -623,21 +1018,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "https://zora.co/content",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "23",
+      "id": "25",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "2974",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "22",
+      "id": "24",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "24",
+        "id": "26",
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
@@ -659,7 +1057,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "25",
+          "id": "27",
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
@@ -686,28 +1084,41 @@ Object {
       },
       "createdAtTimestamp": "12974",
       "currentBid": Object {
-        "amount": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "29",
+          "id": "32",
         },
         "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": Object {
+            "inETH": "1.800042898602e-10",
+            "inUSD": "0.00000249742133251694932446",
+          },
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "26",
+      "id": "28",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "32",
+            "id": "35",
           },
           "createdAtTimestamp": "12974",
-          "id": "30",
+          "id": "33",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -728,10 +1139,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "33",
+            "id": "36",
           },
           "createdAtTimestamp": "12974",
-          "id": "31",
+          "id": "34",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -751,6 +1162,9 @@ Object {
       "reservePrice": "1000000",
       "status": "Active",
       "tokenId": "2974",
+      "tokenOwner": Object {
+        "id": "30",
+      },
     },
   },
 }
@@ -760,15 +1174,25 @@ exports[`useNFT correctly loads multiple perpetual bid NFTs 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
+      "auctionType": "reserve",
+      "endingAt": "12974",
       "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "83",
+      "placedBy": "97",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -785,121 +1209,24 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "79",
+      "id": "87",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "1",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "78",
-    },
-  },
-  "pricing": Object {
-    "perpetual": Object {
-      "ask": Object {
-        "createdAtTimestamp": "12974",
-        "id": "80",
-        "pricing": Object {
-          "amount": "12974",
-          "computedValue": undefined,
-          "currency": Object {
-            "decimals": 18,
-            "id": "0xFACE",
-            "name": "Wrapped Ether",
-            "symbol": "WETH",
-          },
-          "prettyAmount": "1.2974e-14",
-        },
-      },
-      "bids": Array [
-        Object {
-          "bidder": Object {
-            "id": "83",
-          },
-          "createdAtTimestamp": "12974",
-          "id": "81",
-          "pricing": Object {
-            "amount": "12974",
-            "computedValue": undefined,
-            "currency": Object {
-              "decimals": 18,
-              "id": "0xFACE",
-              "name": "Wrapped Ether",
-              "symbol": "WETH",
-            },
-            "prettyAmount": "1.2974e-14",
-          },
-        },
-        Object {
-          "bidder": Object {
-            "id": "84",
-          },
-          "createdAtTimestamp": "12974",
-          "id": "82",
-          "pricing": Object {
-            "amount": "12974",
-            "computedValue": undefined,
-            "currency": Object {
-              "decimals": 18,
-              "id": "0xFACE",
-              "name": "Wrapped Ether",
-              "symbol": "WETH",
-            },
-            "prettyAmount": "1.2974e-14",
-          },
-        },
-      ],
-    },
-    "reserve": undefined,
-  },
-}
-`;
-
-exports[`useNFT correctly loads multiple perpetual bid NFTs 2`] = `
-Object {
-  "auction": Object {
-    "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
-      "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
-    },
-    "highestBid": Object {
-      "placedAt": "12974",
-      "placedBy": "90",
-      "pricing": Object {
-        "amount": "12974",
-        "computedValue": undefined,
-        "currency": Object {
-          "decimals": 18,
-          "id": "0xFACE",
-          "name": "Wrapped Ether",
-          "symbol": "WETH",
-        },
-        "prettyAmount": "1.2974e-14",
-      },
-    },
-  },
-  "nft": Object {
-    "contentHash": "ByTeSStrInG",
-    "contentURI": "Hello World",
-    "creator": Object {
       "id": "86",
     },
-    "id": "2",
-    "metadataHash": "ByTeSStrInG",
-    "metadataURI": "Hello World",
-    "owner": Object {
-      "id": "85",
-    },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "87",
+        "id": "88",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -913,24 +1240,6 @@ Object {
         },
       },
       "bids": Array [
-        Object {
-          "bidder": Object {
-            "id": "90",
-          },
-          "createdAtTimestamp": "12974",
-          "id": "88",
-          "pricing": Object {
-            "amount": "12974",
-            "computedValue": undefined,
-            "currency": Object {
-              "decimals": 18,
-              "id": "0xFACE",
-              "name": "Wrapped Ether",
-              "symbol": "WETH",
-            },
-            "prettyAmount": "1.2974e-14",
-          },
-        },
         Object {
           "bidder": Object {
             "id": "91",
@@ -949,78 +1258,14 @@ Object {
             "prettyAmount": "1.2974e-14",
           },
         },
-      ],
-    },
-    "reserve": undefined,
-  },
-}
-`;
-
-exports[`useNFT loads an NFT not in an auction with bids 1`] = `
-Object {
-  "auction": Object {
-    "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
-      "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
-    },
-    "highestBid": Object {
-      "placedAt": "12974",
-      "placedBy": "10",
-      "pricing": Object {
-        "amount": "10000",
-        "computedValue": undefined,
-        "currency": Object {
-          "decimals": 18,
-          "id": "0xFACE",
-          "name": "Wrapped Ether",
-          "symbol": "WETH",
-        },
-        "prettyAmount": "1e-14",
-      },
-    },
-  },
-  "nft": Object {
-    "contentHash": "ByTeSStrInG",
-    "contentURI": "https://zora.co/content",
-    "creator": Object {
-      "id": "44",
-    },
-    "id": "2974",
-    "metadataHash": "ByTeSStrInG",
-    "metadataURI": "https://zora.co/content",
-    "owner": Object {
-      "id": "43",
-    },
-  },
-  "pricing": Object {
-    "perpetual": Object {
-      "ask": Object {
-        "createdAtTimestamp": "12974",
-        "id": "45",
-        "pricing": Object {
-          "amount": "12974",
-          "computedValue": undefined,
-          "currency": Object {
-            "decimals": 18,
-            "id": "0xFACE",
-            "name": "Wrapped Ether",
-            "symbol": "WETH",
-          },
-          "prettyAmount": "1.2974e-14",
-        },
-      },
-      "bids": Array [
         Object {
           "bidder": Object {
-            "id": "10",
+            "id": "92",
           },
           "createdAtTimestamp": "12974",
-          "id": "46",
+          "id": "90",
           "pricing": Object {
-            "amount": "10000",
+            "amount": "12974",
             "computedValue": undefined,
             "currency": Object {
               "decimals": 18,
@@ -1028,46 +1273,25 @@ Object {
               "name": "Wrapped Ether",
               "symbol": "WETH",
             },
-            "prettyAmount": "1e-14",
+            "prettyAmount": "1.2974e-14",
           },
         },
       ],
     },
-    "reserve": undefined,
-  },
-}
-`;
-
-exports[`useNFT loads an NFT with no bids and no auction 1`] = `
-Object {
-  "auction": Object {
-    "current": Object {
-      "auctionType": "perpetual",
-      "endingAt": undefined,
-      "likelyHasEnded": true,
-      "reserveMet": false,
-      "reservePrice": undefined,
-    },
-    "highestBid": undefined,
-  },
-  "nft": Object {
-    "contentHash": "ByTeSStrInG",
-    "contentURI": "https://zora.co/content",
-    "creator": Object {
-      "id": "62",
-    },
-    "id": "2974",
-    "metadataHash": "ByTeSStrInG",
-    "metadataURI": "https://zora.co/content",
-    "owner": Object {
-      "id": "61",
-    },
-  },
-  "pricing": Object {
-    "perpetual": Object {
-      "ask": Object {
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "97",
+        },
         "createdAtTimestamp": "12974",
-        "id": "63",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1080,14 +1304,67 @@ Object {
           "prettyAmount": "1.2974e-14",
         },
       },
-      "bids": Array [],
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "93",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "100",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "98",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "101",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "99",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "95",
+      },
     },
-    "reserve": undefined,
   },
 }
 `;
 
-exports[`useNFT loads an nft currently in an auction 1`] = `
+exports[`useNFT correctly loads multiple perpetual bid NFTs 2`] = `
 Object {
   "auction": Object {
     "current": Object {
@@ -1109,7 +1386,201 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "9",
+      "placedBy": "120",
+      "pricing": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
+    },
+  },
+  "nft": Object {
+    "contentHash": "ByTeSStrInG",
+    "contentURI": "Hello World",
+    "createdAtTimestamp": "12974",
+    "creator": Object {
+      "id": "110",
+    },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
+    "id": "2",
+    "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "owner": Object {
+      "id": "109",
+    },
+  },
+  "pricing": Object {
+    "perpetual": Object {
+      "ask": Object {
+        "createdAtTimestamp": "12974",
+        "id": "111",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "bids": Array [
+        Object {
+          "bidder": Object {
+            "id": "114",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "112",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidder": Object {
+            "id": "115",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "113",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+    },
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "120",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "116",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "123",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "121",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "124",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "122",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "12974",
+      "tokenOwner": Object {
+        "id": "118",
+      },
+    },
+  },
+}
+`;
+
+exports[`useNFT loads an NFT not in an auction with bids 1`] = `
+Object {
+  "auction": Object {
+    "current": Object {
+      "auctionType": "reserve",
+      "endingAt": "12974",
+      "likelyHasEnded": true,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
+    },
+    "highestBid": Object {
+      "placedAt": "12974",
+      "placedBy": "55",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -1126,9 +1597,345 @@ Object {
   "nft": Object {
     "contentHash": "ByTeSStrInG",
     "contentURI": "https://zora.co/content",
+    "createdAtTimestamp": "12974",
+    "creator": Object {
+      "id": "48",
+    },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
+    "id": "2974",
+    "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "owner": Object {
+      "id": "47",
+    },
+  },
+  "pricing": Object {
+    "perpetual": Object {
+      "ask": Object {
+        "createdAtTimestamp": "12974",
+        "id": "49",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "bids": Array [
+        Object {
+          "bidder": Object {
+            "id": "10",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "50",
+          "pricing": Object {
+            "amount": "10000",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1e-14",
+          },
+        },
+      ],
+    },
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "55",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "51",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "58",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "56",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "59",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "57",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "-1",
+      "tokenOwner": Object {
+        "id": "53",
+      },
+    },
+  },
+}
+`;
+
+exports[`useNFT loads an NFT with no bids and no auction 1`] = `
+Object {
+  "auction": Object {
+    "current": Object {
+      "auctionType": "reserve",
+      "endingAt": "12974",
+      "likelyHasEnded": true,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
+    },
+    "highestBid": Object {
+      "placedAt": "12974",
+      "placedBy": "74",
+      "pricing": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
+    },
+  },
+  "nft": Object {
+    "contentHash": "ByTeSStrInG",
+    "contentURI": "https://zora.co/content",
+    "createdAtTimestamp": "12974",
+    "creator": Object {
+      "id": "68",
+    },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
+    "id": "2974",
+    "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "owner": Object {
+      "id": "67",
+    },
+  },
+  "pricing": Object {
+    "perpetual": Object {
+      "ask": Object {
+        "createdAtTimestamp": "12974",
+        "id": "69",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "bids": Array [],
+    },
+    "reserve": Object {
+      "auctionCurrency": Object {
+        "decimals": 18,
+        "id": "0xFACE",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+      },
+      "createdAtTimestamp": "12974",
+      "currentBid": Object {
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "74",
+        },
+        "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
+      },
+      "duration": "12974",
+      "expectedEndTimestamp": "12974",
+      "finalizedAtTimestamp": "12974",
+      "firstBidTime": "12974",
+      "id": "70",
+      "previousBids": Array [
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "77",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "75",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "78",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "76",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
+      ],
+      "reservePrice": "12974",
+      "status": "Active",
+      "tokenId": "-1",
+      "tokenOwner": Object {
+        "id": "72",
+      },
+    },
+  },
+}
+`;
+
+exports[`useNFT loads an nft currently in an auction 1`] = `
+Object {
+  "auction": Object {
+    "current": Object {
+      "auctionType": "reserve",
+      "endingAt": "12974",
+      "likelyHasEnded": true,
+      "reserveMet": true,
+      "reservePrice": Object {
+        "amount": "1000000",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1e-12",
+      },
+    },
+    "highestBid": Object {
+      "placedAt": "12974",
+      "placedBy": "10",
+      "pricing": Object {
+        "amount": "12974",
+        "computedValue": undefined,
+        "currency": Object {
+          "decimals": 18,
+          "id": "0xFACE",
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+        },
+        "prettyAmount": "1.2974e-14",
+      },
+    },
+  },
+  "nft": Object {
+    "contentHash": "ByTeSStrInG",
+    "contentURI": "https://zora.co/content",
+    "createdAtTimestamp": "12974",
     "creator": Object {
       "id": "3",
     },
+    "creatorBidShare": "12974",
+    "creatorBidSharePercentage": 1.2974e-14,
     "id": "2974",
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
@@ -1183,12 +1990,22 @@ Object {
       },
       "createdAtTimestamp": "12974",
       "currentBid": Object {
-        "amount": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "9",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
+        "pricing": Object {
+          "amount": "12974",
+          "computedValue": undefined,
+          "currency": Object {
+            "decimals": 18,
+            "id": "0xFACE",
+            "name": "Wrapped Ether",
+            "symbol": "WETH",
+          },
+          "prettyAmount": "1.2974e-14",
+        },
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1196,27 +2013,6 @@ Object {
       "firstBidTime": "12974",
       "id": "6",
       "previousBids": Array [
-        Object {
-          "bidInactivatedAtBlockNumber": "12974",
-          "bidInactivatedAtTimestamp": "12974",
-          "bidType": "Final",
-          "bidder": Object {
-            "id": "12",
-          },
-          "createdAtTimestamp": "12974",
-          "id": "10",
-          "pricing": Object {
-            "amount": "12974",
-            "computedValue": undefined,
-            "currency": Object {
-              "decimals": 18,
-              "id": "0xFACE",
-              "name": "Wrapped Ether",
-              "symbol": "WETH",
-            },
-            "prettyAmount": "1.2974e-14",
-          },
-        },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
@@ -1238,10 +2034,34 @@ Object {
             "prettyAmount": "1.2974e-14",
           },
         },
+        Object {
+          "bidInactivatedAtBlockNumber": "12974",
+          "bidInactivatedAtTimestamp": "12974",
+          "bidType": "Final",
+          "bidder": Object {
+            "id": "14",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "12",
+          "pricing": Object {
+            "amount": "12974",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1.2974e-14",
+          },
+        },
       ],
       "reservePrice": "1000000",
       "status": "Active",
       "tokenId": "2974",
+      "tokenOwner": Object {
+        "id": "8",
+      },
     },
   },
 }
