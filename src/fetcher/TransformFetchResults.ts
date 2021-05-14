@@ -99,7 +99,9 @@ export function addAuctionInformation(
     if (!currencyInfo) {
       return;
     }
-    const inETH = new Big(currencyInfo.token.derivedETH).mul(bidAmount).toString();
+    const inETH = new Big(currencyInfo.token.derivedETH)
+      .mul(new Big(bidAmount).div(new Big(10).pow(currencyInfo.token.decimals)))
+      .toString();
     return {
       inETH,
       inUSD: new Big(inETH).mul(currencyInfo.ethToUsd).toString(),
@@ -244,8 +246,10 @@ export function addAuctionInformation(
     return;
   };
   const highestBid = getHighestBid();
-  const likelyHasEnded =
-    chainNFT.pricing.reserve?.expectedEndTimestamp > new Date().getTime() / 1000;
+  const likelyHasEnded = chainNFT.pricing.reserve
+    ? parseInt(chainNFT.pricing.reserve?.expectedEndTimestamp, 10) <
+      new Date().getTime() / 1000
+    : true;
   const { pricing, nft } = chainNFT;
   return {
     pricing: {
@@ -278,7 +282,7 @@ export function addAuctionInformation(
         reservePrice: getReservePrice(),
         likelyHasEnded,
         reserveMet: hasActiveReserveAuction
-          ? !chainNFT.pricing.reserve?.firstBidTime
+          ? !!chainNFT.pricing.reserve?.firstBidTime
           : false,
         endingAt: hasActiveReserveAuction
           ? chainNFT.pricing.reserve?.expectedEndTimestamp
