@@ -899,6 +899,9 @@ type Media {
 
   """The InactiveBids of the Media"""
   inactiveBids(skip: Int = 0, first: Int = 100, orderBy: InactiveBid_orderBy, orderDirection: OrderDirection, where: InactiveBid_filter): [InactiveBid!]
+
+  """The ReserveAuctions of the Media"""
+  reserveAuctions(skip: Int = 0, first: Int = 100, orderBy: ReserveAuction_orderBy, orderDirection: OrderDirection, where: ReserveAuction_filter): [ReserveAuction!]
 }
 
 input Media_filter {
@@ -1085,6 +1088,7 @@ enum Media_orderBy {
   currentBids
   inactiveAsks
   inactiveBids
+  reserveAuctions
 }
 
 enum OrderDirection {

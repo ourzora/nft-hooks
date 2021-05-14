@@ -50,6 +50,8 @@ export class MediaFetchAgent {
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
     metadataLoader: DataLoader<string, any>;
+    // fetches auction house data for an arbitary NFT
+    // auctionLoader: DataLoader<{address: string, id: string}, NFTAuctionType>;
   };
 
   constructor(network: NetworkIDs) {
@@ -103,7 +105,7 @@ export class MediaFetchAgent {
   async loadMetadata(url: string): Promise<MetadataResultType> {
     const metadata = await this.loaders.metadataLoader.load(url);
 
-    return {metadata};
+    return { metadata };
   }
 
   /**
@@ -178,7 +180,6 @@ export class MediaFetchAgent {
     });
     const response = (await client.request(GET_MEDIA_QUERY, {
       ids_id: mediaIds,
-      ids_bigint: mediaIds,
     })) as GetMediaAndAuctionsQuery;
     return mediaIds.map((key) => transformMediaForKey(response, key));
   }
@@ -199,7 +200,7 @@ export class MediaFetchAgent {
     const currencies = (await client.request(GET_TOKEN_VALUES_QUERY, {
       currencyContracts,
     })) as GetTokenPricesQuery;
-    
+
     return currencyContracts.map((key) => transformCurrencyForKey(currencies, key));
   }
 
