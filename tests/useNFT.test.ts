@@ -61,6 +61,7 @@ describe("useNFT", () => {
     const mockUniswapOverrides = {
       Token: () => ({
         id: "0xFACE",
+        decimals: 18,
       }),
     };
 

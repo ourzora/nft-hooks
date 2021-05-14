@@ -6,7 +6,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -106,7 +106,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -206,7 +206,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -306,7 +306,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -406,13 +406,13 @@ Object {
     "current": Object {
       "auctionType": "reserve",
       "endingAt": "12974",
-      "likelyHasEnded": false,
-      "reserveMet": false,
+      "likelyHasEnded": true,
+      "reserveMet": true,
       "reservePrice": Object {
         "amount": "12974",
         "computedValue": Object {
-          "inETH": "180004289.8602",
-          "inUSD": "2497421332516.94932446",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -429,8 +429,8 @@ Object {
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
-          "inETH": "180004289.8602",
-          "inUSD": "2497421332516.94932446",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -463,8 +463,8 @@ Object {
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
-            "inETH": "180004289.8602",
-            "inUSD": "2497421332516.94932446",
+            "inETH": "1.800042898602e-10",
+            "inUSD": "0.00000249742133251694932446",
           },
           "currency": Object {
             "decimals": 18,
@@ -485,8 +485,8 @@ Object {
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
-              "inETH": "138742323",
-              "inUSD": "1924943219143.6329",
+              "inETH": "1.38742323e-10",
+              "inUSD": "0.0000019249432191436329",
             },
             "currency": Object {
               "decimals": 18,
@@ -533,8 +533,8 @@ Object {
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
-              "inETH": "180004289.8602",
-              "inUSD": "2497421332516.94932446",
+              "inETH": "1.800042898602e-10",
+              "inUSD": "0.00000249742133251694932446",
             },
             "currency": Object {
               "decimals": 18,
@@ -557,8 +557,8 @@ Object {
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
-              "inETH": "180004289.8602",
-              "inUSD": "2497421332516.94932446",
+              "inETH": "1.800042898602e-10",
+              "inUSD": "0.00000249742133251694932446",
             },
             "currency": Object {
               "decimals": 18,
@@ -584,13 +584,13 @@ Object {
     "current": Object {
       "auctionType": "reserve",
       "endingAt": "12974",
-      "likelyHasEnded": false,
-      "reserveMet": false,
+      "likelyHasEnded": true,
+      "reserveMet": true,
       "reservePrice": Object {
         "amount": "12974",
         "computedValue": Object {
-          "inETH": "180004289.8602",
-          "inUSD": "2497421332516.94932446",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -607,8 +607,8 @@ Object {
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
-          "inETH": "180004289.8602",
-          "inUSD": "2497421332516.94932446",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -641,8 +641,8 @@ Object {
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
-            "inETH": "180004289.8602",
-            "inUSD": "2497421332516.94932446",
+            "inETH": "1.800042898602e-10",
+            "inUSD": "0.00000249742133251694932446",
           },
           "currency": Object {
             "decimals": 18,
@@ -663,8 +663,8 @@ Object {
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
-              "inETH": "138742323",
-              "inUSD": "1924943219143.6329",
+              "inETH": "1.38742323e-10",
+              "inUSD": "0.0000019249432191436329",
             },
             "currency": Object {
               "decimals": 18,
@@ -711,8 +711,8 @@ Object {
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
-              "inETH": "180004289.8602",
-              "inUSD": "2497421332516.94932446",
+              "inETH": "1.800042898602e-10",
+              "inUSD": "0.00000249742133251694932446",
             },
             "currency": Object {
               "decimals": 18,
@@ -735,8 +735,8 @@ Object {
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
-              "inETH": "180004289.8602",
-              "inUSD": "2497421332516.94932446",
+              "inETH": "1.800042898602e-10",
+              "inUSD": "0.00000249742133251694932446",
             },
             "currency": Object {
               "decimals": 18,
@@ -762,7 +762,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -862,7 +862,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -962,7 +962,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -1044,7 +1044,7 @@ Object {
     "current": Object {
       "auctionType": "perpetual",
       "endingAt": undefined,
-      "likelyHasEnded": false,
+      "likelyHasEnded": true,
       "reserveMet": false,
       "reservePrice": undefined,
     },
@@ -1093,8 +1093,8 @@ Object {
     "current": Object {
       "auctionType": "reserve",
       "endingAt": "12974",
-      "likelyHasEnded": false,
-      "reserveMet": false,
+      "likelyHasEnded": true,
+      "reserveMet": true,
       "reservePrice": Object {
         "amount": "12974",
         "computedValue": undefined,
