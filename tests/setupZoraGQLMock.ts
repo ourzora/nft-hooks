@@ -31,6 +31,7 @@ async function makeQuery(
     // Randomly chosen by mock
     //  breaks consistent testing
     ReserveAuctionBidType: () => "Final",
+    ReserveAuctionStatus: () => "Active",
     ID: () => (currentID++).toString(),
     Currency: () => ({
       name: "Wrapped Ether",
