@@ -10,7 +10,7 @@ import type { NetworkIDs } from '../constants/networks';
 import { GET_ALL_AUCTIONS, GET_AUCTION_BY_CURATOR, GET_MEDIA_QUERY } from '../graph-queries/zora';
 import type {
   GetMediaAndAuctionsQuery,
-  GetReserveAuctionQuery,
+  GetAllAuctionsQuery,
 } from '../graph-queries/zora-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
@@ -194,7 +194,7 @@ export class MediaFetchAgent {
       first: first,
       skip: skip,
       approved: isApproved === null ? [true, false] : [isApproved],
-    })) as GetReserveAuctionQuery;
+    })) as GetAllAuctionsQuery;
     return response.reserveAuctions;
   }
 

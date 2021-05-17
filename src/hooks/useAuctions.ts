@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { CuratorReserveAuctionPartialFragment } from 'src/graph-queries/zora-types';
+import { ReserveAuctionPartialFragment } from 'src/graph-queries/zora-types';
 
 import { useCallbackFetch } from './useCallbackFetch';
 
 export type useAuctionHouseType = {
   loading: boolean;
   error?: string;
-  auctions?: CuratorReserveAuctionPartialFragment[];
+  auctions?: ReserveAuctionPartialFragment[];
 };
 
 /**
@@ -20,7 +20,7 @@ export function useAuctions(
   curators: readonly string[] = [],
   approved: boolean | null = null
 ): useAuctionHouseType {
-  const [auctions, setAuctions] = useState<CuratorReserveAuctionPartialFragment[]>();
+  const [auctions, setAuctions] = useState<ReserveAuctionPartialFragment[]>();
   const [error, setError] = useState<string | undefined>();
 
   useCallbackFetch(curators, async (fetchAgent, curators) => {
