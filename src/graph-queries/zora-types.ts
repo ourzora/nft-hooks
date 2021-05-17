@@ -2231,31 +2231,6 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
-export type CuratorReserveAuctionPartialFragment = (
-  { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'approved' | 'duration' | 'expectedEndTimestamp' | 'createdAtTimestamp' | 'createdAtBlockNumber' | 'finalizedAtTimestamp' | 'finalizedAtBlockNumber'>
-  & { curator: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), tokenOwner: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ) }
-);
-
-export type GetReserveAuctionQueryVariables = Exact<{
-  curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-}>;
-
-
-export type GetReserveAuctionQuery = (
-  { __typename?: 'Query' }
-  & { reserveAuctions: Array<(
-    { __typename?: 'ReserveAuction' }
-    & CuratorReserveAuctionPartialFragment
-  )> }
-);
-
 export type CurrencyShortFragment = (
   { __typename?: 'Currency' }
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
@@ -2279,19 +2254,13 @@ export type CurrentReserveBidFragment = (
   ) }
 );
 
-export type AskPriceFragment = (
-  { __typename?: 'Ask' }
-  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
-  & { currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
-  & { tokenOwner: (
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & { curator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), tokenOwner: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
   ), auctionCurrency: (
@@ -2306,17 +2275,44 @@ export type ReserveAuctionPartialFragment = (
   )>> }
 );
 
-export type GetAuctionsQueryVariables = Exact<{
-  auctionIds?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+export type GetAuctionsByCuratorQueryVariables = Exact<{
+  curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type GetAuctionsQuery = (
+export type GetAuctionsByCuratorQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
     & ReserveAuctionPartialFragment
   )> }
+);
+
+export type GetAllAuctionsQueryVariables = Exact<{
+  approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetAllAuctionsQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )> }
+);
+
+export type AskPriceFragment = (
+  { __typename?: 'Ask' }
+  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
+  & { currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
 );
 
 export type NftMediaFragment = (

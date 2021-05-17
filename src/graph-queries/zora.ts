@@ -63,7 +63,7 @@ fragment ReserveAuctionPartial on ReserveAuction {
 export const GET_AUCTION_BY_CURATOR = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctions($curators: [String!], $approved: [Boolean!], $first: Int, $skip: Int) {
+  query getAuctionsByCurator($curators: [String!], $approved: [Boolean!], $first: Int, $skip: Int) {
     reserveAuctions(where:
       {
         curator_in: $curators,
@@ -80,7 +80,7 @@ export const GET_AUCTION_BY_CURATOR = gql`
 export const GET_ALL_AUCTIONS = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctions($approved: [Boolean!], $first: Int, $skip: Int) {
+  query getAllAuctions($approved: [Boolean!], $first: Int, $skip: Int) {
     reserveAuctions(
       where: {
         approved_in: $approved

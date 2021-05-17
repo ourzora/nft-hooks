@@ -213,7 +213,6 @@ export class MediaFetchAgent {
     });
     const response = (await client.request(GET_MEDIA_QUERY, {
       ids_id: mediaIds,
-      ids_bigint: mediaIds,
     })) as GetMediaAndAuctionsQuery;
     return mediaIds.map((key) => transformMediaForKey(response, key));
   }
