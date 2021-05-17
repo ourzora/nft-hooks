@@ -7,8 +7,11 @@ import {
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
 } from '../constants/urls';
 import type { NetworkIDs } from '../constants/networks';
-import { GET_MEDIA_QUERY } from '../graph-queries/zora';
-import type { GetMediaAndAuctionsQuery } from '../graph-queries/zora-types';
+import { GET_ALL_AUCTIONS, GET_AUCTION_BY_CURATOR, GET_MEDIA_QUERY } from '../graph-queries/zora';
+import type {
+  GetMediaAndAuctionsQuery,
+  GetAllAuctionsQuery,
+} from '../graph-queries/zora-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -50,8 +53,6 @@ export class MediaFetchAgent {
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
     metadataLoader: DataLoader<string, any>;
-    // fetches auction house data for an arbitary NFT
-    // auctionLoader: DataLoader<{address: string, id: string}, NFTAuctionType>;
   };
 
   constructor(network: NetworkIDs) {
@@ -166,7 +167,39 @@ export class MediaFetchAgent {
   }
 
   /**
-   * Internal fetch function to retrieve Graph data for Zora NFT IDs
+   * Fetch function to retrieve Graph data for matching curated auctions
+   * This function is not cached
+   *
+   * @function fetchReserveAuctions
+   * @private
+   * @param curatorIds list of Zora NFT IDs to fetch from the graph datastore
+   * @returns mapped transformed list of curated auction results
+   */
+  public async fetchReserveAuctions(
+    curatorIds: readonly string[],
+    isApproved: boolean | null = null,
+    first: number = 1000,
+    skip: number = 0
+  ) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
+    const client = new GraphQLClient(this.graphEndpoint, {
+      fetch: fetchWithTimeout.fetch,
+    });
+    let query = GET_ALL_AUCTIONS;
+    if (curatorIds.length) {
+      query = GET_AUCTION_BY_CURATOR;
+    }
+    const response = (await client.request(query, {
+      curators: curatorIds.length ? curatorIds : undefined,
+      first: first,
+      skip: skip,
+      approved: isApproved === null ? [true, false] : [isApproved],
+    })) as GetAllAuctionsQuery;
+    return response.reserveAuctions;
+  }
+
+  /**
+   * Internal fetch current auctions by curator
    *
    * @function fetchMediaGraph
    * @private

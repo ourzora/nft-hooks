@@ -2254,19 +2254,13 @@ export type CurrentReserveBidFragment = (
   ) }
 );
 
-export type AskPriceFragment = (
-  { __typename?: 'Ask' }
-  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
-  & { currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
-  & { tokenOwner: (
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & { curator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), tokenOwner: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
   ), auctionCurrency: (
@@ -2281,17 +2275,44 @@ export type ReserveAuctionPartialFragment = (
   )>> }
 );
 
-export type GetAuctionsQueryVariables = Exact<{
-  auctionIds?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+export type GetAuctionsByCuratorQueryVariables = Exact<{
+  curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type GetAuctionsQuery = (
+export type GetAuctionsByCuratorQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
     & ReserveAuctionPartialFragment
   )> }
+);
+
+export type GetAllAuctionsQueryVariables = Exact<{
+  approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetAllAuctionsQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )> }
+);
+
+export type AskPriceFragment = (
+  { __typename?: 'Ask' }
+  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
+  & { currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
 );
 
 export type NftMediaFragment = (
