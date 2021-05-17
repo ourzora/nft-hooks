@@ -22,7 +22,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "143",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -41,7 +41,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "133",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -49,14 +49,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "132",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "134",
+        "id": "72",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -72,10 +72,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "137",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "135",
+          "id": "73",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -90,10 +90,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "138",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "136",
+          "id": "74",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -109,6 +109,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -116,10 +117,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 77,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "143",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -138,17 +143,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "139",
+      "id": "75",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "146",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "144",
+          "id": "79",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -166,10 +171,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "147",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "145",
+          "id": "80",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -187,7 +192,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "141",
+        "id": "10",
       },
     },
   },
@@ -216,7 +221,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "166",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -235,7 +240,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "156",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -243,14 +248,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "155",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "157",
+        "id": "85",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -266,10 +271,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "160",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "158",
+          "id": "86",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -284,10 +289,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "161",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "159",
+          "id": "87",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -303,6 +308,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -310,10 +316,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 90,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "166",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -332,17 +342,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "162",
+      "id": "88",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "169",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "167",
+          "id": "92",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -360,10 +370,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "170",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "168",
+          "id": "93",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -381,7 +391,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "164",
+        "id": "10",
       },
     },
   },
@@ -410,7 +420,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "143",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -429,7 +439,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "133",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -437,14 +447,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "132",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "134",
+        "id": "72",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -460,10 +470,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "137",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "135",
+          "id": "73",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -478,10 +488,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "138",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "136",
+          "id": "74",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -497,6 +507,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -504,10 +515,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 77,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "143",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -526,17 +541,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "139",
+      "id": "75",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "146",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "144",
+          "id": "79",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -554,10 +569,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "147",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "145",
+          "id": "80",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -575,7 +590,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "141",
+        "id": "10",
       },
     },
   },
@@ -604,7 +619,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "166",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -623,7 +638,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "156",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -631,14 +646,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "155",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "157",
+        "id": "85",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -654,10 +669,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "160",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "158",
+          "id": "86",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -672,10 +687,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "161",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "159",
+          "id": "87",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -691,6 +706,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -698,10 +714,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 90,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "166",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -720,17 +740,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "162",
+      "id": "88",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "169",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "167",
+          "id": "92",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -748,10 +768,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "170",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "168",
+          "id": "93",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -769,7 +789,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "164",
+        "id": "10",
       },
     },
   },
@@ -785,10 +805,10 @@ Object {
       "likelyHasEnded": true,
       "reserveMet": true,
       "reservePrice": Object {
-        "amount": "1000000",
+        "amount": "12974",
         "computedValue": Object {
-          "inETH": "1.38742323e-8",
-          "inUSD": "0.00019249432191436329",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -796,12 +816,12 @@ Object {
           "name": "Wrapped Ether",
           "symbol": "WETH",
         },
-        "prettyAmount": "1e-12",
+        "prettyAmount": "1.2974e-14",
       },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "32",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
@@ -823,7 +843,7 @@ Object {
     "contentURI": "https://zora.co/content",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "25",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -831,14 +851,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "24",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "26",
+        "id": "14",
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
@@ -860,7 +880,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "27",
+          "id": "15",
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
@@ -879,6 +899,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -886,10 +907,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 100,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "32",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -911,17 +936,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "28",
+      "id": "16",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "35",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "33",
+          "id": "19",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -942,10 +967,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "36",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "34",
+          "id": "20",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -962,11 +987,11 @@ Object {
           },
         },
       ],
-      "reservePrice": "1000000",
+      "reservePrice": "12974",
       "status": "Active",
-      "tokenId": "2974",
+      "tokenId": 2974,
       "tokenOwner": Object {
-        "id": "30",
+        "id": "10",
       },
     },
   },
@@ -982,10 +1007,10 @@ Object {
       "likelyHasEnded": true,
       "reserveMet": true,
       "reservePrice": Object {
-        "amount": "1000000",
+        "amount": "12974",
         "computedValue": Object {
-          "inETH": "1.38742323e-8",
-          "inUSD": "0.00019249432191436329",
+          "inETH": "1.800042898602e-10",
+          "inUSD": "0.00000249742133251694932446",
         },
         "currency": Object {
           "decimals": 18,
@@ -993,12 +1018,12 @@ Object {
           "name": "Wrapped Ether",
           "symbol": "WETH",
         },
-        "prettyAmount": "1e-12",
+        "prettyAmount": "1.2974e-14",
       },
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "32",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": Object {
@@ -1020,7 +1045,7 @@ Object {
     "contentURI": "https://zora.co/content",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "25",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1028,14 +1053,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "24",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "26",
+        "id": "14",
         "pricing": Object {
           "amount": "12974",
           "computedValue": Object {
@@ -1057,7 +1082,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "27",
+          "id": "15",
           "pricing": Object {
             "amount": "10000",
             "computedValue": Object {
@@ -1076,6 +1101,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1083,10 +1109,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 100,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "32",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -1108,17 +1138,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "28",
+      "id": "16",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "35",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "33",
+          "id": "19",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1139,10 +1169,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "36",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "34",
+          "id": "20",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1159,11 +1189,11 @@ Object {
           },
         },
       ],
-      "reservePrice": "1000000",
+      "reservePrice": "12974",
       "status": "Active",
-      "tokenId": "2974",
+      "tokenId": 2974,
       "tokenOwner": Object {
-        "id": "30",
+        "id": "10",
       },
     },
   },
@@ -1192,7 +1222,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "97",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -1211,7 +1241,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "87",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1219,14 +1249,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "86",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "88",
+        "id": "46",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1242,10 +1272,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "91",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "89",
+          "id": "47",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1260,10 +1290,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "92",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "90",
+          "id": "48",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1279,6 +1309,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1286,10 +1317,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 51,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "97",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -1308,17 +1343,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "93",
+      "id": "49",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "100",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "98",
+          "id": "53",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1336,10 +1371,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "101",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "99",
+          "id": "54",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1357,7 +1392,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "95",
+        "id": "10",
       },
     },
   },
@@ -1386,7 +1421,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "120",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -1405,7 +1440,7 @@ Object {
     "contentURI": "Hello World",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "110",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1413,14 +1448,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "Hello World",
     "owner": Object {
-      "id": "109",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "111",
+        "id": "59",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1436,10 +1471,10 @@ Object {
       "bids": Array [
         Object {
           "bidder": Object {
-            "id": "114",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "112",
+          "id": "60",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1454,10 +1489,10 @@ Object {
         },
         Object {
           "bidder": Object {
-            "id": "115",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "113",
+          "id": "61",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1473,6 +1508,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1480,10 +1516,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 64,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "120",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -1502,17 +1542,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "116",
+      "id": "62",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "123",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "121",
+          "id": "66",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1530,10 +1570,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "124",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "122",
+          "id": "67",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1551,7 +1591,7 @@ Object {
       "status": "Active",
       "tokenId": "12974",
       "tokenOwner": Object {
-        "id": "118",
+        "id": "10",
       },
     },
   },
@@ -1580,7 +1620,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "55",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -1599,7 +1639,7 @@ Object {
     "contentURI": "https://zora.co/content",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "48",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1607,14 +1647,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "47",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "49",
+        "id": "27",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1633,7 +1673,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "50",
+          "id": "28",
           "pricing": Object {
             "amount": "10000",
             "computedValue": undefined,
@@ -1649,6 +1689,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1656,10 +1697,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 100,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "55",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -1678,17 +1723,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "51",
+      "id": "29",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "58",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "56",
+          "id": "32",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1706,10 +1751,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "59",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "57",
+          "id": "33",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1727,7 +1772,7 @@ Object {
       "status": "Active",
       "tokenId": "-1",
       "tokenOwner": Object {
-        "id": "53",
+        "id": "10",
       },
     },
   },
@@ -1756,7 +1801,7 @@ Object {
     },
     "highestBid": Object {
       "placedAt": "12974",
-      "placedBy": "74",
+      "placedBy": "10",
       "pricing": Object {
         "amount": "12974",
         "computedValue": undefined,
@@ -1775,7 +1820,7 @@ Object {
     "contentURI": "https://zora.co/content",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "68",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1783,14 +1828,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "67",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "69",
+        "id": "37",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1806,6 +1851,7 @@ Object {
       "bids": Array [],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1813,10 +1859,14 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 100,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
-          "id": "74",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
         "pricing": Object {
@@ -1835,17 +1885,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "70",
+      "id": "38",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "77",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "75",
+          "id": "41",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1863,10 +1913,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "78",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "76",
+          "id": "42",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1884,7 +1934,7 @@ Object {
       "status": "Active",
       "tokenId": "-1",
       "tokenOwner": Object {
-        "id": "72",
+        "id": "10",
       },
     },
   },
@@ -1900,7 +1950,7 @@ Object {
       "likelyHasEnded": true,
       "reserveMet": true,
       "reservePrice": Object {
-        "amount": "1000000",
+        "amount": "12974",
         "computedValue": undefined,
         "currency": Object {
           "decimals": 18,
@@ -1908,7 +1958,7 @@ Object {
           "name": "Wrapped Ether",
           "symbol": "WETH",
         },
-        "prettyAmount": "1e-12",
+        "prettyAmount": "1.2974e-14",
       },
     },
     "highestBid": Object {
@@ -1932,7 +1982,7 @@ Object {
     "contentURI": "https://zora.co/content",
     "createdAtTimestamp": "12974",
     "creator": Object {
-      "id": "3",
+      "id": "10",
     },
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
@@ -1940,14 +1990,14 @@ Object {
     "metadataHash": "ByTeSStrInG",
     "metadataURI": "https://zora.co/content",
     "owner": Object {
-      "id": "2",
+      "id": "10",
     },
   },
   "pricing": Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "4",
+        "id": "2",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1966,7 +2016,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "5",
+          "id": "3",
           "pricing": Object {
             "amount": "10000",
             "computedValue": undefined,
@@ -1982,6 +2032,7 @@ Object {
       ],
     },
     "reserve": Object {
+      "approved": true,
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1989,6 +2040,10 @@ Object {
         "symbol": "WETH",
       },
       "createdAtTimestamp": "12974",
+      "curator": Object {
+        "id": "10",
+      },
+      "curatorFeePercentage": 100,
       "currentBid": Object {
         "bidType": "Final",
         "bidder": Object {
@@ -2011,17 +2066,17 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "6",
+      "id": "4",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "13",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "11",
+          "id": "7",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2039,10 +2094,10 @@ Object {
           "bidInactivatedAtTimestamp": "12974",
           "bidType": "Final",
           "bidder": Object {
-            "id": "14",
+            "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "12",
+          "id": "8",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2056,11 +2111,11 @@ Object {
           },
         },
       ],
-      "reservePrice": "1000000",
+      "reservePrice": "12974",
       "status": "Active",
-      "tokenId": "2974",
+      "tokenId": 2974,
       "tokenOwner": Object {
-        "id": "8",
+        "id": "10",
       },
     },
   },
