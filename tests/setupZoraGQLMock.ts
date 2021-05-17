@@ -1,17 +1,17 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { addMocksToSchema } from "@graphql-tools/mock";
-import { graphql } from "graphql";
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { addMocksToSchema } from '@graphql-tools/mock';
+import { graphql } from 'graphql';
 
 // @ts-ignore
-import zoraSchema from "../graph-schemas/zora.graphql";
+import zoraSchema from '../graph-schemas/zora.graphql';
 // @ts-ignore
-import uniswapSchema from "../graph-schemas/uniswap.graphql";
+import uniswapSchema from '../graph-schemas/uniswap.graphql';
 
-import fetchMock from "./setupFetchMock";
+import fetchMock from './setupFetchMock';
 
 let currentID = 0;
 
-export type SchemaName = "Zora" | "Uniswap";
+export type SchemaName = 'Zora' | 'Uniswap';
 
 const Schemas: Record<SchemaName, any> = {
   Zora: zoraSchema,
@@ -22,22 +22,25 @@ async function makeQuery(
   mockOverrides: any,
   requestBody: string,
   resolverOverrides: any,
-  schema: SchemaName = "Zora"
+  schema: SchemaName = 'Zora'
 ) {
   const mocks = {
-    BigInt: () => "12974",
-    BigDecimal: () => "13874.2323",
-    Bytes: () => "ByTeSStrInG",
+    BigInt: () => '12974',
+    BigDecimal: () => '13874.2323',
+    Bytes: () => 'ByTeSStrInG',
     // Randomly chosen by mock
     //  breaks consistent testing
-    ReserveAuctionBidType: () => "Final",
-    ReserveAuctionStatus: () => "Active",
+    Boolean: () => true,
+    Int: () => currentID++,
+    ReserveAuctionBidType: () => 'Final',
+    ReserveAuctionStatus: () => 'Active',
     ID: () => (currentID++).toString(),
+    User: () => ({ id: '10' }),
     Currency: () => ({
-      name: "Wrapped Ether",
-      symbol: "WETH",
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
       decimals: 18,
-      id: "0xFACE",
+      id: '0xFACE',
     }),
     ...mockOverrides,
   };

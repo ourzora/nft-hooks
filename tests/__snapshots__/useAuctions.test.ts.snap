@@ -12,14 +12,14 @@ Array [
     },
     "createdAtTimestamp": "12974",
     "curator": Object {
-      "id": "2",
+      "id": "10",
     },
     "curatorFeePercentage": 10000,
     "currentBid": Object {
       "amount": "12974",
       "bidType": "Final",
       "bidder": Object {
-        "id": "5",
+        "id": "10",
       },
       "createdAtTimestamp": "12974",
     },
@@ -35,10 +35,10 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "8",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "6",
+        "id": "3",
       },
       Object {
         "amount": "12974",
@@ -46,17 +46,17 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "9",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "7",
+        "id": "4",
       },
     ],
     "reservePrice": "12974",
     "status": "Active",
     "tokenId": 0,
     "tokenOwner": Object {
-      "id": "3",
+      "id": "10",
     },
   },
   Object {
@@ -76,7 +76,7 @@ Array [
       "amount": "12974",
       "bidType": "Final",
       "bidder": Object {
-        "id": "13",
+        "id": "10",
       },
       "createdAtTimestamp": "12974",
     },
@@ -92,10 +92,10 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "16",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "14",
+        "id": "6",
       },
       Object {
         "amount": "12974",
@@ -103,17 +103,17 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "17",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "15",
+        "id": "7",
       },
     ],
     "reservePrice": "12974",
     "status": "Active",
     "tokenId": 1,
     "tokenOwner": Object {
-      "id": "11",
+      "id": "10",
     },
   },
 ]
@@ -131,14 +131,14 @@ Array [
     },
     "createdAtTimestamp": "12974",
     "curator": Object {
-      "id": "20",
+      "id": "10",
     },
     "curatorFeePercentage": 10000,
     "currentBid": Object {
       "amount": "12974",
       "bidType": "Final",
       "bidder": Object {
-        "id": "23",
+        "id": "10",
       },
       "createdAtTimestamp": "12974",
     },
@@ -146,7 +146,7 @@ Array [
     "expectedEndTimestamp": "12974",
     "finalizedAtTimestamp": "12974",
     "firstBidTime": "12974",
-    "id": "18",
+    "id": "8",
     "previousBids": Array [
       Object {
         "amount": "12974",
@@ -154,10 +154,10 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "26",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "24",
+        "id": "11",
       },
       Object {
         "amount": "12974",
@@ -165,17 +165,17 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "27",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "25",
+        "id": "12",
       },
     ],
     "reservePrice": "12974",
     "status": "Active",
     "tokenId": 2,
     "tokenOwner": Object {
-      "id": "21",
+      "id": "10",
     },
   },
   Object {
@@ -188,14 +188,14 @@ Array [
     },
     "createdAtTimestamp": "12974",
     "curator": Object {
-      "id": "28",
+      "id": "10",
     },
     "curatorFeePercentage": 10000,
     "currentBid": Object {
       "amount": "12974",
       "bidType": "Final",
       "bidder": Object {
-        "id": "31",
+        "id": "10",
       },
       "createdAtTimestamp": "12974",
     },
@@ -203,7 +203,7 @@ Array [
     "expectedEndTimestamp": "12974",
     "finalizedAtTimestamp": "12974",
     "firstBidTime": "12974",
-    "id": "19",
+    "id": "9",
     "previousBids": Array [
       Object {
         "amount": "12974",
@@ -211,10 +211,10 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "34",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "32",
+        "id": "14",
       },
       Object {
         "amount": "12974",
@@ -222,17 +222,17 @@ Array [
         "bidInactivatedAtTimestamp": "12974",
         "bidType": "Final",
         "bidder": Object {
-          "id": "35",
+          "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "33",
+        "id": "15",
       },
     ],
     "reservePrice": "12974",
     "status": "Active",
     "tokenId": 3,
     "tokenOwner": Object {
-      "id": "29",
+      "id": "10",
     },
   },
 ]
