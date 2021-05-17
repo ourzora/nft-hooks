@@ -29,15 +29,6 @@ fragment CurrentReserveBid on ReserveAuctionBid {
   }
 }
 
-fragment AskPrice on Ask {
-  id
-  currency {
-    ...CurrencyShort
-  }
-  amount
-  createdAtTimestamp
-}
-
 fragment ReserveAuctionPartial on ReserveAuction {
   id
   tokenId
@@ -72,7 +63,7 @@ fragment ReserveAuctionPartial on ReserveAuction {
 export const GET_AUCTION_BY_CURATOR = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctions($curators: [ID!], $approved_states: [Boolean!], $first: Number, $skip: Number) {
+  query getAuctions($curators: [String!], $approved: [Boolean!], $first: Int, $skip: Int) {
     reserveAuctions(where:
       {
         curator_in: $curators,
@@ -89,7 +80,7 @@ export const GET_AUCTION_BY_CURATOR = gql`
 export const GET_ALL_AUCTIONS = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctions($approved_states: [Boolean!], $first: Number, $skip: Number) {
+  query getAuctions($approved: [Boolean!], $first: Int, $skip: Int) {
     reserveAuctions(
       where: {
         approved_in: $approved
@@ -104,7 +95,16 @@ export const GET_ALL_AUCTIONS = gql`
 
 export const GET_MEDIA_QUERY = gql`
   ${AUCTION_PARTIALS}
-  
+
+  fragment AskPrice on Ask {
+    id
+    currency {
+      ...CurrencyShort
+    }
+    amount
+    createdAtTimestamp
+  }
+
   fragment NFTMedia on Media {
     id
     creatorBidShare

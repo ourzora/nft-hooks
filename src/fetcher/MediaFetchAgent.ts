@@ -7,7 +7,7 @@ import {
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
 } from '../constants/urls';
 import type { NetworkIDs } from '../constants/networks';
-import { GET_ALL_AUCTIONS, GET_AUCTION_BY_CURATOR, GET_AUCTION_HOUSE_QUERY, GET_MEDIA_QUERY } from '../graph-queries/zora';
+import { GET_ALL_AUCTIONS, GET_AUCTION_BY_CURATOR, GET_MEDIA_QUERY } from '../graph-queries/zora';
 import type {
   GetMediaAndAuctionsQuery,
   GetReserveAuctionQuery,
@@ -21,13 +21,11 @@ import {
   MediaContentType,
   MetadataResultType,
   NFTMediaDataType,
-  AuctionsResult,
 } from './FetchResultTypes';
 import {
   transformCurrencyForKey,
   transformMediaForKey,
   addAuctionInformation,
-  transformAuctionsForKey,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType } from './AuctionInfoTypes';
@@ -55,8 +53,6 @@ export class MediaFetchAgent {
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
     metadataLoader: DataLoader<string, any>;
-    // fetches NFT ipfs metadata from url, not batched but cached
-    auctionLoader: DataLoader<string, AuctionsResult>;
   };
 
   constructor(network: NetworkIDs) {
@@ -66,7 +62,6 @@ export class MediaFetchAgent {
     this.graphEndpoint = THEGRAPH_API_URL_BY_NETWORK[network];
     this.loaders = {
       mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
-      auctionLoader: new DataLoader((keys) => this.fetchReserveAuctions(keys)),
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
       metadataLoader: new DataLoader(
         async (keys) => {
@@ -171,10 +166,6 @@ export class MediaFetchAgent {
     return addAuctionInformation(chainInfo, currencyInfos);
   }
 
-  async loadAuctionByCurator(curatorId: string) {
-    return this.loaders.auctionLoader.load(curatorId.toLowerCase());
-  }
-
   /**
    * Fetch function to retrieve Graph data for matching curated auctions
    * This function is not cached
@@ -204,7 +195,7 @@ export class MediaFetchAgent {
       skip: skip,
       approved: isApproved === null ? [true, false] : [isApproved],
     })) as GetReserveAuctionQuery;
-    return response;
+    return response.reserveAuctions;
   }
 
   /**

@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useNFT loads all auctions 1`] = `
+Array [
+  Object {
+    "approved": true,
+    "auctionCurrency": Object {
+      "decimals": 18,
+      "id": "0xFACE",
+      "name": "Wrapped Ether",
+      "symbol": "WETH",
+    },
+    "createdAtTimestamp": "12974",
+    "curator": Object {
+      "id": "2",
+    },
+    "curatorFeePercentage": 10000,
+    "currentBid": Object {
+      "amount": "12974",
+      "bidType": "Final",
+      "bidder": Object {
+        "id": "5",
+      },
+      "createdAtTimestamp": "12974",
+    },
+    "duration": "12974",
+    "expectedEndTimestamp": "12974",
+    "finalizedAtTimestamp": "12974",
+    "firstBidTime": "12974",
+    "id": "0",
+    "previousBids": Array [
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "8",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "6",
+      },
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "9",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "7",
+      },
+    ],
+    "reservePrice": "12974",
+    "status": "Active",
+    "tokenId": 0,
+    "tokenOwner": Object {
+      "id": "3",
+    },
+  },
+  Object {
+    "approved": true,
+    "auctionCurrency": Object {
+      "decimals": 18,
+      "id": "0xFACE",
+      "name": "Wrapped Ether",
+      "symbol": "WETH",
+    },
+    "createdAtTimestamp": "12974",
+    "curator": Object {
+      "id": "10",
+    },
+    "curatorFeePercentage": 10000,
+    "currentBid": Object {
+      "amount": "12974",
+      "bidType": "Final",
+      "bidder": Object {
+        "id": "13",
+      },
+      "createdAtTimestamp": "12974",
+    },
+    "duration": "12974",
+    "expectedEndTimestamp": "12974",
+    "finalizedAtTimestamp": "12974",
+    "firstBidTime": "12974",
+    "id": "1",
+    "previousBids": Array [
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "16",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "14",
+      },
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "17",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "15",
+      },
+    ],
+    "reservePrice": "12974",
+    "status": "Active",
+    "tokenId": 1,
+    "tokenOwner": Object {
+      "id": "11",
+    },
+  },
+]
+`;
+
+exports[`useNFT loads specific auctions for a given curator 1`] = `
+Array [
+  Object {
+    "approved": true,
+    "auctionCurrency": Object {
+      "decimals": 18,
+      "id": "0xFACE",
+      "name": "Wrapped Ether",
+      "symbol": "WETH",
+    },
+    "createdAtTimestamp": "12974",
+    "curator": Object {
+      "id": "20",
+    },
+    "curatorFeePercentage": 10000,
+    "currentBid": Object {
+      "amount": "12974",
+      "bidType": "Final",
+      "bidder": Object {
+        "id": "23",
+      },
+      "createdAtTimestamp": "12974",
+    },
+    "duration": "12974",
+    "expectedEndTimestamp": "12974",
+    "finalizedAtTimestamp": "12974",
+    "firstBidTime": "12974",
+    "id": "18",
+    "previousBids": Array [
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "26",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "24",
+      },
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "27",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "25",
+      },
+    ],
+    "reservePrice": "12974",
+    "status": "Active",
+    "tokenId": 2,
+    "tokenOwner": Object {
+      "id": "21",
+    },
+  },
+  Object {
+    "approved": true,
+    "auctionCurrency": Object {
+      "decimals": 18,
+      "id": "0xFACE",
+      "name": "Wrapped Ether",
+      "symbol": "WETH",
+    },
+    "createdAtTimestamp": "12974",
+    "curator": Object {
+      "id": "28",
+    },
+    "curatorFeePercentage": 10000,
+    "currentBid": Object {
+      "amount": "12974",
+      "bidType": "Final",
+      "bidder": Object {
+        "id": "31",
+      },
+      "createdAtTimestamp": "12974",
+    },
+    "duration": "12974",
+    "expectedEndTimestamp": "12974",
+    "finalizedAtTimestamp": "12974",
+    "firstBidTime": "12974",
+    "id": "19",
+    "previousBids": Array [
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "34",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "32",
+      },
+      Object {
+        "amount": "12974",
+        "bidInactivatedAtBlockNumber": "12974",
+        "bidInactivatedAtTimestamp": "12974",
+        "bidType": "Final",
+        "bidder": Object {
+          "id": "35",
+        },
+        "createdAtTimestamp": "12974",
+        "id": "33",
+      },
+    ],
+    "reservePrice": "12974",
+    "status": "Active",
+    "tokenId": 3,
+    "tokenOwner": Object {
+      "id": "29",
+    },
+  },
+]
+`;

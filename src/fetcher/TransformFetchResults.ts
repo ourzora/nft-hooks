@@ -9,7 +9,7 @@ import type {
   GetMediaAndAuctionsQuery,
 } from '../graph-queries/zora-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
-import { AuctionsResult, ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultTypes';
+import { ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultTypes';
 import { RequestError } from './RequestError';
 import { BidPricingInfo, CurrencyLookupType } from './AuctionInfoTypes';
 
