@@ -23,7 +23,8 @@ export type MetadataResultType = {
   metadata: any;
 };
 
-export type AuctionsResult = ReserveAuctionPartialFragment[];
+export type AuctionResultType = ReserveAuctionPartialFragment;
+export type AuctionsResult = AuctionResultType[];
 
 export type NFTMediaDataType = {
   nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'> & {

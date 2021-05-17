@@ -298,7 +298,7 @@ export function addAuctionInformation(
         reservePrice: getReservePrice(),
         likelyHasEnded,
         reserveMet: hasActiveReserveAuction
-          ? !!chainNFT.pricing.reserve?.firstBidTime
+          ? !!chainNFT.pricing.reserve?.firstBidTime && chainNFT.pricing.reserve?.firstBidTime !== "0"
           : false,
         endingAt: hasActiveReserveAuction
           ? chainNFT.pricing.reserve?.expectedEndTimestamp
