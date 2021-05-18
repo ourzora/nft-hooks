@@ -1,26 +1,19 @@
-import { useState } from 'react';
-import { UsernameResponseType } from 'src/fetcher/FetchResultTypes';
+import { useContext } from 'react';
+import useSWR from 'swr';
 
-import { useCallbackFetch } from './useCallbackFetch';
+import { NFTFetchContext } from '../context/NFTFetchContext';
 
 /**
  * useZoraUsername - Load zora username for pretty display
- *  
+ *
  * @param address string address to fetch zora username of
  * @returns UsernameResponseType
  */
 export function useZoraUsername(address: string) {
-  const [error, setError] = useState<string | undefined>();
-  const [username, setUsername] = useState<UsernameResponseType | undefined>();
+  const fetcher = useContext(NFTFetchContext);
+  const { error, data } = useSWR(['loadUsername', address], (_, address: string) =>
+    fetcher.loadUsername(address)
+  );
 
-  useCallbackFetch(address, async (fetch, address) => {
-    try {
-      setUsername(await fetch.loadUsername(address));
-    } catch (err) {
-      setUsername({ address });
-      setError(err.toString());
-    }
-  });
-
-  return { error, username };
+  return { error, username: data };
 }

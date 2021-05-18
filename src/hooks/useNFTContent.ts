@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import { MediaContentType } from '../fetcher/FetchResultTypes';
-import { useCallbackFetch } from './useCallbackFetch';
+import { NFTFetchContext } from '../context/NFTFetchContext';
 
 export type useNFTContentType = {
-  loading: boolean;
   error?: string;
   content?: MediaContentType;
 };
@@ -18,27 +18,26 @@ export type useNFTContentType = {
  * @param mimeType MIME type expected for content
  * @returns useNFTContentType
  */
-export function useNFTContent(uri?: string, mimeType?: string): useNFTContentType {
-  const [content, setContent] = useState<MediaContentType | undefined>();
-  const [error, setError] = useState<string | undefined>();
+export function useNFTContent(
+  uri?: string,
+  mimeType?: string,
+  options?: SWRConfiguration<MediaContentType>
+): useNFTContentType {
+  const fetcher = useContext(NFTFetchContext);
+  const mimeTypeFetched = useSWR(
+    uri && !mimeType ? ['fetchContentMimeType', uri] : null,
+    (_, uri) => fetcher.fetchContentMimeType(uri)
+  );
+  const mimeTypeResult = mimeType || mimeTypeFetched.data;
+  const content = useSWR(
+    uri && mimeTypeResult ? ['fetchContent', uri, mimeTypeResult] : null,
+    (_, uri, mimeTypeResult) => fetcher.fetchContent(uri, mimeTypeResult),
+    options,
+  );
 
-  useCallbackFetch([uri, mimeType], async (fetchAgent, [uri, mimeType]) => {
-    if (!uri) {
-      return;
-    }
-    try {
-      if (!mimeType) {
-        mimeType = await fetchAgent.fetchContentMimeType(uri);
-      }
-      setContent(await fetchAgent.fetchContent(uri, mimeType));
-    } catch (err) {
-      setError(err.toString());
-    }
-  });
-
+  const error = mimeTypeFetched.error || content.error;
   return {
-    loading: !error && !content && !!uri,
     error,
-    content,
+    content: content.data,
   };
 }

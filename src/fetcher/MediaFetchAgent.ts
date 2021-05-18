@@ -24,7 +24,6 @@ import {
   ChainCurrencyType,
   NFTDataType,
   MediaContentType,
-  MetadataResultType,
   NFTMediaDataType,
   UsernameResponseType,
 } from './FetchResultTypes';
@@ -65,22 +64,18 @@ export class MediaFetchAgent {
     this.networkId = network;
 
     this.loaders = {
-      mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
-      currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
-      usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
-
-      // Only caches and does not batch metadata information
-      // TODO(iain): Replace with SWR
-      metadataLoader: new DataLoader(
-        async (keys) => {
-          if (keys.length !== 1) {
-            throw new Error('Wrong keys!');
-          }
-          const key = keys[0];
-          return [await this.fetchIPFSMetadataCached(key)];
-        },
-        { maxBatchSize: 1 }
-      ),
+      mediaLoader: new DataLoader((keys) => {
+        this.loaders.mediaLoader.clearAll();
+        return this.fetchMediaGraph(keys);
+      }),
+      currencyLoader: new DataLoader((keys) => {
+        this.loaders.currencyLoader.clearAll();
+        return this.fetchCurrenciesGraph(keys);
+      }),
+      usernameLoader: new DataLoader((keys) => {
+        this.loaders.usernameLoader.clearAll();
+        return this.fetchZoraUsernames(keys)
+      }),
     };
   }
 
@@ -104,17 +99,6 @@ export class MediaFetchAgent {
       }
       return last;
     }, {});
-  }
-
-  /**
-   * Cached, non-batched function to retrieve NFT media information from a JSON blob at the given url
-   * @param url URL fo Metadata to fetch
-   * @returns Metadata Information
-   */
-  async loadMetadata(url: string): Promise<MetadataResultType> {
-    const metadata = await this.loaders.metadataLoader.load(url);
-
-    return { metadata };
   }
 
   /**
@@ -172,6 +156,10 @@ export class MediaFetchAgent {
       throw new RequestError('Cannot fetch chain information');
     }
     return addAuctionInformation(chainInfo, currencyInfos);
+  }
+
+  async loadNFTDataUntransformed(mediaId: string) {
+    return await this.loaders.mediaLoader.load(mediaId);
   }
 
   /**
@@ -278,15 +266,15 @@ export class MediaFetchAgent {
   }
 
   /**
-   * Internal fetch method to query metadata from IPFS
+   * Fetch method to query metadata from IPFS. Not cached
    *
    * @function fetchIPFSMetadataCached
-   * @private
+   * @public
    * @param url Metadata Source
    * @returns IPFS Metadata Fetch
    * @throws RequestError
    */
-  private async fetchIPFSMetadataCached(url: string) {
+  public async fetchIPFSMetadata(url: string) {
     // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas
     const request = await new FetchWithTimeout(
       this.timeouts.IPFS,

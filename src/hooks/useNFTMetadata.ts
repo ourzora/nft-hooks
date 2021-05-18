@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import useSWR from 'swr';
 
-import { useCallbackFetch } from './useCallbackFetch';
+import { NFTFetchContext } from '../context/NFTFetchContext';
 
 export type useNFTMetadataType = {
   loading: boolean;
-  error: string | undefined;
+  error?: Error;
   metadata: any;
 };
 
@@ -16,24 +17,17 @@ export type useNFTMetadataType = {
  * @param uri URI of metadata to fetch
  * @returns @type useNFTMetadataType
  */
-export function useNFTMetadata(
-  uri?: string,
-): useNFTMetadataType {
-  const [metadata, setMetadata] = useState<any>();
-  const [error, setError] = useState<string | undefined>();
-
-  useCallbackFetch(uri, async (fetchAgent, uri) => {
-    try {
-      const {metadata} = await fetchAgent.loadMetadata(uri);
-      setMetadata(metadata);
-    } catch (err) {
-      setError(err.toString());
-    }
-  });
+export function useNFTMetadata(uri?: string, initialData?: any): useNFTMetadataType {
+  const fetcher = useContext(NFTFetchContext);
+  const { error, data } = useSWR(
+    uri ? ['loadMetadata', uri] : null,
+    (_, uri) => fetcher.fetchIPFSMetadata(uri),
+    { initialData }
+  );
 
   return {
-    loading: !error && !metadata,
+    loading: !error && !data,
     error,
-    metadata,
+    metadata: data,
   };
 }
