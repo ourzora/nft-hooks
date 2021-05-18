@@ -1,15 +1,15 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Generic Rendering Component for zNFTs",
   "repository": "https://github.com/our-zora/nft-hooks",
   "homepage": "https://github.com/our-zora/nft-hooks#README",
   "author": "Zora",
   "license": "MIT",
   "private": false,
-  "typings": "dist/src/index.d.ts",
+  "typings": "dist/index.d.ts",
   "source": "src/index.ts",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
