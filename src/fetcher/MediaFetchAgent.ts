@@ -5,9 +5,14 @@ import { RequestError } from './RequestError';
 import {
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
+  ZORA_USERNAME_API_URL,
 } from '../constants/urls';
 import type { NetworkIDs } from '../constants/networks';
-import { GET_ALL_AUCTIONS, GET_AUCTION_BY_CURATOR, GET_MEDIA_QUERY } from '../graph-queries/zora';
+import {
+  GET_ALL_AUCTIONS,
+  GET_AUCTION_BY_CURATOR,
+  GET_MEDIA_QUERY,
+} from '../graph-queries/zora';
 import type {
   GetMediaAndAuctionsQuery,
   GetAllAuctionsQuery,
@@ -21,6 +26,7 @@ import {
   MediaContentType,
   MetadataResultType,
   NFTMediaDataType,
+  UsernameResponseType,
 } from './FetchResultTypes';
 import {
   transformCurrencyForKey,
@@ -40,9 +46,6 @@ export class MediaFetchAgent {
   // Network ID used to set fetch URLs
   readonly networkId: NetworkIDs;
 
-  // Used to store the given graphEndpoint for each network id.
-  readonly graphEndpoint: string;
-
   private timeouts: TimeoutsLookupType;
 
   // Batching content loaders
@@ -53,16 +56,21 @@ export class MediaFetchAgent {
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
     metadataLoader: DataLoader<string, any>;
+    // fetches NFT ipfs metadata from url, not batched but cached
+    usernameLoader: DataLoader<string, UsernameResponseType>;
   };
 
   constructor(network: NetworkIDs) {
-    // TODO(iain): Make configurable
     this.timeouts = DEFAULT_NETWORK_TIMEOUTS_MS;
     this.networkId = network;
-    this.graphEndpoint = THEGRAPH_API_URL_BY_NETWORK[network];
+
     this.loaders = {
       mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
+      usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
+
+      // Only caches and does not batch metadata information
+      // TODO(iain): Replace with SWR
       metadataLoader: new DataLoader(
         async (keys) => {
           if (keys.length !== 1) {
@@ -167,6 +175,15 @@ export class MediaFetchAgent {
   }
 
   /**
+   *
+   * @param address string address of username to load
+   * @returns
+   */
+  async loadUsername(address: string) {
+    return this.loaders.usernameLoader.load(address.toLowerCase());
+  }
+
+  /**
    * Fetch function to retrieve Graph data for matching curated auctions
    * This function is not cached
    *
@@ -182,7 +199,7 @@ export class MediaFetchAgent {
     skip: number = 0
   ) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
-    const client = new GraphQLClient(this.graphEndpoint, {
+    const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
     let query = GET_ALL_AUCTIONS;
@@ -208,13 +225,36 @@ export class MediaFetchAgent {
    */
   private async fetchMediaGraph(mediaIds: readonly string[]) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
-    const client = new GraphQLClient(this.graphEndpoint, {
+    const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
     const response = (await client.request(GET_MEDIA_QUERY, {
       ids_id: mediaIds,
     })) as GetMediaAndAuctionsQuery;
     return mediaIds.map((key) => transformMediaForKey(response, key));
+  }
+
+  /**
+   * Fetches zora username information from blockchain addresses for displaying user
+   * information.
+   *
+   * @param addresses string list of addresses to map to Zora usernames
+   * @returns list of UsernameResponseType - all fields are optional except address
+   */
+  private async fetchZoraUsernames(addresses: readonly string[]) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Zora);
+    const response = await fetchWithTimeout.fetch(ZORA_USERNAME_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ addresses }),
+    });
+    const usernames = (await response.json()) as UsernameResponseType[];
+    return addresses.map((address) => {
+      const foundUsername = usernames.find((username) => username.address === address);
+      if (foundUsername) {
+        return foundUsername;
+      }
+      return { address };
+    });
   }
 
   /**

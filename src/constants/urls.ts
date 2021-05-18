@@ -11,4 +11,4 @@ export const THEGRAPH_UNISWAP_URL_BY_NETWORK = {
     'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v2-rinkeby',
 };
 
-export const ZORA_USERNAME_API_ENDPOINT = 'https://zora.co/api/users';
+export const ZORA_USERNAME_API_URL = 'https://zora.co/api/users';
