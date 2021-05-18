@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReserveAuctionPartialFragment } from 'src/graph-queries/zora-types';
+import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
 
 import { useCallbackFetch } from './useCallbackFetch';
 

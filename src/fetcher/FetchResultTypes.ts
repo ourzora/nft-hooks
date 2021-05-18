@@ -26,6 +26,15 @@ export type MetadataResultType = {
 export type AuctionResultType = ReserveAuctionPartialFragment;
 export type AuctionsResult = AuctionResultType[];
 
+export type UsernameResponseType = {
+  address: string,
+  bio?: string,
+  name?: string,
+  username?: string,
+  verified?: boolean,
+  website?: string,
+};
+
 export type NFTMediaDataType = {
   nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'> & {
     creatorBidSharePercentage: number;
