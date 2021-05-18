@@ -1,6 +1,6 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Generic Rendering Component for zNFTs",
   "repository": "https://github.com/our-zora/nft-hooks",
   "homepage": "https://github.com/our-zora/nft-hooks#README",
@@ -61,7 +61,8 @@
     "graphql-request": "^3.4.0",
     "node-abort-controller": "^2.0.0",
     "react": "^17.0.2",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^17.0.2",
+    "tslib": "^2.2.0"
   },
   "prettier": {
     "singleQuote": true,

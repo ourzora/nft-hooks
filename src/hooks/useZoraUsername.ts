@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { UsernameResponseType } from 'src/fetcher/FetchResultTypes';
 
+import { UsernameResponseType } from '../fetcher/FetchResultTypes';
 import { useCallbackFetch } from './useCallbackFetch';
 
 /**
