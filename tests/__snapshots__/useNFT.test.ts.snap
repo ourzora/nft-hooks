@@ -1770,7 +1770,7 @@ Object {
       ],
       "reservePrice": "12974",
       "status": "Active",
-      "tokenId": "-1",
+      "tokenId": 2974,
       "tokenOwner": Object {
         "id": "10",
       },
@@ -1835,7 +1835,7 @@ Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "0",
+        "id": "2",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1848,7 +1848,26 @@ Object {
           "prettyAmount": "1.2974e-14",
         },
       },
-      "bids": Array [],
+      "bids": Array [
+        Object {
+          "bidder": Object {
+            "id": "10",
+          },
+          "createdAtTimestamp": "12974",
+          "id": "3",
+          "pricing": Object {
+            "amount": "10000",
+            "computedValue": undefined,
+            "currency": Object {
+              "decimals": 18,
+              "id": "0xFACE",
+              "name": "Wrapped Ether",
+              "symbol": "WETH",
+            },
+            "prettyAmount": "1e-14",
+          },
+        },
+      ],
     },
     "reserve": Object {
       "approved": true,
@@ -1885,7 +1904,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "1",
+      "id": "4",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1895,7 +1914,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "4",
+          "id": "7",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1916,7 +1935,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "5",
+          "id": "8",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1932,7 +1951,7 @@ Object {
       ],
       "reservePrice": "12974",
       "status": "Active",
-      "tokenId": "-1",
+      "tokenId": 2974,
       "tokenOwner": Object {
         "id": "10",
       },

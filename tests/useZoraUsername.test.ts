@@ -54,7 +54,7 @@ describe('useZoraUsername', () => {
     await waitFor(() => result.current.error !== undefined);
 
     expect(result.current.error.toString()).toEqual('RequestError: Request Status = 402');
-    expect(result.current.username).toEqual({ address: '0xeeee' });
+    expect(result.current.username).toBeUndefined();
   });
 
   it('batches multiple usernames', async () => {
@@ -104,11 +104,13 @@ describe('useZoraUsername', () => {
       response: { headers: { 'content-type': 'application/json' } },
     });
 
-    const { waitFor, result } = renderHook(() => useZoraUsername('0xeee'));
+    const { waitFor, result } = renderHook(() => useZoraUsername('0xdeee'));
 
     await waitFor(() => !!result.current.error);
 
-    expect(result.current.error).toEqual('FetchError: invalid json response body at https://zora.co/api/users reason: Unexpected end of JSON input');
-    expect(result.current.username).toEqual({ address: '0xeee' });
+    expect(result.current.error.toString()).toEqual(
+      'FetchError: invalid json response body at https://zora.co/api/users reason: Unexpected end of JSON input'
+    );
+    expect(result.current.username).toBeUndefined();
   });
 });

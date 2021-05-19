@@ -54,8 +54,6 @@ export class MediaFetchAgent {
     // fetches eth currency data from Uniswap subgraph, cached and batched
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
-    metadataLoader: DataLoader<string, any>;
-    // fetches NFT ipfs metadata from url, not batched but cached
     usernameLoader: DataLoader<string, UsernameResponseType>;
   };
 
@@ -64,18 +62,9 @@ export class MediaFetchAgent {
     this.networkId = network;
 
     this.loaders = {
-      mediaLoader: new DataLoader((keys) => {
-        this.loaders.mediaLoader.clearAll();
-        return this.fetchMediaGraph(keys);
-      }),
-      currencyLoader: new DataLoader((keys) => {
-        this.loaders.currencyLoader.clearAll();
-        return this.fetchCurrenciesGraph(keys);
-      }),
-      usernameLoader: new DataLoader((keys) => {
-        this.loaders.usernameLoader.clearAll();
-        return this.fetchZoraUsernames(keys)
-      }),
+      mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
+      currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
+      usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
     };
   }
 
@@ -233,11 +222,17 @@ export class MediaFetchAgent {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Zora);
     const response = await fetchWithTimeout.fetch(ZORA_USERNAME_API_URL, {
       method: 'POST',
+      type: 'cors',
+      headers: {
+        'content-type': 'application/json',
+      },
       body: JSON.stringify({ addresses }),
     });
     const usernames = (await response.json()) as UsernameResponseType[];
     return addresses.map((address) => {
-      const foundUsername = usernames.find((username) => username.address === address);
+      const foundUsername = usernames.find(
+        (username) => username.address.toLowerCase() === address
+      );
       if (foundUsername) {
         return foundUsername;
       }
