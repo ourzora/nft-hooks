@@ -12,7 +12,8 @@ import {
 import * as ExtractResultData from './fetcher/TransformFetchResults';
 import { useAuctions } from './hooks/useAuctions';
 import { useZoraUsername } from './hooks/useZoraUsername';
-import { PricingInfo } from './fetcher/AuctionInfoTypes';
+import { AuctionType, PricingInfo } from './fetcher/AuctionInfoTypes';
+import { AuctionStateInfo } from './fetcher/AuctionState';
 
 export {
   // Hooks
@@ -33,6 +34,8 @@ export {
   MediaFetchAgent,
   // Types
   AuctionResultType,
+  AuctionType,
+  AuctionStateInfo,
   NFTDataType,
   ChainCurrencyType,
   // Constants

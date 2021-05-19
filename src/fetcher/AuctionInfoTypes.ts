@@ -6,6 +6,7 @@ import {
   PreviousReserveBidFragment,
 } from '../graph-queries/zora-types';
 import { ChainCurrencyType } from '../fetcher/FetchResultTypes';
+import { AuctionStateInfo } from './AuctionState';
 
 export type PricingInfo = {
   currency: CurrencyShortFragment;
@@ -33,14 +34,20 @@ export type PricingInfoValue = {
   inETH: string;
 };
 
+export enum AuctionType {
+  PERPETUAL = 'PERPETUAL',
+  RESERVE = 'RESERVE',
+};
+
 export type AuctionInfoData = {
+  status: AuctionStateInfo;
   highestBid?: {
     pricing: PricingInfo;
     placedBy: string;
     placedAt: string;
   };
   current: {
-    auctionType: 'reserve' | 'perpetual';
+    auctionType: AuctionType;
     endingAt?: string;
     likelyHasEnded: boolean;
     reserveMet: boolean;

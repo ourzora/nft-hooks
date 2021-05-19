@@ -11,7 +11,8 @@ import type {
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, NFTDataType, NFTMediaDataType } from './FetchResultTypes';
 import { RequestError } from './RequestError';
-import { BidPricingInfo, CurrencyLookupType } from './AuctionInfoTypes';
+import { AuctionType, BidPricingInfo, CurrencyLookupType } from './AuctionInfoTypes';
+import { AuctionStateInfo, getAuctionState } from './AuctionState';
 
 const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
 
@@ -105,9 +106,7 @@ export function addAuctionInformation(
       return;
     }
     const inETH = new Big(currencyInfo.token.derivedETH)
-      .mul(
-        new Big(bidAmount).div(new Big(10).pow(parseInt(currencyInfo.token.decimals, 10)))
-      )
+      .mul(new Big(bidAmount).div(new Big(10).pow(currencyInfo.token.decimals)))
       .toString();
     return {
       inETH,
@@ -144,7 +143,6 @@ export function addAuctionInformation(
 
   const transformAskCurrency = (ask: AskPriceFragment) => {
     const { amount, currency, createdAtTimestamp, id } = ask;
-
     return {
       createdAtTimestamp,
       id,
@@ -173,7 +171,6 @@ export function addAuctionInformation(
           computedValue: getCurrencyComputedValue(ask.currency.id, ask.amount),
         };
       }
-      return;
     }
     const reserve = chainNFT.pricing.reserve;
     if (!reserve || !reserve.reservePrice) {
@@ -258,7 +255,7 @@ export function addAuctionInformation(
       : true
     : false;
   const { pricing, nft } = chainNFT;
-  return {
+  const nftAuctionInformation = {
     pricing: {
       reserve: pricing.reserve
         ? {
@@ -295,10 +292,13 @@ export function addAuctionInformation(
     },
     nft,
     auction: {
+      status: AuctionStateInfo.LOADING,
       highestBid,
       // Only really useful for a reserve auction, reserveMet could be used to show first
       current: {
-        auctionType: hasActiveReserveAuction ? 'reserve' : 'perpetual',
+        auctionType: hasActiveReserveAuction
+          ? AuctionType.RESERVE
+          : AuctionType.PERPETUAL,
         reservePrice: getReservePrice(),
         likelyHasEnded,
         reserveMet: hasActiveReserveAuction
@@ -311,4 +311,6 @@ export function addAuctionInformation(
       },
     },
   };
+  nftAuctionInformation.auction.status = getAuctionState(nftAuctionInformation);
+  return nftAuctionInformation;
 }

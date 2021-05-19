@@ -4,7 +4,7 @@ exports[`useNFT caches multiple NFTs being loaded 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -35,6 +35,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -203,7 +204,7 @@ exports[`useNFT caches multiple NFTs being loaded 2`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -234,6 +235,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -402,7 +404,7 @@ exports[`useNFT caches multiple NFTs being loaded 3`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -433,6 +435,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -601,7 +604,7 @@ exports[`useNFT caches multiple NFTs being loaded 4`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -632,6 +635,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -800,7 +804,7 @@ exports[`useNFT correctly loads auction information from uniswap 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -837,6 +841,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1002,7 +1007,7 @@ exports[`useNFT correctly loads auction information from uniswap 2`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1039,6 +1044,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1204,7 +1210,7 @@ exports[`useNFT correctly loads multiple perpetual bid NFTs 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1235,6 +1241,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1403,7 +1410,7 @@ exports[`useNFT correctly loads multiple perpetual bid NFTs 2`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1434,6 +1441,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1602,7 +1610,7 @@ exports[`useNFT loads an NFT not in an auction with bids 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1633,6 +1641,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1783,7 +1792,7 @@ exports[`useNFT loads an NFT with no bids and no auction 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1814,6 +1823,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
@@ -1964,7 +1974,7 @@ exports[`useNFT loads an nft currently in an auction 1`] = `
 Object {
   "auction": Object {
     "current": Object {
-      "auctionType": "reserve",
+      "auctionType": "RESERVE",
       "endingAt": "12974",
       "likelyHasEnded": true,
       "reserveMet": true,
@@ -1995,6 +2005,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
     },
+    "status": "RESERVE_AUCTION_FINISHED",
   },
   "nft": Object {
     "contentHash": "ByTeSStrInG",
