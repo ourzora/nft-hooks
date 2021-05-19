@@ -24,7 +24,6 @@ import {
   ChainCurrencyType,
   NFTDataType,
   MediaContentType,
-  MetadataResultType,
   NFTMediaDataType,
   UsernameResponseType,
 } from './FetchResultTypes';
@@ -55,8 +54,6 @@ export class MediaFetchAgent {
     // fetches eth currency data from Uniswap subgraph, cached and batched
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
-    metadataLoader: DataLoader<string, any>;
-    // fetches NFT ipfs metadata from url, not batched but cached
     usernameLoader: DataLoader<string, UsernameResponseType>;
   };
 
@@ -68,19 +65,6 @@ export class MediaFetchAgent {
       mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
-
-      // Only caches and does not batch metadata information
-      // TODO(iain): Replace with SWR
-      metadataLoader: new DataLoader(
-        async (keys) => {
-          if (keys.length !== 1) {
-            throw new Error('Wrong keys!');
-          }
-          const key = keys[0];
-          return [await this.fetchIPFSMetadataCached(key)];
-        },
-        { maxBatchSize: 1 }
-      ),
     };
   }
 
@@ -104,17 +88,6 @@ export class MediaFetchAgent {
       }
       return last;
     }, {});
-  }
-
-  /**
-   * Cached, non-batched function to retrieve NFT media information from a JSON blob at the given url
-   * @param url URL fo Metadata to fetch
-   * @returns Metadata Information
-   */
-  async loadMetadata(url: string): Promise<MetadataResultType> {
-    const metadata = await this.loaders.metadataLoader.load(url);
-
-    return { metadata };
   }
 
   /**
@@ -172,6 +145,10 @@ export class MediaFetchAgent {
       throw new RequestError('Cannot fetch chain information');
     }
     return addAuctionInformation(chainInfo, currencyInfos);
+  }
+
+  async loadNFTDataUntransformed(mediaId: string) {
+    return await this.loaders.mediaLoader.load(mediaId);
   }
 
   /**
@@ -245,11 +222,17 @@ export class MediaFetchAgent {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Zora);
     const response = await fetchWithTimeout.fetch(ZORA_USERNAME_API_URL, {
       method: 'POST',
+      type: 'cors',
+      headers: {
+        'content-type': 'application/json',
+      },
       body: JSON.stringify({ addresses }),
     });
     const usernames = (await response.json()) as UsernameResponseType[];
     return addresses.map((address) => {
-      const foundUsername = usernames.find((username) => username.address === address);
+      const foundUsername = usernames.find(
+        (username) => username.address.toLowerCase() === address
+      );
       if (foundUsername) {
         return foundUsername;
       }
@@ -278,15 +261,15 @@ export class MediaFetchAgent {
   }
 
   /**
-   * Internal fetch method to query metadata from IPFS
+   * Fetch method to query metadata from IPFS. Not cached
    *
    * @function fetchIPFSMetadataCached
-   * @private
+   * @public
    * @param url Metadata Source
    * @returns IPFS Metadata Fetch
    * @throws RequestError
    */
-  private async fetchIPFSMetadataCached(url: string) {
+  public async fetchIPFSMetadata(url: string) {
     // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas
     const request = await new FetchWithTimeout(
       this.timeouts.IPFS,

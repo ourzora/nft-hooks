@@ -146,7 +146,7 @@ Array [
     "expectedEndTimestamp": "12974",
     "finalizedAtTimestamp": "12974",
     "firstBidTime": "12974",
-    "id": "8",
+    "id": "0",
     "previousBids": Array [
       Object {
         "amount": "12974",
@@ -157,7 +157,7 @@ Array [
           "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "11",
+        "id": "3",
       },
       Object {
         "amount": "12974",
@@ -168,7 +168,7 @@ Array [
           "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "12",
+        "id": "4",
       },
     ],
     "reservePrice": "12974",
@@ -203,7 +203,7 @@ Array [
     "expectedEndTimestamp": "12974",
     "finalizedAtTimestamp": "12974",
     "firstBidTime": "12974",
-    "id": "9",
+    "id": "1",
     "previousBids": Array [
       Object {
         "amount": "12974",
@@ -214,7 +214,7 @@ Array [
           "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "14",
+        "id": "6",
       },
       Object {
         "amount": "12974",
@@ -225,7 +225,7 @@ Array [
           "id": "10",
         },
         "createdAtTimestamp": "12974",
-        "id": "15",
+        "id": "7",
       },
     ],
     "reservePrice": "12974",

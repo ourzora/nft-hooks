@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { cache } from 'swr';
 
 import fetchMock from './setupFetchMock';
 
@@ -6,9 +7,10 @@ import { useZoraUsername } from '../src';
 import { defaultFetchAgent } from '../src/context/NFTFetchContext';
 
 describe('useZoraUsername', () => {
-  afterEach(() => {
+  beforeEach(() => {
     defaultFetchAgent.clearCache();
     fetchMock.reset();
+    cache.clear();
   });
 
   it('loads zora username information from server', async () => {
@@ -47,12 +49,12 @@ describe('useZoraUsername', () => {
       response: { status: 402 },
     });
 
-    const { waitFor, result } = renderHook(() => useZoraUsername('0xeee'));
+    const { waitFor, result } = renderHook(() => useZoraUsername('0xeeee'));
 
     await waitFor(() => result.current.error !== undefined);
 
-    expect(result.current.error).toEqual('RequestError: Request Status = 402');
-    expect(result.current.username).toEqual({ address: '0xeee' });
+    expect(result.current.error.toString()).toEqual('RequestError: Request Status = 402');
+    expect(result.current.username).toBeUndefined();
   });
 
   it('batches multiple usernames', async () => {
@@ -102,11 +104,13 @@ describe('useZoraUsername', () => {
       response: { headers: { 'content-type': 'application/json' } },
     });
 
-    const { waitFor, result } = renderHook(() => useZoraUsername('0xeee'));
+    const { waitFor, result } = renderHook(() => useZoraUsername('0xdeee'));
 
     await waitFor(() => !!result.current.error);
 
-    expect(result.current.error).toEqual('FetchError: invalid json response body at https://zora.co/api/users reason: Unexpected end of JSON input');
-    expect(result.current.username).toEqual({ address: '0xeee' });
+    expect(result.current.error.toString()).toEqual(
+      'FetchError: invalid json response body at https://zora.co/api/users reason: Unexpected end of JSON input'
+    );
+    expect(result.current.username).toBeUndefined();
   });
 });

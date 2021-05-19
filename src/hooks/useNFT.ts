@@ -1,48 +1,58 @@
-import { useState } from 'react';
-import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
+import { useContext } from 'react';
+import useSWR from 'swr';
 
+import { NFTFetchContext } from '../context/NFTFetchContext';
+import { addAuctionInformation } from '../fetcher/TransformFetchResults';
+import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
 import { NFTDataType } from '../fetcher/FetchResultTypes';
-import { useCallbackFetch } from './useCallbackFetch';
 
 export type useNFTType = {
-  loading: boolean;
   currencyLoaded: boolean;
   error?: string;
   data?: NFTDataType;
+};
+
+type OptionsType = {
+  refreshInterval?: number;
+  initialData?: any;
+  loadCurrencyInfo?: boolean;
 };
 
 /**
  * Fetches on-chain NFT data and pricing for the given zNFT id
  *
  * @param id id of zNFT to fetch blockchain information for
- * @param loadCurrencyInfo flag to enable loading currency conversion info to convert
- *                         token value to ETH and USD equivalent
+ * @param options SWR flags and an option to load currency info
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
-export function useNFT(id?: string, loadCurrencyInfo: boolean = false): useNFTType {
-  const [data, setData] = useState<NFTDataType>();
-  const [currencyLoaded, setCurrencyLoaded] = useState<boolean>(false);
-  const [error, setError] = useState<string | undefined>();
+export function useNFT(id?: string, options: OptionsType = {}): useNFTType {
+  const fetcher = useContext(NFTFetchContext);
+  const { loadCurrencyInfo = false, refreshInterval, initialData } = options || {};
 
-  useCallbackFetch(id, async (fetchAgent, id) => {
-    try {
-      let data = await fetchAgent.loadNFTData(id);
-      setData(data);
-      if (loadCurrencyInfo && data) {
-        setCurrencyLoaded(true);
-        const currencyInfos = await fetchAgent.loadCurrencies(getCurrenciesInUse(data));
-        setData(await fetchAgent.loadNFTData(id, currencyInfos));
-        setCurrencyLoaded(true);
-      }
-    } catch (err) {
-      setError(err.toString());
+  const nftData = useSWR(
+    id ? ['loadNFTDataUntransformed', id] : null,
+    (_, id) => fetcher.loadNFTDataUntransformed(id),
+    { refreshInterval, dedupingInterval: 0, initialData }
+  );
+  const currencyData = useSWR(
+    nftData.data && loadCurrencyInfo
+      ? ['loadCurrencies', ...getCurrenciesInUse(addAuctionInformation(nftData.data))]
+      : null,
+    (_, ...currencies) => fetcher.loadCurrencies(currencies),
+    {
+      refreshInterval,
+      dedupingInterval: 0,
     }
-  });
+  );
+
+  let data;
+  if (nftData.data !== undefined) {
+    data = addAuctionInformation(nftData.data, currencyData.data);
+  }
 
   return {
-    loading: !error && !data,
-    currencyLoaded,
-    error,
+    currencyLoaded: !!currencyData.data,
+    error: nftData.error,
     data,
   };
 }

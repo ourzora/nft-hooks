@@ -105,7 +105,9 @@ export function addAuctionInformation(
       return;
     }
     const inETH = new Big(currencyInfo.token.derivedETH)
-      .mul(new Big(bidAmount).div(new Big(10).pow(currencyInfo.token.decimals)))
+      .mul(
+        new Big(bidAmount).div(new Big(10).pow(parseInt(currencyInfo.token.decimals, 10)))
+      )
       .toString();
     return {
       inETH,
@@ -142,6 +144,7 @@ export function addAuctionInformation(
 
   const transformAskCurrency = (ask: AskPriceFragment) => {
     const { amount, currency, createdAtTimestamp, id } = ask;
+
     return {
       createdAtTimestamp,
       id,
@@ -170,6 +173,7 @@ export function addAuctionInformation(
           computedValue: getCurrencyComputedValue(ask.currency.id, ask.amount),
         };
       }
+      return;
     }
     const reserve = chainNFT.pricing.reserve;
     if (!reserve || !reserve.reservePrice) {
@@ -298,7 +302,8 @@ export function addAuctionInformation(
         reservePrice: getReservePrice(),
         likelyHasEnded,
         reserveMet: hasActiveReserveAuction
-          ? !!chainNFT.pricing.reserve?.firstBidTime && chainNFT.pricing.reserve?.firstBidTime !== "0"
+          ? !!chainNFT.pricing.reserve?.firstBidTime &&
+            chainNFT.pricing.reserve?.firstBidTime !== '0'
           : false,
         endingAt: hasActiveReserveAuction
           ? chainNFT.pricing.reserve?.expectedEndTimestamp
