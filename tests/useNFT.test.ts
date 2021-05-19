@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { IMockStore } from '@graphql-tools/mock';
+import {cache} from 'swr';
 
 import { mockGraphQLQuery } from './setupZoraGQLMock';
 
 import fetchMock from './setupFetchMock';
 
-import { defaultFetchAgent } from '../src/context/NFTFetchContext';
 import { useNFT } from '../src';
 
 describe('useNFT', () => {
   beforeEach(() => {
     fetchMock.reset();
-    defaultFetchAgent.clearCache();
+    cache.clear();
   });
   const MEDIA_MOCK = {
     id: '2974',
@@ -44,10 +44,9 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(() => useNFT('2974'));
 
-    await waitFor(() => result.current.loading === false);
+    await waitFor(() => !!result.current.data);
 
     expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
     expect(result.current.data).toMatchSnapshot();
   });
 
@@ -77,17 +76,17 @@ describe('useNFT', () => {
       'Zora'
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2974', true));
+    const { waitFor, result } = renderHook(() =>
+      useNFT('2974', { loadCurrencyInfo: true })
+    );
 
-    await waitFor(() => result.current.loading === false);
+    await waitFor(() => !!result.current.data);
 
     expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
     expect(result.current.data).toMatchSnapshot();
 
     await waitFor(() => result.current.currencyLoaded === true);
     expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
     expect(result.current.data).toMatchSnapshot();
   });
 
@@ -105,10 +104,9 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(() => useNFT('2974'));
 
-    await waitFor(() => result.current.loading === false);
+    await waitFor(() => !!result.current.data);
 
     expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
     expect(result.current.data).toMatchSnapshot();
   });
 
@@ -119,13 +117,12 @@ describe('useNFT', () => {
       { response: { status: 500 } }
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2974'));
+    const { waitFor, result } = renderHook(() => useNFT('2972'));
 
-    await waitFor(() => result.current.loading === false);
+    await waitFor(() => !!result.current.error);
 
     expect(result.current.data).toBeUndefined();
-    expect(result.current.error).toEqual('RequestError: Request Status = 500');
-    expect(result.current.loading).toBeFalsy();
+    expect(result.current.error?.toString()).toEqual('RequestError: Request Status = 500');
   });
 
   it('loads an NFT with no bids and no auction', async () => {
@@ -143,10 +140,9 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(() => useNFT('2974'));
 
-    await waitFor(() => result.current.loading === false);
+    await waitFor(() => !!result.current.data);
 
     expect(result.current.error).toBeUndefined();
-    expect(result.current.loading).toBeFalsy();
     expect(result.current.data).toMatchSnapshot();
   });
 
@@ -172,14 +168,12 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(() => useMultipleNFTHooks());
 
-    await waitFor(() => result.current[0].loading === false);
+    await waitFor(() => !!result.current[0].data);
 
     expect(result.current[0].error).toBeUndefined();
-    expect(result.current[0].loading).toBeFalsy();
     expect(result.current[0].data).toMatchSnapshot();
 
     expect(result.current[1].error).toBeUndefined();
-    expect(result.current[1].loading).toBeFalsy();
     expect(result.current[1].data).toMatchSnapshot();
   });
   it('caches multiple NFTs being loaded', async () => {
@@ -204,14 +198,12 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(() => useMultipleNFTHooks());
 
-    await waitFor(() => result.current[0].loading === false);
+    await waitFor(() => !!result.current[0].data);
 
     expect(result.current[0].error).toBeUndefined();
-    expect(result.current[0].loading).toBeFalsy();
     expect(result.current[0].data).toMatchSnapshot();
 
     expect(result.current[1].error).toBeUndefined();
-    expect(result.current[1].loading).toBeFalsy();
     expect(result.current[1].data).toMatchSnapshot();
 
     const { waitFor: waitFor2, result: result2 } = renderHook(() =>
@@ -220,14 +212,12 @@ describe('useNFT', () => {
 
     // If this attempts to make a new HTTP request,
     //  the request will fail since the mock only works once.
-    await waitFor2(() => result2.current[0].loading === false);
+    await waitFor2(() => !!result2.current[0].data);
 
     expect(result2.current[0].error).toBeUndefined();
-    expect(result2.current[0].loading).toBeFalsy();
     expect(result2.current[0].data).toMatchSnapshot();
 
     expect(result2.current[1].error).toBeUndefined();
-    expect(result2.current[1].loading).toBeFalsy();
     expect(result2.current[1].data).toMatchSnapshot();
   });
 });

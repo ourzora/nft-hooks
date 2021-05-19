@@ -9,7 +9,6 @@ import uniswapSchema from '../graph-schemas/uniswap.graphql';
 
 import fetchMock from './setupFetchMock';
 
-let currentID = 0;
 
 export type SchemaName = 'Zora' | 'Uniswap';
 
@@ -24,6 +23,7 @@ async function makeQuery(
   resolverOverrides: any,
   schema: SchemaName = 'Zora'
 ) {
+  let currentID = 0;
   const mocks = {
     BigInt: () => '12974',
     BigDecimal: () => '13874.2323',
