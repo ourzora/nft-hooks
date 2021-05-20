@@ -92,7 +92,9 @@ export function transformCurrencyForKey(
 }
 
 const setCurrencyDecimal = (amount: string, decimals: Maybe<number>) => {
-  return new Big(amount).div(new Big(10).pow(decimals || 18)).toString();
+  return new Big(amount)
+    .div(new Big(10).pow(parseInt(decimals as any, 10) || 18))
+    .toString();
 };
 
 export function addAuctionInformation(
@@ -106,7 +108,9 @@ export function addAuctionInformation(
       return;
     }
     const inETH = new Big(currencyInfo.token.derivedETH)
-      .mul(new Big(bidAmount).div(new Big(10).pow(currencyInfo.token.decimals)))
+      .mul(
+        new Big(bidAmount).div(new Big(10).pow(parseInt(currencyInfo.token.decimals, 10)))
+      )
       .toString();
     return {
       inETH,

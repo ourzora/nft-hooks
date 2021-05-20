@@ -71,6 +71,8 @@ export const GET_AUCTION_BY_CURATOR = gql`
       }
       first: $first
       skip: $skip
+      orderBy: createdAtTimestamp
+      orderDirection: desc
     ) {
       ...ReserveAuctionPartial
     }
