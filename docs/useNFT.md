@@ -7,12 +7,15 @@ import {useNFT} from "@zoralabs/nft-hooks";
 type NFTDataType = {
   nft: {
     id: string, // ID of zNFT
+    contractAddress: string, // Address of contract
     owner: {id: string}, // Address of owner
-    creator: {id: string}, // Address of creator
+    creator?: {id: string}, // Address of creator
     metadataURI: string, // URI of metadata for zNFT
-    metadataHash: string, // sha256 hash for metadata for zNFT
-    contentURI: string, // URI of content described by metadata
-    contentHash: string, // sha256 hash of content
+    // If supported
+    metadataHash?: string, // sha256 hash for metadata
+    // If supported
+    contentURI?: string, // URI of content described by metadata
+    contentHash?: string, // sha256 hash of content
   },
   
   pricing: {
@@ -39,6 +42,13 @@ type NFTDataType = {
       expectedEndTimestamp: string;
       createdAtTimestamp: string;
       finalizedAtTimestamp: string;
+      currentBid?: {
+        createdAtTimestamp: string
+        bidType: "Active" | "Refunded" | "Final";
+        bidInactivatedAtTimestamp: string
+        bidInactivatedAtBlockNumber: number
+        pricing: PricingInfo,
+      },
       previousBids: {
         createdAtTimestamp: string
         bidType: "Active" | "Refunded" | "Final";
@@ -51,18 +61,18 @@ type NFTDataType = {
 
   // Current/ongoing auction information synthesized from pricing data
   auction: {
-   highestBid: {
-     pricing: PricingInfo;
-     placedBy: string;
-     placedAt: string;
-   };
-   current: {
-     auctionType: "reserve" | "perpetual";
-     endingAt?: string;
-     likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
-     reserveMet: boolean; 
-     reservePrice?: PricingInfo;
-   };
+    highestBid: {
+      pricing: PricingInfo;
+      placedBy: string;
+      placedAt: string;
+    };
+    // Auction type is none if no perpetual market exists and
+    // no reserve auctions exist.
+    auctionType: "reserve" | "perpetual" | "none";
+    endingAt?: string;
+    likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
+    reserveMet: boolean; 
+    reservePrice?: PricingInfo;
   };
 };
 
