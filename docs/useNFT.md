@@ -72,26 +72,6 @@ type NFTDataType = {
     // Auction type is none if no perpetual market exists and
     auctionType: "reserve" | "perpetual" | "none";
   };
-
-  // Current/ongoing auction information synthesized from pricing data
-  auction: {
-<<<<<<< HEAD
-    highestBid: {
-      pricing: PricingInfo;
-      placedBy: string;
-      placedAt: string;
-    };
-    // Auction type is none if no perpetual market exists and
-    // no reserve auctions exist.
-    auctionType: "reserve" | "perpetual" | "none";
-    endingAt?: string;
-    likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
-    reserveMet: boolean; 
-    reservePrice?: PricingInfo;
-=======
-    reserveMet: boolean; 
->>>>>>> main
-  };
 };
 
 export type PricingInfo = {
