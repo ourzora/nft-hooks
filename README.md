@@ -15,10 +15,10 @@ yarn add @zoralabs/nft-hooks
 Then you can import and use the hooks in your react application:
 
 ```ts
-import {useNFT, useNFTMetadata} from "@zoralabs/nft-hooks";
+import {useZNFT, useNFTMetadata} from "@zoralabs/nft-hooks";
 
 function MyNFT() {
-  const {data} = useNFT("20");
+  const {data} = useZNFT("20");
   const {metadata} = useNFTMetadata(data && data.metadataURI);
   
   return (
@@ -35,7 +35,8 @@ function MyNFT() {
 
 | Hook | Usage |
 | -- | -- |
-| [useNFT](docs/useNFT.md) | Fetches on-chain NFT data |
+| [useZNFT](docs/useZNFT.md) | Fetches on-chain zNFT data |
+| *useNFT* | Fetches on-chain NFT data for any ERC721 (coming soon) |
 | [useNFTMetadata](docs/useNFTMetadata.md) | Fetches NFT metadata from a URL |
 | [useNFTContent](docs/useNFTContent.md) | Fetches text content from server for rendering from content URL |
 

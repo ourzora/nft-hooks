@@ -134,7 +134,7 @@ export class MediaFetchAgent {
    * @param mediaId ZORA NFT id to retrieve information of
    * @returns Promise<NFTDataType> On-chain NFT data
    */
-  async loadNFTData(
+  async loadZNFTData(
     mediaId: string,
     currencyInfos: CurrencyLookupType = {}
   ): Promise<NFTDataType> {
@@ -145,7 +145,7 @@ export class MediaFetchAgent {
     return addAuctionInformation(chainInfo, currencyInfos);
   }
 
-  async loadNFTDataUntransformed(mediaId: string) {
+  async loadZNFTDataUntransformed(mediaId: string) {
     return await this.loaders.mediaLoader.load(mediaId);
   }
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`useNFT caches multiple NFTs being loaded 1`] = `
+exports[`useZNFT caches multiple NFTs being loaded 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -213,7 +213,7 @@ Object {
 }
 `;
 
-exports[`useNFT caches multiple NFTs being loaded 2`] = `
+exports[`useZNFT caches multiple NFTs being loaded 2`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -426,7 +426,7 @@ Object {
 }
 `;
 
-exports[`useNFT caches multiple NFTs being loaded 3`] = `
+exports[`useZNFT caches multiple NFTs being loaded 3`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -639,7 +639,7 @@ Object {
 }
 `;
 
-exports[`useNFT caches multiple NFTs being loaded 4`] = `
+exports[`useZNFT caches multiple NFTs being loaded 4`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -852,7 +852,7 @@ Object {
 }
 `;
 
-exports[`useNFT correctly loads auction information from uniswap 1`] = `
+exports[`useZNFT correctly loads auction information from uniswap 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -1071,7 +1071,7 @@ Object {
 }
 `;
 
-exports[`useNFT correctly loads auction information from uniswap 2`] = `
+exports[`useZNFT correctly loads auction information from uniswap 2`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -1290,7 +1290,7 @@ Object {
 }
 `;
 
-exports[`useNFT correctly loads multiple perpetual bid NFTs 1`] = `
+exports[`useZNFT correctly loads multiple perpetual bid NFTs 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -1503,7 +1503,7 @@ Object {
 }
 `;
 
-exports[`useNFT correctly loads multiple perpetual bid NFTs 2`] = `
+exports[`useZNFT correctly loads multiple perpetual bid NFTs 2`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -1716,7 +1716,7 @@ Object {
 }
 `;
 
-exports[`useNFT loads an NFT not in an auction with bids 1`] = `
+exports[`useZNFT loads an NFT not in an auction with bids 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -1911,7 +1911,7 @@ Object {
 }
 `;
 
-exports[`useNFT loads an NFT with no bids and no auction 1`] = `
+exports[`useZNFT loads an NFT with no bids and no auction 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
@@ -2106,7 +2106,7 @@ Object {
 }
 `;
 
-exports[`useNFT loads an nft currently in an auction 1`] = `
+exports[`useZNFT loads an nft currently in an auction 1`] = `
 Object {
   "nft": Object {
     "contract": Object {
