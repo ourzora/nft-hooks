@@ -1,18 +1,10 @@
-import { Maybe } from 'graphql/jsutils/Maybe';
-
 import { TokenShortFragment } from '../graph-queries/uniswap-types';
 import {
-  AskPriceFragment,
-  BidDataPartialFragment,
-  NftMediaFragment,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
 import {
-  AuctionInfoData,
   CurrentReserveBid,
   PastReserveBid,
-  PerpetualAsk,
-  PerpetualBid,
 } from './AuctionInfoTypes';
 
 export type MediaContentType =
@@ -35,39 +27,41 @@ export type UsernameResponseType = {
   website?: string,
 };
 
-export type NFTMediaDataType = {
-  nft: Omit<NftMediaFragment, 'currentBids' | 'currentAsk'> & {
-    creatorBidSharePercentage: number;
-  };
-  pricing: {
-    perpetual: {
-      bids: BidDataPartialFragment[];
-      ask: Maybe<AskPriceFragment>;
-    };
-    reserve: Maybe<ReserveAuctionPartialFragment>;
-  };
+export enum KNOWN_CONTRACTS {
+  ZORA = 'zora',
 };
 
-type ReserveAuctionBidsWithCurrency = Omit<
+
+type ETHAddress = String;
+
+export type NFTResultType = {
+  tokenId: string,
+  contract: {
+    address: string;
+    knownContract?: KNOWN_CONTRACTS;
+  },
+  owner: ETHAddress;
+  creator?: ETHAddress;
+  metadataURI: string;
+};
+
+export type ZoraMedia = {
+  metadataHash: string;
+  contentURI: string;
+  contentHash?: string;
+  creatorSharePercentage: number;
+  creatorBidShare: string;
+  createdAtTimestamp: string;
+};
+
+
+export type ReserveAuctionBidsWithCurrency = Omit<
   ReserveAuctionPartialFragment,
-  'previousBids' | 'currentBid'
+  'previousBids' | 'currentBid' | 'reservePrice'
 > & {
   previousBids: PastReserveBid[];
   currentBid?: CurrentReserveBid;
 };
-
-export type NFTAuctionType = {
-  auction: AuctionInfoData;
-  pricing: {
-    perpetual: {
-      bids: PerpetualBid[];
-      ask: Maybe<PerpetualAsk>;
-    };
-    reserve: Maybe<ReserveAuctionBidsWithCurrency>;
-  };
-};
-
-export type NFTDataType = Omit<NFTMediaDataType, 'pricing'> & NFTAuctionType;
 
 export type ZoraUsernameFetchResult = {
   name: string;

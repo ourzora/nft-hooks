@@ -7,15 +7,19 @@ import {useNFT} from "@zoralabs/nft-hooks";
 type NFTDataType = {
   nft: {
     id: string, // ID of zNFT
-    contractAddress: string, // Address of contract
+    contract: {
+      address: string;
+      knownIdentifier?: "ZORA",
+    },
     owner: {id: string}, // Address of owner
     creator?: {id: string}, // Address of creator
     metadataURI: string, // URI of metadata for zNFT
-    // If supported
-    metadataHash?: string, // sha256 hash for metadata
-    // If supported
-    contentURI?: string, // URI of content described by metadata
-    contentHash?: string, // sha256 hash of content
+  },
+
+  zoraNFT?: {
+    metadataHash: string, // sha256 hash for metadata
+    contentURI: string, // URI of content described by metadata
+    contentHash: string, // sha256 hash of content
   },
   
   pricing: {
@@ -35,6 +39,9 @@ type NFTDataType = {
     reserve?: {
       auctionCurrency: CurrencyInformation;
       id: string;
+      endingAt?: string;
+      likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
+      reservePrice?: PricingInfo;
       tokenId: string;
       status: "Pending" | "Active" | "Canceled" | "Finished";
       firstBidTime: string;
@@ -57,10 +64,18 @@ type NFTDataType = {
         pricing: PricingInfo,
       }[],
     },
+    highestBid: {
+      pricing: PricingInfo;
+      placedBy: string;
+      placedAt: string;
+    };
+    // Auction type is none if no perpetual market exists and
+    auctionType: "reserve" | "perpetual" | "none";
   };
 
   // Current/ongoing auction information synthesized from pricing data
   auction: {
+<<<<<<< HEAD
     highestBid: {
       pricing: PricingInfo;
       placedBy: string;
@@ -73,6 +88,9 @@ type NFTDataType = {
     likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
     reserveMet: boolean; 
     reservePrice?: PricingInfo;
+=======
+    reserveMet: boolean; 
+>>>>>>> main
   };
 };
 
