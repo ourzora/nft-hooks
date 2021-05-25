@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
-import { NFTDataType } from '../fetcher/FetchResultTypes';
+import { NFTDataType } from '../fetcher/AuctionInfoTypes';
 
 export type useNFTType = {
   currencyLoaded: boolean;

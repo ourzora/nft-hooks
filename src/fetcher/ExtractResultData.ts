@@ -1,4 +1,4 @@
-import { NFTDataType } from './FetchResultTypes';
+import { NFTDataType } from "./AuctionInfoTypes";
 
 export function getCurrenciesInUse(nftData: NFTDataType): string[] {
   const hasActiveReserveAuction = nftData.pricing.reserve?.status === 'Active';

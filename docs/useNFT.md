@@ -7,12 +7,18 @@ import {useNFT} from "@zoralabs/nft-hooks";
 type NFTDataType = {
   nft: {
     id: string, // ID of zNFT
+    contract: {
+      address: string;
+      knownIdentifier?: "ZORA",
+    },
     owner: {id: string}, // Address of owner
-    creator: {id: string}, // Address of creator
+    creator?: {id: string}, // Address of creator
     metadataURI: string, // URI of metadata for zNFT
-    metadataHash: string, // sha256 hash for metadata for zNFT
-    contentURI: string, // URI of content described by metadata
-    contentHash: string, // sha256 hash of content
+    zoraMedia?: {
+      metadataHash: string, // sha256 hash for metadata
+      contentURI: string, // URI of content described by metadata
+      contentHash: string, // sha256 hash of content
+    },
   },
   
   pricing: {
@@ -32,6 +38,9 @@ type NFTDataType = {
     reserve?: {
       auctionCurrency: CurrencyInformation;
       id: string;
+      endingAt?: string;
+      likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
+      reservePrice?: PricingInfo;
       tokenId: string;
       status: "Pending" | "Active" | "Canceled" | "Finished";
       firstBidTime: string;
@@ -39,6 +48,13 @@ type NFTDataType = {
       expectedEndTimestamp: string;
       createdAtTimestamp: string;
       finalizedAtTimestamp: string;
+      currentBid?: {
+        createdAtTimestamp: string
+        bidType: "Active" | "Refunded" | "Final";
+        bidInactivatedAtTimestamp: string
+        bidInactivatedAtBlockNumber: number
+        pricing: PricingInfo,
+      },
       previousBids: {
         createdAtTimestamp: string
         bidType: "Active" | "Refunded" | "Final";
@@ -47,22 +63,18 @@ type NFTDataType = {
         pricing: PricingInfo,
       }[],
     },
+    highestBid: {
+      pricing: PricingInfo;
+      placedBy: string;
+      placedAt: string;
+    };
+    // Auction type is none if no perpetual market exists and
+    auctionType: "reserve" | "perpetual" | "none";
   };
 
   // Current/ongoing auction information synthesized from pricing data
   auction: {
-   highestBid: {
-     pricing: PricingInfo;
-     placedBy: string;
-     placedAt: string;
-   };
-   current: {
-     auctionType: "reserve" | "perpetual";
-     endingAt?: string;
-     likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
-     reserveMet: boolean; 
-     reservePrice?: PricingInfo;
-   };
+    reserveMet: boolean; 
   };
 };
 

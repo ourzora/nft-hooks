@@ -5,14 +5,13 @@ import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
 import { NFTFetchConfiguration } from './context/NFTFetchContext';
 import { MediaFetchAgent } from './fetcher/MediaFetchAgent';
 import {
-  NFTDataType,
   ChainCurrencyType,
   AuctionResultType,
 } from './fetcher/FetchResultTypes';
 import * as ExtractResultData from './fetcher/TransformFetchResults';
 import { useAuctions } from './hooks/useAuctions';
 import { useZoraUsername } from './hooks/useZoraUsername';
-import { AuctionType, PricingInfo } from './fetcher/AuctionInfoTypes';
+import { AuctionType, NFTDataType, PricingInfo } from './fetcher/AuctionInfoTypes';
 import { AuctionStateInfo } from './fetcher/AuctionState';
 
 export {
