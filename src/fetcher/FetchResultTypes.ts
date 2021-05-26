@@ -32,7 +32,7 @@ export enum KNOWN_CONTRACTS {
 };
 
 
-type ETHAddress = String;
+type ETHAddress = string;
 
 export type NFTResultType = {
   tokenId: string,

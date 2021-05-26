@@ -1,6 +1,6 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Generic Rendering Component for zNFTs",
   "repository": "https://github.com/ourzora/nft-hooks",
   "homepage": "https://github.com/ourzora/nft-hooks#README",
