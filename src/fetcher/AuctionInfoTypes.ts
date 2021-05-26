@@ -3,9 +3,16 @@ import {
   BidDataPartialFragment,
   CurrencyShortFragment,
   CurrentReserveBidFragment,
+  Maybe,
+  NftMediaFragment,
   PreviousReserveBidFragment,
+  ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
-import { ChainCurrencyType } from '../fetcher/FetchResultTypes';
+import {
+  ChainCurrencyType,
+  NFTResultType,
+  ReserveAuctionBidsWithCurrency,
+} from '../fetcher/FetchResultTypes';
 import { AuctionStateInfo } from './AuctionState';
 
 export type PricingInfo = {
@@ -21,7 +28,8 @@ export type BidPricingInfo = {
 
 export type PastReserveBid = Omit<PreviousReserveBidFragment, 'amount'> & BidPricingInfo;
 
-export type CurrentReserveBid = Omit<CurrentReserveBidFragment, 'amount'> & BidPricingInfo;
+export type CurrentReserveBid = Omit<CurrentReserveBidFragment, 'amount'> &
+  BidPricingInfo;
 
 export type PerpetualBid = Omit<BidDataPartialFragment, 'currency' | 'amount'> &
   BidPricingInfo;
@@ -35,24 +43,53 @@ export type PricingInfoValue = {
 };
 
 export enum AuctionType {
+  NONE = 'NONE',
   PERPETUAL = 'PERPETUAL',
   RESERVE = 'RESERVE',
+}
+
+export type ZNFTMediaDataType = {
+  nft: NFTResultType,
+  zoraNFT: Omit<NftMediaFragment, 'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator' | 'metadataURI'> & {
+    creatorBidSharePercentage: number;
+  };
+  pricing: {
+    perpetual?: {
+      bids: BidDataPartialFragment[];
+      ask: Maybe<AskPriceFragment>;
+    };
+    reserve: Maybe<ReserveAuctionPartialFragment>;
+  };
 };
 
-export type AuctionInfoData = {
+export type HighestBidType = {
+  pricing: PricingInfo;
+  placedBy: string;
+  placedAt: string;
+};
+
+export type PricingInfoData = {
   status: AuctionStateInfo;
-  highestBid?: {
-    pricing: PricingInfo;
-    placedBy: string;
-    placedAt: string;
+  perpetual: {
+    bids: PerpetualBid[];
+    ask?: PerpetualAsk;
+    highestBid?: HighestBidType;
   };
-  current: {
-    auctionType: AuctionType;
-    endingAt?: string;
-    likelyHasEnded: boolean;
-    reserveMet: boolean;
+  reserve?: ReserveAuctionBidsWithCurrency & {
+    current: {
+      highestBid?: HighestBidType;
+      likelyHasEnded: boolean;
+      reserveMet: boolean;
+    };
     reservePrice?: PricingInfo;
+    currentBid?: CurrentReserveBid;
+    previousBids: PastReserveBid[];
   };
+  auctionType: AuctionType;
+};
+
+export type NFTDataType = Omit<ZNFTMediaDataType, 'pricing'> & {
+  pricing: PricingInfoData;
 };
 
 export type CurrencyLookupType = { [currencyId: string]: ChainCurrencyType };

@@ -2,15 +2,22 @@ This hook fetches data found on the blockchain from the given zNFT. The only arg
 The main types are within the result `data.nft` object. This object contains the on-chain NFT data itself. The pricing information can be found in `data.pricing` which corresponds to data on-chain for Zora's perpetual zNFT auctions along with the reserve auction functionality.
 
 ```ts
-import {useNFT} from "@zoralabs/nft-hooks";
+import {useZNFT} from "@zoralabs/nft-hooks";
 
 type NFTDataType = {
   nft: {
     id: string, // ID of zNFT
+    contract: {
+      address: string;
+      knownIdentifier?: "ZORA",
+    },
     owner: {id: string}, // Address of owner
-    creator: {id: string}, // Address of creator
+    creator?: {id: string}, // Address of creator
     metadataURI: string, // URI of metadata for zNFT
-    metadataHash: string, // sha256 hash for metadata for zNFT
+  },
+
+  zoraNFT?: {
+    metadataHash: string, // sha256 hash for metadata
     contentURI: string, // URI of content described by metadata
     contentHash: string, // sha256 hash of content
   },
@@ -32,6 +39,9 @@ type NFTDataType = {
     reserve?: {
       auctionCurrency: CurrencyInformation;
       id: string;
+      endingAt?: string;
+      likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
+      reservePrice?: PricingInfo;
       tokenId: string;
       status: "Pending" | "Active" | "Canceled" | "Finished";
       firstBidTime: string;
@@ -39,6 +49,13 @@ type NFTDataType = {
       expectedEndTimestamp: string;
       createdAtTimestamp: string;
       finalizedAtTimestamp: string;
+      currentBid?: {
+        createdAtTimestamp: string
+        bidType: "Active" | "Refunded" | "Final";
+        bidInactivatedAtTimestamp: string
+        bidInactivatedAtBlockNumber: number
+        pricing: PricingInfo,
+      },
       previousBids: {
         createdAtTimestamp: string
         bidType: "Active" | "Refunded" | "Final";
@@ -47,22 +64,13 @@ type NFTDataType = {
         pricing: PricingInfo,
       }[],
     },
-  };
-
-  // Current/ongoing auction information synthesized from pricing data
-  auction: {
-   highestBid: {
-     pricing: PricingInfo;
-     placedBy: string;
-     placedAt: string;
-   };
-   current: {
-     auctionType: "reserve" | "perpetual";
-     endingAt?: string;
-     likelyHasEnded: boolean; // If an auction ended but has not been finalized this will be true.
-     reserveMet: boolean; 
-     reservePrice?: PricingInfo;
-   };
+    highestBid: {
+      pricing: PricingInfo;
+      placedBy: string;
+      placedAt: string;
+    };
+    // Auction type is none if no perpetual market exists and
+    auctionType: "reserve" | "perpetual" | "none";
   };
 };
 
@@ -81,14 +89,14 @@ type CurrencyInformation = {
 };
 
 
-type useNFT = (id: string) => {
-  loading: boolean;
+type useZNFT = (id: string) => {
+  currencyLoaded: boolean;
   error?: string; // undefined if no error, string if error
-  chainNFT?: NFTDataType; // undefined in error or loading states
+  data?: NFTDataType; // undefined in error or loading states
 }
 
 // Example with usage:
-const {chainNFT, loading} = useNFT("2");
+const {chainNFT, loading} = useZNFT("2");
 ```
 
 Alternatively, the same information can be fetched using the base MediaFetchAgentfor server-side or non-react use:
@@ -101,6 +109,6 @@ import {MediaFetchAgent, Networks} from "@zoralabs/nft-hooks";
 const fetchAgent = new MediaFetchAgent(Networks.MAINNET);
 
 // Get result from the server
-const result = await fetchAgent.loadNFTData("2");
+const result = await fetchAgent.loadZNFTData("2");
 // result type is NFTDataType
 ```

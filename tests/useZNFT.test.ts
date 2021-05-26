@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { IMockStore } from '@graphql-tools/mock';
-import {cache} from 'swr';
+import { cache } from 'swr';
 
 import { mockGraphQLQuery } from './setupZoraGQLMock';
 
 import fetchMock from './setupFetchMock';
 
-import { useNFT } from '../src';
+import { useZNFT } from '../src';
 
-describe('useNFT', () => {
+describe('useZNFT', () => {
   beforeEach(() => {
     fetchMock.reset();
     cache.clear();
@@ -42,7 +42,7 @@ describe('useNFT', () => {
       mockOverrides
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2974'));
+    const { waitFor, result } = renderHook(() => useZNFT('2974'));
 
     await waitFor(() => !!result.current.data);
 
@@ -77,7 +77,7 @@ describe('useNFT', () => {
     );
 
     const { waitFor, result } = renderHook(() =>
-      useNFT('2974', { loadCurrencyInfo: true })
+      useZNFT('2974', { loadCurrencyInfo: true })
     );
 
     await waitFor(() => !!result.current.data);
@@ -102,7 +102,7 @@ describe('useNFT', () => {
       mockOverrides
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2974'));
+    const { waitFor, result } = renderHook(() => useZNFT('2974'));
 
     await waitFor(() => !!result.current.data);
 
@@ -117,12 +117,14 @@ describe('useNFT', () => {
       { response: { status: 500 } }
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2972'));
+    const { waitFor, result } = renderHook(() => useZNFT('2972'));
 
     await waitFor(() => !!result.current.error);
 
     expect(result.current.data).toBeUndefined();
-    expect(result.current.error?.toString()).toEqual('RequestError: Request Status = 500');
+    expect(result.current.error?.toString()).toEqual(
+      'RequestError: Request Status = 500'
+    );
   });
 
   it('loads an NFT with no bids and no auction', async () => {
@@ -138,7 +140,7 @@ describe('useNFT', () => {
       mockOverrides
     );
 
-    const { waitFor, result } = renderHook(() => useNFT('2974'));
+    const { waitFor, result } = renderHook(() => useZNFT('2974'));
 
     await waitFor(() => !!result.current.data);
 
@@ -148,7 +150,7 @@ describe('useNFT', () => {
 
   it('correctly loads multiple perpetual bid NFTs', async () => {
     function useMultipleNFTHooks() {
-      return [useNFT('1'), useNFT('2')];
+      return [useZNFT('1'), useZNFT('2')];
     }
 
     mockGraphQLQuery(
@@ -178,7 +180,7 @@ describe('useNFT', () => {
   });
   it('caches multiple NFTs being loaded', async () => {
     function useMultipleNFTHooks() {
-      return [useNFT('1'), useNFT('2')];
+      return [useZNFT('1'), useZNFT('2')];
     }
 
     mockGraphQLQuery(

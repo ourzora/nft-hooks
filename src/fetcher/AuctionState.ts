@@ -1,5 +1,4 @@
-import { AuctionType } from "./AuctionInfoTypes";
-import { NFTDataType } from "./FetchResultTypes";
+import { AuctionType, PricingInfoData } from './AuctionInfoTypes';
 
 export enum AuctionStateInfo {
   LOADING = 'LOADING',
@@ -13,25 +12,29 @@ export enum AuctionStateInfo {
   RESERVE_AUCTION_FINISHED = 'RESERVE_AUCTION_FINISHED',
 }
 
-export function getAuctionState(data: NFTDataType): AuctionStateInfo {
-  if (data.auction.current.auctionType === AuctionType.PERPETUAL) {
-    if (data.auction.current.reservePrice) {
+export function getAuctionState(pricing: PricingInfoData): AuctionStateInfo {
+  if (pricing.auctionType === AuctionType.PERPETUAL) {
+    if (pricing.perpetual.ask) {
       return AuctionStateInfo.PERPETUAL_ASK;
     }
-    if (!data.auction.highestBid && data.pricing.reserve?.previousBids.length) {
+    if (!pricing.perpetual.highestBid && pricing.reserve?.previousBids.length) {
       return AuctionStateInfo.RESERVE_AUCTION_FINISHED;
     }
-    if (data.auction.highestBid) {
+    if (pricing.perpetual.highestBid) {
       return AuctionStateInfo.PERPETUAL_BID;
     }
     return AuctionStateInfo.NO_PRICING;
   }
-  if (data.auction.current.auctionType === AuctionType.RESERVE) {
-    if (data.auction.current.likelyHasEnded) {
+  if (pricing.auctionType === AuctionType.RESERVE && pricing.reserve) {
+    if (pricing.reserve.current.likelyHasEnded) {
       return AuctionStateInfo.RESERVE_AUCTION_FINISHED;
     }
-    if (data.auction.current.reserveMet) {
-      if (data.auction.current.endingAt && Math.floor(new Date().getTime()/1000) - 15 * 60 > parseInt(data.auction.current.endingAt, 10)) {
+    if (pricing.reserve.current.reserveMet) {
+      if (
+        pricing.reserve.expectedEndTimestamp &&
+        Math.floor(new Date().getTime() / 1000) - 15 * 60 >
+          parseInt(pricing.reserve.expectedEndTimestamp, 10)
+      ) {
         return AuctionStateInfo.RESERVE_AUCTION_LAST_15;
       }
       return AuctionStateInfo.RESERVE_AUCTION_ACTIVE;

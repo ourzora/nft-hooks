@@ -22,9 +22,7 @@ import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
 import {
   ChainCurrencyType,
-  NFTDataType,
   MediaContentType,
-  NFTMediaDataType,
   UsernameResponseType,
 } from './FetchResultTypes';
 import {
@@ -33,7 +31,7 @@ import {
   addAuctionInformation,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
-import { CurrencyLookupType } from './AuctionInfoTypes';
+import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -50,7 +48,7 @@ export class MediaFetchAgent {
   // Batching content loaders
   private loaders: {
     // fetches NFT data from Zora subgraph, cached and batched
-    mediaLoader: DataLoader<string, NFTMediaDataType>;
+    mediaLoader: DataLoader<string, ZNFTMediaDataType>;
     // fetches eth currency data from Uniswap subgraph, cached and batched
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
@@ -136,7 +134,7 @@ export class MediaFetchAgent {
    * @param mediaId ZORA NFT id to retrieve information of
    * @returns Promise<NFTDataType> On-chain NFT data
    */
-  async loadNFTData(
+  async loadZNFTData(
     mediaId: string,
     currencyInfos: CurrencyLookupType = {}
   ): Promise<NFTDataType> {
@@ -147,7 +145,7 @@ export class MediaFetchAgent {
     return addAuctionInformation(chainInfo, currencyInfos);
   }
 
-  async loadNFTDataUntransformed(mediaId: string) {
+  async loadZNFTDataUntransformed(mediaId: string) {
     return await this.loaders.mediaLoader.load(mediaId);
   }
 
@@ -208,7 +206,7 @@ export class MediaFetchAgent {
     const response = (await client.request(GET_MEDIA_QUERY, {
       ids_id: mediaIds,
     })) as GetMediaAndAuctionsQuery;
-    return mediaIds.map((key) => transformMediaForKey(response, key));
+    return mediaIds.map((key) => transformMediaForKey(response, key, this.networkId));
   }
 
   /**
