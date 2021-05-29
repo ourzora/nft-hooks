@@ -4,10 +4,10 @@ import useSWR from 'swr';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
-import { NFTDataType } from '../fetcher/AuctionInfoTypes';
+import { NFTDataType, ZNFTMediaDataType } from '../fetcher/AuctionInfoTypes';
 
 // TODO: iain move to common folder
-export type useNFTType = {
+export type useZNFTType = {
   currencyLoaded: boolean;
   error?: string;
   data?: NFTDataType;
@@ -26,18 +26,21 @@ type OptionsType = {
  * @param options SWR flags and an option to load currency info
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
-export function useZNFT(id?: string, options: OptionsType = {}): useNFTType {
+export function useZNFT(id?: string, options: OptionsType = {}): useZNFTType {
   const fetcher = useContext(NFTFetchContext);
   const { loadCurrencyInfo = false, refreshInterval, initialData } = options || {};
 
-  const nftData = useSWR(
+  const nftData = useSWR<ZNFTMediaDataType>(
     id ? ['loadZNFTDataUntransformed', id] : null,
     (_, id) => fetcher.loadZNFTDataUntransformed(id),
     { refreshInterval, dedupingInterval: 0, initialData }
   );
   const currencyData = useSWR(
-    nftData.data && loadCurrencyInfo
-      ? ['loadCurrencies', ...getCurrenciesInUse(addAuctionInformation(nftData.data))]
+    nftData.data && nftData.data.pricing && loadCurrencyInfo
+      ? [
+          'loadCurrencies',
+          ...getCurrenciesInUse(addAuctionInformation(nftData.data.pricing)),
+        ]
       : null,
     (_, ...currencies) => fetcher.loadCurrencies(currencies),
     {
@@ -48,7 +51,10 @@ export function useZNFT(id?: string, options: OptionsType = {}): useNFTType {
 
   let data;
   if (nftData.data !== undefined) {
-    data = addAuctionInformation(nftData.data, currencyData.data);
+    data = {
+      ...nftData.data,
+      pricing: addAuctionInformation(nftData.data.pricing, currencyData.data),
+    };
   }
 
   return {

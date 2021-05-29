@@ -1,5 +1,6 @@
 import { Networks, NetworkIDs } from './constants/networks';
-import { useZNFT, useNFTType } from './hooks/useZNFT';
+import { useNFT, useNFTType } from './hooks/useNFT';
+import { useZNFT, useZNFTType } from './hooks/useZNFT';
 import { useNFTContent, useNFTContentType } from './hooks/useNFTContent';
 import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
 import { NFTFetchConfiguration } from './context/NFTFetchContext';
@@ -16,6 +17,7 @@ import { AuctionStateInfo } from './fetcher/AuctionState';
 
 export {
   // Hooks
+  useNFT,
   useZNFT,
   useNFTContent,
   useNFTMetadata,
@@ -23,6 +25,7 @@ export {
   useZoraUsername,
   // Hook types
   useNFTType,
+  useZNFTType,
   useNFTContentType,
   useNFTMetadataType,
   // Types

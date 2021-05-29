@@ -14,6 +14,7 @@ import {
   ReserveAuctionBidsWithCurrency,
 } from '../fetcher/FetchResultTypes';
 import { AuctionStateInfo } from './AuctionState';
+import { OpenseaResponse } from './OpenseaUtils';
 
 export type PricingInfo = {
   currency: CurrencyShortFragment;
@@ -48,11 +49,8 @@ export enum AuctionType {
   RESERVE = 'RESERVE',
 }
 
-export type ZNFTMediaDataType = {
-  nft: NFTResultType,
-  zoraNFT: Omit<NftMediaFragment, 'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator' | 'metadataURI'> & {
-    creatorBidSharePercentage: number;
-  };
+export type CommonNFTMediaDataType = {
+  nft: NFTResultType;
   pricing: {
     perpetual?: {
       bids: BidDataPartialFragment[];
@@ -60,6 +58,19 @@ export type ZNFTMediaDataType = {
     };
     reserve: Maybe<ReserveAuctionPartialFragment>;
   };
+};
+
+export type ZNFTMediaDataType = CommonNFTMediaDataType & {
+  zoraNFT: Omit<
+    NftMediaFragment,
+    'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator' | 'metadataURI'
+  > & {
+    creatorBidSharePercentage: number;
+  };
+};
+
+export type OpenseaNFTMediaDataType = CommonNFTMediaDataType & {
+  openseaInfo: OpenseaResponse;
 };
 
 export type HighestBidType = {
@@ -89,6 +100,10 @@ export type PricingInfoData = {
 };
 
 export type NFTDataType = Omit<ZNFTMediaDataType, 'pricing'> & {
+  pricing: PricingInfoData;
+};
+
+export type OpenseaNFTDataType = Omit<OpenseaNFTMediaDataType, 'pricing'> & {
   pricing: PricingInfoData;
 };
 
