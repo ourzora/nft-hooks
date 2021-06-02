@@ -7,6 +7,7 @@ import type {
   Currency,
   CurrencyShortFragment,
   GetMediaAndAuctionsQuery,
+  ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, KNOWN_CONTRACTS } from './FetchResultTypes';
@@ -38,7 +39,11 @@ export function transformCurrencyEth(currency: CurrencyShortFragment) {
   return updatedCurrency;
 }
 
-export function transformMediaForKey(result: GetMediaAndAuctionsQuery, key: string, networkId: NetworkIDs): ZNFTMediaDataType {
+export function transformMediaForKey(
+  result: GetMediaAndAuctionsQuery,
+  key: string,
+  networkId: NetworkIDs
+): ZNFTMediaDataType {
   const media = result.medias.find((media) => media.id === key);
   if (!media) {
     throw new RequestError('No media in response');
@@ -76,13 +81,20 @@ export function transformMediaForKey(result: GetMediaAndAuctionsQuery, key: stri
         bids: currentBids || [],
         ask: currentAsk || null,
       },
-      reserve: auctionData
-        ? {
-            ...auctionData,
-            auctionCurrency: transformCurrencyEth(auctionData.auctionCurrency),
-          }
-        : null,
+      reserve: auctionDataToPricing(auctionData),
     },
+  };
+}
+
+export function auctionDataToPricing(
+  auctionData: ReserveAuctionPartialFragment | undefined
+) {
+  if (!auctionData) {
+    return null;
+  }
+  return {
+    ...auctionData,
+    auctionCurrency: transformCurrencyEth(auctionData.auctionCurrency),
   };
 }
 
@@ -120,7 +132,7 @@ const setCurrencyDecimal = (amount: string, decimals: Maybe<number>) => {
 };
 
 export function addAuctionInformation(
-  chainNFT: ZNFTMediaDataType,
+  pricing: ZNFTMediaDataType['pricing'],
   currencyInfos: CurrencyLookupType = {}
 ) {
   const getCurrencyComputedValue = (currencyId: string, bidAmount: string) => {
@@ -153,7 +165,7 @@ export function addAuctionInformation(
   };
 
   const getBidPricing = (amount: string): BidPricingInfo => {
-    const currency = chainNFT.pricing.reserve?.auctionCurrency as Currency;
+    const currency = pricing.reserve?.auctionCurrency as Currency;
     return {
       pricing: {
         currency,
@@ -181,8 +193,8 @@ export function addAuctionInformation(
   };
 
   const getHighestReserveBid = () => {
-    if (chainNFT.pricing.reserve?.currentBid) {
-      const { auctionCurrency, currentBid } = chainNFT.pricing.reserve;
+    if (pricing.reserve?.currentBid) {
+      const { auctionCurrency, currentBid } = pricing.reserve;
       const computedValue = getCurrencyComputedValue(
         auctionCurrency.id,
         currentBid.amount
@@ -202,7 +214,7 @@ export function addAuctionInformation(
   };
 
   const getHighestPerpetualBid = () => {
-    const sortedBids = chainNFT.pricing.perpetual?.bids
+    const sortedBids = pricing.perpetual?.bids
       ?.map((bid) => ({
         bid,
         computedValue: getCurrencyComputedValue(bid.currency.id, bid.amount),
@@ -233,7 +245,6 @@ export function addAuctionInformation(
       placedAt: sortedBids[0].bid.createdAtTimestamp,
     };
   };
-  const { pricing } = chainNFT;
   const nftPricingInformation: PricingInfoData = {
     reserve: pricing.reserve
       ? {
@@ -251,11 +262,10 @@ export function addAuctionInformation(
           current: {
             highestBid: getHighestReserveBid(),
             likelyHasEnded:
-              parseInt(chainNFT.pricing.reserve?.expectedEndTimestamp, 10) <
+              parseInt(pricing.reserve?.expectedEndTimestamp, 10) <
               new Date().getTime() / 1000,
             reserveMet:
-              chainNFT.pricing.reserve?.firstBidTime &&
-              chainNFT.pricing.reserve.firstBidTime !== '0',
+              pricing.reserve?.firstBidTime && pricing.reserve.firstBidTime !== '0',
           },
           reservePrice: {
             currency: transformCurrencyEth({
@@ -303,8 +313,5 @@ export function addAuctionInformation(
     status: AuctionStateInfo.LOADING,
   };
   nftPricingInformation.status = getAuctionState(nftPricingInformation);
-  return {
-    ...chainNFT,
-    pricing: nftPricingInformation,
-  };
+  return nftPricingInformation;
 }

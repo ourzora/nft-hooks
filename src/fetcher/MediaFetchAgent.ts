@@ -3,6 +3,7 @@ import { GraphQLClient } from 'graphql-request';
 
 import { RequestError } from './RequestError';
 import {
+  OPENSEA_API_URL_BY_NETWORK,
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
   ZORA_USERNAME_API_URL,
@@ -11,11 +12,14 @@ import type { NetworkIDs } from '../constants/networks';
 import {
   GET_ALL_AUCTIONS,
   GET_AUCTION_BY_CURATOR,
+  GET_AUCTION_BY_MEDIA,
   GET_MEDIA_QUERY,
 } from '../graph-queries/zora';
 import type {
   GetMediaAndAuctionsQuery,
   GetAllAuctionsQuery,
+  GetAuctionByMediaQuery,
+  ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
@@ -32,6 +36,7 @@ import {
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
+import { OpenseaResponse, transformGenericNFTForKey } from './OpenseaUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -53,6 +58,10 @@ export class MediaFetchAgent {
     currencyLoader: DataLoader<string, ChainCurrencyType>;
     // fetches NFT ipfs metadata from url, not batched but cached
     usernameLoader: DataLoader<string, UsernameResponseType>;
+    // genericNFTLoader currently uses opensea
+    genericNFTLoader: DataLoader<string, OpenseaResponse>;
+    // auctionIfnoLoader fetches auction info for non-zora NFTs
+    auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
   };
 
   constructor(network: NetworkIDs) {
@@ -63,6 +72,10 @@ export class MediaFetchAgent {
       mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
+      genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys)),
+      auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
+        maxBatchSize: 1,
+      }),
     };
   }
 
@@ -142,11 +155,29 @@ export class MediaFetchAgent {
     if (!chainInfo) {
       throw new RequestError('Cannot fetch chain information');
     }
-    return addAuctionInformation(chainInfo, currencyInfos);
+    return {
+      ...chainInfo,
+      pricing: addAuctionInformation(chainInfo.pricing, currencyInfos),
+    };
+  }
+
+  async loadNFTData(contractAddress: string, tokenId: string) {
+    const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
+    const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
+    if (!nftInfo) {
+      throw new RequestError('Cannot fetch NFT information');
+    }
+    return nftInfo;
   }
 
   async loadZNFTDataUntransformed(mediaId: string) {
     return await this.loaders.mediaLoader.load(mediaId);
+  }
+
+  async loadAuctionInfo(tokenContract: string, tokenId: string) {
+    return await this.loaders.auctionInfoLoader.load(
+      [tokenContract.toLowerCase(), tokenId].join(':')
+    );
   }
 
   /**
@@ -190,6 +221,28 @@ export class MediaFetchAgent {
     return response.reserveAuctions;
   }
 
+  private async fetchAuctionNFTInfo(tokenAndAddresses: readonly string[]) {
+    // TODO(iain): Allow batching w/ graphql subgraph update
+    if (tokenAndAddresses.length !== 1) {
+      throw new Error('can only fetch one now');
+    }
+
+    const [tokenContract, tokenId] = tokenAndAddresses[0].split(':');
+
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
+    const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+    const response = (await client.request(GET_AUCTION_BY_MEDIA, {
+      tokenContract,
+      tokenId,
+    })) as GetAuctionByMediaQuery;
+    if (!response.reserveAuctions) {
+      throw new RequestError('Missing auction in reponse');
+    }
+    return [response.reserveAuctions[0]];
+  }
+
   /**
    * Internal fetch current auctions by curator
    *
@@ -207,6 +260,31 @@ export class MediaFetchAgent {
       ids_id: mediaIds,
     })) as GetMediaAndAuctionsQuery;
     return mediaIds.map((key) => transformMediaForKey(response, key, this.networkId));
+  }
+
+  /**
+   * Fetches generic NFT information
+   *
+   * @param nftAddresses list of addresses in a 0xcontractid:tokenid format
+   * @returns
+   */
+  private async fetchGenericNFT(nftAddresses: readonly string[]) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.OpenSea);
+    const apiBase = OPENSEA_API_URL_BY_NETWORK[this.networkId];
+    const urlParams: string[] = [];
+    nftAddresses
+      .map((address) => address.split(':'))
+      .forEach(([address, tokenId]) => {
+        urlParams.push(`token_ids=${tokenId}&asset_contract_addresses=${address}`);
+      });
+    const response = await fetchWithTimeout.fetch(
+      `${apiBase}assets?${urlParams.join('&')}&order_direction=desc&offset=0&limit=100`
+    );
+    const responseJson = await response.json();
+
+    return nftAddresses.map((nftAddress) =>
+      transformGenericNFTForKey(responseJson.assets, nftAddress)
+    );
   }
 
   /**

@@ -11,8 +11,19 @@ export type MediaContentType =
   | { uri: string; type: 'uri'; mimeType: string }
   | { text: string; type: 'text'; mimeType: string };
 
+
+type MetadataIsh = {
+  mimeType: string;
+  name: string;
+  description: string;
+
+  // Only used for non-zora NFTs
+  animation_url?: string;
+  image?: string;
+};
+
 export type MetadataResultType = {
-  metadata: any;
+  metadata: MetadataIsh;
 };
 
 export type AuctionResultType = ReserveAuctionPartialFragment;
@@ -31,7 +42,6 @@ export enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 };
 
-
 type ETHAddress = string;
 
 export type NFTResultType = {
@@ -45,6 +55,10 @@ export type NFTResultType = {
   metadataURI: string;
 };
 
+export type GenericNFTResponseType = {
+  metadata: MetadataIsh
+}
+
 export type ZoraMedia = {
   metadataHash: string;
   contentURI: string;
@@ -53,7 +67,6 @@ export type ZoraMedia = {
   creatorBidShare: string;
   createdAtTimestamp: string;
 };
-
 
 export type ReserveAuctionBidsWithCurrency = Omit<
   ReserveAuctionPartialFragment,

@@ -95,6 +95,24 @@ export const GET_ALL_AUCTIONS = gql`
   }
 `;
 
+export const GET_AUCTION_BY_MEDIA = gql`
+  ${AUCTION_PARTIALS}
+
+  query getAuctionByMedia($tokenContract: String, $tokenId: BigInt) {
+    reserveAuctions(
+      first: 1,
+      where: {
+        tokenContract: $tokenContract
+        tokenId: $tokenId
+      }
+      orderBy: createdAtTimestamp
+      orderDirection: desc
+    ) {
+      ...ReserveAuctionPartial
+    }
+  }
+`;
+
 export const GET_MEDIA_QUERY = gql`
   ${AUCTION_PARTIALS}
 

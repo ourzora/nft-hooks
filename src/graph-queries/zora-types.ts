@@ -2306,6 +2306,20 @@ export type GetAllAuctionsQuery = (
   )> }
 );
 
+export type GetAuctionByMediaQueryVariables = Exact<{
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['BigInt']>;
+}>;
+
+
+export type GetAuctionByMediaQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )> }
+);
+
 export type AskPriceFragment = (
   { __typename?: 'Ask' }
   & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>

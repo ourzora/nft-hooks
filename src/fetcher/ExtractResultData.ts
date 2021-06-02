@@ -1,16 +1,16 @@
 import { NFTDataType } from "./AuctionInfoTypes";
 
-export function getCurrenciesInUse(nftData: NFTDataType): string[] {
-  const hasActiveReserveAuction = nftData.pricing.reserve?.status === 'Active';
+export function getCurrenciesInUse(nftPricing: NFTDataType['pricing']): string[] {
+  const hasActiveReserveAuction = nftPricing.reserve?.status === 'Active';
   if (hasActiveReserveAuction) {
-    const auctionCurrencyId = nftData.pricing.reserve?.auctionCurrency.id;
+    const auctionCurrencyId = nftPricing.reserve?.auctionCurrency.id;
     if (auctionCurrencyId) {
       return [auctionCurrencyId];
     }
   }
   if (!hasActiveReserveAuction) {
-    const bids = nftData.pricing.perpetual?.bids?.map((bid) => bid.pricing.currency.id) || [];
-    const ask = nftData.pricing.perpetual.ask?.pricing.currency.id;
+    const bids = nftPricing.perpetual?.bids?.map((bid) => bid.pricing.currency.id) || [];
+    const ask = nftPricing.perpetual.ask?.pricing.currency.id;
     if (ask) {
       return [...bids, ask];
     }
