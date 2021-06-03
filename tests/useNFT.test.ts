@@ -85,10 +85,7 @@ describe('useZNFT', () => {
       })
     );
 
-    await waitFor(() => {
-      // console.log(result.current);
-      return result.current.currencyLoaded;
-    });
+    await waitFor(() => result.current.currencyLoaded);
 
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();

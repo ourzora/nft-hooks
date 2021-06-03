@@ -6,7 +6,6 @@ import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
 import { NFTDataType, ZNFTMediaDataType } from '../fetcher/AuctionInfoTypes';
 
-// TODO: iain move to common folder
 export type useZNFTType = {
   currencyLoaded: boolean;
   error?: string;

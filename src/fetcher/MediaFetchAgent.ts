@@ -36,7 +36,11 @@ import {
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
-import { OpenseaResponse, transformGenericNFTForKey } from './OpenseaUtils';
+import {
+  OpenseaResponse,
+  transformGenericNFTForKey,
+  transformOpenseaResponse,
+} from './OpenseaUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -161,7 +165,21 @@ export class MediaFetchAgent {
     };
   }
 
-  async loadNFTData(contractAddress: string, tokenId: string) {
+  async loadNFTData(
+    contractAddress: string,
+    tokenId: string,
+    auctionData?: ReserveAuctionPartialFragment,
+    currencyData?: CurrencyLookupType
+  ) {
+    const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
+    const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
+    if (!nftInfo) {
+      throw new RequestError('Cannot fetch NFT information');
+    }
+    return transformOpenseaResponse(nftInfo, auctionData, currencyData);
+  }
+
+  async loadNFTDataUntransformed(contractAddress: string, tokenId: string) {
     const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
     const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
     if (!nftInfo) {

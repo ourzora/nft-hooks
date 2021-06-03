@@ -2,14 +2,9 @@ import { useContext } from 'react';
 import useSWR from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
-import {
-  addAuctionInformation,
-  auctionDataToPricing,
-} from '../fetcher/TransformFetchResults';
 import { OpenseaNFTDataType } from '../fetcher/AuctionInfoTypes';
-import { OpenseaResponse } from 'src/fetcher/OpenseaUtils';
+import { transformOpenseaResponse } from '../fetcher/OpenseaUtils';
 
-// TODO: iain move to common folder
 export type useNFTType = {
   currencyLoaded: boolean;
   error?: string;
@@ -38,9 +33,9 @@ export function useNFT(
   const fetcher = useContext(NFTFetchContext);
   const { loadCurrencyInfo = false, refreshInterval, initialData } = options || {};
 
-  const nftData = useSWR<OpenseaResponse>(
+  const nftData = useSWR(
     contractAddress && tokenId ? ['loadGenericNFT', contractAddress, tokenId] : null,
-    (_, contractAddress, tokenId) => fetcher.loadNFTData(contractAddress, tokenId),
+    (_, contractAddress, tokenId) => fetcher.loadNFTDataUntransformed(contractAddress, tokenId),
     { dedupingInterval: 0, initialData }
   );
   const auctionData = useSWR(
@@ -62,24 +57,11 @@ export function useNFT(
 
   let data: OpenseaNFTDataType | undefined = undefined;
   if (nftData.data !== undefined) {
-    data = {
-      nft: {
-        tokenId: nftData.data.token_id,
-        contract: {
-          address: nftData.data.asset_contract.address,
-        },
-        owner: nftData.data.owner.address,
-        creator: nftData.data.creator.address,
-        metadataURI: nftData.data.token_metadata,
-      },
-      openseaInfo: nftData.data,
-      pricing: addAuctionInformation(
-        {
-          reserve: auctionDataToPricing(auctionData.data),
-        },
-        currencyData.data
-      ),
-    };
+    data = transformOpenseaResponse(
+      nftData.data,
+      auctionData.data,
+      currencyData.data,
+    );
   }
 
   return {

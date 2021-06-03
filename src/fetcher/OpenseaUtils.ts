@@ -1,4 +1,7 @@
-import { RequestError } from "./RequestError";
+import { ReserveAuctionPartialFragment } from 'src/graph-queries/zora-types';
+import { CurrencyLookupType, OpenseaNFTDataType } from './AuctionInfoTypes';
+import { RequestError } from './RequestError';
+import { addAuctionInformation, auctionDataToPricing } from './TransformFetchResults';
 
 export type OpenseaResponse = {
   token_id: string;
@@ -23,6 +26,31 @@ export type OpenseaResponse = {
   };
   creator: {
     address: string;
+  };
+};
+
+export const transformOpenseaResponse = (
+  data: OpenseaResponse,
+  auctionData?: ReserveAuctionPartialFragment,
+  currencyData?: CurrencyLookupType
+): OpenseaNFTDataType => {
+  return {
+    nft: {
+      tokenId: data.token_id,
+      contract: {
+        address: data.asset_contract.address,
+      },
+      owner: data.owner.address,
+      creator: data.creator.address,
+      metadataURI: data.token_metadata,
+    },
+    openseaInfo: data,
+    pricing: addAuctionInformation(
+      {
+        reserve: auctionDataToPricing(auctionData),
+      },
+      currencyData
+    ),
   };
 };
 
