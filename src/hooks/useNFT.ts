@@ -36,7 +36,7 @@ export function useNFT(
   const nftData = useSWR(
     contractAddress && tokenId ? ['loadGenericNFT', contractAddress, tokenId] : null,
     (_, contractAddress, tokenId) => fetcher.loadNFTDataUntransformed(contractAddress, tokenId),
-    { dedupingInterval: 0, initialData }
+    { dedupingInterval: 0 }
   );
   const auctionData = useSWR(
     contractAddress && tokenId ? ['loadAuctionForNFT', contractAddress, tokenId] : null,
@@ -62,6 +62,8 @@ export function useNFT(
       auctionData.data,
       currencyData.data,
     );
+  } else {
+    data = initialData;
   }
 
   return {

@@ -32,7 +32,7 @@ export function useZNFT(id?: string, options: OptionsType = {}): useZNFTType {
   const nftData = useSWR<ZNFTMediaDataType>(
     id ? ['loadZNFTDataUntransformed', id] : null,
     (_, id) => fetcher.loadZNFTDataUntransformed(id),
-    { refreshInterval, dedupingInterval: 0, initialData }
+    { refreshInterval, dedupingInterval: 0 }
   );
   const currencyData = useSWR(
     nftData.data && nftData.data.pricing && loadCurrencyInfo
@@ -54,6 +54,8 @@ export function useZNFT(id?: string, options: OptionsType = {}): useZNFTType {
       ...nftData.data,
       pricing: addAuctionInformation(nftData.data.pricing, currencyData.data),
     };
+  } else {
+    data = initialData;
   }
 
   return {
