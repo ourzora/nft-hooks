@@ -29,6 +29,16 @@ export type OpenseaResponse = {
   };
 };
 
+export const openseaDataToMetadata = (response: OpenseaNFTDataType) => {
+  return {
+    name: response.openseaInfo.name,
+    description: response.openseaInfo.description,
+    image: response.openseaInfo.image_url,
+    image_thumbnail_url: response.openseaInfo.image_thumbnail_url,
+    animation_url: response.openseaInfo.animation_url,
+  };
+};
+
 export const transformOpenseaResponse = (
   data: OpenseaResponse,
   auctionData?: ReserveAuctionPartialFragment,

@@ -99,12 +99,14 @@ export type PricingInfoData = {
   auctionType: AuctionType;
 };
 
-export type NFTDataType = Omit<ZNFTMediaDataType, 'pricing'> & {
+export type ZNFTDataType = Omit<ZNFTMediaDataType, 'pricing'> & {
   pricing: PricingInfoData;
 };
 
 export type OpenseaNFTDataType = Omit<OpenseaNFTMediaDataType, 'pricing'> & {
   pricing: PricingInfoData;
 };
+
+export type NFTDataType = ZNFTDataType | OpenseaNFTDataType;
 
 export type CurrencyLookupType = { [currencyId: string]: ChainCurrencyType };

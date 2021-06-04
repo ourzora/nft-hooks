@@ -5,15 +5,13 @@ import { useNFTContent, useNFTContentType } from './hooks/useNFTContent';
 import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
 import { NFTFetchConfiguration } from './context/NFTFetchContext';
 import { MediaFetchAgent } from './fetcher/MediaFetchAgent';
-import {
-  ChainCurrencyType,
-  AuctionResultType,
-} from './fetcher/FetchResultTypes';
-import * as ExtractResultData from './fetcher/TransformFetchResults';
+import { ChainCurrencyType, AuctionResultType } from './fetcher/FetchResultTypes';
 import { useAuctions } from './hooks/useAuctions';
 import { useZoraUsername } from './hooks/useZoraUsername';
 import { AuctionType, NFTDataType, PricingInfo } from './fetcher/AuctionInfoTypes';
 import { AuctionStateInfo } from './fetcher/AuctionState';
+import * as DataTransformers from './fetcher/DataTransformers';
+import { RequestError } from './fetcher/RequestError';
 
 export {
   // Hooks
@@ -44,6 +42,8 @@ export {
   Networks,
   // Constant Types
   NetworkIDs,
-  // Utility functions
-  ExtractResultData,
+  // Data Transfomers
+  DataTransformers,
+  // Error type
+  RequestError,
 };
