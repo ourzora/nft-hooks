@@ -4,12 +4,12 @@ import useSWR from 'swr';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
-import { NFTDataType, ZNFTMediaDataType } from '../fetcher/AuctionInfoTypes';
+import { ZNFTDataType, ZNFTMediaDataType } from '../fetcher/AuctionInfoTypes';
 
 export type useZNFTType = {
   currencyLoaded: boolean;
   error?: string;
-  data?: NFTDataType;
+  data?: ZNFTDataType;
 };
 
 type OptionsType = {
