@@ -157,7 +157,10 @@ export const GET_MEDIA_QUERY = gql`
   }
 
   query getMediaAndAuctions($ids_id: [ID!]) {
-    medias(where: { id_in: $ids_id }) {
+    medias(
+      where: { id_in: $ids_id }
+      first: 500
+    ) {
       ...NFTMedia
       currentBids {
         ...BidDataPartial
