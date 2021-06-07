@@ -1,6 +1,7 @@
 import { Networks, NetworkIDs } from './constants/networks';
 import { useNFT, useNFTType } from './hooks/useNFT';
 import { useZNFT, useZNFTType } from './hooks/useZNFT';
+import { useOpenseaNFT, useOpenseaNFTType } from './hooks/useOpenseaNFT';
 import { useNFTContent, useNFTContentType } from './hooks/useNFTContent';
 import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
 import { NFTFetchConfiguration } from './context/NFTFetchContext';
@@ -15,17 +16,20 @@ import { RequestError } from './fetcher/RequestError';
 
 export {
   // Hooks
+  useAuctions,
   useNFT,
-  useZNFT,
   useNFTContent,
   useNFTMetadata,
-  useAuctions,
+  // Wrapped by useNFT, can use the underlying hooks here
+  useZNFT,
+  useOpenseaNFT,
   useZoraUsername,
   // Hook types
-  useNFTType,
-  useZNFTType,
   useNFTContentType,
   useNFTMetadataType,
+  useNFTType,
+  useOpenseaNFTType,
+  useZNFTType,
   // Types
   PricingInfo,
   // Configuration
