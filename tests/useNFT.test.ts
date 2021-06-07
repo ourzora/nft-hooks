@@ -1,93 +1,34 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { cache } from 'swr';
+import { Networks, useNFT, useZNFT } from '../src';
+import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../src/constants/addresses';
+import { useOpenseaNFT } from '../src/hooks/useOpenseaNFT';
 
-import OpenseaCryptopunk from './mock-responses/openseaCryptopunk.json';
-import { mockGraphQLQuery } from './setupZoraGQLMock';
+jest.mock('../src/hooks/useOpenseaNFT');
+jest.mock('../src/hooks/useZNFT');
 
-import fetchMock from './setupFetchMock';
-
-import { useNFT } from '../src';
-
-describe('useZNFT', () => {
+describe('useNFT', () => {
   beforeEach(() => {
-    fetchMock.reset();
-    cache.clear();
+    jest.resetAllMocks();
   });
-  const RESERVE_AUCTION_MOCK = {
-    tokenId: 2974,
-    status: 'Active',
-    curatorFeePercentage: 100,
-    approved: true,
-  };
-
-  it('loads an nft currently in an auction', async () => {
-    const mockOverrides = {
-      ReserveAuction: () => RESERVE_AUCTION_MOCK,
-    };
-
-    mockGraphQLQuery(
-      'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1',
-      mockOverrides
-    );
-
-    fetchMock.once(
-      'https://api.opensea.io/api/v1/assets?token_ids=5683&asset_contract_addresses=0xb7f7f6c52f2e2fdb1963eab30438024864c313f6&order_direction=desc&offset=0&limit=100',
-      OpenseaCryptopunk
-    );
-
-    const { waitFor, result } = renderHook(() =>
-      useNFT('0xb7f7f6c52f2e2fdb1963eab30438024864c313f6', '5683')
-    );
-
-    await waitFor(() => !!result.current.data);
-
-    expect(result.current.error).toBeUndefined();
-    expect(result.current.data).toMatchSnapshot();
+  it('fetches opensea NFT', () => {
+    renderHook(() => useNFT('0x00000000120040', '23'));
+    expect(useOpenseaNFT).toHaveBeenLastCalledWith('0x00000000120040', '23', {});
+    expect(useOpenseaNFT).toHaveBeenCalledTimes(1);
+    expect(useZNFT).toHaveBeenLastCalledWith(undefined, {});
+    expect(useOpenseaNFT).toHaveBeenCalledTimes(1);
   });
-
-  it('correctly loads auction information from uniswap', async () => {
-    const mockZoraOverrides = {
-      ReserveAuction: () => ({
-        ...RESERVE_AUCTION_MOCK,
-        tokenId: '5683',
-        tokenContract: '0xb7f7f6c52f2e2fdb1963eab30438024864c313f6',
-      }),
-    };
-    const mockUniswapOverrides = {
-      Token: () => ({
-        id: '0xFACE',
-        decimals: 18,
-      }),
-    };
-
-    mockGraphQLQuery(
-      'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
-      mockUniswapOverrides,
-      {},
-      'Uniswap'
-    );
-
-    mockGraphQLQuery(
-      'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1',
-      mockZoraOverrides,
-      {},
-      'Zora'
-    );
-
-    fetchMock.once(
-      'https://api.opensea.io/api/v1/assets?token_ids=5683&asset_contract_addresses=0xb7f7f6c52f2e2fdb1963eab30438024864c313f6&order_direction=desc&offset=0&limit=100',
-      OpenseaCryptopunk
-    );
-
-    const { waitFor, result } = renderHook(() =>
-      useNFT('0xb7f7f6c52f2e2fdb1963eab30438024864c313f6', '5683', {
-        loadCurrencyInfo: true,
-      })
-    );
-
-    await waitFor(() => result.current.currencyLoaded);
-
-    expect(result.current.error).toBeUndefined();
-    expect(result.current.data).toMatchSnapshot();
+  it('fetches zora NFT', () => {
+    renderHook(() => useNFT(undefined, '23'));
+    expect(useZNFT).toHaveBeenCalledWith('23', {});
+    expect(useZNFT).toHaveBeenCalledTimes(1);
+    expect(useOpenseaNFT).toHaveBeenCalledWith(undefined, undefined, {});
+    expect(useOpenseaNFT).toHaveBeenCalledTimes(1);
+  });
+  it('fetches zora NFT by address', () => {
+    renderHook(() => useNFT(ZORA_MEDIA_CONTRACT_BY_NETWORK[Networks.MAINNET], '23'));
+    expect(useZNFT).toHaveBeenCalledWith("23", {});
+    expect(useOpenseaNFT).toHaveBeenCalledWith(undefined, undefined, {});
+    expect(useZNFT).toHaveBeenCalledTimes(1);
+    expect(useOpenseaNFT).toHaveBeenCalledTimes(1);
   });
 });
