@@ -173,6 +173,9 @@ export class MediaFetchAgent {
   ) {
     const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
     const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
+    if (!auctionData) {
+      auctionData = await this.loadAuctionInfo(contractAddress, tokenId);
+    }
     if (!nftInfo) {
       throw new RequestError('Cannot fetch NFT information');
     }
