@@ -221,7 +221,7 @@ export function addAuctionInformation(
       }))
       .sort((a, b) => {
         if (a.computedValue && b.computedValue) {
-          return new Big(a.computedValue.inETH).sub(b.computedValue.inETH) ? -1 : 1;
+          return new Big(a.computedValue.inETH).sub(b.computedValue.inETH).toNumber() > 0 ? -1 : 1;
         }
         return new Date(a.bid.createdAtTimestamp).getTime() >
           new Date(b.bid.createdAtTimestamp).getTime()
