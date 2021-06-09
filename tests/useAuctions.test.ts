@@ -49,7 +49,7 @@ describe('useNFT', () => {
 
     expect(result.current.error).toBeUndefined();
     expect(result.current.loading).toBeFalsy();
-    expect(result.current.auctions).toMatchSnapshot();
+    expect(result.current.data).toMatchSnapshot();
   });
 
   it('loads specific auctions for a given curator', async () => {
@@ -80,6 +80,6 @@ describe('useNFT', () => {
 
     expect(result.current.error).toBeUndefined();
     expect(result.current.loading).toBeFalsy();
-    expect(result.current.auctions).toMatchSnapshot();
+    expect(result.current.data).toMatchSnapshot();
   });
 });

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
 
@@ -9,10 +9,12 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
  * @param address string address to fetch zora username of
  * @returns UsernameResponseType
  */
-export function useZoraUsername(address: string) {
+export function useZoraUsername(address: string, options?: SWRConfiguration<any>) {
   const fetcher = useContext(NFTFetchContext);
-  const { error, data } = useSWR(['loadUsername', address], (_, address: string) =>
-    fetcher.loadUsername(address)
+  const { error, data } = useSWR(
+    ['loadUsername', address],
+    (_, address: string) => fetcher.loadUsername(address),
+    options,
   );
 
   return { error, username: data };

@@ -1,40 +1,41 @@
-import { useState } from 'react';
-import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
+import { useContext } from 'react';
+import useSWR, { SWRConfiguration } from 'swr';
 
-import { useCallbackFetch } from './useCallbackFetch';
+import { NFTFetchContext } from '../context/NFTFetchContext';
+import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
 
 export type useAuctionHouseType = {
   loading: boolean;
   error?: string;
-  auctions?: ReserveAuctionPartialFragment[];
+  data?: ReserveAuctionPartialFragment[];
 };
 
 /**
  * Fetches on-chain NFT auction data for the given curator
  *
- * @param id id of zNFT to fetch blockchain information for
- * @param curator
+ * @param curators
+ * @param approved
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
 export function useAuctions(
   curators: readonly string[] = [],
-  approved: boolean | null = null
+  approved: boolean | null = null,
+  options?: SWRConfiguration<ReserveAuctionPartialFragment[]>
 ): useAuctionHouseType {
-  const [auctions, setAuctions] = useState<ReserveAuctionPartialFragment[]>();
-  const [error, setError] = useState<string | undefined>();
-
-  useCallbackFetch(curators, async (fetchAgent, curators) => {
-    try {
-      let data = await fetchAgent.fetchReserveAuctions(curators, approved);
-      setAuctions(data);
-    } catch (err) {
-      setError(err.toString());
-    }
-  });
+  const fetcher = useContext(NFTFetchContext);
+  const queryKey = JSON.stringify({ type: 'useAuctions', curators, approved });
+  const { data, error } = useSWR<ReserveAuctionPartialFragment[]>(
+    queryKey,
+    async (query: string) => {
+      const { curators, approved } = JSON.parse(query);
+      return await fetcher.fetchReserveAuctions(curators, approved);
+    },
+    options
+  );
 
   return {
-    loading: !error && !auctions,
+    loading: !error && !data,
     error,
-    auctions,
+    data,
   };
 }
