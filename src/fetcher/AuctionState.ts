@@ -6,9 +6,16 @@ export enum AuctionStateInfo {
   PERPETUAL_BID = 'PERPETUAL_BID',
   PERPETUAL_ASK = 'PERPETUAL_ASK',
   RESERVE_AUCTION_PENDING = 'RESERVE_AUCTION_PENDING',
+  // A reserve auction is active after the reserve has been met
   RESERVE_AUCTION_ACTIVE = 'RESERVE_AUCTION_ACTIVE',
+  // This is set during the last 15 minutes of a reserve auction
+  // Any bids during this time increase the bidding available time
+  // by 15 minutes in the default configuration.
   RESERVE_AUCTION_LAST_15 = 'RESERVE_AUCTION_LAST_15',
+  // Ended auctions are auctions where the time has run out
+  // but the auction has not yet been finalized or finished
   RESERVE_AUCTION_ENDED = 'RESERVE_AUCTION_ENDED',
+  // Finished auctions are finalized and funds claimed
   RESERVE_AUCTION_FINISHED = 'RESERVE_AUCTION_FINISHED',
 }
 
@@ -39,6 +46,13 @@ export function getAuctionState(pricing: PricingInfoData): AuctionStateInfo {
       }
       return AuctionStateInfo.RESERVE_AUCTION_ACTIVE;
     }
+    return AuctionStateInfo.RESERVE_AUCTION_PENDING;
+  }
+
+  if (!pricing.perpetual && pricing.reserve?.status === 'Finished') {
+    return AuctionStateInfo.RESERVE_AUCTION_FINISHED;
+  }
+  if (!pricing.perpetual && pricing.reserve?.status === 'Pending') {
     return AuctionStateInfo.RESERVE_AUCTION_PENDING;
   }
 

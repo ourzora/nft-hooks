@@ -37,6 +37,9 @@ fragment ReserveAuctionPartial on ReserveAuction {
   reservePrice
   firstBidTime
   createdAtTimestamp
+  tokenOwner {
+    id
+  }
   curator {
     id
   }
