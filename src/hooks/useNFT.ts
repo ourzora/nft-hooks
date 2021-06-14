@@ -48,7 +48,7 @@ export function useNFT(
 
   const zoraNFT = useZNFT(isZoraContractAddress ? tokenId : undefined, options);
 
-  let data = nonZoraNFT || zoraNFT;
+  let data = isZoraContractAddress ? zoraNFT : nonZoraNFT;
 
   return {
     currencyLoaded: !!data.currencyLoaded,
