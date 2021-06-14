@@ -40,7 +40,7 @@ export function useNFT(
   const isZoraContractAddress =
     contractAddress === ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
 
-  const nonZoraNFT = useOpenseaNFT(
+  const openseaNFT = useOpenseaNFT(
     !isZoraContractAddress ? contractAddress : undefined,
     !isZoraContractAddress ? tokenId : undefined,
     options
@@ -48,7 +48,7 @@ export function useNFT(
 
   const zoraNFT = useZNFT(isZoraContractAddress ? tokenId : undefined, options);
 
-  let data = nonZoraNFT || zoraNFT;
+  let data = isZoraContractAddress ? zoraNFT : openseaNFT;
 
   return {
     currencyLoaded: !!data.currencyLoaded,
