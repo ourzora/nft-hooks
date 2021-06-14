@@ -15,7 +15,7 @@ export type useAuctionHouseType = {
  *
  * @param curators
  * @param approved
- * @returns useNFTType hook results include loading, error, and chainNFT data.
+ * @returns useNFTType hook results include loading, error, and data (ReserveAuctionPartialFragment).
  */
 export function useAuctions(
   curators: readonly string[] = [],

@@ -6,6 +6,8 @@ Put together, these power implementations of the zNFT protocol on any website.
 
 This library consists of a data fetch class and associated React hooks to load NFT data is an easy, efficient manner. The API both batches and caches requests, meaning you can use the hooks across a page without needing to worry about significant performance penalties.
 
+👯 See also: [@zoralabs/nft-components](https://github.com/ourzora/nft-components) a complimentary library to this one to render NFT data on a webpage.
+
 
 Install:
 ```bash
@@ -35,8 +37,9 @@ function MyNFT() {
 
 | Hook | Usage |
 | -- | -- |
-| [useZNFT](docs/useZNFT.md) | Fetches on-chain zNFT data |
-| *useNFT* | Fetches on-chain NFT data for any ERC721 (coming soon) |
+| [useNFT](docs/useNFT.md) | Fetches on-chain NFT data for either zora or non-zora NFTs |
+| [useZNFT](docs/useZNFT.md) | Fetches on-chain zora zNFT data (most likely want to use useNFT) |
+| [useAuctions](docs/useAuctions.md) | Fetches list of auctions given one or more curators from the Zora auction house |
 | [useNFTMetadata](docs/useNFTMetadata.md) | Fetches NFT metadata from a URL |
 | [useNFTContent](docs/useNFTContent.md) | Fetches text content from server for rendering from content URL |
 
