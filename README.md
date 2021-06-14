@@ -6,6 +6,8 @@ Put together, these power implementations of the zNFT protocol on any website.
 
 This library consists of a data fetch class and associated React hooks to load NFT data is an easy, efficient manner. The API both batches and caches requests, meaning you can use the hooks across a page without needing to worry about significant performance penalties.
 
+👯 See also: [@zoralabs/nft-components](https://github.com/ourzora/nft-components) a complimentary library to this one to render NFT data on a webpage.
+
 
 Install:
 ```bash
