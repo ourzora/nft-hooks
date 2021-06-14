@@ -12,6 +12,7 @@ import { useZoraUsername } from './hooks/useZoraUsername';
 import { AuctionType, NFTDataType, PricingInfo } from './fetcher/AuctionInfoTypes';
 import { AuctionStateInfo } from './fetcher/AuctionState';
 import * as DataTransformers from './fetcher/DataTransformers';
+import * as FetchStaticData from './fetcher/FetchStaticData';
 import { RequestError } from './fetcher/RequestError';
 
 export {
@@ -48,6 +49,8 @@ export {
   NetworkIDs,
   // Data Transfomers
   DataTransformers,
+  // Static server-side data fetching utilities
+  FetchStaticData,
   // Error type
   RequestError,
 };
