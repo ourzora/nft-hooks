@@ -1893,7 +1893,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
       "status": "Active",
-      "tokenId": 2974,
+      "tokenId": "-1",
       "tokenOwner": Object {
         "id": "10",
       },
@@ -1928,7 +1928,7 @@ Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "2",
+        "id": "0",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1941,41 +1941,8 @@ Object {
           "prettyAmount": "1.2974e-14",
         },
       },
-      "bids": Array [
-        Object {
-          "bidder": Object {
-            "id": "10",
-          },
-          "createdAtTimestamp": "12974",
-          "id": "3",
-          "pricing": Object {
-            "amount": "10000",
-            "computedValue": undefined,
-            "currency": Object {
-              "decimals": 18,
-              "id": "0xFACE",
-              "name": "Wrapped Ether",
-              "symbol": "WETH",
-            },
-            "prettyAmount": "1e-14",
-          },
-        },
-      ],
-      "highestBid": Object {
-        "placedAt": "12974",
-        "placedBy": "10",
-        "pricing": Object {
-          "amount": "10000",
-          "computedValue": undefined,
-          "currency": Object {
-            "decimals": 18,
-            "id": "0xFACE",
-            "name": "Wrapped Ether",
-            "symbol": "WETH",
-          },
-          "prettyAmount": "1e-14",
-        },
-      },
+      "bids": Array [],
+      "highestBid": undefined,
     },
     "reserve": Object {
       "approved": true,
@@ -2031,7 +1998,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "4",
+      "id": "1",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -2041,7 +2008,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "4",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2062,7 +2029,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "5",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2088,7 +2055,7 @@ Object {
         "prettyAmount": "1.2974e-14",
       },
       "status": "Active",
-      "tokenId": 2974,
+      "tokenId": "-1",
       "tokenOwner": Object {
         "id": "10",
       },
