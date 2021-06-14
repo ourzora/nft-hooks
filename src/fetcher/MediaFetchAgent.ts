@@ -73,12 +73,17 @@ export class MediaFetchAgent {
     this.networkId = network;
 
     this.loaders = {
-      mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys)),
-      currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys)),
+      mediaLoader: new DataLoader((keys) => this.fetchMediaGraph(keys), { cache: false }),
+      currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys), {
+        cache: false,
+      }),
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
-      genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys)),
+      genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys), {
+        cache: false,
+      }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         maxBatchSize: 1,
+        cache: false,
       }),
     };
   }
