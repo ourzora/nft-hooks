@@ -13,6 +13,7 @@ fragment PreviousReserveBid on InactiveReserveAuctionBid {
   bidder {
     id
   }
+  transactionHash
   createdAtTimestamp
   amount
   bidType
@@ -23,6 +24,7 @@ fragment PreviousReserveBid on InactiveReserveAuctionBid {
 fragment CurrentReserveBid on ReserveAuctionBid {
   bidType
   amount
+  transactionHash
   createdAtTimestamp
   bidder {
     id
@@ -37,6 +39,7 @@ fragment ReserveAuctionPartial on ReserveAuction {
   reservePrice
   firstBidTime
   createdAtTimestamp
+  approvedTimestamp
   curator {
     id
   }
@@ -150,6 +153,7 @@ export const GET_MEDIA_QUERY = gql`
       id
     }
     createdAtTimestamp
+    transactionHash
     amount
     currency {
       ...CurrencyShort

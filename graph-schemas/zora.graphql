@@ -47,6 +47,9 @@ type Ask {
   """The Media associated with the Ask"""
   media: Media!
 
+  """Transaction hash the ask was created at"""
+  transactionHash: String!
+
   """The Currency of the Ask"""
   currency: Currency!
 
@@ -86,6 +89,20 @@ input Ask_filter {
   media_not_starts_with: String
   media_ends_with: String
   media_not_ends_with: String
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   currency: String
   currency_not: String
   currency_gt: String
@@ -143,6 +160,7 @@ input Ask_filter {
 enum Ask_orderBy {
   id
   media
+  transactionHash
   currency
   amount
   owner
@@ -153,6 +171,9 @@ enum Ask_orderBy {
 type Bid {
   """<token-id>-<bidderAddress>"""
   id: ID!
+
+  """Transaction hash the bid was created at"""
+  transactionHash: String!
 
   """The Media associated with the Bid"""
   media: Media!
@@ -188,6 +209,20 @@ input Bid_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   media: String
   media_not: String
   media_gt: String
@@ -280,6 +315,7 @@ input Bid_filter {
 
 enum Bid_orderBy {
   id
+  transactionHash
   media
   currency
   amount
@@ -401,6 +437,9 @@ type InactiveAsk {
   """<tokenId>-<transactionHash>-<logIndex>"""
   id: ID!
 
+  """Transaction hash the ask was created at"""
+  transactionHash: String!
+
   """The Media associated with the InactiveAsk"""
   media: Media!
 
@@ -438,6 +477,20 @@ input InactiveAsk_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   media: String
   media_not: String
   media_gt: String
@@ -526,6 +579,7 @@ input InactiveAsk_filter {
 
 enum InactiveAsk_orderBy {
   id
+  transactionHash
   media
   type
   currency
@@ -540,6 +594,9 @@ enum InactiveAsk_orderBy {
 type InactiveBid {
   """<tokenId>-<transactionHash>-<logIndex>"""
   id: ID!
+
+  """Transaction hash the bid was created at"""
+  transactionHash: String!
 
   """The Media associated with the InactiveBid"""
   media: Media!
@@ -584,6 +641,20 @@ input InactiveBid_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   media: String
   media_not: String
   media_gt: String
@@ -694,6 +765,7 @@ input InactiveBid_filter {
 
 enum InactiveBid_orderBy {
   id
+  transactionHash
   media
   type
   currency
@@ -710,6 +782,9 @@ enum InactiveBid_orderBy {
 type InactiveReserveAuctionBid {
   """<auctionId>-<txHash>-<logIndex>"""
   id: ID!
+
+  """The transaction hash the reserve auction big was created at"""
+  transactionHash: String!
 
   """The Reserve auction associated with the Bid"""
   reserveAuction: ReserveAuction!
@@ -749,6 +824,20 @@ input InactiveReserveAuctionBid_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   reserveAuction: String
   reserveAuction_not: String
   reserveAuction_gt: String
@@ -823,6 +912,7 @@ input InactiveReserveAuctionBid_filter {
 
 enum InactiveReserveAuctionBid_orderBy {
   id
+  transactionHash
   reserveAuction
   amount
   bidder
@@ -842,6 +932,9 @@ enum MarketEventType {
 type Media {
   """The tokenId on the Zora Media Contract"""
   id: ID!
+
+  """The transaction hash the media was created at"""
+  transactionHash: String!
 
   """The current owner of the Media"""
   owner: User!
@@ -900,6 +993,9 @@ type Media {
   """The InactiveBids of the Media"""
   inactiveBids(skip: Int = 0, first: Int = 100, orderBy: InactiveBid_orderBy, orderDirection: OrderDirection, where: InactiveBid_filter): [InactiveBid!]
 
+  """The transfers of the Media"""
+  transfers(skip: Int = 0, first: Int = 100, orderBy: Transfer_orderBy, orderDirection: OrderDirection, where: Transfer_filter): [Transfer!]
+
   """The ReserveAuctions of the Media"""
   reserveAuctions(skip: Int = 0, first: Int = 100, orderBy: ReserveAuction_orderBy, orderDirection: OrderDirection, where: ReserveAuction_filter): [ReserveAuction!]
 }
@@ -913,6 +1009,20 @@ input Media_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   owner: String
   owner_not: String
   owner_gt: String
@@ -1069,6 +1179,7 @@ input Media_filter {
 
 enum Media_orderBy {
   id
+  transactionHash
   owner
   creator
   prevOwner
@@ -1088,6 +1199,7 @@ enum Media_orderBy {
   currentBids
   inactiveAsks
   inactiveBids
+  transfers
   reserveAuctions
 }
 
@@ -1391,14 +1503,20 @@ type Query {
 }
 
 type ReserveAuction {
-  """<tokenContract>-<tokenId>"""
+  """ID of the auction from contract, autoincrementing int"""
   id: ID!
+
+  """Transaction hash where the reserve auction was created"""
+  transactionHash: String!
 
   """The originating token contract for this auction"""
   tokenContract: String!
 
   """The token ID for this auction"""
   tokenId: BigInt!
+
+  """<tokenContract>-<tokenId>"""
+  token: String!
 
   """The media for the auction, if it is a zora NFT"""
   media: Media
@@ -1444,6 +1562,12 @@ type ReserveAuction {
   """The previous bids on this auction"""
   previousBids(skip: Int = 0, first: Int = 100, orderBy: InactiveReserveAuctionBid_orderBy, orderDirection: OrderDirection, where: InactiveReserveAuctionBid_filter): [InactiveReserveAuctionBid!]
 
+  """The time the auction was approved"""
+  approvedTimestamp: BigInt
+
+  """The number of the block the auction was Approved"""
+  approvedBlockNumber: BigInt
+
   """The timestamp of the block the Transfer was created in"""
   createdAtTimestamp: BigInt!
 
@@ -1466,6 +1590,20 @@ input ReserveAuction_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   tokenContract: String
   tokenContract_not: String
   tokenContract_gt: String
@@ -1488,6 +1626,20 @@ input ReserveAuction_filter {
   tokenId_lte: BigInt
   tokenId_in: [BigInt!]
   tokenId_not_in: [BigInt!]
+  token: String
+  token_not: String
+  token_gt: String
+  token_lt: String
+  token_gte: String
+  token_lte: String
+  token_in: [String!]
+  token_not_in: [String!]
+  token_contains: String
+  token_not_contains: String
+  token_starts_with: String
+  token_not_starts_with: String
+  token_ends_with: String
+  token_not_ends_with: String
   media: String
   media_not: String
   media_gt: String
@@ -1604,6 +1756,22 @@ input ReserveAuction_filter {
   currentBid_not_starts_with: String
   currentBid_ends_with: String
   currentBid_not_ends_with: String
+  approvedTimestamp: BigInt
+  approvedTimestamp_not: BigInt
+  approvedTimestamp_gt: BigInt
+  approvedTimestamp_lt: BigInt
+  approvedTimestamp_gte: BigInt
+  approvedTimestamp_lte: BigInt
+  approvedTimestamp_in: [BigInt!]
+  approvedTimestamp_not_in: [BigInt!]
+  approvedBlockNumber: BigInt
+  approvedBlockNumber_not: BigInt
+  approvedBlockNumber_gt: BigInt
+  approvedBlockNumber_lt: BigInt
+  approvedBlockNumber_gte: BigInt
+  approvedBlockNumber_lte: BigInt
+  approvedBlockNumber_in: [BigInt!]
+  approvedBlockNumber_not_in: [BigInt!]
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -1640,8 +1808,10 @@ input ReserveAuction_filter {
 
 enum ReserveAuction_orderBy {
   id
+  transactionHash
   tokenContract
   tokenId
+  token
   media
   approved
   duration
@@ -1655,6 +1825,8 @@ enum ReserveAuction_orderBy {
   status
   currentBid
   previousBids
+  approvedTimestamp
+  approvedBlockNumber
   createdAtTimestamp
   createdAtBlockNumber
   finalizedAtTimestamp
@@ -1664,6 +1836,9 @@ enum ReserveAuction_orderBy {
 type ReserveAuctionBid {
   """<auctionId>-<txHash>-<logIndex>"""
   id: ID!
+
+  """The transaction hash the reserve auction big was created at"""
+  transactionHash: String!
 
   """The Reserve auction associated with the Bid"""
   reserveAuction: ReserveAuction!
@@ -1693,6 +1868,20 @@ input ReserveAuctionBid_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   reserveAuction: String
   reserveAuction_not: String
   reserveAuction_gt: String
@@ -1751,6 +1940,7 @@ input ReserveAuctionBid_filter {
 
 enum ReserveAuctionBid_orderBy {
   id
+  transactionHash
   reserveAuction
   amount
   bidder
@@ -2070,6 +2260,9 @@ type Transfer {
   """<tokenId>-<transactionHash>-<logIndex>"""
   id: ID!
 
+  """Transaction hash for the transfer"""
+  transactionHash: String!
+
   """The Media associated with the Transfer"""
   media: Media!
 
@@ -2095,6 +2288,20 @@ input Transfer_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   media: String
   media_not: String
   media_gt: String
@@ -2157,6 +2364,7 @@ input Transfer_filter {
 
 enum Transfer_orderBy {
   id
+  transactionHash
   media
   from
   to
@@ -2167,6 +2375,9 @@ enum Transfer_orderBy {
 type URIUpdate {
   """<tokenId>-<transactionHash>-<logIndex>"""
   id: ID!
+
+  """The transaction has the uri update happened at"""
+  transactionHash: String!
 
   """The Type of URIUpdate"""
   type: URIUpdateType!
@@ -2202,6 +2413,20 @@ input URIUpdate_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
+  transactionHash: String
+  transactionHash_not: String
+  transactionHash_gt: String
+  transactionHash_lt: String
+  transactionHash_gte: String
+  transactionHash_lte: String
+  transactionHash_in: [String!]
+  transactionHash_not_in: [String!]
+  transactionHash_contains: String
+  transactionHash_not_contains: String
+  transactionHash_starts_with: String
+  transactionHash_not_starts_with: String
+  transactionHash_ends_with: String
+  transactionHash_not_ends_with: String
   type: URIUpdateType
   type_not: URIUpdateType
   from: String
@@ -2294,6 +2519,7 @@ input URIUpdate_filter {
 
 enum URIUpdate_orderBy {
   id
+  transactionHash
   type
   from
   to
