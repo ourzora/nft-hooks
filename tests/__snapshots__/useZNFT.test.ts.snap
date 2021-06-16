@@ -48,6 +48,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -66,6 +67,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -86,6 +88,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -133,6 +136,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -160,6 +164,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -181,6 +186,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -261,6 +267,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -279,6 +286,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -299,6 +307,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -346,6 +355,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -373,6 +383,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -394,6 +405,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -474,6 +486,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -492,6 +505,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -512,6 +526,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -559,6 +574,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -586,6 +602,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -607,6 +624,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -687,6 +705,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -705,6 +724,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -725,6 +745,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -772,6 +793,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -799,6 +821,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -820,6 +843,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -906,6 +930,7 @@ Object {
             },
             "prettyAmount": "1e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -929,6 +954,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -982,6 +1008,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1012,6 +1039,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1036,6 +1064,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -1125,6 +1154,7 @@ Object {
             },
             "prettyAmount": "1e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -1148,6 +1178,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1201,6 +1232,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1231,6 +1263,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1255,6 +1288,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -1338,6 +1372,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -1356,6 +1391,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -1376,6 +1412,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1423,6 +1460,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1450,6 +1488,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1471,6 +1510,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -1551,6 +1591,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidder": Object {
@@ -1569,6 +1610,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -1589,6 +1631,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1636,6 +1679,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1663,6 +1707,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1684,6 +1729,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -1764,6 +1810,7 @@ Object {
             },
             "prettyAmount": "1e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -1784,6 +1831,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1831,6 +1879,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -1858,6 +1907,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1879,6 +1929,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -1946,6 +1997,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -1993,6 +2045,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -2020,6 +2073,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -2041,6 +2095,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -2121,6 +2176,7 @@ Object {
             },
             "prettyAmount": "1e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "highestBid": Object {
@@ -2141,6 +2197,7 @@ Object {
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -2188,6 +2245,7 @@ Object {
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -2215,6 +2273,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -2236,6 +2295,7 @@ Object {
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {

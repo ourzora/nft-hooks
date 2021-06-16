@@ -2452,6 +2452,42 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type AskPriceFragment = (
+  { __typename?: 'Ask' }
+  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
+  & { currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
+
+export type BidDataPartialFragment = (
+  { __typename?: 'Bid' }
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
+
+export type NftMediaFragment = (
+  { __typename?: 'Media' }
+  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & { owner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), creator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currentAsk?: Maybe<(
+    { __typename?: 'Ask' }
+    & AskPriceFragment
+  )> }
+);
+
 export type CurrencyShortFragment = (
   { __typename?: 'Currency' }
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
@@ -2496,6 +2532,15 @@ export type ReserveAuctionPartialFragment = (
   )>> }
 );
 
+export type ReserveAuctionPartialWithMediaFragment = (
+  { __typename?: 'ReserveAuction' }
+  & { media?: Maybe<(
+    { __typename?: 'Media' }
+    & NftMediaFragment
+  )> }
+  & ReserveAuctionPartialFragment
+);
+
 export type GetAuctionsByCuratorQueryVariables = Exact<{
   curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
@@ -2508,7 +2553,7 @@ export type GetAuctionsByCuratorQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
-    & ReserveAuctionPartialFragment
+    & ReserveAuctionPartialWithMediaFragment
   )> }
 );
 
@@ -2539,42 +2584,6 @@ export type GetAuctionByMediaQuery = (
     { __typename?: 'ReserveAuction' }
     & ReserveAuctionPartialFragment
   )> }
-);
-
-export type AskPriceFragment = (
-  { __typename?: 'Ask' }
-  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
-  & { currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
-export type NftMediaFragment = (
-  { __typename?: 'Media' }
-  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
-  & { owner: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), creator: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currentAsk?: Maybe<(
-    { __typename?: 'Ask' }
-    & AskPriceFragment
-  )> }
-);
-
-export type BidDataPartialFragment = (
-  { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
-  & { bidder: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
 );
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{
