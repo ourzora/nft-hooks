@@ -99,7 +99,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 5,
+      "curatorFeePercentage": 7,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -142,7 +142,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "3",
+      "id": "5",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -152,7 +152,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -174,7 +174,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -236,7 +236,7 @@ Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "13",
+        "id": "15",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -255,7 +255,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "14",
+          "id": "16",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -274,7 +274,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "15",
+          "id": "17",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -318,7 +318,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 18,
+      "curatorFeePercentage": 22,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -361,7 +361,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "16",
+      "id": "20",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -371,7 +371,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "20",
+          "id": "24",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -393,7 +393,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "21",
+          "id": "25",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -537,7 +537,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 5,
+      "curatorFeePercentage": 7,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -580,7 +580,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "3",
+      "id": "5",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -590,7 +590,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -612,7 +612,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -674,7 +674,7 @@ Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "13",
+        "id": "15",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -693,7 +693,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "14",
+          "id": "16",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -712,7 +712,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "15",
+          "id": "17",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -756,7 +756,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 18,
+      "curatorFeePercentage": 22,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -799,7 +799,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "16",
+      "id": "20",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -809,7 +809,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "20",
+          "id": "24",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -831,7 +831,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "21",
+          "id": "25",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1014,7 +1014,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "4",
+      "id": "6",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1024,7 +1024,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1049,7 +1049,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1238,7 +1238,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "4",
+      "id": "6",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1248,7 +1248,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1273,7 +1273,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": Object {
@@ -1423,7 +1423,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 5,
+      "curatorFeePercentage": 7,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -1466,7 +1466,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "3",
+      "id": "5",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1476,7 +1476,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1498,7 +1498,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1560,7 +1560,7 @@ Object {
     "perpetual": Object {
       "ask": Object {
         "createdAtTimestamp": "12974",
-        "id": "13",
+        "id": "15",
         "pricing": Object {
           "amount": "12974",
           "computedValue": undefined,
@@ -1579,7 +1579,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "14",
+          "id": "16",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1598,7 +1598,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "15",
+          "id": "17",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1642,7 +1642,7 @@ Object {
       "curator": Object {
         "id": "10",
       },
-      "curatorFeePercentage": 18,
+      "curatorFeePercentage": 22,
       "current": Object {
         "highestBid": Object {
           "placedAt": "12974",
@@ -1685,7 +1685,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "16",
+      "id": "20",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1695,7 +1695,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "20",
+          "id": "24",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1717,7 +1717,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "21",
+          "id": "25",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1885,7 +1885,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "4",
+      "id": "6",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -1895,7 +1895,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -1917,7 +1917,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2051,7 +2051,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "1",
+      "id": "3",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -2061,7 +2061,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "4",
+          "id": "6",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2083,7 +2083,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "5",
+          "id": "7",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2251,7 +2251,7 @@ Object {
       "expectedEndTimestamp": "12974",
       "finalizedAtTimestamp": "12974",
       "firstBidTime": "12974",
-      "id": "4",
+      "id": "6",
       "previousBids": Array [
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -2261,7 +2261,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "7",
+          "id": "9",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
@@ -2283,7 +2283,7 @@ Object {
             "id": "10",
           },
           "createdAtTimestamp": "12974",
-          "id": "8",
+          "id": "10",
           "pricing": Object {
             "amount": "12974",
             "computedValue": undefined,
