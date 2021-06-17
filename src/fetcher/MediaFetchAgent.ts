@@ -13,7 +13,7 @@ import {
   GET_ALL_AUCTIONS,
   GET_AUCTION_BY_CURATOR,
   GET_AUCTION_BY_MEDIA,
-  GET_MEDIA_QUERY,
+  GET_MEDIAS_QUERY,
 } from '../graph-queries/zora';
 import type {
   GetMediaAndAuctionsQuery,
@@ -26,6 +26,7 @@ import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
 import {
   ChainCurrencyType,
+  FetchGroupTypes,
   MediaContentType,
   UsernameResponseType,
 } from './FetchResultTypes';
@@ -33,6 +34,7 @@ import {
   transformCurrencyForKey,
   transformMediaForKey,
   addAuctionInformation,
+  transformMediaItem,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
@@ -148,6 +150,46 @@ export class MediaFetchAgent {
       throw new RequestError('No content type returned for URI');
     }
     return header;
+  }
+
+  /**
+   * Un-batched fetch function to fetch a group of ZNFT data
+   * 
+   * @param ids list of ids to query
+   * @param type type of ids: creator, id (of media), owner
+   * @returns 
+   */
+  async fetchZNFTGroupData(ids: string[], type: FetchGroupTypes) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
+    const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const getQuery = () => {
+      let base: Record<string, string[]> = {
+        id_ids: [],
+        creator_ids: [],
+        owner_ids: [],
+      };
+      switch (type) {
+        case 'id':
+          base.id_ids = ids;
+          break;
+        case 'creator':
+          base.creator_ids = ids;
+          break;
+        case 'owner':
+          base.owner_ids = ids;
+          break;
+      }
+      return base;
+    };
+
+    const response = (await client.request(
+      GET_MEDIAS_QUERY,
+      getQuery
+    )) as GetMediaAndAuctionsQuery;
+    return response.medias.map((media) => transformMediaItem(media, this.networkId));
   }
 
   /**
@@ -282,8 +324,10 @@ export class MediaFetchAgent {
     const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
-    const response = (await client.request(GET_MEDIA_QUERY, {
-      ids_id: mediaIds,
+    const response = (await client.request(GET_MEDIAS_QUERY, {
+      id_ids: mediaIds,
+      creator_ids: [],
+      owner_ids: [],
     })) as GetMediaAndAuctionsQuery;
     return mediaIds.map((key) => transformMediaForKey(response, key, this.networkId));
   }

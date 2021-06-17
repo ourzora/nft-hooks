@@ -1,6 +1,21 @@
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
+import { FetchGroupTypes } from './FetchResultTypes';
 import { MediaFetchAgent } from './MediaFetchAgent';
 import { openseaDataToMetadata } from './OpenseaUtils';
+import { addAuctionInformation } from './TransformFetchResults';
+
+/**
+ * This removes undefined values to sanitize
+ * data objects to work with nextJS server-side
+ * page props.
+ *
+ * @param json Object to sanitize for JSON fields
+ * @returns JSON-safe object
+ */
+export function prepareJson<T>(json: T): T {
+  return JSON.parse(JSON.stringify(json));
+}
+
 
 type fetchNFTDataType = {
   tokenId: string;
@@ -10,23 +25,11 @@ type fetchNFTDataType = {
 };
 
 /**
- * This removes undefined values to sanitize
- * data objects to work with nextJS server-side
- * page props.
- * 
- * @param json Object to sanitize for JSON fields
- * @returns JSON-safe object
- */
-export function prepareJson<T>(json: T): T {
-  return JSON.parse(JSON.stringify(json));
-}
-
-/**
  * Async function to fetch auction information and metadata for any
  * NFT or zNFT. Mirrors behavior of useNFT hook but for server-side rendering.
  * Fetches all metadata and auction information server-side. Will be re-validated client-side.
  * Can pass return value directly into `initialData` for useNFT hook.
- * 
+ *
  * @param tokenId: Token ID to fetch
  * @param contractAddress: Contract address to fetch token from
  * @param fetchAgent: MediaFetchAgent instance
@@ -66,4 +69,35 @@ export const fetchNFTData = async ({
     }
     return response;
   }
+};
+
+type fetchZNFTGroupDataType = {
+  ids: string[];
+  type: FetchGroupTypes;
+  fetchAgent: MediaFetchAgent;
+  prepareDataJSON?: boolean;
+};
+
+/**
+ * Server-side initial data hook for zNFTGroup data hook
+ * 
+ * @param ids list of ids (addresses for creator or owner, znft id for NFT)
+ * @param type type of 'id' or 'creator' or 'owner' to determine what type of data to fetch
+ * @returns NFTDataType
+ */
+export const fetchZNFTGroupData = async ({
+  ids,
+  type,
+  fetchAgent,
+  prepareDataJSON = true,
+}: fetchZNFTGroupDataType) => {
+  const nftGroup = await fetchAgent.fetchZNFTGroupData(ids, type);
+  const response = nftGroup.map((media) => ({
+    ...media,
+    pricing: addAuctionInformation(media.pricing),
+  }));
+  if (prepareDataJSON) {
+    return prepareJson(response);
+  }
+  return response;
 };
