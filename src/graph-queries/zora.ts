@@ -163,11 +163,27 @@ export const GET_MEDIA_QUERY = gql`
     }
   }
 
+  fragment TransferPartial on Transfer {
+    id
+    transactionHash
+    from {
+      id
+    }
+    to {
+      id
+    }
+    createdAtTimestamp
+    createdAtBlockNumber
+  }
+
   query getMediaAndAuctions($ids_id: [ID!]) {
     medias(where: { id_in: $ids_id }, first: 500) {
       ...NFTMedia
       currentBids {
         ...BidDataPartial
+      }
+      transfers {
+        ...TransferPartial
       }
       reserveAuctions(orderBy: createdAtTimestamp, orderDirection: desc, first: 1) {
         ...ReserveAuctionPartial

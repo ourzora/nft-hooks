@@ -2461,18 +2461,6 @@ export type AskPriceFragment = (
   ) }
 );
 
-export type BidDataPartialFragment = (
-  { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
-  & { bidder: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
 export type NftMediaFragment = (
   { __typename?: 'Media' }
   & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
@@ -2586,6 +2574,30 @@ export type GetAuctionByMediaQuery = (
   )> }
 );
 
+export type BidDataPartialFragment = (
+  { __typename?: 'Bid' }
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
+
+export type TransferPartialFragment = (
+  { __typename?: 'Transfer' }
+  & Pick<Transfer, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'>
+  & { from: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), to: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
 export type GetMediaAndAuctionsQueryVariables = Exact<{
   ids_id?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
@@ -2598,6 +2610,9 @@ export type GetMediaAndAuctionsQuery = (
     & { currentBids?: Maybe<Array<(
       { __typename?: 'Bid' }
       & BidDataPartialFragment
+    )>>, transfers?: Maybe<Array<(
+      { __typename?: 'Transfer' }
+      & TransferPartialFragment
     )>>, reserveAuctions?: Maybe<Array<(
       { __typename?: 'ReserveAuction' }
       & ReserveAuctionPartialFragment
