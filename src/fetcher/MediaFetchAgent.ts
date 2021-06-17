@@ -154,10 +154,10 @@ export class MediaFetchAgent {
 
   /**
    * Un-batched fetch function to fetch a group of ZNFT data
-   * 
+   *
    * @param ids list of ids to query
    * @param type type of ids: creator, id (of media), owner
-   * @returns 
+   * @returns
    */
   async fetchZNFTGroupData(ids: string[], type: FetchGroupTypes) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
@@ -171,15 +171,16 @@ export class MediaFetchAgent {
         creator_ids: [],
         owner_ids: [],
       };
+      const idsNormalized = ids.map((id) => id.toLowerCase());
       switch (type) {
         case 'id':
-          base.id_ids = ids;
+          base.id_ids = idsNormalized;
           break;
         case 'creator':
-          base.creator_ids = ids;
+          base.creator_ids = idsNormalized;
           break;
         case 'owner':
-          base.owner_ids = ids;
+          base.owner_ids = idsNormalized;
           break;
       }
       return base;
