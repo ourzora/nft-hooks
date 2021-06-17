@@ -23,6 +23,8 @@ export type Ask = {
   id: Scalars['ID'];
   /** The Media associated with the Ask */
   media: Media;
+  /** Transaction hash the ask was created at */
+  transactionHash: Scalars['String'];
   /** The Currency of the Ask */
   currency: Currency;
   /** The amount of Currency of the Ask */
@@ -58,6 +60,20 @@ export type Ask_Filter = {
   media_not_starts_with?: Maybe<Scalars['String']>;
   media_ends_with?: Maybe<Scalars['String']>;
   media_not_ends_with?: Maybe<Scalars['String']>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   currency?: Maybe<Scalars['String']>;
   currency_not?: Maybe<Scalars['String']>;
   currency_gt?: Maybe<Scalars['String']>;
@@ -115,6 +131,7 @@ export type Ask_Filter = {
 export enum Ask_OrderBy {
   Id = 'id',
   Media = 'media',
+  TransactionHash = 'transactionHash',
   Currency = 'currency',
   Amount = 'amount',
   Owner = 'owner',
@@ -126,6 +143,8 @@ export type Bid = {
   __typename?: 'Bid';
   /** <token-id>-<bidderAddress> */
   id: Scalars['ID'];
+  /** Transaction hash the bid was created at */
+  transactionHash: Scalars['String'];
   /** The Media associated with the Bid */
   media: Media;
   /** The Currency of the Bid */
@@ -153,6 +172,20 @@ export type Bid_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   media?: Maybe<Scalars['String']>;
   media_not?: Maybe<Scalars['String']>;
   media_gt?: Maybe<Scalars['String']>;
@@ -245,6 +278,7 @@ export type Bid_Filter = {
 
 export enum Bid_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Media = 'media',
   Currency = 'currency',
   Amount = 'amount',
@@ -392,6 +426,8 @@ export type InactiveAsk = {
   __typename?: 'InactiveAsk';
   /** <tokenId>-<transactionHash>-<logIndex> */
   id: Scalars['ID'];
+  /** Transaction hash the ask was created at */
+  transactionHash: Scalars['String'];
   /** The Media associated with the InactiveAsk */
   media: Media;
   /** The why this Ask is Inactive */
@@ -421,6 +457,20 @@ export type InactiveAsk_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   media?: Maybe<Scalars['String']>;
   media_not?: Maybe<Scalars['String']>;
   media_gt?: Maybe<Scalars['String']>;
@@ -509,6 +559,7 @@ export type InactiveAsk_Filter = {
 
 export enum InactiveAsk_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Media = 'media',
   Type = 'type',
   Currency = 'currency',
@@ -524,6 +575,8 @@ export type InactiveBid = {
   __typename?: 'InactiveBid';
   /** <tokenId>-<transactionHash>-<logIndex> */
   id: Scalars['ID'];
+  /** Transaction hash the bid was created at */
+  transactionHash: Scalars['String'];
   /** The Media associated with the InactiveBid */
   media: Media;
   /** The reason why this Bid is Inactive */
@@ -557,6 +610,20 @@ export type InactiveBid_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   media?: Maybe<Scalars['String']>;
   media_not?: Maybe<Scalars['String']>;
   media_gt?: Maybe<Scalars['String']>;
@@ -667,6 +734,7 @@ export type InactiveBid_Filter = {
 
 export enum InactiveBid_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Media = 'media',
   Type = 'type',
   Currency = 'currency',
@@ -684,6 +752,8 @@ export type InactiveReserveAuctionBid = {
   __typename?: 'InactiveReserveAuctionBid';
   /** <auctionId>-<txHash>-<logIndex> */
   id: Scalars['ID'];
+  /** The transaction hash the reserve auction big was created at */
+  transactionHash: Scalars['String'];
   /** The Reserve auction associated with the Bid */
   reserveAuction: ReserveAuction;
   /** The amount of the Bid */
@@ -711,6 +781,20 @@ export type InactiveReserveAuctionBid_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   reserveAuction?: Maybe<Scalars['String']>;
   reserveAuction_not?: Maybe<Scalars['String']>;
   reserveAuction_gt?: Maybe<Scalars['String']>;
@@ -785,6 +869,7 @@ export type InactiveReserveAuctionBid_Filter = {
 
 export enum InactiveReserveAuctionBid_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   ReserveAuction = 'reserveAuction',
   Amount = 'amount',
   Bidder = 'bidder',
@@ -805,6 +890,8 @@ export type Media = {
   __typename?: 'Media';
   /** The tokenId on the Zora Media Contract */
   id: Scalars['ID'];
+  /** The transaction hash the media was created at */
+  transactionHash: Scalars['String'];
   /** The current owner of the Media */
   owner: User;
   /** The creator of the Media */
@@ -843,6 +930,8 @@ export type Media = {
   inactiveAsks?: Maybe<Array<InactiveAsk>>;
   /** The InactiveBids of the Media */
   inactiveBids?: Maybe<Array<InactiveBid>>;
+  /** The transfers of the Media */
+  transfers?: Maybe<Array<Transfer>>;
   /** The ReserveAuctions of the Media */
   reserveAuctions?: Maybe<Array<ReserveAuction>>;
 };
@@ -875,6 +964,15 @@ export type MediaInactiveBidsArgs = {
 };
 
 
+export type MediaTransfersArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Transfer_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<Transfer_Filter>;
+};
+
+
 export type MediaReserveAuctionsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -892,6 +990,20 @@ export type Media_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   owner?: Maybe<Scalars['String']>;
   owner_not?: Maybe<Scalars['String']>;
   owner_gt?: Maybe<Scalars['String']>;
@@ -1048,6 +1160,7 @@ export type Media_Filter = {
 
 export enum Media_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Owner = 'owner',
   Creator = 'creator',
   PrevOwner = 'prevOwner',
@@ -1067,6 +1180,7 @@ export enum Media_OrderBy {
   CurrentBids = 'currentBids',
   InactiveAsks = 'inactiveAsks',
   InactiveBids = 'inactiveBids',
+  Transfers = 'transfers',
   ReserveAuctions = 'reserveAuctions'
 }
 
@@ -1304,12 +1418,16 @@ export type Query_MetaArgs = {
 
 export type ReserveAuction = {
   __typename?: 'ReserveAuction';
-  /** <tokenContract>-<tokenId> */
+  /** ID of the auction from contract, autoincrementing int */
   id: Scalars['ID'];
+  /** Transaction hash where the reserve auction was created */
+  transactionHash: Scalars['String'];
   /** The originating token contract for this auction */
   tokenContract: Scalars['String'];
   /** The token ID for this auction */
   tokenId: Scalars['BigInt'];
+  /** <tokenContract>-<tokenId> */
+  token: Scalars['String'];
   /** The media for the auction, if it is a zora NFT */
   media?: Maybe<Media>;
   /** Whether or not the auction has been approved by the curator */
@@ -1338,6 +1456,10 @@ export type ReserveAuction = {
   currentBid?: Maybe<ReserveAuctionBid>;
   /** The previous bids on this auction */
   previousBids?: Maybe<Array<InactiveReserveAuctionBid>>;
+  /** The time the auction was approved */
+  approvedTimestamp?: Maybe<Scalars['BigInt']>;
+  /** The number of the block the auction was Approved */
+  approvedBlockNumber?: Maybe<Scalars['BigInt']>;
   /** The timestamp of the block the Transfer was created in */
   createdAtTimestamp: Scalars['BigInt'];
   /** The number of the block the Transfer was created in */
@@ -1361,6 +1483,8 @@ export type ReserveAuctionBid = {
   __typename?: 'ReserveAuctionBid';
   /** <auctionId>-<txHash>-<logIndex> */
   id: Scalars['ID'];
+  /** The transaction hash the reserve auction big was created at */
+  transactionHash: Scalars['String'];
   /** The Reserve auction associated with the Bid */
   reserveAuction: ReserveAuction;
   /** The amount of the Bid */
@@ -1390,6 +1514,20 @@ export type ReserveAuctionBid_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   reserveAuction?: Maybe<Scalars['String']>;
   reserveAuction_not?: Maybe<Scalars['String']>;
   reserveAuction_gt?: Maybe<Scalars['String']>;
@@ -1448,6 +1586,7 @@ export type ReserveAuctionBid_Filter = {
 
 export enum ReserveAuctionBid_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   ReserveAuction = 'reserveAuction',
   Amount = 'amount',
   Bidder = 'bidder',
@@ -1472,6 +1611,20 @@ export type ReserveAuction_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   tokenContract?: Maybe<Scalars['String']>;
   tokenContract_not?: Maybe<Scalars['String']>;
   tokenContract_gt?: Maybe<Scalars['String']>;
@@ -1494,6 +1647,20 @@ export type ReserveAuction_Filter = {
   tokenId_lte?: Maybe<Scalars['BigInt']>;
   tokenId_in?: Maybe<Array<Scalars['BigInt']>>;
   tokenId_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  token?: Maybe<Scalars['String']>;
+  token_not?: Maybe<Scalars['String']>;
+  token_gt?: Maybe<Scalars['String']>;
+  token_lt?: Maybe<Scalars['String']>;
+  token_gte?: Maybe<Scalars['String']>;
+  token_lte?: Maybe<Scalars['String']>;
+  token_in?: Maybe<Array<Scalars['String']>>;
+  token_not_in?: Maybe<Array<Scalars['String']>>;
+  token_contains?: Maybe<Scalars['String']>;
+  token_not_contains?: Maybe<Scalars['String']>;
+  token_starts_with?: Maybe<Scalars['String']>;
+  token_not_starts_with?: Maybe<Scalars['String']>;
+  token_ends_with?: Maybe<Scalars['String']>;
+  token_not_ends_with?: Maybe<Scalars['String']>;
   media?: Maybe<Scalars['String']>;
   media_not?: Maybe<Scalars['String']>;
   media_gt?: Maybe<Scalars['String']>;
@@ -1610,6 +1777,22 @@ export type ReserveAuction_Filter = {
   currentBid_not_starts_with?: Maybe<Scalars['String']>;
   currentBid_ends_with?: Maybe<Scalars['String']>;
   currentBid_not_ends_with?: Maybe<Scalars['String']>;
+  approvedTimestamp?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_not?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_gt?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_lt?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_gte?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_lte?: Maybe<Scalars['BigInt']>;
+  approvedTimestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  approvedTimestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  approvedBlockNumber?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_not?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_gt?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_lt?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_gte?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_lte?: Maybe<Scalars['BigInt']>;
+  approvedBlockNumber_in?: Maybe<Array<Scalars['BigInt']>>;
+  approvedBlockNumber_not_in?: Maybe<Array<Scalars['BigInt']>>;
   createdAtTimestamp?: Maybe<Scalars['BigInt']>;
   createdAtTimestamp_not?: Maybe<Scalars['BigInt']>;
   createdAtTimestamp_gt?: Maybe<Scalars['BigInt']>;
@@ -1646,8 +1829,10 @@ export type ReserveAuction_Filter = {
 
 export enum ReserveAuction_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   TokenContract = 'tokenContract',
   TokenId = 'tokenId',
+  Token = 'token',
   Media = 'media',
   Approved = 'approved',
   Duration = 'duration',
@@ -1661,6 +1846,8 @@ export enum ReserveAuction_OrderBy {
   Status = 'status',
   CurrentBid = 'currentBid',
   PreviousBids = 'previousBids',
+  ApprovedTimestamp = 'approvedTimestamp',
+  ApprovedBlockNumber = 'approvedBlockNumber',
   CreatedAtTimestamp = 'createdAtTimestamp',
   CreatedAtBlockNumber = 'createdAtBlockNumber',
   FinalizedAtTimestamp = 'finalizedAtTimestamp',
@@ -1898,6 +2085,8 @@ export type Transfer = {
   __typename?: 'Transfer';
   /** <tokenId>-<transactionHash>-<logIndex> */
   id: Scalars['ID'];
+  /** Transaction hash for the transfer */
+  transactionHash: Scalars['String'];
   /** The Media associated with the Transfer */
   media: Media;
   /** The User transferring the Media */
@@ -1919,6 +2108,20 @@ export type Transfer_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   media?: Maybe<Scalars['String']>;
   media_not?: Maybe<Scalars['String']>;
   media_gt?: Maybe<Scalars['String']>;
@@ -1981,6 +2184,7 @@ export type Transfer_Filter = {
 
 export enum Transfer_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Media = 'media',
   From = 'from',
   To = 'to',
@@ -1992,6 +2196,8 @@ export type UriUpdate = {
   __typename?: 'URIUpdate';
   /** <tokenId>-<transactionHash>-<logIndex> */
   id: Scalars['ID'];
+  /** The transaction has the uri update happened at */
+  transactionHash: Scalars['String'];
   /** The Type of URIUpdate */
   type: UriUpdateType;
   /** The previous uri */
@@ -2025,6 +2231,20 @@ export type UriUpdate_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  transactionHash?: Maybe<Scalars['String']>;
+  transactionHash_not?: Maybe<Scalars['String']>;
+  transactionHash_gt?: Maybe<Scalars['String']>;
+  transactionHash_lt?: Maybe<Scalars['String']>;
+  transactionHash_gte?: Maybe<Scalars['String']>;
+  transactionHash_lte?: Maybe<Scalars['String']>;
+  transactionHash_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_not_in?: Maybe<Array<Scalars['String']>>;
+  transactionHash_contains?: Maybe<Scalars['String']>;
+  transactionHash_not_contains?: Maybe<Scalars['String']>;
+  transactionHash_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_not_starts_with?: Maybe<Scalars['String']>;
+  transactionHash_ends_with?: Maybe<Scalars['String']>;
+  transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   type?: Maybe<UriUpdateType>;
   type_not?: Maybe<UriUpdateType>;
   from?: Maybe<Scalars['String']>;
@@ -2117,6 +2337,7 @@ export type UriUpdate_Filter = {
 
 export enum UriUpdate_OrderBy {
   Id = 'id',
+  TransactionHash = 'transactionHash',
   Type = 'type',
   From = 'from',
   To = 'to',
@@ -2231,6 +2452,30 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type AskPriceFragment = (
+  { __typename?: 'Ask' }
+  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
+  & { currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
+
+export type NftMediaFragment = (
+  { __typename?: 'Media' }
+  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & { owner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), creator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currentAsk?: Maybe<(
+    { __typename?: 'Ask' }
+    & AskPriceFragment
+  )> }
+);
+
 export type CurrencyShortFragment = (
   { __typename?: 'Currency' }
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
@@ -2238,7 +2483,7 @@ export type CurrencyShortFragment = (
 
 export type PreviousReserveBidFragment = (
   { __typename?: 'InactiveReserveAuctionBid' }
-  & Pick<InactiveReserveAuctionBid, 'id' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
+  & Pick<InactiveReserveAuctionBid, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
   & { bidder: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2247,7 +2492,7 @@ export type PreviousReserveBidFragment = (
 
 export type CurrentReserveBidFragment = (
   { __typename?: 'ReserveAuctionBid' }
-  & Pick<ReserveAuctionBid, 'bidType' | 'amount' | 'createdAtTimestamp'>
+  & Pick<ReserveAuctionBid, 'bidType' | 'amount' | 'transactionHash' | 'createdAtTimestamp'>
   & { bidder: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2256,7 +2501,7 @@ export type CurrentReserveBidFragment = (
 
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
   & { curator: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2275,6 +2520,15 @@ export type ReserveAuctionPartialFragment = (
   )>> }
 );
 
+export type ReserveAuctionPartialWithMediaFragment = (
+  { __typename?: 'ReserveAuction' }
+  & { media?: Maybe<(
+    { __typename?: 'Media' }
+    & NftMediaFragment
+  )> }
+  & ReserveAuctionPartialFragment
+);
+
 export type GetAuctionsByCuratorQueryVariables = Exact<{
   curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
@@ -2287,7 +2541,7 @@ export type GetAuctionsByCuratorQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
-    & ReserveAuctionPartialFragment
+    & ReserveAuctionPartialWithMediaFragment
   )> }
 );
 
@@ -2320,39 +2574,27 @@ export type GetAuctionByMediaQuery = (
   )> }
 );
 
-export type AskPriceFragment = (
-  { __typename?: 'Ask' }
-  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
-  & { currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
-export type NftMediaFragment = (
-  { __typename?: 'Media' }
-  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
-  & { owner: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), creator: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currentAsk?: Maybe<(
-    { __typename?: 'Ask' }
-    & AskPriceFragment
-  )> }
-);
-
 export type BidDataPartialFragment = (
   { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'amount'>
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
   & { bidder: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
   ), currency: (
     { __typename?: 'Currency' }
     & CurrencyShortFragment
+  ) }
+);
+
+export type TransferPartialFragment = (
+  { __typename?: 'Transfer' }
+  & Pick<Transfer, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'>
+  & { from: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), to: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
   ) }
 );
 
@@ -2368,6 +2610,9 @@ export type GetMediaAndAuctionsQuery = (
     & { currentBids?: Maybe<Array<(
       { __typename?: 'Bid' }
       & BidDataPartialFragment
+    )>>, transfers?: Maybe<Array<(
+      { __typename?: 'Transfer' }
+      & TransferPartialFragment
     )>>, reserveAuctions?: Maybe<Array<(
       { __typename?: 'ReserveAuction' }
       & ReserveAuctionPartialFragment

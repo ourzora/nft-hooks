@@ -1,13 +1,13 @@
 import { useContext } from 'react';
+import { ReserveAuctionPartialWithMediaFragment } from 'src/graph-queries/zora-types';
 import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
-import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
 
 export type useAuctionHouseType = {
   loading: boolean;
   error?: string;
-  data?: ReserveAuctionPartialFragment[];
+  data?: ReserveAuctionPartialWithMediaFragment[];
 };
 
 /**
@@ -20,11 +20,11 @@ export type useAuctionHouseType = {
 export function useAuctions(
   curators: readonly string[] = [],
   approved: boolean | null = null,
-  options?: SWRConfiguration<ReserveAuctionPartialFragment[]>
+  options?: SWRConfiguration<ReserveAuctionPartialWithMediaFragment[]>
 ): useAuctionHouseType {
   const fetcher = useContext(NFTFetchContext);
   const queryKey = JSON.stringify({ type: 'useAuctions', curators, approved });
-  const { data, error } = useSWR<ReserveAuctionPartialFragment[]>(
+  const { data, error } = useSWR<ReserveAuctionPartialWithMediaFragment[]>(
     queryKey,
     async (query: string) => {
       const { curators, approved } = JSON.parse(query);

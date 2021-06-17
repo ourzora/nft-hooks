@@ -258,6 +258,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -305,6 +306,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -332,6 +334,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -353,6 +356,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
@@ -635,6 +639,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
     },
     "reserve": Object {
       "approved": true,
+      "approvedTimestamp": "12974",
       "auctionCurrency": Object {
         "decimals": 18,
         "id": "0xFACE",
@@ -682,6 +687,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
           },
           "prettyAmount": "1.2974e-14",
         },
+        "transactionHash": "Hello World",
       },
       "duration": "12974",
       "expectedEndTimestamp": "12974",
@@ -709,6 +715,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
         Object {
           "bidInactivatedAtBlockNumber": "12974",
@@ -730,6 +737,7 @@ The CryptoPunks are the first NFT. A fixed set of 10,000, they were launched in 
             },
             "prettyAmount": "1.2974e-14",
           },
+          "transactionHash": "Hello World",
         },
       ],
       "reservePrice": Object {
