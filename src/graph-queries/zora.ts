@@ -189,8 +189,15 @@ export const GET_MEDIAS_QUERY = gql`
     }
   }
 
-  query getMediaAndAuctions($id_ids: [ID!], $creator_ids: [String!], $owner_ids: [String!]) {
-    medias(where: { id_in: $id_ids, creator_in: $creator_ids, owner_in: $owner_ids }, first: 500) {
+  query getMediaAndAuctions(
+    $id_ids: [ID!]
+    $creator_ids: [String!]
+    $owner_ids: [String!]
+  ) {
+    medias(
+      where: { id_in: $id_ids, creator_in: $creator_ids, owner_in: $owner_ids }
+      first: 500
+    ) {
       ...NFTMediaFullData
     }
   }

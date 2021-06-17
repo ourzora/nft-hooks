@@ -59,6 +59,15 @@ function NFTGallery() {
 }
 ```
 
+### Data sources:
+
+Currently data is fetched from:
+1. TheGraph for auction information, zNFT information, and currency information
+2. Direct metadata URIs for zNFT metadata
+3. Opensea for non-zora tracked NFTs
+
+Links direct to zora.co interfaces, but can be overridden to directly use the [zdk](https://github.com/ourzora/zdk) instead.
+
 ### Development:
 
 1. `git clone https://github.com/ourzora/nft-hooks`
