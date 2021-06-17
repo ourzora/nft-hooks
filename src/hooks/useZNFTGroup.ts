@@ -4,12 +4,13 @@ import useSWR from 'swr';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
-import { ZNFTDataType, ZNFTMediaDataType } from '../fetcher/AuctionInfoTypes';
+import { ZNFTDataType } from '../fetcher/AuctionInfoTypes';
+import { FetchGroupTypes } from 'src/fetcher/FetchResultTypes';
 
 export type useZNFTType = {
   currencyLoaded: boolean;
   error?: string;
-  data?: ZNFTDataType;
+  medias?: ZNFTDataType[];
 };
 
 type OptionsType = {
@@ -25,20 +26,26 @@ type OptionsType = {
  * @param options SWR flags and an option to load currency info
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
-export function useZNFTGroup(ids?: string[], type = 'creator', options: OptionsType = {}): useZNFTType {
+export function useZNFTGroup(
+  ids?: string[],
+  type: FetchGroupTypes = 'creator',
+  options: OptionsType = {}
+): useZNFTType {
   const fetcher = useContext(NFTFetchContext);
   const { loadCurrencyInfo = false, refreshInterval, initialData } = options || {};
 
-  const nftData = useSWR<ZNFTMediaDataType>(
+  const nftData = useSWR(
     ids ? ['fetchZNFTGroupData', type, ...ids] : null,
-    (_, type, ...ids) => fetcher.fetchZNFTGroupData(id, type),
+    (_, type, ...ids) => fetcher.fetchZNFTGroupData(ids, type),
     { refreshInterval, dedupingInterval: 0 }
   );
   const currencyData = useSWR(
-    nftData.data && nftData.data.pricing && loadCurrencyInfo
+    nftData.data && nftData.data.length > 0 && loadCurrencyInfo
       ? [
           'loadCurrencies',
-          ...getCurrenciesInUse(addAuctionInformation(nftData.data.pricing)),
+          ...nftData.data
+            .map((item) => getCurrenciesInUse(addAuctionInformation(item.pricing)))
+            .reduce((last, item) => last.concat(item), []),
         ]
       : null,
     (_, ...currencies) => fetcher.loadCurrencies(currencies),
@@ -48,19 +55,19 @@ export function useZNFTGroup(ids?: string[], type = 'creator', options: OptionsT
     }
   );
 
-  let data;
+  let medias;
   if (nftData.data !== undefined) {
-    data = {
-      ...nftData.data,
-      pricing: addAuctionInformation(nftData.data.pricing, currencyData.data),
-    };
+    medias = nftData.data.map((media) => ({
+      ...media,
+      pricing: addAuctionInformation(media.pricing, currencyData.data),
+    }));
   } else {
-    data = initialData;
+    medias = initialData;
   }
 
   return {
     currencyLoaded: !!currencyData.data,
     error: nftData.error,
-    data,
+    medias,
   };
 }

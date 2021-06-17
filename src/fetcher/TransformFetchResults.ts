@@ -7,6 +7,7 @@ import type {
   Currency,
   CurrencyShortFragment,
   GetMediaAndAuctionsQuery,
+  NftMediaFullDataFragment,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
@@ -39,15 +40,10 @@ export function transformCurrencyEth(currency: CurrencyShortFragment) {
   return updatedCurrency;
 }
 
-export function transformMediaForKey(
-  result: GetMediaAndAuctionsQuery,
-  key: string,
+export function transformMediaItem(
+  media: NftMediaFullDataFragment,
   networkId: NetworkIDs
 ): ZNFTMediaDataType {
-  const media = result.medias.find((media) => media.id === key);
-  if (!media) {
-    throw new RequestError('No media in response');
-  }
   const { reserveAuctions, currentBids, currentAsk, ...nft } = media;
 
   // Since auctions are sorted by last created, the first auction will be the active auction
@@ -84,6 +80,18 @@ export function transformMediaForKey(
       reserve: auctionDataToPricing(auctionData),
     },
   };
+}
+
+export function transformMediaForKey(
+  result: GetMediaAndAuctionsQuery,
+  key: string,
+  networkId: NetworkIDs
+): ZNFTMediaDataType {
+  const media = result.medias.find((media) => media.id === key);
+  if (!media) {
+    throw new RequestError('No media in response');
+  }
+  return transformMediaItem(media, networkId);
 }
 
 export function auctionDataToPricing(
@@ -221,7 +229,9 @@ export function addAuctionInformation(
       }))
       .sort((a, b) => {
         if (a.computedValue && b.computedValue) {
-          return new Big(a.computedValue.inETH).sub(b.computedValue.inETH).toNumber() > 0 ? -1 : 1;
+          return new Big(a.computedValue.inETH).sub(b.computedValue.inETH).toNumber() > 0
+            ? -1
+            : 1;
         }
         return new Date(a.bid.createdAtTimestamp).getTime() >
           new Date(b.bid.createdAtTimestamp).getTime()

@@ -2598,8 +2598,25 @@ export type TransferPartialFragment = (
   ) }
 );
 
+export type NftMediaFullDataFragment = (
+  { __typename?: 'Media' }
+  & { currentBids?: Maybe<Array<(
+    { __typename?: 'Bid' }
+    & BidDataPartialFragment
+  )>>, transfers?: Maybe<Array<(
+    { __typename?: 'Transfer' }
+    & TransferPartialFragment
+  )>>, reserveAuctions?: Maybe<Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )>> }
+  & NftMediaFragment
+);
+
 export type GetMediaAndAuctionsQueryVariables = Exact<{
-  ids_id?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  id_ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  creator_ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  owner_ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
@@ -2607,16 +2624,6 @@ export type GetMediaAndAuctionsQuery = (
   { __typename?: 'Query' }
   & { medias: Array<(
     { __typename?: 'Media' }
-    & { currentBids?: Maybe<Array<(
-      { __typename?: 'Bid' }
-      & BidDataPartialFragment
-    )>>, transfers?: Maybe<Array<(
-      { __typename?: 'Transfer' }
-      & TransferPartialFragment
-    )>>, reserveAuctions?: Maybe<Array<(
-      { __typename?: 'ReserveAuction' }
-      & ReserveAuctionPartialFragment
-    )>> }
-    & NftMediaFragment
+    & NftMediaFullDataFragment
   )> }
 );
