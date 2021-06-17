@@ -64,6 +64,8 @@ const AUCTION_PARTIALS = gql`
   fragment ReserveAuctionPartial on ReserveAuction {
     id
     tokenId
+    tokenContract
+    transactionHash
     status
     approved
     reservePrice
@@ -134,10 +136,10 @@ export const GET_ALL_AUCTIONS = gql`
 export const GET_AUCTION_BY_MEDIA = gql`
   ${AUCTION_PARTIALS}
 
-  query getAuctionByMedia($tokenContract: String, $tokenId: BigInt) {
+  query getAuctionByMedia($tokens: [String!]) {
     reserveAuctions(
       first: 1
-      where: { tokenContract: $tokenContract, tokenId: $tokenId }
+      where: { token_in: $tokens }
       orderBy: createdAtTimestamp
       orderDirection: desc
     ) {

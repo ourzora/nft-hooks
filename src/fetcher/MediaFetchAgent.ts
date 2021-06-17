@@ -84,7 +84,6 @@ export class MediaFetchAgent {
         cache: false,
       }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
-        maxBatchSize: 1,
         cache: false,
       }),
     };
@@ -245,7 +244,7 @@ export class MediaFetchAgent {
 
   async loadAuctionInfo(tokenContract: string, tokenId: string) {
     return await this.loaders.auctionInfoLoader.load(
-      [tokenContract.toLowerCase(), tokenId].join(':')
+      [tokenContract.toLowerCase(), tokenId].join('-')
     );
   }
 
@@ -291,20 +290,12 @@ export class MediaFetchAgent {
   }
 
   private async fetchAuctionNFTInfo(tokenAndAddresses: readonly string[]) {
-    // TODO(iain): Allow batching w/ graphql subgraph update
-    if (tokenAndAddresses.length !== 1) {
-      throw new Error('can only fetch one now');
-    }
-
-    const [tokenContract, tokenId] = tokenAndAddresses[0].split(':');
-
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
     const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
     const response = (await client.request(GET_AUCTION_BY_MEDIA, {
-      tokenContract,
-      tokenId,
+      tokens: tokenAndAddresses.map((tokenAndAddress) => tokenAndAddress.toLowerCase()),
     })) as GetAuctionByMediaQuery;
     if (!response.reserveAuctions) {
       throw new RequestError('Missing auction in reponse');
