@@ -5,7 +5,7 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
 import { addAuctionInformation } from '../fetcher/TransformFetchResults';
 import { getCurrenciesInUse } from '../fetcher/ExtractResultData';
 import { ZNFTDataType } from '../fetcher/AuctionInfoTypes';
-import { FetchGroupTypes } from 'src/fetcher/FetchResultTypes';
+import { FetchGroupTypes } from '../fetcher/FetchResultTypes';
 
 export type useZNFTType = {
   currencyLoaded: boolean;

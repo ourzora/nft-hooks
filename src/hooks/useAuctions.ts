@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ReserveAuctionPartialWithMediaFragment } from 'src/graph-queries/zora-types';
+import { ReserveAuctionPartialWithMediaFragment } from '../graph-queries/zora-types';
 import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
