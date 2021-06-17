@@ -11,6 +11,7 @@ export type MediaContentType =
   | { uri: string; type: 'uri'; mimeType: string }
   | { text: string; type: 'text'; mimeType: string };
 
+export type FetchGroupTypes = 'id' | 'creator' | 'owner';
 
 type MetadataIsh = {
   mimeType: string;
