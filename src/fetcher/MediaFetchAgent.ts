@@ -27,7 +27,6 @@ import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/ti
 import {
   ChainCurrencyType,
   FetchGroupTypes,
-  FETCH_GROUP_TYPES,
   MediaContentType,
   UsernameResponseType,
 } from './FetchResultTypes';
