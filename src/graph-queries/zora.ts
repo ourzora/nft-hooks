@@ -146,7 +146,7 @@ export const GET_AUCTION_BY_MEDIA = gql`
   }
 `;
 
-export const GET_MEDIA_QUERY = gql`
+const makeMediaQuery = (query: string) => gql`
   ${AUCTION_PARTIALS}
   ${MEDIA_PARTIALS}
 
@@ -164,7 +164,7 @@ export const GET_MEDIA_QUERY = gql`
   }
 
   query getMediaAndAuctions($ids_id: [ID!]) {
-    medias(where: { id_in: $ids_id }, first: 500) {
+    medias(where: { ${query}_in: $ids_id }, first: 500) {
       ...NFTMedia
       currentBids {
         ...BidDataPartial
@@ -175,3 +175,7 @@ export const GET_MEDIA_QUERY = gql`
     }
   }
 `;
+
+export const GET_MEDIA_BY_IDS_QUERY = makeMediaQuery('ids');
+export const GET_MEDIA_BY_CREATOR_QUERY = makeMediaQuery('creator');
+export const GET_MEDIA_BY_OWNER_QUERY = makeMediaQuery('owner');
