@@ -58,10 +58,12 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "tokenContract": "Hello World",
     "tokenId": 0,
     "tokenOwner": Object {
       "id": "10",
     },
+    "transactionHash": "Hello World",
   },
   Object {
     "approved": true,
@@ -119,10 +121,12 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "tokenContract": "Hello World",
     "tokenId": 1,
     "tokenOwner": Object {
       "id": "10",
     },
+    "transactionHash": "Hello World",
   },
 ]
 `;
@@ -211,10 +215,12 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "tokenContract": "Hello World",
     "tokenId": 2,
     "tokenOwner": Object {
       "id": "10",
     },
+    "transactionHash": "Hello World",
   },
   Object {
     "approved": true,
@@ -298,10 +304,12 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "tokenContract": "Hello World",
     "tokenId": 3,
     "tokenOwner": Object {
       "id": "10",
     },
+    "transactionHash": "Hello World",
   },
 ]
 `;

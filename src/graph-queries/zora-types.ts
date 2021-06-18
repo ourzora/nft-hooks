@@ -2501,7 +2501,7 @@ export type CurrentReserveBidFragment = (
 
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
   & { curator: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2561,8 +2561,7 @@ export type GetAllAuctionsQuery = (
 );
 
 export type GetAuctionByMediaQueryVariables = Exact<{
-  tokenContract?: Maybe<Scalars['String']>;
-  tokenId?: Maybe<Scalars['BigInt']>;
+  tokens?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 

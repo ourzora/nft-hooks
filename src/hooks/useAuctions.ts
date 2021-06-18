@@ -28,7 +28,10 @@ export function useAuctions(
     queryKey,
     async (query: string) => {
       const { curators, approved } = JSON.parse(query);
-      return await fetcher.fetchReserveAuctions(curators, approved);
+      return await fetcher.fetchReserveAuctions(
+        curators.map((curator: string) => curator.toLowerCase()),
+        approved
+      );
     },
     options
   );
