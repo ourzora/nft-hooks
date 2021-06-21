@@ -87,7 +87,7 @@ export function transformMediaForKey(
   key: string,
   networkId: NetworkIDs
 ): ZNFTMediaDataType {
-  const media = result.medias.find((media) => media.id === key);
+  const media = result.id.find((media) => media.id === key);
   if (!media) {
     throw new RequestError('No media in response');
   }

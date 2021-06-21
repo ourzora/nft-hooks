@@ -196,8 +196,20 @@ export const GET_MEDIAS_QUERY = gql`
     $creator_ids: [String!]
     $owner_ids: [String!]
   ) {
-    medias(
-      where: { id_in: $id_ids, creator_in: $creator_ids, owner_in: $owner_ids }
+    id: medias(
+      where: { id_in: $id_ids }
+      first: 500
+    ) {
+      ...NFTMediaFullData
+    }
+    creator: medias(
+      where: { creator_in: $creator_ids }
+      first: 500
+    ) {
+      ...NFTMediaFullData
+    }
+    owner: medias(
+      where: { owner_in: $owner_ids }
       first: 500
     ) {
       ...NFTMediaFullData
