@@ -189,7 +189,8 @@ export class MediaFetchAgent {
       GET_MEDIAS_QUERY,
       getQuery
     )) as GetMediaAndAuctionsQuery;
-    return response.medias.map((media) => transformMediaItem(media, this.networkId));
+    const medias = [...response.creator, ...response.owner, ...response.id];
+    return medias.map((media) => transformMediaItem(media, this.networkId));
   }
 
   /**

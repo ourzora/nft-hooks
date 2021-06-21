@@ -2621,7 +2621,13 @@ export type GetMediaAndAuctionsQueryVariables = Exact<{
 
 export type GetMediaAndAuctionsQuery = (
   { __typename?: 'Query' }
-  & { medias: Array<(
+  & { id: Array<(
+    { __typename?: 'Media' }
+    & NftMediaFullDataFragment
+  )>, creator: Array<(
+    { __typename?: 'Media' }
+    & NftMediaFullDataFragment
+  )>, owner: Array<(
     { __typename?: 'Media' }
     & NftMediaFullDataFragment
   )> }
