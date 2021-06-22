@@ -82,6 +82,7 @@ export class MediaFetchAgent {
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
       genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys), {
         cache: false,
+        maxBatchSize: 50,
       }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
@@ -341,7 +342,7 @@ export class MediaFetchAgent {
         urlParams.push(`token_ids=${tokenId}&asset_contract_addresses=${address}`);
       });
     const response = await fetchWithTimeout.fetch(
-      `${apiBase}assets?${urlParams.join('&')}&order_direction=desc&offset=0&limit=100`
+      `${apiBase}assets?${urlParams.join('&')}&order_direction=desc&offset=0&limit=50`
     );
     const responseJson = await response.json();
 

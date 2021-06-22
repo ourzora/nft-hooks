@@ -31,7 +31,7 @@ describe('useZNFT', () => {
     );
 
     fetchMock.once(
-      'https://api.opensea.io/api/v1/assets?token_ids=5683&asset_contract_addresses=0xb7f7f6c52f2e2fdb1963eab30438024864c313f6&order_direction=desc&offset=0&limit=100',
+      'https://api.opensea.io/api/v1/assets?token_ids=5683&asset_contract_addresses=0xb7f7f6c52f2e2fdb1963eab30438024864c313f6&order_direction=desc&offset=0&limit=50',
       OpenseaCryptopunk
     );
 
