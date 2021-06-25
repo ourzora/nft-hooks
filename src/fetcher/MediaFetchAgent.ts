@@ -82,7 +82,7 @@ export class MediaFetchAgent {
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
       genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys), {
         cache: false,
-        maxBatchSize: 50,
+        maxBatchSize: 30,
       }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
