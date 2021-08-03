@@ -18,6 +18,8 @@ describe('useZNFT', () => {
     status: 'Active',
     curatorFeePercentage: 100,
     approved: true,
+    token: '0xb7f7f6c52f2e2fdb1963eab30438024864c313f6-5683',
+    tokenContract: '0xb7f7f6c52f2e2fdb1963eab30438024864c313f6',
   };
 
   it('loads an nft currently in an auction', async () => {

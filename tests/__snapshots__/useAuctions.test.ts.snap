@@ -58,6 +58,7 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "token": "Hello World",
     "tokenContract": "Hello World",
     "tokenId": 0,
     "tokenOwner": Object {
@@ -121,6 +122,7 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "token": "Hello World",
     "tokenContract": "Hello World",
     "tokenId": 1,
     "tokenOwner": Object {
@@ -215,6 +217,7 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "token": "Hello World",
     "tokenContract": "Hello World",
     "tokenId": 2,
     "tokenOwner": Object {
@@ -304,6 +307,7 @@ Array [
     ],
     "reservePrice": "12974",
     "status": "Active",
+    "token": "Hello World",
     "tokenContract": "Hello World",
     "tokenId": 3,
     "tokenOwner": Object {
