@@ -2501,7 +2501,7 @@ export type CurrentReserveBidFragment = (
 
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'token' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
   & { curator: (
     { __typename?: 'User' }
     & Pick<User, 'id'>

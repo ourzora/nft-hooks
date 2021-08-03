@@ -70,6 +70,7 @@ const AUCTION_PARTIALS = gql`
     approved
     reservePrice
     firstBidTime
+    token
     createdAtTimestamp
     approvedTimestamp
     curator {

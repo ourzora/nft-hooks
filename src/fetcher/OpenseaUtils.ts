@@ -24,7 +24,7 @@ export type OpenseaResponse = {
   owner: {
     address: string;
   };
-  creator: {
+  creator?: {
     address: string;
   };
 };
@@ -51,7 +51,7 @@ export const transformOpenseaResponse = (
         address: data.asset_contract.address,
       },
       owner: data.owner.address,
-      creator: data.creator.address,
+      creator: data.creator?.address,
       metadataURI: data.token_metadata,
     },
     openseaInfo: data,
