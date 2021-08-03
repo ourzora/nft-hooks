@@ -303,7 +303,7 @@ export class MediaFetchAgent {
       throw new RequestError('Missing auction in reponse');
     }
     return tokenAndAddresses.map((tokenAndAddress: string) =>
-      response.reserveAuctions.find((auction) => auction.token === tokenAndAddress)
+      response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) || new Error('Missing Record')
     );
   }
 
