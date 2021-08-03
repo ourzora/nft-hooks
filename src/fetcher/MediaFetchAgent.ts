@@ -86,6 +86,7 @@ export class MediaFetchAgent {
       }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
+        maxBatchSize: 300,
       }),
     };
   }

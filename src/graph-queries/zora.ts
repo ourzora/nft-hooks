@@ -139,7 +139,7 @@ export const GET_AUCTION_BY_MEDIA = gql`
 
   query getAuctionByMedia($tokens: [String!]) {
     reserveAuctions(
-      first: 1
+      first: 300
       where: { token_in: $tokens }
       orderBy: createdAtTimestamp
       orderDirection: desc
