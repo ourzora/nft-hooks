@@ -3,6 +3,8 @@ import { Networks } from './networks';
 export const THEGRAPH_API_URL_BY_NETWORK = {
   [Networks.MAINNET]: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1',
   [Networks.RINKEBY]: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-rinkeby',
+  [Networks.POLYGON]: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-polygon',
+  [Networks.MUMBAI]: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-mumbai',
 };
 
 export const THEGRAPH_UNISWAP_URL_BY_NETWORK = {
