@@ -1,8 +1,13 @@
 {
   "generates": {
-    "./src/graph-queries/zora-types.ts": {
-      "schema": "./graph-schemas/zora.graphql",
-      "documents": "./src/graph-queries/zora.ts",
+    "./src/graph-queries/zora-graph-types.ts": {
+      "schema": "./graph-schemas/zora-graph.graphql",
+      "documents": "./src/graph-queries/zora-graph.ts",
+      "plugins": ["typescript", "typescript-operations"]
+    },
+    "./src/graph-queries/zora-indexer-types.ts": {
+      "schema": "./graph-schemas/zora-indexer.graphql",
+      "documents": "./src/graph-queries/zora-indexer.ts",
       "plugins": ["typescript", "typescript-operations"]
     },
     "./src/graph-queries/uniswap-types.ts": {
