@@ -1,3 +1,5 @@
+import { NFTInterface } from "./NFTInterface";
+
 type NullableString = string | null;
 
 export type OpenseaAsset = {
@@ -64,7 +66,5 @@ type TokenUser = {
   config: string;
 }
 
-export interface OpenseaInterface {
-  loadNFT(tokenContract: string, tokenId: string): Promise<OpenseaAsset|Error>;
-  loadNFTs(tokenContractAndId: string): Promise<(OpenseaAsset | Error)[]>;
+export interface OpenseaInterface extends NFTInterface<OpenseaAsset> {
 }

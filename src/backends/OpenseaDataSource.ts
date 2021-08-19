@@ -2,6 +2,7 @@ import DataLoader from 'dataloader';
 import { NetworkIDs } from '../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../constants/urls';
 import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
+import { NFTObject } from './NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
 
 type OpenseaDataResponse = {
@@ -24,8 +25,34 @@ export class OpenseaDataSource implements OpenseaInterface {
   async loadNFT(tokenContract: string, tokenId: string): Promise<OpenseaAsset | Error> {
     return await this.nftsLoader.load(`${tokenContract}:${tokenId}`);
   }
-  async loadNFTs(tokenContractAndId: string): Promise<(OpenseaAsset | Error)[]> {
+  async loadNFTs(tokenContractAndId: string[]): Promise<(OpenseaAsset | Error)[]> {
     return await this.nftsLoader.loadMany(tokenContractAndId);
+  }
+  canLoadNFT() {
+    return true;
+  }
+  transformNFT(asset: OpenseaAsset, object: NFTObject) {
+    object.nft = {
+      tokenId: asset.id.toString(),
+      contract: {
+        address: asset.asset_contract.address,
+        name: asset.asset_contract.name,
+        symbol: asset.asset_contract.symbol,
+        description: asset.asset_contract.description,
+      },
+      owner: asset.owner.address,
+      creator: asset.creator.address,
+      metadataURI: null,
+      contentURI: null,
+    };
+    object.metadata = {
+      name: asset.name,
+      description: asset.description,
+      animation_url: asset.animation_url,
+      image: asset.image_url,
+    }
+    object.rawData['opensea'] = asset;
+    return object;
   }
 
   async fetchNFTsOpensea(
