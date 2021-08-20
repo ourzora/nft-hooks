@@ -1,5 +1,6 @@
 import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
+import { getAddress } from '@ethersproject/address';
 
 import { RequestError } from './RequestError';
 import {
@@ -210,20 +211,21 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const response = (await client.request(
-      INDEXER_BY_IDS_QUERY,
-      {
-        ids: keys
-      }
-    ));
+    const response = await client.request(INDEXER_BY_IDS_QUERY, {
+      ids: keys,
+    });
 
-    return keys.map((key: string) => 
-      response.Token.find((token: TokenWithAuctionFragment) => token.id === key) || new Error('Did not find token')
+    return keys.map(
+      (key: string) =>
+        response.Token.find((token: TokenWithAuctionFragment) => token.id === key) ||
+        new Error('Did not find token')
     );
   }
 
   async loadZoraNFTIndexerNFTUntransformed(contractAddress: string, tokenId: string) {
-    return this.loaders.zoraNFTIndexerLoader.load(`${contractAddress}-${tokenId}`);
+    return this.loaders.zoraNFTIndexerLoader.load(
+      `${getAddress(contractAddress)}-${tokenId}`
+    );
   }
 
   async loadZoraNFTIndexerNFTsUntransformed(tokenAndIds: readonly string[]) {
@@ -245,10 +247,9 @@ export class MediaFetchAgent {
 
     console.log(type);
 
-    const response = (await client.request(
-      GET_MEDIAS_QUERY,
-      {ids}
-    )) as GetMediaAndAuctionsQuery;
+    const response = (await client.request(GET_MEDIAS_QUERY, {
+      ids,
+    })) as GetMediaAndAuctionsQuery;
     const medias = [...response.creator, ...response.owner, ...response.id];
     return medias.map((media) => transformMediaItem(media, this.networkId));
   }

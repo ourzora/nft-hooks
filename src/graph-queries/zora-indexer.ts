@@ -11,9 +11,17 @@ const BASE_FRAGMENTS = gql`
     metadata {
       json
     }
+    mintTransferEvent {
+      blockTimestamp
+      blockNumber
+    }
     media {
       contentURI
+      contentHash
+      metadataHash
       metadataURI
+      ownerBidShare
+      creatorBidShare
     }
     auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
       winner

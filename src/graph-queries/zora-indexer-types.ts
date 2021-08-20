@@ -9559,9 +9559,12 @@ export type TokenWithAuctionFragment = (
   & { metadata?: Maybe<(
     { __typename?: 'TokenMetadata' }
     & Pick<TokenMetadata, 'json'>
+  )>, mintTransferEvent?: Maybe<(
+    { __typename?: 'TokenTransferEvent' }
+    & Pick<TokenTransferEvent, 'blockTimestamp' | 'blockNumber'>
   )>, media?: Maybe<(
     { __typename?: 'Media' }
-    & Pick<Media, 'contentURI' | 'metadataURI'>
+    & Pick<Media, 'contentURI' | 'contentHash' | 'metadataHash' | 'metadataURI' | 'ownerBidShare' | 'creatorBidShare'>
   )>, auctions: Array<(
     { __typename?: 'Auction' }
     & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner'>

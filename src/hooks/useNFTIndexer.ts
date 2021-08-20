@@ -31,7 +31,7 @@ export function useNFTIndexer(
   options: OptionsType = {}
 ): useNFTType {
   const fetcher = useContext(NFTFetchContext);
-  const { refreshInterval, initialData } = options || {};
+  const { refreshInterval, initialData, loadCurrencyInfo = true } = options || {};
 
   const nftData = useSWR(
     contractAddress && tokenId ? ['loadIndexerNFT', contractAddress, tokenId] : null,
@@ -45,20 +45,20 @@ export function useNFTIndexer(
     { refreshInterval }
   );
 
-  // const currencyData = useSWR(
-  //   nftResponseData && loadCurrencyInfo
-  //     ? ['loadCurrencies', auctionData.data?.auctionCurrency]
-  //     : null,
-  //   (_, ...currencies) => fetcher.loadCurrencies(currencies),
-  //   {
-  //     refreshInterval,
-  //     dedupingInterval: 0,
-  //   }
-  // );
+  const currencyData = useSWR(
+    nftData && nftData.data && loadCurrencyInfo
+      ? ['loadCurrencies', auctionData.data?.auctionCurrency]
+      : null,
+    (_, ...currencies) => fetcher.loadCurrencies(currencies),
+    {
+      refreshInterval,
+      dedupingInterval: 0,
+    }
+  );
 
   let data: IndexerDataType | undefined = undefined;
   if (nftData.data !== undefined) {
-    data = transformNFTIndexerResponse(nftData.data, auctionData.data);
+    data = transformNFTIndexerResponse(nftData.data, auctionData.data, currencyData.data);
   } else {
     data = initialData;
   }

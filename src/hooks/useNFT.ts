@@ -54,8 +54,6 @@ export function useNFT(
     options
   );
 
-  console.log({betaIndexerNFT})
-
   const zoraNFT = useZNFT(
     !options.useBetaIndexer && isZoraContractAddress ? tokenId : undefined,
     options

@@ -218,6 +218,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -440,6 +443,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -662,6 +668,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -884,6 +893,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -1111,6 +1123,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -1338,6 +1353,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -1560,6 +1578,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -1782,6 +1803,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "Hello World",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -1985,6 +2009,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -2154,6 +2181,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;
@@ -2357,6 +2387,9 @@ Object {
     "creatorBidShare": "12974",
     "creatorBidSharePercentage": 1.2974e-14,
     "metadataHash": "ByTeSStrInG",
+    "metadataURI": "https://zora.co/content",
+    "ownerBidShare": "12974",
+    "ownerBidSharePercentage": 1.2974e-14,
   },
 }
 `;

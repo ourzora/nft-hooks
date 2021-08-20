@@ -61,13 +61,15 @@ export type CommonNFTMediaDataType = {
   };
 };
 
+type ZoraNFTType = Omit<
+  NftMediaFragment,
+  'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator'
+> & {
+  creatorBidSharePercentage: number;
+  ownerBidSharePercentage: number;
+};
 export type ZNFTMediaDataType = CommonNFTMediaDataType & {
-  zoraNFT: Omit<
-    NftMediaFragment,
-    'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator' | 'metadataURI'
-  > & {
-    creatorBidSharePercentage: number;
-  };
+  zoraNFT: ZoraNFTType;
 };
 
 export type OpenseaNFTMediaDataType = CommonNFTMediaDataType & {
@@ -110,7 +112,8 @@ export type OpenseaNFTDataType = Omit<OpenseaNFTMediaDataType, 'pricing'> & {
 
 export type IndexerDataType = Omit<CommonNFTMediaDataType, 'pricing'> & {
   zoraIndexerResponse: TokenWithAuctionFragment;
-  pricing: PricingInfoData,
+  zoraNFT?: ZoraNFTType,
+  pricing: PricingInfoData;
 };
 
 export type NFTDataType = ZNFTDataType | OpenseaNFTDataType | IndexerDataType;

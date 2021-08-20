@@ -63,12 +63,17 @@ export function transformMediaItem(
       metadataURI: nft.metadataURI,
     },
     zoraNFT: {
+      metadataURI: nft.metadataURI,
       metadataHash: nft.metadataHash,
       contentURI: nft.contentURI,
       contentHash: nft.contentHash,
       creatorBidShare: nft.creatorBidShare,
+      ownerBidShare: nft.ownerBidShare,
       createdAtTimestamp: nft.createdAtTimestamp,
       creatorBidSharePercentage: new Big(nft.creatorBidShare)
+        .div(new Big(10).pow(18))
+        .toNumber(),
+      ownerBidSharePercentage: new Big(nft.ownerBidShare)
         .div(new Big(10).pow(18))
         .toNumber(),
     },
