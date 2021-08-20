@@ -245,16 +245,21 @@ export class MediaFetchAgent {
    */
   async fetchZoraIndexerGroupData({
     collectionAddress,
+    curatorAddress,
     limit = 120,
     offset = 0,
   }: FetchZoraIndexerListCollectionType) {
+    if (!collectionAddress && !curatorAddress) {
+      throw new Error('Needs to have at least one curator or collector');
+    }
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
     const response = await client.request(ACTIVE_AUCTIONS_QUERY, {
-      address: getAddress(collectionAddress),
+      addresses: collectionAddress ? [getAddress(collectionAddress)] : [],
+      curators: curatorAddress ? [getAddress(curatorAddress)] : [],
       offset,
       limit,
     });

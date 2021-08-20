@@ -153,6 +153,21 @@ export const fetchZoraIndexerList = async (
   return result;
 };
 
+export const getIndexerServerTokenInfo = ({
+  nft: { tokenData },
+}: {
+  nft: { tokenData: TokenWithAuctionFragment };
+}) => ({
+  tokenId: tokenData.tokenId.toString(),
+  tokenContract: tokenData.address,
+  metadata: tokenData.metadata?.json,
+  image: tokenData.metadata?.json?.image_url
+    ? tokenData.metadata.json.image_url
+    : tokenData.media
+    ? tokenData.media.contentURI
+    : null,
+});
+
 /**
  * Server-side initial data hook for zora nft indexer response data
  *

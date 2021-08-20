@@ -99,11 +99,22 @@ export const BY_IDS = gql`
 // Get active auctions by address
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${BASE_FRAGMENTS}
-  query activeTokens($address: String, $limit: Int, $offset: Int) {
+  query activeTokens(
+    $addresses: [String!]
+    $curators: [String!]
+    $limit: Int
+    $offset: Int
+  ) {
     Token(
       limit: $limit
       offset: $offset
-      where: { address: { _eq: $address }, tokenURI: { _is_null: false } }
+      where: {
+        _or: [
+          { address: { _in: $addresses } }
+          { auctions: { curator: { _in: $curators } } }
+        ]
+        tokenURI: { _is_null: false }
+      }
       order_by: [
         { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
         { auctions_aggregate: { count: desc } }
