@@ -9584,6 +9584,8 @@ export type TokenWithAuctionFragment = (
 export type ByOwnerQueryVariables = Exact<{
   address?: Maybe<Scalars['String']>;
   owner?: Maybe<Scalars['String']>;
+  offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -9624,6 +9626,8 @@ export type ByIdsQuery = (
 
 export type ActiveTokensQueryVariables = Exact<{
   address?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 

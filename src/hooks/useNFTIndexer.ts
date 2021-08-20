@@ -34,11 +34,14 @@ export function useNFTIndexer(
   const { refreshInterval, initialData, loadCurrencyInfo = true } = options || {};
 
   const nftData = useSWR(
-    contractAddress && tokenId ? ['loadIndexerNFT', contractAddress, tokenId] : null,
+    !options.initialData && contractAddress && tokenId
+      ? ['loadIndexerNFT', contractAddress, tokenId]
+      : null,
     (_, contractAddress, tokenId) =>
       fetcher.loadZoraNFTIndexerNFTUntransformed(contractAddress, tokenId),
     { dedupingInterval: 0 }
   );
+  // TODO(iain): Integrate auction data from zora indexer into hook
   const auctionData = useSWR(
     contractAddress && tokenId ? ['loadAuctionForNFT', contractAddress, tokenId] : null,
     (_, contractAddress, tokenId) => fetcher.loadAuctionInfo(contractAddress, tokenId),
@@ -64,7 +67,7 @@ export function useNFTIndexer(
   }
 
   return {
-    currencyLoaded: false, //!!currencyData.data,
+    currencyLoaded: !!currencyData.data,
     error: nftData.error,
     data,
   };

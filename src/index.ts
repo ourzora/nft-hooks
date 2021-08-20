@@ -16,6 +16,7 @@ import * as FetchStaticData from './fetcher/FetchStaticData';
 import { RequestError } from './fetcher/RequestError';
 import { useZNFTGroup } from './hooks/useZNFTGroup';
 import { useNFTIndexer } from './hooks/useNFTIndexer';
+import { useNFTIndexerQuery } from './hooks/useNFTIndexerQuery';
 
 export {
   // Hooks
@@ -27,6 +28,7 @@ export {
   useZNFT,
   useZNFTGroup,
   useNFTIndexer,
+  useNFTIndexerQuery,
   useOpenseaNFT,
   useZoraUsername,
   // Hook types

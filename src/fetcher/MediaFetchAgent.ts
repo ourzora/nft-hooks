@@ -32,7 +32,6 @@ import {
   FetchGroupTypes,
   MediaContentType,
   UsernameResponseType,
-  ZoraFetchQueryType,
 } from './FetchResultTypes';
 import {
   transformCurrencyForKey,
@@ -47,7 +46,12 @@ import {
   transformGenericNFTForKey,
   transformOpenseaResponse,
 } from './OpenseaUtils';
-import { BY_IDS as INDEXER_BY_IDS_QUERY } from '../graph-queries/zora-indexer';
+import {
+  ACTIVE_AUCTIONS_QUERY,
+  BY_IDS as INDEXER_BY_IDS_QUERY,
+  BY_OWNER,
+} from '../graph-queries/zora-indexer';
+import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -239,19 +243,54 @@ export class MediaFetchAgent {
    * @param type type of ids: creator, id (of media), owner
    * @returns
    */
-  async fetchZoraIndexerGroupData(ids: string[], type: ZoraFetchQueryType) {
+  async fetchZoraIndexerGroupData({
+    collectionAddress,
+    limit = 120,
+    offset = 0,
+  }: FetchZoraIndexerListCollectionType) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
-    console.log(type);
+    const response = await client.request(ACTIVE_AUCTIONS_QUERY, {
+      address: getAddress(collectionAddress),
+      offset,
+      limit,
+    });
+    return response.Tokens as TokenWithAuctionFragment[];
+  }
 
-    const response = (await client.request(GET_MEDIAS_QUERY, {
-      ids,
-    })) as GetMediaAndAuctionsQuery;
-    const medias = [...response.creator, ...response.owner, ...response.id];
-    return medias.map((media) => transformMediaItem(media, this.networkId));
+  /**
+   * Un-batched fetch function to fetch a group of NFT data from the zora indexer
+   *
+   * @param ids list of ids to query
+   * @param type type of ids: creator, id (of media), owner
+   * @returns
+   */
+  async fetchZoraIndexerUserOwnedNFTs({
+    collectionAddress,
+    userAddress,
+    offset = 0,
+    limit = 250,
+  }: {
+    collectionAddress: string;
+    userAddress: string;
+    offset?: number;
+    limit?: number;
+  }) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const response = await client.request(BY_OWNER, {
+      address: getAddress(collectionAddress),
+      owner: getAddress(userAddress),
+      offset,
+      limit,
+    });
+    return response.Tokens as TokenWithAuctionFragment[];
   }
 
   /**
@@ -308,6 +347,11 @@ export class MediaFetchAgent {
     return await this.loaders.auctionInfoLoader.load(
       [tokenContract.toLowerCase(), tokenId].join('-')
     );
+  }
+
+  // use dash between lowercase contract id and token id
+  async loadAuctionInfos(tokenContractAndIds: readonly string[]) {
+    return await this.loaders.auctionInfoLoader.loadMany(tokenContractAndIds);
   }
 
   /**
