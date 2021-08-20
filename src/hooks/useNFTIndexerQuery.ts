@@ -1,8 +1,8 @@
 import { useContext } from 'react';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
-import useSWR, { SWRConfiguration } from 'swr';
-import { TokenWithAuctionFragment } from 'src/graph-queries/zora-indexer-types';
+import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 
 export type useNFTType = {
   error?: string;

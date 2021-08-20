@@ -58,18 +58,17 @@ export const BY_OWNER = gql`
       limit: $limit
       offset: $offset
       where: {
-        _and: [
-          { address: { _eq: $address } }
+        address: { _eq: $address }
+        _or: [
+          { owner: { _eq: $owner } }
           {
-            _or: [
-              { owner: { _eq: $owner } }
-              {
-                _and: [
-                  { auctions: { tokenOwner: { _eq: $owner } } }
-                  { auctions: { _not: { canceledEvent: {} } } }
-                ]
-              }
-            ]
+            auctions: {
+              _and: [
+                { _not: { endedEvent: {} } }
+                { _not: { canceledEvent: {} } }
+                { tokenOwner: { _eq: $owner } }
+              ]
+            }
           }
         ]
       }

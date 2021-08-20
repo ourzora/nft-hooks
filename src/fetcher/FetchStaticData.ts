@@ -1,11 +1,15 @@
-import { TokenWithAuctionFragment } from 'src/graph-queries/zora-indexer-types';
+import { getAddress } from '@ethersproject/address';
+
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
+import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 import { FetchGroupTypes } from './FetchResultTypes';
 import { MediaFetchAgent } from './MediaFetchAgent';
 import { openseaDataToMetadata } from './OpenseaUtils';
 import { addAuctionInformation } from './TransformFetchResults';
-import { transformNFTIndexerResponse } from './ZoraIndexerTransformers';
-import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
+import {
+  FetchZoraIndexerItemType,
+  FetchZoraIndexerListCollectionType,
+} from './ZoraIndexerTypes';
 
 /**
  * This removes undefined values to sanitize
@@ -112,16 +116,18 @@ const transformServerSideIndexerDataList = async (
     response.map((element) => `${element.address.toLowerCase()}-${element.tokenId}`)
   );
   return response.map((tokenData) => {
-    return transformNFTIndexerResponse(
-      tokenData,
-      auctionInfos
-        .map((auction) => (auction instanceof Error ? undefined : auction))
-        .find(
-          (auction) =>
-            auction?.tokenContract.toLowerCase() === tokenData.address.toLowerCase() &&
-            auction.tokenId === tokenData.tokenId.toString()
-        )
-    );
+    return {
+      nft: {
+        tokenData,
+        auctionData: auctionInfos
+          .map((auction) => (auction instanceof Error ? undefined : auction))
+          .find(
+            (auction) =>
+              auction?.tokenContract.toLowerCase() === tokenData.address.toLowerCase() &&
+              auction.tokenId === tokenData.tokenId.toString()
+          ),
+      },
+    };
   });
 };
 
@@ -136,14 +142,39 @@ const transformServerSideIndexerDataList = async (
 export const fetchZoraIndexerList = async (
   fetchAgent: MediaFetchAgent,
   listOptions: FetchZoraIndexerListCollectionType,
-  prepareDataJson: boolean = false
+  prepareDataJson: boolean = true
 ) => {
   const response = await fetchAgent.fetchZoraIndexerGroupData(listOptions);
-  const result = transformServerSideIndexerDataList(fetchAgent, response);
+  const result = await transformServerSideIndexerDataList(fetchAgent, response);
+
   if (prepareDataJson) {
     return prepareJson(result);
   }
   return result;
+};
+
+/**
+ * Server-side initial data hook for zora nft indexer response data
+ *
+ * @param fetchAgent FetchAgent class
+ * @param listOptions Options of what objects to list (limited to contract address at the moment)
+ *    has limit and offset fields
+ * @param prepareDataJson prepare data for vercel static prop passing by cleaning up invalid JSON objects
+ */
+export const fetchZoraIndexerItem = async (
+  fetchAgent: MediaFetchAgent,
+  listOptions: FetchZoraIndexerItemType,
+  prepareDataJson: boolean = true
+) => {
+  const response = await fetchAgent.fetchZoraNFTIndexerNFTs([
+    `${getAddress(listOptions.collectionAddress)}-${listOptions.tokenId}`,
+  ]);
+  const result = await transformServerSideIndexerDataList(fetchAgent, response);
+
+  if (prepareDataJson) {
+    return prepareJson(result[0]);
+  }
+  return result[0];
 };
 
 /**
@@ -175,7 +206,8 @@ export const fetchUserOwnedNFTs = async (
     limit,
     offset,
   });
-  const result = transformServerSideIndexerDataList(fetchAgent, response);
+  const result = await transformServerSideIndexerDataList(fetchAgent, response);
+
   if (prepareDataJson) {
     return prepareJson(result);
   }

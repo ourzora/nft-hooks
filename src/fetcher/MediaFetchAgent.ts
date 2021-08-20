@@ -258,7 +258,7 @@ export class MediaFetchAgent {
       offset,
       limit,
     });
-    return response.Tokens as TokenWithAuctionFragment[];
+    return response.Token as TokenWithAuctionFragment[];
   }
 
   /**
@@ -290,7 +290,7 @@ export class MediaFetchAgent {
       offset,
       limit,
     });
-    return response.Tokens as TokenWithAuctionFragment[];
+    return response.Token as TokenWithAuctionFragment[];
   }
 
   /**
