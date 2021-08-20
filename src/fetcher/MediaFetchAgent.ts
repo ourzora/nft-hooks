@@ -31,6 +31,7 @@ import {
   FetchGroupTypes,
   MediaContentType,
   UsernameResponseType,
+  ZoraFetchQueryType,
 } from './FetchResultTypes';
 import {
   transformCurrencyForKey,
@@ -214,10 +215,10 @@ export class MediaFetchAgent {
       {
         ids: keys
       }
-    )) as TokenWithAuctionFragment[];
+    ));
 
     return keys.map((key: string) => 
-      response.find((token: TokenWithAuctionFragment) => token.id === key) || new Error('Did not find token')
+      response.Token.find((token: TokenWithAuctionFragment) => token.id === key) || new Error('Did not find token')
     );
   }
 
@@ -236,36 +237,17 @@ export class MediaFetchAgent {
    * @param type type of ids: creator, id (of media), owner
    * @returns
    */
-  async fetchZoraIndexerGroupData(ids: string[], type: FetchGroupTypes) {
+  async fetchZoraIndexerGroupData(ids: string[], type: ZoraFetchQueryType) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const getQuery = () => {
-      let base: Record<string, string[]> = {
-        id_ids: [],
-        creator_ids: [],
-        owner_ids: [],
-      };
-      const idsNormalized = ids.map((id) => id.toLowerCase());
-      switch (type) {
-        case 'id':
-          base.id_ids = idsNormalized;
-          break;
-        case 'creator':
-          base.creator_ids = idsNormalized;
-          break;
-        case 'owner':
-          base.owner_ids = idsNormalized;
-          break;
-      }
-      return base;
-    };
+    console.log(type);
 
     const response = (await client.request(
       GET_MEDIAS_QUERY,
-      getQuery
+      {ids}
     )) as GetMediaAndAuctionsQuery;
     const medias = [...response.creator, ...response.owner, ...response.id];
     return medias.map((media) => transformMediaItem(media, this.networkId));
