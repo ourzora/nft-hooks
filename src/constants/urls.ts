@@ -7,6 +7,11 @@ export const THEGRAPH_API_URL_BY_NETWORK = {
   [Networks.MUMBAI]: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-mumbai',
 };
 
+export const ZORA_INDEXER_URL_BY_NETWORK = {
+  [Networks.MAINNET]: 'https://indexer-prod-mainnet.zora.co/v1/graphql',
+  [Networks.RINKEBY]: 'https://indexer-dev-rinkeby.zora.co/v1/graphql',
+};
+
 export const THEGRAPH_UNISWAP_URL_BY_NETWORK = {
   [Networks.MAINNET]: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
   [Networks.RINKEBY]:

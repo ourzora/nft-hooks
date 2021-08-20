@@ -9,7 +9,7 @@ import type {
   GetMediaAndAuctionsQuery,
   NftMediaFullDataFragment,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, KNOWN_CONTRACTS } from './FetchResultTypes';
 import { RequestError } from './RequestError';
@@ -87,7 +87,7 @@ export function transformMediaForKey(
   key: string,
   networkId: NetworkIDs
 ): ZNFTMediaDataType {
-  const media = result.id.find((media) => media.id === key);
+  const media = result.id.find((media: any) => media.id === key);
   if (!media) {
     throw new RequestError('No media in response');
   }

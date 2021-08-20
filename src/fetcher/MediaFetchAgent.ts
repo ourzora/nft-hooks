@@ -6,6 +6,7 @@ import {
   OPENSEA_API_URL_BY_NETWORK,
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
+  ZORA_INDEXER_URL_BY_NETWORK,
   ZORA_USERNAME_API_URL,
 } from '../constants/urls';
 import type { NetworkIDs } from '../constants/networks';
@@ -14,13 +15,14 @@ import {
   GET_AUCTION_BY_CURATOR,
   GET_AUCTION_BY_MEDIA,
   GET_MEDIAS_QUERY,
-} from '../graph-queries/zora';
+} from '../graph-queries/zora-graph';
 import type {
   GetMediaAndAuctionsQuery,
   GetAllAuctionsQuery,
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
+import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -43,6 +45,7 @@ import {
   transformGenericNFTForKey,
   transformOpenseaResponse,
 } from './OpenseaUtils';
+import { BY_IDS as INDEXER_BY_IDS_QUERY } from '../graph-queries/zora-indexer';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -66,6 +69,8 @@ export class MediaFetchAgent {
     usernameLoader: DataLoader<string, UsernameResponseType>;
     // genericNFTLoader currently uses opensea
     genericNFTLoader: DataLoader<string, OpenseaResponse>;
+    // zoraNFTIndexer uses zora indexer
+    zoraNFTIndexerLoader: DataLoader<string, TokenWithAuctionFragment>;
     // auctionIfnoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
   };
@@ -79,6 +84,7 @@ export class MediaFetchAgent {
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys), {
         cache: false,
       }),
+      zoraNFTIndexerLoader: new DataLoader((keys) => this.fetchZoraNFTIndexerNFTs(keys)),
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
       genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys), {
         cache: false,
@@ -163,6 +169,76 @@ export class MediaFetchAgent {
   async fetchZNFTGroupData(ids: string[], type: FetchGroupTypes) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
     const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const getQuery = () => {
+      let base: Record<string, string[]> = {
+        id_ids: [],
+        creator_ids: [],
+        owner_ids: [],
+      };
+      const idsNormalized = ids.map((id) => id.toLowerCase());
+      switch (type) {
+        case 'id':
+          base.id_ids = idsNormalized;
+          break;
+        case 'creator':
+          base.creator_ids = idsNormalized;
+          break;
+        case 'owner':
+          base.owner_ids = idsNormalized;
+          break;
+      }
+      return base;
+    };
+
+    const response = (await client.request(
+      GET_MEDIAS_QUERY,
+      getQuery
+    )) as GetMediaAndAuctionsQuery;
+    const medias = [...response.creator, ...response.owner, ...response.id];
+    return medias.map((media) => transformMediaItem(media, this.networkId));
+  }
+
+  // Alpha: uses zora indexer
+  // format CONTRACT_ID-TOKEN_ID
+  async fetchZoraNFTIndexerNFTs(keys: readonly string[]) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const response = (await client.request(
+      INDEXER_BY_IDS_QUERY,
+      {
+        ids: keys
+      }
+    )) as TokenWithAuctionFragment[];
+
+    return keys.map((key: string) => 
+      response.find((token: TokenWithAuctionFragment) => token.id === key) || new Error('Did not find token')
+    );
+  }
+
+  async loadZoraNFTIndexerNFTUntransformed(contractAddress: string, tokenId: string) {
+    return this.loaders.zoraNFTIndexerLoader.load(`${contractAddress}-${tokenId}`);
+  }
+
+  async loadZoraNFTIndexerNFTsUntransformed(tokenAndIds: readonly string[]) {
+    return this.loaders.zoraNFTIndexerLoader.loadMany(tokenAndIds);
+  }
+
+  /**
+   * Un-batched fetch function to fetch a group of NFT data from the zora indexer
+   *
+   * @param ids list of ids to query
+   * @param type type of ids: creator, id (of media), owner
+   * @returns
+   */
+  async fetchZoraIndexerGroupData(ids: string[], type: FetchGroupTypes) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
@@ -303,8 +379,10 @@ export class MediaFetchAgent {
     if (!response.reserveAuctions) {
       throw new RequestError('Missing auction in reponse');
     }
-    return tokenAndAddresses.map((tokenAndAddress: string) =>
-      response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) || new Error('Missing Record')
+    return tokenAndAddresses.map(
+      (tokenAndAddress: string) =>
+        response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
+        new Error('Missing Record')
     );
   }
 
