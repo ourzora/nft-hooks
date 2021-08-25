@@ -1,4 +1,4 @@
-import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
+import { ReserveAuctionPartialFragment } from '../graph-queries/zora-graph-types';
 import { CurrencyLookupType, OpenseaNFTDataType } from './AuctionInfoTypes';
 import { RequestError } from './RequestError';
 import { addAuctionInformation, auctionDataToPricing } from './TransformFetchResults';

@@ -9,7 +9,7 @@ import type {
   GetMediaAndAuctionsQuery,
   NftMediaFullDataFragment,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, KNOWN_CONTRACTS } from './FetchResultTypes';
 import { RequestError } from './RequestError';
@@ -63,12 +63,17 @@ export function transformMediaItem(
       metadataURI: nft.metadataURI,
     },
     zoraNFT: {
+      metadataURI: nft.metadataURI,
       metadataHash: nft.metadataHash,
       contentURI: nft.contentURI,
       contentHash: nft.contentHash,
       creatorBidShare: nft.creatorBidShare,
+      ownerBidShare: nft.ownerBidShare,
       createdAtTimestamp: nft.createdAtTimestamp,
       creatorBidSharePercentage: new Big(nft.creatorBidShare)
+        .div(new Big(10).pow(18))
+        .toNumber(),
+      ownerBidSharePercentage: new Big(nft.ownerBidShare)
         .div(new Big(10).pow(18))
         .toNumber(),
     },
@@ -87,7 +92,7 @@ export function transformMediaForKey(
   key: string,
   networkId: NetworkIDs
 ): ZNFTMediaDataType {
-  const media = result.id.find((media) => media.id === key);
+  const media = result.id.find((media: any) => media.id === key);
   if (!media) {
     throw new RequestError('No media in response');
   }

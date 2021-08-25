@@ -2463,7 +2463,7 @@ export type AskPriceFragment = (
 
 export type NftMediaFragment = (
   { __typename?: 'Media' }
-  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & Pick<Media, 'id' | 'creatorBidShare' | 'ownerBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
   & { owner: (
     { __typename?: 'User' }
     & Pick<User, 'id'>

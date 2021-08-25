@@ -1,7 +1,7 @@
 import { TokenShortFragment } from '../graph-queries/uniswap-types';
 import {
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import {
   CurrentReserveBid,
   PastReserveBid,
@@ -12,6 +12,8 @@ export type MediaContentType =
   | { text: string; type: 'text'; mimeType: string };
 
 export type FetchGroupTypes = 'id' | 'creator' | 'owner';
+
+export type ZoraFetchQueryType = 'creator' | 'owner' | 'creator' | 'collection';
 
 type MetadataIsh = {
   mimeType: string;

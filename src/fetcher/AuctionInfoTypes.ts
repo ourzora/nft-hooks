@@ -7,7 +7,7 @@ import {
   NftMediaFragment,
   PreviousReserveBidFragment,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import {
   ChainCurrencyType,
   NFTResultType,
@@ -15,6 +15,7 @@ import {
 } from '../fetcher/FetchResultTypes';
 import { AuctionStateInfo } from './AuctionState';
 import { OpenseaResponse } from './OpenseaUtils';
+import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 
 export type PricingInfo = {
   currency: CurrencyShortFragment;
@@ -60,13 +61,15 @@ export type CommonNFTMediaDataType = {
   };
 };
 
+type ZoraNFTType = Omit<
+  NftMediaFragment,
+  'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator'
+> & {
+  creatorBidSharePercentage: number;
+  ownerBidSharePercentage: number;
+};
 export type ZNFTMediaDataType = CommonNFTMediaDataType & {
-  zoraNFT: Omit<
-    NftMediaFragment,
-    'currentBids' | 'currentAsk' | 'id' | 'owner' | 'creator' | 'metadataURI'
-  > & {
-    creatorBidSharePercentage: number;
-  };
+  zoraNFT: ZoraNFTType;
 };
 
 export type OpenseaNFTMediaDataType = CommonNFTMediaDataType & {
@@ -107,6 +110,12 @@ export type OpenseaNFTDataType = Omit<OpenseaNFTMediaDataType, 'pricing'> & {
   pricing: PricingInfoData;
 };
 
-export type NFTDataType = ZNFTDataType | OpenseaNFTDataType;
+export type IndexerDataType = Omit<CommonNFTMediaDataType, 'pricing'> & {
+  zoraIndexerResponse: TokenWithAuctionFragment;
+  zoraNFT?: ZoraNFTType,
+  pricing: PricingInfoData;
+};
+
+export type NFTDataType = ZNFTDataType | OpenseaNFTDataType | IndexerDataType;
 
 export type CurrencyLookupType = { [currencyId: string]: ChainCurrencyType };
