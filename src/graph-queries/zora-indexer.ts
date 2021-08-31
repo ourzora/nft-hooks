@@ -78,15 +78,6 @@ export const BY_OWNER = gql`
   }
 `;
 
-export const LOOKUP_TOKEN = gql`
-  ${BASE_FRAGMENTS}
-  query byId($address: String, $tokenId: Int) @cached {
-    Token(where: { address: { _eq: $address }, tokenId: { _eq: $tokenId } }) {
-      ...TokenWithAuction
-    }
-  }
-`;
-
 export const BY_IDS = gql`
   ${BASE_FRAGMENTS}
   query byIds($ids: [String!]) @cached {
