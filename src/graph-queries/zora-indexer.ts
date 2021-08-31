@@ -53,7 +53,7 @@ const BASE_FRAGMENTS = gql`
 // Get list of owners in manage modal for contract
 export const BY_OWNER = gql`
   ${BASE_FRAGMENTS}
-  query byOwner($address: String, $owner: String, $offset: Int, $limit: Int) {
+  query byOwner($address: String, $owner: String, $offset: Int, $limit: Int) @cached {
     Token(
       limit: $limit
       offset: $offset
@@ -80,7 +80,7 @@ export const BY_OWNER = gql`
 
 export const LOOKUP_TOKEN = gql`
   ${BASE_FRAGMENTS}
-  query byId($address: String, $tokenId: Int) {
+  query byId($address: String, $tokenId: Int) @cached {
     Token(where: { address: { _eq: $address }, tokenId: { _eq: $tokenId } }) {
       ...TokenWithAuction
     }
@@ -89,7 +89,7 @@ export const LOOKUP_TOKEN = gql`
 
 export const BY_IDS = gql`
   ${BASE_FRAGMENTS}
-  query byIds($ids: [String!]) {
+  query byIds($ids: [String!]) @cached {
     Token(where: { id: { _in: $ids } }) {
       ...TokenWithAuction
     }
@@ -99,12 +99,12 @@ export const BY_IDS = gql`
 // Get active auctions by address
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${BASE_FRAGMENTS}
-  query activeTokens(
+  query activeTokens (
     $addresses: [String!]
     $curators: [String!]
     $limit: Int
     $offset: Int
-  ) {
+  ) @cached {
     Token(
       limit: $limit
       offset: $offset
