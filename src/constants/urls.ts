@@ -8,7 +8,7 @@ export const THEGRAPH_API_URL_BY_NETWORK = {
 };
 
 export const ZORA_INDEXER_URL_BY_NETWORK = {
-  [Networks.MAINNET]: 'https://indexer-prod-mainnet.zora.co/v1/graphql',
+  [Networks.MAINNET]: 'https://indexer-dev-mainnet.zora.co/v1/graphql',
   [Networks.RINKEBY]: 'https://indexer-dev-rinkeby.zora.co/v1/graphql',
 };
 
