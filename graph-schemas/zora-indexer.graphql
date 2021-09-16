@@ -205,6 +205,7 @@ type Auction {
     """filter the rows returned"""
     where: AuctionReservePriceUpdatedEvent_bool_exp
   ): AuctionReservePriceUpdatedEvent_aggregate!
+  status: auction_status_enum
 
   """An object relationship"""
   token: Token
@@ -297,6 +298,7 @@ input Auction_bool_exp {
   media: Media_bool_exp
   reservePrice: String_comparison_exp
   reservePriceUpdatedEvents: AuctionReservePriceUpdatedEvent_bool_exp
+  status: auction_status_enum_comparison_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
   tokenId: String_comparison_exp
@@ -412,6 +414,7 @@ input Auction_order_by {
   media: Media_order_by
   reservePrice: order_by
   reservePriceUpdatedEvents_aggregate: AuctionReservePriceUpdatedEvent_aggregate_order_by
+  status: order_by
   token: Token_order_by
   tokenContract: order_by
   tokenId: order_by
@@ -463,6 +466,9 @@ enum Auction_select_column {
   reservePrice
 
   """column name"""
+  status
+
+  """column name"""
   tokenContract
 
   """column name"""
@@ -473,6 +479,23 @@ enum Auction_select_column {
 
   """column name"""
   winner
+}
+
+scalar auction_status_enum
+
+"""
+Boolean expression to compare columns of type "auction_status_enum". All fields are combined with logical 'AND'.
+"""
+input auction_status_enum_comparison_exp {
+  _eq: auction_status_enum
+  _gt: auction_status_enum
+  _gte: auction_status_enum
+  _in: [auction_status_enum!]
+  _is_null: Boolean
+  _lt: auction_status_enum
+  _lte: auction_status_enum
+  _neq: auction_status_enum
+  _nin: [auction_status_enum!]
 }
 
 """aggregate stddev on columns"""
@@ -3050,23 +3073,6 @@ input bid_event_status_enum_comparison_exp {
   _nin: [bid_event_status_enum!]
 }
 
-scalar bid_status_enum
-
-"""
-Boolean expression to compare columns of type "bid_status_enum". All fields are combined with logical 'AND'.
-"""
-input bid_status_enum_comparison_exp {
-  _eq: bid_status_enum
-  _gt: bid_status_enum
-  _gte: bid_status_enum
-  _in: [bid_status_enum!]
-  _is_null: Boolean
-  _lt: bid_status_enum
-  _lte: bid_status_enum
-  _neq: bid_status_enum
-  _nin: [bid_status_enum!]
-}
-
 """
 Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
 """
@@ -4064,6 +4070,42 @@ columns and relationships of "bid"
 """
 type MarketBid {
   amount: String!
+
+  """An array relationship"""
+  bidEvents(
+    """distinct select on columns"""
+    distinct_on: [MarketBidEvent_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [MarketBidEvent_order_by!]
+
+    """filter the rows returned"""
+    where: MarketBidEvent_bool_exp
+  ): [MarketBidEvent!]!
+
+  """An aggregate relationship"""
+  bidEvents_aggregate(
+    """distinct select on columns"""
+    distinct_on: [MarketBidEvent_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [MarketBidEvent_order_by!]
+
+    """filter the rows returned"""
+    where: MarketBidEvent_bool_exp
+  ): MarketBidEvent_aggregate!
   bidder: String!
 
   """An object relationship"""
@@ -4075,7 +4117,6 @@ type MarketBid {
   media: Media
   recipient: String!
   sellOnShare: String!
-  status: bid_status_enum!
   tokenId: String!
 }
 
@@ -4113,6 +4154,7 @@ input MarketBid_bool_exp {
   _not: MarketBid_bool_exp
   _or: [MarketBid_bool_exp!]
   amount: String_comparison_exp
+  bidEvents: MarketBidEvent_bool_exp
   bidder: String_comparison_exp
   currency: Currency_bool_exp
   currencyAddress: String_comparison_exp
@@ -4120,7 +4162,6 @@ input MarketBid_bool_exp {
   media: Media_bool_exp
   recipient: String_comparison_exp
   sellOnShare: String_comparison_exp
-  status: bid_status_enum_comparison_exp
   tokenId: String_comparison_exp
 }
 
@@ -4175,6 +4216,7 @@ input MarketBid_min_order_by {
 """Ordering options when selecting data from "bid"."""
 input MarketBid_order_by {
   amount: order_by
+  bidEvents_aggregate: MarketBidEvent_aggregate_order_by
   bidder: order_by
   currency: Currency_order_by
   currencyAddress: order_by
@@ -4182,7 +4224,6 @@ input MarketBid_order_by {
   media: Media_order_by
   recipient: order_by
   sellOnShare: order_by
-  status: order_by
   tokenId: order_by
 }
 
@@ -4207,9 +4248,6 @@ enum MarketBid_select_column {
 
   """column name"""
   sellOnShare
-
-  """column name"""
-  status
 
   """column name"""
   tokenId
@@ -6604,6 +6642,23 @@ order by variance() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
+}
+
+scalar nft_contract_status_enum
+
+"""
+Boolean expression to compare columns of type "nft_contract_status_enum". All fields are combined with logical 'AND'.
+"""
+input nft_contract_status_enum_comparison_exp {
+  _eq: nft_contract_status_enum
+  _gt: nft_contract_status_enum
+  _gte: nft_contract_status_enum
+  _in: [nft_contract_status_enum!]
+  _is_null: Boolean
+  _lt: nft_contract_status_enum
+  _lte: nft_contract_status_enum
+  _neq: nft_contract_status_enum
+  _nin: [nft_contract_status_enum!]
 }
 
 """column ordering options"""
@@ -9218,9 +9273,10 @@ columns and relationships of "nft_contract"
 """
 type TokenContract {
   address: String!
-  deployedAtBlockNumber: Int!
+  deployedAtBlockNumber: Int
   name: String
-  supportsMetadata: Boolean!
+  status: nft_contract_status_enum!
+  supportsMetadata: Boolean
   symbol: String
 }
 
@@ -9264,6 +9320,7 @@ input TokenContract_bool_exp {
   address: String_comparison_exp
   deployedAtBlockNumber: Int_comparison_exp
   name: String_comparison_exp
+  status: nft_contract_status_enum_comparison_exp
   supportsMetadata: Boolean_comparison_exp
   symbol: String_comparison_exp
 }
@@ -9289,6 +9346,7 @@ input TokenContract_order_by {
   address: order_by
   deployedAtBlockNumber: order_by
   name: order_by
+  status: order_by
   supportsMetadata: order_by
   symbol: order_by
 }
@@ -9305,6 +9363,9 @@ enum TokenContract_select_column {
 
   """column name"""
   name
+
+  """column name"""
+  status
 
   """column name"""
   supportsMetadata

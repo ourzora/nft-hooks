@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
-const BASE_FRAGMENTS = gql`
-  fragment TokenWithAuction on Token {
+const MEDIA_FRAGMENTS = gql`
+  fragment IndexerTokenPart on Token {
     id
     tokenId
     owner
@@ -12,6 +12,7 @@ const BASE_FRAGMENTS = gql`
       json
     }
     mintTransferEvent {
+      transactionHash
       blockTimestamp
       blockNumber
     }
@@ -23,42 +24,58 @@ const BASE_FRAGMENTS = gql`
       ownerBidShare
       creatorBidShare
     }
-    auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
-      winner
-      lastBidAmount
-      duration
-      tokenId
-      auctionId
-      tokenContract
-      reservePrice
-      firstBidTime
-      expiresAt
-      tokenOwner
-      canceledEvent {
-        id
-      }
-      endedEvent {
-        id
-      }
-      bidEvents {
-        id
-        value
-        sender
-        transactionHash
-      }
+  }
+  fragment IndexerAuctionPart on Auction {
+    winner
+    lastBidAmount
+    duration
+    tokenId
+    auctionId
+    tokenContract
+    reservePrice
+    firstBidTime
+    expiresAt
+    tokenOwner
+    canceledEvent {
+      id
+    }
+    endedEvent {
+      id
+    }
+    bidEvents {
+      id
+      value
+      sender
+      transactionHash
+    }
+  }
+  fragment IndexerAuctionWithToken on Auction {
+    ...IndexerAuctionPart
+    token {
+      ...IndexerTokenPart
     }
   }
 `;
 
-// Get list of owners in manage modal for contract
+const BASE_FRAGMENTS = gql`
+  ${MEDIA_FRAGMENTS}
+  fragment IndexerTokenWithAuction on Token {
+    ...IndexerTokenPart
+    auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
+      ...IndexerAuctionPart
+    }
+  }
+`;
+
+// Get list of nfts owned by user from contracts
 export const BY_OWNER = gql`
   ${BASE_FRAGMENTS}
-  query byOwner($address: String, $owner: String, $offset: Int, $limit: Int) @cached {
+  query byOwner($addresses: [String!], $owner: String, $offset: Int, $limit: Int) @cached {
     Token(
       limit: $limit
       offset: $offset
       where: {
-        address: { _eq: $address }
+        address: { _in: $addresses }
         _or: [
           { owner: { _eq: $owner } }
           {
@@ -73,7 +90,7 @@ export const BY_OWNER = gql`
         ]
       }
     ) {
-      ...TokenWithAuction
+      ...IndexerTokenWithAuction
     }
   }
 `;
@@ -82,37 +99,36 @@ export const BY_IDS = gql`
   ${BASE_FRAGMENTS}
   query byIds($ids: [String!]) @cached {
     Token(where: { id: { _in: $ids } }) {
-      ...TokenWithAuction
+      ...IndexerTokenWithAuction
     }
   }
 `;
 
-// Get active auctions by address
 export const ACTIVE_AUCTIONS_QUERY = gql`
-  ${BASE_FRAGMENTS}
-  query activeTokens (
-    $addresses: [String!]
-    $curators: [String!]
-    $limit: Int
-    $offset: Int
-  ) @cached {
-    Token(
-      limit: $limit
-      offset: $offset
+  ${MEDIA_FRAGMENTS}
+  query activeAuctionsQuery($tokenContracts: [String!], $curators: [String!], $approved: Boolean) @cached {
+    Auction(
       where: {
         _or: [
-          { address: { _in: $addresses } }
-          { auctions: { curator: { _in: $curators } } }
-        ]
-        tokenURI: { _is_null: false }
+          { token: { address: {_in: $tokenContracts } } }
+          { curator: { _in: $curators } }
+        ],
+        approved: {_eq: $approved}
       }
-      order_by: [
-        { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
-        { auctions_aggregate: { count: desc } }
-        { tokenId: asc }
-      ]
+      order_by: { auctionId: desc }
+      distinct_on: [tokenContract, tokenId]
     ) {
-      ...TokenWithAuction
+      ...IndexerAuctionWithToken
+    }
+  }
+`;
+
+export const TOKENS_WITHOUT_AUCTIONS = gql`
+  query tokensWithoutAuctions($tokenContracts: [String!]) @cached {
+    Token(
+      where: { address: { _in: $tokenContracts}, _not: { auctions: {}}}
+    ) {
+      ...IndexerTokenPart
     }
   }
 `;

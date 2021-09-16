@@ -3,9 +3,11 @@ export type NFTQueryInfo = {
   tokenId: string;
 };
 export type FetchZoraIndexerListCollectionType = {
-  collectionAddress?: string;
+  collectionAddresses?: string[];
   curatorAddress?: string;
   tokenId?: string;
+  onlyAuctions?: boolean,
+  approved?: boolean | null,
   limit: number;
   offset: number;
 };

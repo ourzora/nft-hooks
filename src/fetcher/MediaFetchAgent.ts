@@ -24,7 +24,7 @@ import type {
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-graph-types';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import { IndexerAuctionWithTokenFragment, IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -51,6 +51,7 @@ import {
   ACTIVE_AUCTIONS_QUERY,
   BY_IDS as INDEXER_BY_IDS_QUERY,
   BY_OWNER,
+  TOKENS_WITHOUT_AUCTIONS,
 } from '../graph-queries/zora-indexer';
 import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
 import { RESOLVE_ENS_FROM_ADDRESS_QUERY } from '../graph-queries/ens-graph';
@@ -82,7 +83,7 @@ export class MediaFetchAgent {
     // genericNFTLoader currently uses opensea
     genericNFTLoader: DataLoader<string, OpenseaResponse>;
     // zoraNFTIndexer uses zora indexer
-    zoraNFTIndexerLoader: DataLoader<string, TokenWithAuctionFragment>;
+    zoraNFTIndexerLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
     // auctionInfoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
     // ensLoader
@@ -248,7 +249,7 @@ export class MediaFetchAgent {
 
     return keys.map(
       (key: string) =>
-        response.Token.find((token: TokenWithAuctionFragment) => token.id === key) ||
+        response.Token.find((token: IndexerTokenWithAuctionFragment) => token.id === key) ||
         new Error('Did not find token')
     );
   }
@@ -266,17 +267,19 @@ export class MediaFetchAgent {
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
    *
-   * @param ids list of ids to query
-   * @param type type of ids: creator, id (of media), owner
-   * @returns
+   * @param collectionAddresses list of collections to include
+   * @param curatorAddress curator to query
+   * @param approved boolean if the auction is approved (null for approved and un-approved auctions)
    */
   async fetchZoraIndexerGroupData({
-    collectionAddress,
+    collectionAddresses = [],
     curatorAddress,
-    limit = 120,
+    approved = null,
+    onlyAuctions = false,
+    limit = 200,
     offset = 0,
-  }: FetchZoraIndexerListCollectionType) {
-    if (!collectionAddress && !curatorAddress) {
+  }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
+    if (!collectionAddresses && !curatorAddress) {
       throw new Error('Needs to have at least one curator or collector');
     }
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
@@ -284,29 +287,49 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const response = await client.request(ACTIVE_AUCTIONS_QUERY, {
-      addresses: collectionAddress ? [getAddress(collectionAddress)] : [],
+    const addresses = collectionAddresses.map((address) => getAddress(address));
+
+    const auctionsResponse = (await client.request(ACTIVE_AUCTIONS_QUERY, {
+      addresses,
       curators: curatorAddress ? [getAddress(curatorAddress)] : [],
+      approved,
       offset,
       limit,
-    });
-    return response.Token as TokenWithAuctionFragment[];
+    })).Auction as IndexerAuctionWithTokenFragment[];
+    let tokenResponse: IndexerTokenWithAuctionFragment[] = [];
+    if (!onlyAuctions) {
+      tokenResponse = await client.request(TOKENS_WITHOUT_AUCTIONS, {
+        addresses,
+        limit,
+      });
+    }
+    tokenResponse.concat(
+      // @ts-ignore
+      auctionsResponse.map(({token, ...auctionResponse}) => ({
+        ...token,
+        auctions: [
+          auctionResponse
+        ]
+      }))
+    );
+    return tokenResponse as IndexerTokenWithAuctionFragment[];
   }
 
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
    *
-   * @param ids list of ids to query
+   * @param collectionAddresses list of addresses for collection
+   * @param userAddress address of user
    * @param type type of ids: creator, id (of media), owner
    * @returns
    */
   async fetchZoraIndexerUserOwnedNFTs({
-    collectionAddress,
+    collectionAddresses,
     userAddress,
     offset = 0,
     limit = 250,
   }: {
-    collectionAddress: string;
+    collectionAddresses: string[];
     userAddress: string;
     offset?: number;
     limit?: number;
@@ -317,7 +340,7 @@ export class MediaFetchAgent {
     });
 
     const response = await client.request(BY_OWNER, {
-      address: getAddress(collectionAddress),
+      addresses: collectionAddresses.map((address) => getAddress(address)),
       owner: getAddress(userAddress),
       offset,
       limit,

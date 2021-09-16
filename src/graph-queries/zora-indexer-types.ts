@@ -10,9 +10,10 @@ export type Scalars = {
   Int: number;
   Float: number;
   ask_event_status_enum: any;
+  auction_status_enum: any;
   bid_event_status_enum: any;
-  bid_status_enum: any;
   jsonb: any;
+  nft_contract_status_enum: any;
   timestamp: any;
   timestamptz: any;
   uuid: any;
@@ -61,6 +62,7 @@ export type Auction = {
   reservePriceUpdatedEvents: Array<AuctionReservePriceUpdatedEvent>;
   /** An aggregate relationship */
   reservePriceUpdatedEvents_aggregate: AuctionReservePriceUpdatedEvent_Aggregate;
+  status?: Maybe<Scalars['auction_status_enum']>;
   /** An object relationship */
   token?: Maybe<Token>;
   tokenContract: Scalars['String'];
@@ -2504,6 +2506,7 @@ export type Auction_Bool_Exp = {
   media?: Maybe<Media_Bool_Exp>;
   reservePrice?: Maybe<String_Comparison_Exp>;
   reservePriceUpdatedEvents?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
+  status?: Maybe<Auction_Status_Enum_Comparison_Exp>;
   token?: Maybe<Token_Bool_Exp>;
   tokenContract?: Maybe<String_Comparison_Exp>;
   tokenId?: Maybe<String_Comparison_Exp>;
@@ -2617,6 +2620,7 @@ export type Auction_Order_By = {
   media?: Maybe<Media_Order_By>;
   reservePrice?: Maybe<Order_By>;
   reservePriceUpdatedEvents_aggregate?: Maybe<AuctionReservePriceUpdatedEvent_Aggregate_Order_By>;
+  status?: Maybe<Order_By>;
   token?: Maybe<Token_Order_By>;
   tokenContract?: Maybe<Order_By>;
   tokenId?: Maybe<Order_By>;
@@ -2652,6 +2656,8 @@ export enum Auction_Select_Column {
   LastBidder = 'lastBidder',
   /** column name */
   ReservePrice = 'reservePrice',
+  /** column name */
+  Status = 'status',
   /** column name */
   TokenContract = 'tokenContract',
   /** column name */
@@ -3641,6 +3647,10 @@ export enum MarketAsk_Select_Column {
 export type MarketBid = {
   __typename?: 'MarketBid';
   amount: Scalars['String'];
+  /** An array relationship */
+  bidEvents: Array<MarketBidEvent>;
+  /** An aggregate relationship */
+  bidEvents_aggregate: MarketBidEvent_Aggregate;
   bidder: Scalars['String'];
   /** An object relationship */
   currency?: Maybe<Currency>;
@@ -3650,8 +3660,27 @@ export type MarketBid = {
   media?: Maybe<Media>;
   recipient: Scalars['String'];
   sellOnShare: Scalars['String'];
-  status: Scalars['bid_status_enum'];
   tokenId: Scalars['String'];
+};
+
+
+/** columns and relationships of "bid" */
+export type MarketBidBidEventsArgs = {
+  distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<MarketBidEvent_Order_By>>;
+  where?: Maybe<MarketBidEvent_Bool_Exp>;
+};
+
+
+/** columns and relationships of "bid" */
+export type MarketBidBidEvents_AggregateArgs = {
+  distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<MarketBidEvent_Order_By>>;
+  where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
 /** columns and relationships of "bid_event" */
@@ -4396,6 +4425,7 @@ export type MarketBid_Bool_Exp = {
   _not?: Maybe<MarketBid_Bool_Exp>;
   _or?: Maybe<Array<MarketBid_Bool_Exp>>;
   amount?: Maybe<String_Comparison_Exp>;
+  bidEvents?: Maybe<MarketBidEvent_Bool_Exp>;
   bidder?: Maybe<String_Comparison_Exp>;
   currency?: Maybe<Currency_Bool_Exp>;
   currencyAddress?: Maybe<String_Comparison_Exp>;
@@ -4403,7 +4433,6 @@ export type MarketBid_Bool_Exp = {
   media?: Maybe<Media_Bool_Exp>;
   recipient?: Maybe<String_Comparison_Exp>;
   sellOnShare?: Maybe<String_Comparison_Exp>;
-  status?: Maybe<Bid_Status_Enum_Comparison_Exp>;
   tokenId?: Maybe<String_Comparison_Exp>;
 };
 
@@ -4456,6 +4485,7 @@ export type MarketBid_Min_Order_By = {
 /** Ordering options when selecting data from "bid". */
 export type MarketBid_Order_By = {
   amount?: Maybe<Order_By>;
+  bidEvents_aggregate?: Maybe<MarketBidEvent_Aggregate_Order_By>;
   bidder?: Maybe<Order_By>;
   currency?: Maybe<Currency_Order_By>;
   currencyAddress?: Maybe<Order_By>;
@@ -4463,7 +4493,6 @@ export type MarketBid_Order_By = {
   media?: Maybe<Media_Order_By>;
   recipient?: Maybe<Order_By>;
   sellOnShare?: Maybe<Order_By>;
-  status?: Maybe<Order_By>;
   tokenId?: Maybe<Order_By>;
 };
 
@@ -4481,8 +4510,6 @@ export enum MarketBid_Select_Column {
   Recipient = 'recipient',
   /** column name */
   SellOnShare = 'sellOnShare',
-  /** column name */
-  Status = 'status',
   /** column name */
   TokenId = 'tokenId'
 }
@@ -6041,9 +6068,10 @@ export type TokenTransferEvents_AggregateArgs = {
 export type TokenContract = {
   __typename?: 'TokenContract';
   address: Scalars['String'];
-  deployedAtBlockNumber: Scalars['Int'];
+  deployedAtBlockNumber?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
-  supportsMetadata: Scalars['Boolean'];
+  status: Scalars['nft_contract_status_enum'];
+  supportsMetadata?: Maybe<Scalars['Boolean']>;
   symbol?: Maybe<Scalars['String']>;
 };
 
@@ -6091,6 +6119,7 @@ export type TokenContract_Bool_Exp = {
   address?: Maybe<String_Comparison_Exp>;
   deployedAtBlockNumber?: Maybe<Int_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<Nft_Contract_Status_Enum_Comparison_Exp>;
   supportsMetadata?: Maybe<Boolean_Comparison_Exp>;
   symbol?: Maybe<String_Comparison_Exp>;
 };
@@ -6118,6 +6147,7 @@ export type TokenContract_Order_By = {
   address?: Maybe<Order_By>;
   deployedAtBlockNumber?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
   supportsMetadata?: Maybe<Order_By>;
   symbol?: Maybe<Order_By>;
 };
@@ -6130,6 +6160,8 @@ export enum TokenContract_Select_Column {
   DeployedAtBlockNumber = 'deployedAtBlockNumber',
   /** column name */
   Name = 'name',
+  /** column name */
+  Status = 'status',
   /** column name */
   SupportsMetadata = 'supportsMetadata',
   /** column name */
@@ -7338,6 +7370,20 @@ export type Ask_Event_Status_Enum_Comparison_Exp = {
 };
 
 
+/** Boolean expression to compare columns of type "auction_status_enum". All fields are combined with logical 'AND'. */
+export type Auction_Status_Enum_Comparison_Exp = {
+  _eq?: Maybe<Scalars['auction_status_enum']>;
+  _gt?: Maybe<Scalars['auction_status_enum']>;
+  _gte?: Maybe<Scalars['auction_status_enum']>;
+  _in?: Maybe<Array<Scalars['auction_status_enum']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['auction_status_enum']>;
+  _lte?: Maybe<Scalars['auction_status_enum']>;
+  _neq?: Maybe<Scalars['auction_status_enum']>;
+  _nin?: Maybe<Array<Scalars['auction_status_enum']>>;
+};
+
+
 /** Boolean expression to compare columns of type "bid_event_status_enum". All fields are combined with logical 'AND'. */
 export type Bid_Event_Status_Enum_Comparison_Exp = {
   _eq?: Maybe<Scalars['bid_event_status_enum']>;
@@ -7349,20 +7395,6 @@ export type Bid_Event_Status_Enum_Comparison_Exp = {
   _lte?: Maybe<Scalars['bid_event_status_enum']>;
   _neq?: Maybe<Scalars['bid_event_status_enum']>;
   _nin?: Maybe<Array<Scalars['bid_event_status_enum']>>;
-};
-
-
-/** Boolean expression to compare columns of type "bid_status_enum". All fields are combined with logical 'AND'. */
-export type Bid_Status_Enum_Comparison_Exp = {
-  _eq?: Maybe<Scalars['bid_status_enum']>;
-  _gt?: Maybe<Scalars['bid_status_enum']>;
-  _gte?: Maybe<Scalars['bid_status_enum']>;
-  _in?: Maybe<Array<Scalars['bid_status_enum']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['bid_status_enum']>;
-  _lte?: Maybe<Scalars['bid_status_enum']>;
-  _neq?: Maybe<Scalars['bid_status_enum']>;
-  _nin?: Maybe<Array<Scalars['bid_status_enum']>>;
 };
 
 
@@ -7387,6 +7419,20 @@ export type Jsonb_Comparison_Exp = {
   _lte?: Maybe<Scalars['jsonb']>;
   _neq?: Maybe<Scalars['jsonb']>;
   _nin?: Maybe<Array<Scalars['jsonb']>>;
+};
+
+
+/** Boolean expression to compare columns of type "nft_contract_status_enum". All fields are combined with logical 'AND'. */
+export type Nft_Contract_Status_Enum_Comparison_Exp = {
+  _eq?: Maybe<Scalars['nft_contract_status_enum']>;
+  _gt?: Maybe<Scalars['nft_contract_status_enum']>;
+  _gte?: Maybe<Scalars['nft_contract_status_enum']>;
+  _in?: Maybe<Array<Scalars['nft_contract_status_enum']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['nft_contract_status_enum']>;
+  _lte?: Maybe<Scalars['nft_contract_status_enum']>;
+  _neq?: Maybe<Scalars['nft_contract_status_enum']>;
+  _nin?: Maybe<Array<Scalars['nft_contract_status_enum']>>;
 };
 
 /** column ordering options */
@@ -8935,7 +8981,7 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type TokenWithAuctionFragment = (
+export type IndexerTokenPartFragment = (
   { __typename?: 'Token' }
   & Pick<Token, 'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'>
   & { metadata?: Maybe<(
@@ -8943,28 +8989,48 @@ export type TokenWithAuctionFragment = (
     & Pick<TokenMetadata, 'json'>
   )>, mintTransferEvent?: Maybe<(
     { __typename?: 'TokenTransferEvent' }
-    & Pick<TokenTransferEvent, 'blockTimestamp' | 'blockNumber'>
+    & Pick<TokenTransferEvent, 'transactionHash' | 'blockTimestamp' | 'blockNumber'>
   )>, media?: Maybe<(
     { __typename?: 'Media' }
     & Pick<Media, 'contentURI' | 'contentHash' | 'metadataHash' | 'metadataURI' | 'ownerBidShare' | 'creatorBidShare'>
-  )>, auctions: Array<(
-    { __typename?: 'Auction' }
-    & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner'>
-    & { canceledEvent?: Maybe<(
-      { __typename?: 'AuctionCanceledEvent' }
-      & Pick<AuctionCanceledEvent, 'id'>
-    )>, endedEvent?: Maybe<(
-      { __typename?: 'AuctionEndedEvent' }
-      & Pick<AuctionEndedEvent, 'id'>
-    )>, bidEvents: Array<(
-      { __typename?: 'AuctionBidEvent' }
-      & Pick<AuctionBidEvent, 'id' | 'value' | 'sender' | 'transactionHash'>
-    )> }
   )> }
 );
 
+export type IndexerAuctionPartFragment = (
+  { __typename?: 'Auction' }
+  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner'>
+  & { canceledEvent?: Maybe<(
+    { __typename?: 'AuctionCanceledEvent' }
+    & Pick<AuctionCanceledEvent, 'id'>
+  )>, endedEvent?: Maybe<(
+    { __typename?: 'AuctionEndedEvent' }
+    & Pick<AuctionEndedEvent, 'id'>
+  )>, bidEvents: Array<(
+    { __typename?: 'AuctionBidEvent' }
+    & Pick<AuctionBidEvent, 'id' | 'value' | 'sender' | 'transactionHash'>
+  )> }
+);
+
+export type IndexerAuctionWithTokenFragment = (
+  { __typename?: 'Auction' }
+  & { token?: Maybe<(
+    { __typename?: 'Token' }
+    & IndexerTokenPartFragment
+  )> }
+  & IndexerAuctionPartFragment
+);
+
+export type IndexerTokenWithAuctionFragment = (
+  { __typename?: 'Token' }
+  & { auctions: Array<(
+    { __typename?: 'Auction' }
+    & IndexerAuctionPartFragment
+  )> }
+  & IndexerTokenPartFragment
+);
+
 export type ByOwnerQueryVariables = Exact<{
-  address?: Maybe<Scalars['String']>;
+  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   owner?: Maybe<Scalars['String']>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
@@ -8975,7 +9041,7 @@ export type ByOwnerQuery = (
   { __typename?: 'query_root' }
   & { Token: Array<(
     { __typename?: 'Token' }
-    & TokenWithAuctionFragment
+    & IndexerTokenWithAuctionFragment
   )> }
 );
 
@@ -8988,22 +9054,34 @@ export type ByIdsQuery = (
   { __typename?: 'query_root' }
   & { Token: Array<(
     { __typename?: 'Token' }
-    & TokenWithAuctionFragment
+    & IndexerTokenWithAuctionFragment
   )> }
 );
 
-export type ActiveTokensQueryVariables = Exact<{
-  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+export type ActiveAuctionsQueryQueryVariables = Exact<{
+  tokenContracts?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
+  approved?: Maybe<Scalars['Boolean']>;
 }>;
 
 
-export type ActiveTokensQuery = (
+export type ActiveAuctionsQueryQuery = (
+  { __typename?: 'query_root' }
+  & { Auction: Array<(
+    { __typename?: 'Auction' }
+    & IndexerAuctionWithTokenFragment
+  )> }
+);
+
+export type TokensWithoutAuctionsQueryVariables = Exact<{
+  tokenContracts?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type TokensWithoutAuctionsQuery = (
   { __typename?: 'query_root' }
   & { Token: Array<(
     { __typename?: 'Token' }
-    & TokenWithAuctionFragment
+    & IndexerTokenPartFragment
   )> }
 );

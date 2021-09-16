@@ -15,7 +15,7 @@ import {
 } from '../fetcher/FetchResultTypes';
 import { AuctionStateInfo } from './AuctionState';
 import { OpenseaResponse } from './OpenseaUtils';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import { IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 
 export type PricingInfo = {
   currency: CurrencyShortFragment;
@@ -111,7 +111,7 @@ export type OpenseaNFTDataType = Omit<OpenseaNFTMediaDataType, 'pricing'> & {
 };
 
 export type IndexerDataType = Omit<CommonNFTMediaDataType, 'pricing'> & {
-  zoraIndexerResponse: TokenWithAuctionFragment;
+  zoraIndexerResponse: IndexerTokenWithAuctionFragment;
   zoraNFT?: ZoraNFTType,
   pricing: PricingInfoData;
 };

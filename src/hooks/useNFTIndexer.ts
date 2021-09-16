@@ -4,6 +4,7 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
 import { IndexerDataType, NFTDataType } from '../fetcher/AuctionInfoTypes';
 import useSWR from 'swr';
 import { transformNFTIndexerResponse } from '../fetcher/ZoraIndexerTransformers';
+import { onErrorRetry } from '../fetcher/ErrorUtils';
 
 export type useNFTType = {
   currencyLoaded: boolean;
@@ -39,14 +40,14 @@ export function useNFTIndexer(
       : null,
     (_, contractAddress, tokenId) =>
       fetcher.loadZoraNFTIndexerNFTUntransformed(contractAddress, tokenId),
-    { dedupingInterval: 0, initialData: initialData?.tokenData }
+    { dedupingInterval: 0, initialData: initialData?.tokenData, onErrorRetry }
   );
 
   // TODO(iain): Integrate auction data from zora indexer into hook
   const auctionData = useSWR(
     contractAddress && tokenId ? ['loadAuctionForNFT', contractAddress, tokenId] : null,
     (_, contractAddress, tokenId) => fetcher.loadAuctionInfo(contractAddress, tokenId),
-    { refreshInterval, initialData: initialData?.auctionData }
+    { refreshInterval, initialData: initialData?.auctionData, onErrorRetry }
   );
 
   const currencyData = useSWR(
@@ -69,7 +70,7 @@ export function useNFTIndexer(
 
   return {
     currencyLoaded: !!currencyData.data,
-    error: nftData.error,
+    error: nftData.error?.toString(),
     data,
   };
 }

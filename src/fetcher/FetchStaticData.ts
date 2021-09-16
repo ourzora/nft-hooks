@@ -1,7 +1,7 @@
 import { getAddress } from '@ethersproject/address';
 
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import { IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 import { FetchGroupTypes } from './FetchResultTypes';
 import { MediaFetchAgent } from './MediaFetchAgent';
 import { openseaDataToMetadata } from './OpenseaUtils';
@@ -110,7 +110,7 @@ export const fetchZNFTGroupData = async ({
 
 const transformServerSideIndexerDataList = async (
   fetchAgent: MediaFetchAgent,
-  response: TokenWithAuctionFragment[]
+  response: IndexerTokenWithAuctionFragment[]
 ) => {
   const auctionInfos = await fetchAgent.loadAuctionInfos(
     response.map((element) => `${element.address.toLowerCase()}-${element.tokenId}`)
@@ -124,7 +124,7 @@ const transformServerSideIndexerDataList = async (
           .find(
             (auction) =>
               auction?.tokenContract.toLowerCase() === tokenData.address.toLowerCase() &&
-              auction.tokenId === tokenData.tokenId.toString()
+              auction?.tokenId === tokenData.tokenId.toString()
           ),
       },
     };
@@ -156,7 +156,7 @@ export const fetchZoraIndexerList = async (
 export const getIndexerServerTokenInfo = ({
   nft: { tokenData },
 }: {
-  nft: { tokenData: TokenWithAuctionFragment };
+  nft: { tokenData: IndexerTokenWithAuctionFragment };
 }) => ({
   tokenId: tokenData.tokenId.toString(),
   tokenContract: tokenData.address,
@@ -203,12 +203,12 @@ export const fetchZoraIndexerItem = async (
 export const fetchUserOwnedNFTs = async (
   fetchAgent: MediaFetchAgent,
   {
-    collectionAddress,
+    collectionAddresses,
     userAddress,
     offset,
     limit,
   }: {
-    collectionAddress: string;
+    collectionAddresses: string[];
     userAddress: string;
     offset?: number;
     limit?: number;
@@ -216,7 +216,7 @@ export const fetchUserOwnedNFTs = async (
   prepareDataJson: boolean = false
 ) => {
   const response = await fetchAgent.fetchZoraIndexerUserOwnedNFTs({
-    collectionAddress,
+    collectionAddresses,
     userAddress,
     limit,
     offset,

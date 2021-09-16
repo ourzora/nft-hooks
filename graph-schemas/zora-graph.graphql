@@ -507,6 +507,8 @@ input InactiveAsk_filter {
   media_not_ends_with: String
   type: MarketEventType
   type_not: MarketEventType
+  type_in: [MarketEventType!]
+  type_not_in: [MarketEventType!]
   currency: String
   currency_not: String
   currency_gt: String
@@ -671,6 +673,8 @@ input InactiveBid_filter {
   media_not_ends_with: String
   type: MarketEventType
   type_not: MarketEventType
+  type_in: [MarketEventType!]
+  type_not_in: [MarketEventType!]
   currency: String
   currency_not: String
   currency_gt: String
@@ -876,6 +880,8 @@ input InactiveReserveAuctionBid_filter {
   bidder_not_ends_with: String
   bidType: ReserveAuctionBidType
   bidType_not: ReserveAuctionBidType
+  bidType_in: [ReserveAuctionBidType!]
+  bidType_not_in: [ReserveAuctionBidType!]
   bidInactivatedAtTimestamp: BigInt
   bidInactivatedAtTimestamp_not: BigInt
   bidInactivatedAtTimestamp_gt: BigInt
@@ -1218,6 +1224,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Media
   medias(
     skip: Int = 0
@@ -1232,6 +1243,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Media!]!
   user(
     id: ID!
@@ -1242,6 +1258,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): User
   users(
     skip: Int = 0
@@ -1256,6 +1277,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [User!]!
   ask(
     id: ID!
@@ -1266,6 +1292,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Ask
   asks(
     skip: Int = 0
@@ -1280,6 +1311,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Ask!]!
   bid(
     id: ID!
@@ -1290,6 +1326,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Bid
   bids(
     skip: Int = 0
@@ -1304,6 +1345,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Bid!]!
   inactiveBid(
     id: ID!
@@ -1314,6 +1360,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveBid
   inactiveBids(
     skip: Int = 0
@@ -1328,6 +1379,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveBid!]!
   inactiveAsk(
     id: ID!
@@ -1338,6 +1394,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveAsk
   inactiveAsks(
     skip: Int = 0
@@ -1352,6 +1413,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveAsk!]!
   currency(
     id: ID!
@@ -1362,6 +1428,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Currency
   currencies(
     skip: Int = 0
@@ -1376,6 +1447,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Currency!]!
   transfer(
     id: ID!
@@ -1386,6 +1462,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Transfer
   transfers(
     skip: Int = 0
@@ -1400,6 +1481,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
   uriupdate(
     id: ID!
@@ -1410,6 +1496,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): URIUpdate
   uriupdates(
     skip: Int = 0
@@ -1424,6 +1515,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [URIUpdate!]!
   reserveAuctionBid(
     id: ID!
@@ -1434,6 +1530,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ReserveAuctionBid
   reserveAuctionBids(
     skip: Int = 0
@@ -1448,6 +1549,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ReserveAuctionBid!]!
   inactiveReserveAuctionBid(
     id: ID!
@@ -1458,6 +1564,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveReserveAuctionBid
   inactiveReserveAuctionBids(
     skip: Int = 0
@@ -1472,6 +1583,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveReserveAuctionBid!]!
   reserveAuction(
     id: ID!
@@ -1482,6 +1598,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ReserveAuction
   reserveAuctions(
     skip: Int = 0
@@ -1496,6 +1617,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ReserveAuction!]!
 
   """Access to subgraph metadata"""
@@ -1742,6 +1868,8 @@ input ReserveAuction_filter {
   auctionCurrency_not_ends_with: String
   status: ReserveAuctionStatus
   status_not: ReserveAuctionStatus
+  status_in: [ReserveAuctionStatus!]
+  status_not_in: [ReserveAuctionStatus!]
   currentBid: String
   currentBid_not: String
   currentBid_gt: String
@@ -1920,6 +2048,8 @@ input ReserveAuctionBid_filter {
   bidder_not_ends_with: String
   bidType: ReserveAuctionBidType
   bidType_not: ReserveAuctionBidType
+  bidType_in: [ReserveAuctionBidType!]
+  bidType_not_in: [ReserveAuctionBidType!]
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -1972,6 +2102,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Media
   medias(
     skip: Int = 0
@@ -1986,6 +2121,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Media!]!
   user(
     id: ID!
@@ -1996,6 +2136,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): User
   users(
     skip: Int = 0
@@ -2010,6 +2155,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [User!]!
   ask(
     id: ID!
@@ -2020,6 +2170,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Ask
   asks(
     skip: Int = 0
@@ -2034,6 +2189,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Ask!]!
   bid(
     id: ID!
@@ -2044,6 +2204,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Bid
   bids(
     skip: Int = 0
@@ -2058,6 +2223,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Bid!]!
   inactiveBid(
     id: ID!
@@ -2068,6 +2238,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveBid
   inactiveBids(
     skip: Int = 0
@@ -2082,6 +2257,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveBid!]!
   inactiveAsk(
     id: ID!
@@ -2092,6 +2272,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveAsk
   inactiveAsks(
     skip: Int = 0
@@ -2106,6 +2291,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveAsk!]!
   currency(
     id: ID!
@@ -2116,6 +2306,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Currency
   currencies(
     skip: Int = 0
@@ -2130,6 +2325,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Currency!]!
   transfer(
     id: ID!
@@ -2140,6 +2340,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Transfer
   transfers(
     skip: Int = 0
@@ -2154,6 +2359,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
   uriupdate(
     id: ID!
@@ -2164,6 +2374,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): URIUpdate
   uriupdates(
     skip: Int = 0
@@ -2178,6 +2393,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [URIUpdate!]!
   reserveAuctionBid(
     id: ID!
@@ -2188,6 +2408,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ReserveAuctionBid
   reserveAuctionBids(
     skip: Int = 0
@@ -2202,6 +2427,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ReserveAuctionBid!]!
   inactiveReserveAuctionBid(
     id: ID!
@@ -2212,6 +2442,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InactiveReserveAuctionBid
   inactiveReserveAuctionBids(
     skip: Int = 0
@@ -2226,6 +2461,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InactiveReserveAuctionBid!]!
   reserveAuction(
     id: ID!
@@ -2236,6 +2476,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ReserveAuction
   reserveAuctions(
     skip: Int = 0
@@ -2250,6 +2495,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ReserveAuction!]!
 
   """Access to subgraph metadata"""
@@ -2429,6 +2679,8 @@ input URIUpdate_filter {
   transactionHash_not_ends_with: String
   type: URIUpdateType
   type_not: URIUpdateType
+  type_in: [URIUpdateType!]
+  type_not_in: [URIUpdateType!]
   from: String
   from_not: String
   from_gt: String
