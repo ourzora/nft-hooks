@@ -8998,7 +8998,7 @@ export type IndexerTokenPartFragment = (
 
 export type IndexerAuctionPartFragment = (
   { __typename?: 'Auction' }
-  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner'>
+  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner' | 'curator' | 'curatorFee' | 'curatorFeePercentage'>
   & { canceledEvent?: Maybe<(
     { __typename?: 'AuctionCanceledEvent' }
     & Pick<AuctionCanceledEvent, 'id'>
@@ -9059,9 +9059,11 @@ export type ByIdsQuery = (
 );
 
 export type ActiveAuctionsQueryQueryVariables = Exact<{
-  tokenContracts?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  approved?: Maybe<Scalars['Boolean']>;
+  approved_exp?: Maybe<Boolean_Comparison_Exp>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 

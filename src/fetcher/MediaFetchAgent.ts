@@ -24,7 +24,11 @@ import type {
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-graph-types';
-import { IndexerAuctionWithTokenFragment, IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import {
+  IndexerAuctionWithTokenFragment,
+  IndexerTokenPartFragment,
+  IndexerTokenWithAuctionFragment,
+} from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -249,8 +253,9 @@ export class MediaFetchAgent {
 
     return keys.map(
       (key: string) =>
-        response.Token.find((token: IndexerTokenWithAuctionFragment) => token.id === key) ||
-        new Error('Did not find token')
+        response.Token.find(
+          (token: IndexerTokenWithAuctionFragment) => token.id === key
+        ) || new Error('Did not find token')
     );
   }
 
@@ -289,27 +294,38 @@ export class MediaFetchAgent {
 
     const addresses = collectionAddresses.map((address) => getAddress(address));
 
-    const auctionsResponse = (await client.request(ACTIVE_AUCTIONS_QUERY, {
-      addresses,
-      curators: curatorAddress ? [getAddress(curatorAddress)] : [],
-      approved,
-      offset,
-      limit,
-    })).Auction as IndexerAuctionWithTokenFragment[];
-    let tokenResponse: IndexerTokenWithAuctionFragment[] = [];
-    if (!onlyAuctions) {
-      tokenResponse = await client.request(TOKENS_WITHOUT_AUCTIONS, {
+    const approved_exp = approved === null ? {} : { _eq: approved };
+
+    const auctionsResponse = (
+      await client.request(ACTIVE_AUCTIONS_QUERY, {
         addresses,
+        curators: curatorAddress ? [getAddress(curatorAddress)] : [],
+        approved_exp,
+        offset,
         limit,
-      });
+      })
+    ).Auction as IndexerAuctionWithTokenFragment[];
+    let tokenResponse: IndexerTokenPartFragment[] = [];
+    if (!onlyAuctions && approved !== null) {
+      throw new Error(
+        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
+      );
     }
+    if (!onlyAuctions) {
+      tokenResponse = (
+        await client.request(TOKENS_WITHOUT_AUCTIONS, {
+          addresses,
+          limit,
+        })
+      ).Token as IndexerTokenPartFragment[];
+    }
+    console.log(tokenResponse);
+
     tokenResponse.concat(
       // @ts-ignore
-      auctionsResponse.map(({token, ...auctionResponse}) => ({
+      auctionsResponse.map(({ token, ...auctionResponse }) => ({
         ...token,
-        auctions: [
-          auctionResponse
-        ]
+        auctions: [auctionResponse],
       }))
     );
     return tokenResponse as IndexerTokenWithAuctionFragment[];
@@ -345,7 +361,7 @@ export class MediaFetchAgent {
       offset,
       limit,
     });
-    return response.Token as TokenWithAuctionFragment[];
+    return response.Token as IndexerTokenWithAuctionFragment[];
   }
 
   /**

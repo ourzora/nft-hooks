@@ -36,6 +36,9 @@ const MEDIA_FRAGMENTS = gql`
     firstBidTime
     expiresAt
     tokenOwner
+    curator
+    curatorFee
+    curatorFeePercentage
     canceledEvent {
       id
     }
@@ -106,17 +109,22 @@ export const BY_IDS = gql`
 
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${MEDIA_FRAGMENTS}
-  query activeAuctionsQuery($tokenContracts: [String!], $curators: [String!], $approved: Boolean) @cached {
+  query activeAuctionsQuery($addresses: [String!], $curators: [String!], $approved_exp: Boolean_comparison_exp, $limit: Int, $offset: Int) @cached {
     Auction(
       where: {
-        _or: [
-          { token: { address: {_in: $tokenContracts } } }
-          { curator: { _in: $curators } }
-        ],
-        approved: {_eq: $approved}
+        _and: [{
+          _or: [
+              { token: { address: {_in: $addresses } } }
+              { curator: { _in: $curators } }
+            ],
+          },
+          {approved: $approved_exp}
+        ]
       }
-      order_by: { auctionId: desc }
-      distinct_on: [tokenContract, tokenId]
+      limit: $limit
+      offset: $offset
+      order_by: { auctionId: desc, tokenId: desc, tokenContract: desc }
+      distinct_on: [auctionId, tokenContract, tokenId]
     ) {
       ...IndexerAuctionWithToken
     }
@@ -124,9 +132,12 @@ export const ACTIVE_AUCTIONS_QUERY = gql`
 `;
 
 export const TOKENS_WITHOUT_AUCTIONS = gql`
-  query tokensWithoutAuctions($tokenContracts: [String!]) @cached {
+  ${MEDIA_FRAGMENTS}
+  query tokensWithoutAuctions($addresses: [String!], $limit: Int, $offset: Int) @cached {
     Token(
-      where: { address: { _in: $tokenContracts}, _not: { auctions: {}}}
+      where: { address: { _in: $addresses}, _not: { auctions: {}}}
+      limit: $limit
+      offset: $offset
     ) {
       ...IndexerTokenPart
     }
