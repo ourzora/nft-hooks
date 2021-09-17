@@ -256,7 +256,7 @@ export class MediaFetchAgent {
       (key: string) =>
         response.Token.find(
           (token: IndexerTokenWithAuctionFragment) => token.id === key
-        ) || new Error('Did not find token')
+        ) || new NotFoundError('Did not find token')
     );
   }
 

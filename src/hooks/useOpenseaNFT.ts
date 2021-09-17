@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { NotFoundError } from 'src/fetcher/ErrorUtils';
 import useSWR from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
