@@ -63,6 +63,7 @@ import {
   DomainResolvedPartFragment,
   ResolveNamesQuery,
 } from '../graph-queries/ens-graph-types';
+import { NotFoundError } from './ErrorUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -154,7 +155,7 @@ export class MediaFetchAgent {
           type: 'text',
           mimeType: contentType,
         };
-      } catch (e) {
+      } catch (e: any) {
         throw new RequestError('Issue fetching IPFS data', e);
       }
     }
@@ -484,7 +485,7 @@ export class MediaFetchAgent {
     return tokenAndAddresses.map(
       (tokenAndAddress: string) =>
         response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
-        new Error('Missing Record')
+        new NotFoundError('Missing Auction')
     );
   }
 
