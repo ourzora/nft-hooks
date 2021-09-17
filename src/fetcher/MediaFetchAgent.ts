@@ -515,11 +515,9 @@ export class MediaFetchAgent {
       creator_ids: [],
       owner_ids: [],
     })) as GetMediaAndAuctionsQuery;
-    const ids = mediaIds.map((key) =>
+    return mediaIds.map((key) =>
       transformMediaForKey(response, key, this.networkId)
     );
-    console.log({ ids });
-    return ids;
   }
 
   /**
