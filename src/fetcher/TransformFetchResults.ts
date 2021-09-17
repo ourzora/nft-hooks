@@ -24,7 +24,7 @@ import { AuctionStateInfo, getAuctionState } from './AuctionState';
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
 import { NetworkIDs } from '../constants/networks';
 
-const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
+export const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
 
 export function transformCurrencyEth(currency: CurrencyShortFragment) {
   let updatedCurrency = { ...currency };
@@ -115,7 +115,6 @@ export function transformCurrencyForKey(
   result: GetTokenPricesQuery,
   key: string
 ): ChainCurrencyType {
-  const currency = result.tokens.find((token) => token.id === key);
   // Special case ETH
   if (key === NULL_ETH_CURRENCY_ID) {
     return {
@@ -129,6 +128,7 @@ export function transformCurrencyForKey(
       },
     };
   }
+  const currency = result.tokens.find((token) => token.id === key);
   if (!currency) {
     throw new RequestError('No currency in response');
   }

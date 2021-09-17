@@ -52,7 +52,7 @@ export function useNFTIndexer(
 
   const currencyData = useSWR(
     nftData && nftData.data && loadCurrencyInfo
-      ? ['loadCurrencies', auctionData.data?.auctionCurrency]
+      ? ['loadCurrencies', auctionData.data?.auctionCurrency.id]
       : null,
     (_, ...currencies) => fetcher.loadCurrencies(currencies),
     {

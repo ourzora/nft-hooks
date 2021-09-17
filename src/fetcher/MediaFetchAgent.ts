@@ -43,6 +43,7 @@ import {
   transformMediaForKey,
   addAuctionInformation,
   transformMediaItem,
+  NULL_ETH_CURRENCY_ID,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
@@ -63,7 +64,7 @@ import {
   DomainResolvedPartFragment,
   ResolveNamesQuery,
 } from '../graph-queries/ens-graph-types';
-import { NotFoundError } from './ErrorUtils';
+import { ArgumentsError, NotFoundError } from './ErrorUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -286,7 +287,12 @@ export class MediaFetchAgent {
     offset = 0,
   }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
     if (!collectionAddresses && !curatorAddress) {
-      throw new Error('Needs to have at least one curator or collector');
+      throw new ArgumentsError('Needs to have at least one curator or collector');
+    }
+    if (!onlyAuctions && approved !== null) {
+      throw new ArgumentsError(
+        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
+      );
     }
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
@@ -307,11 +313,6 @@ export class MediaFetchAgent {
       })
     ).Auction as IndexerAuctionWithTokenFragment[];
     let tokenResponse: IndexerTokenPartFragment[] = [];
-    if (!onlyAuctions && approved !== null) {
-      throw new Error(
-        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
-      );
-    }
     if (!onlyAuctions) {
       tokenResponse = (
         await client.request(TOKENS_WITHOUT_AUCTIONS, {
@@ -320,15 +321,15 @@ export class MediaFetchAgent {
         })
       ).Token as IndexerTokenPartFragment[];
     }
-    console.log(tokenResponse);
 
-    tokenResponse.concat(
-      // @ts-ignore
-      auctionsResponse.map(({ token, ...auctionResponse }) => ({
+    // @ts-ignore
+    tokenResponse = [
+      ...tokenResponse,
+      ...auctionsResponse.map(({ token, ...auctionResponse }) => ({
         ...token,
         auctions: [auctionResponse],
-      }))
-    );
+      })),
+    ];
     return tokenResponse as IndexerTokenWithAuctionFragment[];
   }
 
@@ -514,7 +515,11 @@ export class MediaFetchAgent {
       creator_ids: [],
       owner_ids: [],
     })) as GetMediaAndAuctionsQuery;
-    return mediaIds.map((key) => transformMediaForKey(response, key, this.networkId));
+    const ids = mediaIds.map((key) =>
+      transformMediaForKey(response, key, this.networkId)
+    );
+    console.log({ ids });
+    return ids;
   }
 
   /**
@@ -585,7 +590,9 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
     const currencies = (await client.request(GET_TOKEN_VALUES_QUERY, {
-      currencyContracts,
+      currencyContracts: currencyContracts.filter(
+        (contract) => contract !== NULL_ETH_CURRENCY_ID
+      ),
     })) as GetTokenPricesQuery;
 
     return currencyContracts.map((key) => transformCurrencyForKey(currencies, key));

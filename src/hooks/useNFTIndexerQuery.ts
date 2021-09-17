@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
+import { onErrorRetry } from '../fetcher/ErrorUtils';
 import { IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 
 export type useNFTType = {
@@ -14,8 +15,8 @@ type OptionsType = SWRConfiguration;
 type QueryType = {
   collectionAddresses: string[];
   curatorAddress?: string;
-  approved?: boolean,
-  onlyAuctions?: boolean,
+  approved?: boolean;
+  onlyAuctions?: boolean;
   owner?: string;
   offset?: number;
   limit?: number;
@@ -31,20 +32,47 @@ type QueryType = {
  * @returns useNFTType hook results include loading, error, and chainNFT data.
  */
 export function useNFTIndexerQuery(
-  { collectionAddresses, curatorAddress, onlyAuctions, approved, owner, limit, offset }: QueryType,
+  {
+    collectionAddresses,
+    curatorAddress,
+    onlyAuctions,
+    approved,
+    owner,
+    limit,
+    offset,
+  }: QueryType,
   options: OptionsType = {}
 ): useNFTType {
+  options.onErrorRetry = onErrorRetry;
   const fetcher = useContext(NFTFetchContext);
-  
+
   if (owner && curatorAddress) {
     throw new Error('Owner and curator address cannot be specified at the same time');
   }
 
   const nftListData = useSWR(
     !options.initialData && collectionAddresses
-      ? ['useNFTIndexerGroup', collectionAddresses, owner, approved, onlyAuctions, limit, offset]
+      ? [
+          'useNFTIndexerGroup',
+          owner,
+          onlyAuctions,
+          approved,
+          curatorAddress,
+          limit,
+          offset,
+          ...collectionAddresses,
+        ]
       : null,
-    (_, collectionAddresses, owner, approved, limit, offset) => {
+    (
+      _,
+      owner,
+      onlyAuctions,
+      approved,
+      curatorAddress,
+      limit,
+      offset,
+      ...collectionAddresses
+    ) => {
       if (owner) {
         return fetcher.fetchZoraIndexerUserOwnedNFTs({
           collectionAddresses,
@@ -58,8 +86,8 @@ export function useNFTIndexerQuery(
         curatorAddress: curatorAddress,
         approved,
         onlyAuctions,
-        limit,
-        offset,
+        limit: limit || 200,
+        offset: offset || 0,
       });
     },
     options

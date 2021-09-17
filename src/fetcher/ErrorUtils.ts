@@ -1,6 +1,7 @@
 import type { Revalidator, RevalidatorOptions } from 'swr';
 
 export class NotFoundError extends Error {}
+export class ArgumentsError extends Error {}
 
 export const onErrorRetry = (
   err: Error,
@@ -10,6 +11,11 @@ export const onErrorRetry = (
   revalidateOpts: RevalidatorOptions
 ) => {
   if (err instanceof NotFoundError) {
+    // Don't retry for 404 records
+    return;
+  }
+  if (err instanceof ArgumentsError) {
+    // Don't retry for invalid arguments
     return;
   }
   // Retry with error other than not found
