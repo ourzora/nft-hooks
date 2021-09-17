@@ -52,8 +52,7 @@ export const fetchNFTData = async ({
     contractAddress &&
     contractAddress !== ZORA_MEDIA_CONTRACT_BY_NETWORK[fetchAgent.networkId]
   ) {
-    const auctionData = await fetchAgent.loadAuctionInfo(contractAddress, tokenId);
-    const nft = await fetchAgent.loadNFTData(contractAddress, tokenId, auctionData);
+    const nft = await fetchAgent.loadNFTData(contractAddress, tokenId);
     const metadata = openseaDataToMetadata(nft);
     const response = {
       nft,
