@@ -286,7 +286,7 @@ export class MediaFetchAgent {
     limit = 200,
     offset = 0,
   }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
-    if (!collectionAddresses && !curatorAddress) {
+    if (!collectionAddresses.length && !curatorAddress) {
       throw new ArgumentsError('Needs to have at least one curator or collector');
     }
     if (!onlyAuctions && approved !== null) {
@@ -294,20 +294,26 @@ export class MediaFetchAgent {
         'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
       );
     }
+    let queryStatement = [];
+    const addresses = collectionAddresses.map((address) => getAddress(address));
+    if (collectionAddresses) {
+      queryStatement.push({ tokenContract: { _in: addresses } });
+    }
+    if (curatorAddress) {
+      queryStatement.push({ curator: { _eq: curatorAddress } });
+    }
+    if (approved !== null) {
+      queryStatement.push({ approved: { _eq: approved } });
+    }
+
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const addresses = collectionAddresses.map((address) => getAddress(address));
-
-    const approved_exp = approved === null ? {} : { _eq: approved };
-
     const auctionsResponse = (
       await client.request(ACTIVE_AUCTIONS_QUERY, {
-        addresses,
-        curators: curatorAddress ? [getAddress(curatorAddress)] : [],
-        approved_exp,
+        andQuery: queryStatement,
         offset,
         limit,
       })
@@ -325,10 +331,12 @@ export class MediaFetchAgent {
     // @ts-ignore
     tokenResponse = [
       ...tokenResponse,
-      ...auctionsResponse.map(({ token, ...auctionResponse }) => ({
-        ...token,
-        auctions: [auctionResponse],
-      })),
+      ...auctionsResponse
+        .sort((token1, token2) => (token1.auctionId < token2.auctionId ? 1 : -1))
+        .map(({ token, ...auctionResponse }) => ({
+          ...token,
+          auctions: [auctionResponse],
+        })),
     ];
     return tokenResponse as IndexerTokenWithAuctionFragment[];
   }
@@ -515,9 +523,7 @@ export class MediaFetchAgent {
       creator_ids: [],
       owner_ids: [],
     })) as GetMediaAndAuctionsQuery;
-    return mediaIds.map((key) =>
-      transformMediaForKey(response, key, this.networkId)
-    );
+    return mediaIds.map((key) => transformMediaForKey(response, key, this.networkId));
   }
 
   /**

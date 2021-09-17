@@ -10,6 +10,8 @@ export const onErrorRetry = (
   revalidate: Revalidator,
   revalidateOpts: RevalidatorOptions
 ) => {
+  console.log('onErrorRetry called')
+  console.log(revalidateOpts);
   if (err instanceof NotFoundError) {
     // Don't retry for 404 records
     return;
@@ -18,6 +20,8 @@ export const onErrorRetry = (
     // Don't retry for invalid arguments
     return;
   }
-  // Retry with error other than not found
-  revalidate(revalidateOpts);
+  if (revalidateOpts.retryCount || 5 < 4) {
+    // Retry with error other than not found
+    revalidate(revalidateOpts);
+  }
 };
