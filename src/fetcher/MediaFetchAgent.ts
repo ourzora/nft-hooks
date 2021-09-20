@@ -4,6 +4,7 @@ import { getAddress } from '@ethersproject/address';
 
 import { RequestError } from './RequestError';
 import {
+  ENS_GRAPH_URL_BY_NETWORK,
   OPENSEA_API_URL_BY_NETWORK,
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
@@ -52,6 +53,8 @@ import {
   BY_OWNER,
 } from '../graph-queries/zora-indexer';
 import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
+import { RESOLVE_ENS_FROM_ADDRESS_QUERY } from '../graph-queries/ens-graph';
+import { ResolveNamesQuery } from '../graph-queries/ens-graph-types';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -77,8 +80,10 @@ export class MediaFetchAgent {
     genericNFTLoader: DataLoader<string, OpenseaResponse>;
     // zoraNFTIndexer uses zora indexer
     zoraNFTIndexerLoader: DataLoader<string, TokenWithAuctionFragment>;
-    // auctionIfnoLoader fetches auction info for non-zora NFTs
+    // auctionInfoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
+    // ensLoader
+    ensLoader: DataLoader<string, string>;
   };
 
   constructor(network: NetworkIDs) {
@@ -96,6 +101,7 @@ export class MediaFetchAgent {
         cache: false,
         maxBatchSize: 30,
       }),
+      ensLoader: new DataLoader((keys) => this.loadEnsBatch(keys), {maxBatchSize: 400}),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
         maxBatchSize: 300,
@@ -205,6 +211,18 @@ export class MediaFetchAgent {
     )) as GetMediaAndAuctionsQuery;
     const medias = [...response.creator, ...response.owner, ...response.id];
     return medias.map((media) => transformMediaItem(media, this.networkId));
+  }
+
+  async loadEnsBatch(names: readonly string[]) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
+    const client = new GraphQLClient(ENS_GRAPH_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const ensResponse = await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
+      names
+    }) as ResolveNamesQuery;
+    return names;
   }
 
   // Alpha: uses zora indexer
@@ -366,6 +384,10 @@ export class MediaFetchAgent {
    */
   async loadUsername(address: string) {
     return this.loaders.usernameLoader.load(address.toLowerCase());
+  }
+
+  async loadEnsName(address: string) {
+    return this.loaders.ensLoader.load(address.toLowerCase());
   }
 
   /**
