@@ -9597,20 +9597,6 @@ export type ByOwnerQuery = (
   )> }
 );
 
-export type ByIdQueryVariables = Exact<{
-  address?: Maybe<Scalars['String']>;
-  tokenId?: Maybe<Scalars['Int']>;
-}>;
-
-
-export type ByIdQuery = (
-  { __typename?: 'query_root' }
-  & { Token: Array<(
-    { __typename?: 'Token' }
-    & TokenWithAuctionFragment
-  )> }
-);
-
 export type ByIdsQueryVariables = Exact<{
   ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
@@ -9625,7 +9611,7 @@ export type ByIdsQuery = (
 );
 
 export type ActiveTokensQueryVariables = Exact<{
-  address?: Maybe<Scalars['String']>;
+  tokenQuery?: Maybe<Token_Bool_Exp>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 }>;

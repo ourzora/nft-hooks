@@ -91,25 +91,16 @@ export const BY_IDS = gql`
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${BASE_FRAGMENTS}
   query activeTokens (
-    $addresses: [String!]
-    $curators: [String!]
+    $tokenQuery: Token_bool_exp
     $limit: Int
     $offset: Int
   ) @cached {
     Token(
       limit: $limit
       offset: $offset
-      where: {
-        _or: [
-          { address: { _in: $addresses } }
-          { auctions: { curator: { _in: $curators } } }
-        ]
-        tokenURI: { _is_null: false }
-      }
+      where: $tokenQuery
       order_by: [
-        { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
-        { auctions_aggregate: { count: desc } }
-        { tokenId: asc }
+        { auctions_aggregate: { max: { auctionId: desc } } }
       ]
     ) {
       ...TokenWithAuction

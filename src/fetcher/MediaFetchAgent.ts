@@ -23,7 +23,10 @@ import type {
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-graph-types';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import {
+  TokenWithAuctionFragment,
+  Token_Bool_Exp,
+} from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -241,12 +244,12 @@ export class MediaFetchAgent {
    *
    * @param ids list of ids to query
    * @param type type of ids: creator, id (of media), owner
-   * @returns
    */
   async fetchZoraIndexerGroupData({
     collectionAddress,
     curatorAddress,
-    limit = 120,
+    approved,
+    limit = 200,
     offset = 0,
   }: FetchZoraIndexerListCollectionType) {
     if (!collectionAddress && !curatorAddress) {
@@ -257,9 +260,22 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
+    let curatorSubQuery = curatorAddress ? { curator: { _eq: curatorAddress } } : {};
+    let approvedSubQuery = approved !== undefined ? { approved: { _eq: approved } } : {};
+    let collectionSubQuery = collectionAddress
+      ? { tokenContract: { _eq: collectionAddress } }
+      : {};
+    const tokenQuery = {
+      ...collectionSubQuery,
+      auctions: {
+        _not: { canceledEvent: {} },
+        ...approvedSubQuery,
+        ...curatorSubQuery,
+      },
+    } as Token_Bool_Exp;
+
     const response = await client.request(ACTIVE_AUCTIONS_QUERY, {
-      addresses: collectionAddress ? [getAddress(collectionAddress)] : [],
-      curators: curatorAddress ? [getAddress(curatorAddress)] : [],
+      tokenQuery,
       offset,
       limit,
     });

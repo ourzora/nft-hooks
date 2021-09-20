@@ -5,6 +5,7 @@ export type NFTQueryInfo = {
 export type FetchZoraIndexerListCollectionType = {
   collectionAddress?: string;
   curatorAddress?: string;
+  approved?: boolean;
   tokenId?: string;
   limit: number;
   offset: number;
