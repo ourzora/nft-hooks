@@ -263,7 +263,7 @@ export class MediaFetchAgent {
     let curatorSubQuery = curatorAddress ? { curator: { _eq: curatorAddress } } : {};
     let approvedSubQuery = approved !== undefined ? { approved: { _eq: approved } } : {};
     let collectionSubQuery = collectionAddress
-      ? { tokenContract: { _eq: collectionAddress } }
+      ? { address: { _eq: collectionAddress } }
       : {};
     const tokenQuery = {
       ...collectionSubQuery,

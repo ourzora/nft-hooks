@@ -14,7 +14,7 @@ type OptionsType = SWRConfiguration;
 type QueryType = {
   collectionAddress?: string;
   curatorAddress?: string;
-  approved?: boolean,
+  approved?: boolean;
   owner?: string;
   offset?: number;
   limit?: number;
@@ -37,7 +37,7 @@ export function useNFTIndexerQuery(
   const fetcher = useContext(NFTFetchContext);
 
   const nftListData = useSWR(
-    !options.initialData && collectionAddress
+    !options.initialData && (collectionAddress || curatorAddress)
       ? [
           'useNFTIndexerGroup',
           curatorAddress,
