@@ -54,7 +54,10 @@ import {
 } from '../graph-queries/zora-indexer';
 import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
 import { RESOLVE_ENS_FROM_ADDRESS_QUERY } from '../graph-queries/ens-graph';
-import { ResolveNamesQuery } from '../graph-queries/ens-graph-types';
+import {
+  DomainResolvedPartFragment,
+  ResolveNamesQuery,
+} from '../graph-queries/ens-graph-types';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -83,7 +86,7 @@ export class MediaFetchAgent {
     // auctionInfoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
     // ensLoader
-    ensLoader: DataLoader<string, string>;
+    ensLoader: DataLoader<string, DomainResolvedPartFragment>;
   };
 
   constructor(network: NetworkIDs) {
@@ -101,7 +104,7 @@ export class MediaFetchAgent {
         cache: false,
         maxBatchSize: 30,
       }),
-      ensLoader: new DataLoader((keys) => this.loadEnsBatch(keys), {maxBatchSize: 400}),
+      ensLoader: new DataLoader((keys) => this.loadEnsBatch(keys), { maxBatchSize: 400 }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
         maxBatchSize: 300,
@@ -213,16 +216,21 @@ export class MediaFetchAgent {
     return medias.map((media) => transformMediaItem(media, this.networkId));
   }
 
-  async loadEnsBatch(names: readonly string[]) {
+  async loadEnsBatch(addresses: readonly string[]) {
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.Graph);
     const client = new GraphQLClient(ENS_GRAPH_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const ensResponse = await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
-      names
-    }) as ResolveNamesQuery;
-    return names;
+    const ensResponse = (await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
+      addresses: addresses.map((address) => address.toLowerCase()),
+    })) as ResolveNamesQuery;
+    return addresses.map(
+      (address) =>
+        ensResponse.domains.find(
+          (domain) => domain.resolvedAddress?.id.toLowerCase() === address.toLowerCase()
+        ) || new Error('Not found')
+    );
   }
 
   // Alpha: uses zora indexer

@@ -9,8 +9,7 @@ export const THEGRAPH_API_URL_BY_NETWORK = {
 
 export const ENS_GRAPH_URL_BY_NETWORK = {
   [Networks.MAINNET]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
-  // No supported ENS for rinkeby on thegraph :( use mainnet for rinkeby
-  [Networks.RINKEBY]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+  [Networks.RINKEBY]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby',
 }
 
 export const ZORA_INDEXER_URL_BY_NETWORK = {

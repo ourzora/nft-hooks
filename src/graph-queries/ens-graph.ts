@@ -1,14 +1,20 @@
 import { gql } from 'graphql-request';
 
 export const RESOLVE_ENS_FROM_ADDRESS_QUERY = gql`
-  query resolveNames($names: [String!]) {
-    domains(where: { name_in: $names }) {
+  fragment DomainResolvedPart on Domain {
+    name
+    labelName
+    labelhash
+    resolvedAddress {
       id
-      name
-      labelName
-      resolvedAddress {
-        id
-      }
+    }
+    resolver {
+      id
+    }
+  }
+  query resolveNames($addresses: [String!]) {
+    domains(where: { resolvedAddress_in: $addresses }) {
+      ...DomainResolvedPart
     }
   }
 `;

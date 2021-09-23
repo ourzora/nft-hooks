@@ -2576,8 +2576,20 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type DomainResolvedPartFragment = (
+  { __typename?: 'Domain' }
+  & Pick<Domain, 'name' | 'labelName' | 'labelhash'>
+  & { resolvedAddress?: Maybe<(
+    { __typename?: 'Account' }
+    & Pick<Account, 'id'>
+  )>, resolver?: Maybe<(
+    { __typename?: 'Resolver' }
+    & Pick<Resolver, 'id'>
+  )> }
+);
+
 export type ResolveNamesQueryVariables = Exact<{
-  names?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
@@ -2585,10 +2597,6 @@ export type ResolveNamesQuery = (
   { __typename?: 'Query' }
   & { domains: Array<(
     { __typename?: 'Domain' }
-    & Pick<Domain, 'id' | 'name' | 'labelName'>
-    & { resolvedAddress?: Maybe<(
-      { __typename?: 'Account' }
-      & Pick<Account, 'id'>
-    )> }
+    & DomainResolvedPartFragment
   )> }
 );
