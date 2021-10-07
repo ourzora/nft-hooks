@@ -222,6 +222,7 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
+
     const ensResponse = (await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
       addresses: addresses.map((address) => address.toLowerCase()),
     })) as ResolveNamesQuery;

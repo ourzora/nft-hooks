@@ -12,10 +12,9 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
  */
 export function useENSAddress(address: string, options?: SWRConfiguration<any>) {
   const fetcher = useContext(NFTFetchContext);
-  const { error, data } = useSWR<DomainResolvedPartFragment>(
-    address ? ['loadENS', address] : null,
+  return useSWR<DomainResolvedPartFragment>(
+    address ? ['loadENS', address.toLowerCase()] : null,
     (_, address: string) => fetcher.loadEnsName(address),
     options
   );
-  return { error, data };
 }
