@@ -25,8 +25,6 @@ import type {
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-graph-types';
 import {
-  IndexerAuctionWithTokenFragment,
-  IndexerTokenPartFragment,
   IndexerTokenWithAuctionFragment,
   Token_Bool_Exp,
 } from '../graph-queries/zora-indexer-types';
@@ -57,7 +55,6 @@ import {
   ACTIVE_AUCTIONS_QUERY,
   BY_IDS as INDEXER_BY_IDS_QUERY,
   BY_OWNER,
-  TOKENS_WITHOUT_AUCTIONS,
 } from '../graph-queries/zora-indexer';
 import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
 import { RESOLVE_ENS_FROM_ADDRESS_QUERY } from '../graph-queries/ens-graph';
