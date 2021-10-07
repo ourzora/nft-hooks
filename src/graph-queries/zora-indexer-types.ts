@@ -9059,9 +9059,7 @@ export type ByIdsQuery = (
 );
 
 export type ActiveAuctionsQueryQueryVariables = Exact<{
-  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  approved_exp?: Maybe<Boolean_Comparison_Exp>;
+  andQuery?: Maybe<Array<Token_Bool_Exp> | Token_Bool_Exp>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 }>;
@@ -9069,14 +9067,16 @@ export type ActiveAuctionsQueryQueryVariables = Exact<{
 
 export type ActiveAuctionsQueryQuery = (
   { __typename?: 'query_root' }
-  & { Auction: Array<(
-    { __typename?: 'Auction' }
-    & IndexerAuctionWithTokenFragment
+  & { Token: Array<(
+    { __typename?: 'Token' }
+    & IndexerTokenWithAuctionFragment
   )> }
 );
 
 export type TokensWithoutAuctionsQueryVariables = Exact<{
-  tokenContracts?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 

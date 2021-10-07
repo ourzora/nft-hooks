@@ -28,6 +28,7 @@ import {
   IndexerAuctionWithTokenFragment,
   IndexerTokenPartFragment,
   IndexerTokenWithAuctionFragment,
+  Token_Bool_Exp,
 } from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
@@ -294,16 +295,21 @@ export class MediaFetchAgent {
         'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
       );
     }
-    let queryStatement = [];
+    let queryStatement: Token_Bool_Exp[] = [];
     const addresses = collectionAddresses.map((address) => getAddress(address));
     if (collectionAddresses) {
-      queryStatement.push({ tokenContract: { _in: addresses } });
+      queryStatement.push({ address: { _in: addresses } });
+    }
+    let approvedStatement = {};
+    if (approved !== null) {
+      approvedStatement = { approved: { _eq: approved } };
     }
     if (curatorAddress) {
-      queryStatement.push({ curator: { _eq: curatorAddress } });
-    }
-    if (approved !== null) {
-      queryStatement.push({ approved: { _eq: approved } });
+      queryStatement.push({
+        auctions: { curator: { _eq: curatorAddress }, ...approvedStatement },
+      });
+    } else if (!curatorAddress) {
+      queryStatement.push({ auctions: { _not: {}, ...approvedStatement } });
     }
 
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
@@ -311,34 +317,13 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const auctionsResponse = (
+    return (
       await client.request(ACTIVE_AUCTIONS_QUERY, {
         andQuery: queryStatement,
         offset,
         limit,
       })
-    ).Auction as IndexerAuctionWithTokenFragment[];
-    let tokenResponse: IndexerTokenPartFragment[] = [];
-    if (!onlyAuctions) {
-      tokenResponse = (
-        await client.request(TOKENS_WITHOUT_AUCTIONS, {
-          addresses,
-          limit,
-        })
-      ).Token as IndexerTokenPartFragment[];
-    }
-
-    // @ts-ignore
-    tokenResponse = [
-      ...tokenResponse,
-      ...auctionsResponse
-        .sort((token1, token2) => (token1.auctionId < token2.auctionId ? 1 : -1))
-        .map(({ token, ...auctionResponse }) => ({
-          ...token,
-          auctions: [auctionResponse],
-        })),
-    ];
-    return tokenResponse as IndexerTokenWithAuctionFragment[];
+    ).Token as IndexerTokenWithAuctionFragment[];
   }
 
   /**

@@ -110,20 +110,19 @@ export const BY_IDS = gql`
 
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${MEDIA_FRAGMENTS}
-  query activeAuctionsQuery(
-    $andQuery: [Auction_bool_exp!]
-    $limit: Int
-    $offset: Int
-  ) @cached {
-    Auction(
-      where: {
-        _and: $andQuery
-      }
+  query activeAuctionsQuery($andQuery: [Token_bool_exp!], $limit: Int, $offset: Int)
+  @cached {
+    Token(
+      where: { _and: $andQuery }
+      order_by: [
+        { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
+        { auctions_aggregate: { count: desc } }
+        { tokenId: asc }
+      ]
       limit: $limit
       offset: $offset
-      distinct_on: [tokenContract, tokenId]
     ) {
-      ...IndexerAuctionWithToken
+      ...IndexerTokenWithAuction
     }
   }
 `;
