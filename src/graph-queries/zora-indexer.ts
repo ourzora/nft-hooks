@@ -109,7 +109,7 @@ export const BY_IDS = gql`
 `;
 
 export const ACTIVE_AUCTIONS_QUERY = gql`
-  ${MEDIA_FRAGMENTS}
+  ${BASE_FRAGMENTS}
   query activeAuctionsQuery($andQuery: [Token_bool_exp!], $limit: Int, $offset: Int)
   @cached {
     Token(
