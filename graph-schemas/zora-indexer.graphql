@@ -72,7 +72,7 @@ type Auction {
   ): AuctionApprovalUpdatedEvent_aggregate!
   approved: Boolean
   auctionCurrency: String
-  auctionId: Int!
+  auctionId: String!
 
   """An array relationship"""
   bidEvents(
@@ -118,6 +118,9 @@ type Auction {
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
+
+  """An object relationship"""
+  currency: Currency
   duration: String
 
   """An array relationship"""
@@ -206,7 +209,7 @@ type Auction {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
   tokenOwner: String
   winner: String
 }
@@ -255,18 +258,14 @@ input Auction_aggregate_order_by {
 
 """aggregate avg on columns"""
 type Auction_avg_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction"
 """
 input Auction_avg_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """
@@ -280,13 +279,14 @@ input Auction_bool_exp {
   approvalEvents: AuctionApprovalUpdatedEvent_bool_exp
   approved: Boolean_comparison_exp
   auctionCurrency: String_comparison_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   bidEvents: AuctionBidEvent_bool_exp
   canceledEvent: AuctionCanceledEvent_bool_exp
   createdEvent: AuctionCreatedEvent_bool_exp
   curator: String_comparison_exp
   curatorFee: String_comparison_exp
   curatorFeePercentage: Int_comparison_exp
+  currency: Currency_bool_exp
   duration: String_comparison_exp
   durationExtendedEvents: AuctionDurationExtendedEvent_bool_exp
   endedEvent: AuctionEndedEvent_bool_exp
@@ -299,7 +299,7 @@ input Auction_bool_exp {
   reservePriceUpdatedEvents: AuctionReservePriceUpdatedEvent_bool_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenOwner: String_comparison_exp
   winner: String_comparison_exp
 }
@@ -308,7 +308,7 @@ input Auction_bool_exp {
 type Auction_max_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -319,7 +319,7 @@ type Auction_max_fields {
   lastBidder: String
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   winner: String
 }
@@ -350,7 +350,7 @@ input Auction_max_order_by {
 type Auction_min_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -361,7 +361,7 @@ type Auction_min_fields {
   lastBidder: String
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   winner: String
 }
@@ -401,6 +401,7 @@ input Auction_order_by {
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
+  currency: Currency_order_by
   duration: order_by
   durationExtendedEvents_aggregate: AuctionDurationExtendedEvent_aggregate_order_by
   endedEvent: AuctionEndedEvent_order_by
@@ -476,114 +477,86 @@ enum Auction_select_column {
 
 """aggregate stddev on columns"""
 type Auction_stddev_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction"
 """
 input Auction_stddev_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type Auction_stddev_pop_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction"
 """
 input Auction_stddev_pop_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type Auction_stddev_samp_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction"
 """
 input Auction_stddev_samp_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type Auction_sum_fields {
-  auctionId: Int
   curatorFeePercentage: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction"
 """
 input Auction_sum_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type Auction_var_pop_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction"
 """
 input Auction_var_pop_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type Auction_var_samp_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction"
 """
 input Auction_var_samp_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type Auction_variance_fields {
-  auctionId: Float
   curatorFeePercentage: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction"
 """
 input Auction_variance_order_by {
-  auctionId: order_by
   curatorFeePercentage: order_by
-  tokenId: order_by
 }
 
 """
@@ -595,7 +568,7 @@ type AuctionApprovalUpdatedEvent {
 
   """An object relationship"""
   auction: Auction
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
 
@@ -611,7 +584,7 @@ type AuctionApprovalUpdatedEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -662,20 +635,16 @@ input AuctionApprovalUpdatedEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionApprovalUpdatedEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -689,7 +658,7 @@ input AuctionApprovalUpdatedEvent_bool_exp {
   address: String_comparison_exp
   approved: Boolean_comparison_exp
   auction: Auction_bool_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   eventLog: EventLog_bool_exp
@@ -699,7 +668,7 @@ input AuctionApprovalUpdatedEvent_bool_exp {
   media: Media_bool_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -707,14 +676,14 @@ input AuctionApprovalUpdatedEvent_bool_exp {
 """aggregate max on columns"""
 type AuctionApprovalUpdatedEvent_max_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -737,14 +706,14 @@ input AuctionApprovalUpdatedEvent_max_order_by {
 """aggregate min on columns"""
 type AuctionApprovalUpdatedEvent_min_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -826,128 +795,100 @@ enum AuctionApprovalUpdatedEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionApprovalUpdatedEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionApprovalUpdatedEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionApprovalUpdatedEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionApprovalUpdatedEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionApprovalUpdatedEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionApprovalUpdatedEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionApprovalUpdatedEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_approval_updated_event"
 """
 input AuctionApprovalUpdatedEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -958,7 +899,7 @@ type AuctionBidEvent {
 
   """An object relationship"""
   auction: Auction
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
 
@@ -977,7 +918,7 @@ type AuctionBidEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -1029,20 +970,16 @@ input AuctionBidEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionBidEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -1054,7 +991,7 @@ input AuctionBidEvent_bool_exp {
   _or: [AuctionBidEvent_bool_exp!]
   address: String_comparison_exp
   auction: Auction_bool_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   eventLog: EventLog_bool_exp
@@ -1067,7 +1004,7 @@ input AuctionBidEvent_bool_exp {
   sender: String_comparison_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
   value: String_comparison_exp
@@ -1076,7 +1013,7 @@ input AuctionBidEvent_bool_exp {
 """aggregate max on columns"""
 type AuctionBidEvent_max_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
@@ -1084,7 +1021,7 @@ type AuctionBidEvent_max_fields {
   logIndex: Int
   sender: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   value: String
 }
@@ -1110,7 +1047,7 @@ input AuctionBidEvent_max_order_by {
 """aggregate min on columns"""
 type AuctionBidEvent_min_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
@@ -1118,7 +1055,7 @@ type AuctionBidEvent_min_fields {
   logIndex: Int
   sender: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   value: String
 }
@@ -1213,128 +1150,100 @@ enum AuctionBidEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionBidEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionBidEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionBidEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionBidEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionBidEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionBidEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionBidEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_bid_event"
 """
 input AuctionBidEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -1345,7 +1254,7 @@ type AuctionCanceledEvent {
 
   """An object relationship"""
   auction: Auction
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
 
@@ -1361,7 +1270,7 @@ type AuctionCanceledEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
   tokenOwner: String!
 
   """An object relationship"""
@@ -1413,20 +1322,16 @@ input AuctionCanceledEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionCanceledEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -1438,7 +1343,7 @@ input AuctionCanceledEvent_bool_exp {
   _or: [AuctionCanceledEvent_bool_exp!]
   address: String_comparison_exp
   auction: Auction_bool_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   eventLog: EventLog_bool_exp
@@ -1448,7 +1353,7 @@ input AuctionCanceledEvent_bool_exp {
   media: Media_bool_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenOwner: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
@@ -1457,14 +1362,14 @@ input AuctionCanceledEvent_bool_exp {
 """aggregate max on columns"""
 type AuctionCanceledEvent_max_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
 }
@@ -1489,14 +1394,14 @@ input AuctionCanceledEvent_max_order_by {
 """aggregate min on columns"""
 type AuctionCanceledEvent_min_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
 }
@@ -1578,128 +1483,100 @@ enum AuctionCanceledEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionCanceledEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionCanceledEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionCanceledEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionCanceledEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionCanceledEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionCanceledEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionCanceledEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_canceled_event"
 """
 input AuctionCanceledEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -1711,7 +1588,7 @@ type AuctionCreatedEvent {
   """An object relationship"""
   auction: Auction
   auctionCurrency: String!
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
   curator: String!
@@ -1731,7 +1608,7 @@ type AuctionCreatedEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
   tokenOwner: String!
 
   """An object relationship"""
@@ -1783,22 +1660,18 @@ input AuctionCreatedEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionCreatedEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -1811,7 +1684,7 @@ input AuctionCreatedEvent_bool_exp {
   address: String_comparison_exp
   auction: Auction_bool_exp
   auctionCurrency: String_comparison_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   curator: String_comparison_exp
@@ -1825,7 +1698,7 @@ input AuctionCreatedEvent_bool_exp {
   reservePrice: String_comparison_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenOwner: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
@@ -1835,7 +1708,7 @@ input AuctionCreatedEvent_bool_exp {
 type AuctionCreatedEvent_max_fields {
   address: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   curator: String
@@ -1846,7 +1719,7 @@ type AuctionCreatedEvent_max_fields {
   logIndex: Int
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
 }
@@ -1877,7 +1750,7 @@ input AuctionCreatedEvent_max_order_by {
 type AuctionCreatedEvent_min_fields {
   address: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   curator: String
@@ -1888,7 +1761,7 @@ type AuctionCreatedEvent_min_fields {
   logIndex: Int
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
 }
@@ -1995,142 +1868,114 @@ enum AuctionCreatedEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionCreatedEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionCreatedEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionCreatedEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionCreatedEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   curatorFeePercentage: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionCreatedEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionCreatedEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionCreatedEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   curatorFeePercentage: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_created_event"
 """
 input AuctionCreatedEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   curatorFeePercentage: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -2141,7 +1986,7 @@ type AuctionDurationExtendedEvent {
 
   """An object relationship"""
   auction: Auction
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
   duration: String!
@@ -2158,7 +2003,7 @@ type AuctionDurationExtendedEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -2209,20 +2054,16 @@ input AuctionDurationExtendedEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionDurationExtendedEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -2235,7 +2076,7 @@ input AuctionDurationExtendedEvent_bool_exp {
   _or: [AuctionDurationExtendedEvent_bool_exp!]
   address: String_comparison_exp
   auction: Auction_bool_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   duration: String_comparison_exp
@@ -2246,7 +2087,7 @@ input AuctionDurationExtendedEvent_bool_exp {
   media: Media_bool_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -2254,7 +2095,7 @@ input AuctionDurationExtendedEvent_bool_exp {
 """aggregate max on columns"""
 type AuctionDurationExtendedEvent_max_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   duration: String
@@ -2262,7 +2103,7 @@ type AuctionDurationExtendedEvent_max_fields {
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -2286,7 +2127,7 @@ input AuctionDurationExtendedEvent_max_order_by {
 """aggregate min on columns"""
 type AuctionDurationExtendedEvent_min_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   duration: String
@@ -2294,7 +2135,7 @@ type AuctionDurationExtendedEvent_min_fields {
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -2377,128 +2218,100 @@ enum AuctionDurationExtendedEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionDurationExtendedEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionDurationExtendedEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionDurationExtendedEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionDurationExtendedEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionDurationExtendedEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionDurationExtendedEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionDurationExtendedEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_duration_extended_event"
 """
 input AuctionDurationExtendedEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -2511,7 +2324,7 @@ type AuctionEndedEvent {
   """An object relationship"""
   auction: Auction
   auctionCurrency: String!
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
   curator: String!
@@ -2529,7 +2342,7 @@ type AuctionEndedEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
   tokenOwner: String!
 
   """An object relationship"""
@@ -2582,20 +2395,16 @@ input AuctionEndedEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionEndedEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -2609,7 +2418,7 @@ input AuctionEndedEvent_bool_exp {
   amount: String_comparison_exp
   auction: Auction_bool_exp
   auctionCurrency: String_comparison_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   curator: String_comparison_exp
@@ -2621,7 +2430,7 @@ input AuctionEndedEvent_bool_exp {
   media: Media_bool_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenOwner: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
@@ -2633,7 +2442,7 @@ type AuctionEndedEvent_max_fields {
   address: String
   amount: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   curator: String
@@ -2642,7 +2451,7 @@ type AuctionEndedEvent_max_fields {
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
   winner: String
@@ -2675,7 +2484,7 @@ type AuctionEndedEvent_min_fields {
   address: String
   amount: String
   auctionCurrency: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   curator: String
@@ -2684,7 +2493,7 @@ type AuctionEndedEvent_min_fields {
   id: String
   logIndex: Int
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   tokenOwner: String
   transactionHash: String
   winner: String
@@ -2792,128 +2601,100 @@ enum AuctionEndedEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionEndedEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionEndedEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionEndedEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionEndedEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionEndedEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionEndedEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionEndedEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_ended_event"
 """
 input AuctionEndedEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -2924,7 +2705,7 @@ type AuctionReservePriceUpdatedEvent {
 
   """An object relationship"""
   auction: Auction
-  auctionId: Int!
+  auctionId: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
 
@@ -2941,7 +2722,7 @@ type AuctionReservePriceUpdatedEvent {
   """An object relationship"""
   token: Token
   tokenContract: String!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -2992,20 +2773,16 @@ input AuctionReservePriceUpdatedEvent_aggregate_order_by {
 
 """aggregate avg on columns"""
 type AuctionReservePriceUpdatedEvent_avg_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by avg() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_avg_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -3018,7 +2795,7 @@ input AuctionReservePriceUpdatedEvent_bool_exp {
   _or: [AuctionReservePriceUpdatedEvent_bool_exp!]
   address: String_comparison_exp
   auction: Auction_bool_exp
-  auctionId: Int_comparison_exp
+  auctionId: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
   eventLog: EventLog_bool_exp
@@ -3029,7 +2806,7 @@ input AuctionReservePriceUpdatedEvent_bool_exp {
   reservePrice: String_comparison_exp
   token: Token_bool_exp
   tokenContract: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -3037,7 +2814,7 @@ input AuctionReservePriceUpdatedEvent_bool_exp {
 """aggregate max on columns"""
 type AuctionReservePriceUpdatedEvent_max_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
@@ -3045,7 +2822,7 @@ type AuctionReservePriceUpdatedEvent_max_fields {
   logIndex: Int
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -3069,7 +2846,7 @@ input AuctionReservePriceUpdatedEvent_max_order_by {
 """aggregate min on columns"""
 type AuctionReservePriceUpdatedEvent_min_fields {
   address: String
-  auctionId: Int
+  auctionId: String
   blockNumber: Int
   blockTimestamp: timestamp
   eventLogId: String
@@ -3077,7 +2854,7 @@ type AuctionReservePriceUpdatedEvent_min_fields {
   logIndex: Int
   reservePrice: String
   tokenContract: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -3160,128 +2937,100 @@ enum AuctionReservePriceUpdatedEvent_select_column {
 
 """aggregate stddev on columns"""
 type AuctionReservePriceUpdatedEvent_stddev_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_stddev_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type AuctionReservePriceUpdatedEvent_stddev_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_pop() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_stddev_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type AuctionReservePriceUpdatedEvent_stddev_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by stddev_samp() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_stddev_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type AuctionReservePriceUpdatedEvent_sum_fields {
-  auctionId: Int
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
 order by sum() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_sum_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type AuctionReservePriceUpdatedEvent_var_pop_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_pop() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_var_pop_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type AuctionReservePriceUpdatedEvent_var_samp_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by var_samp() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_var_samp_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type AuctionReservePriceUpdatedEvent_variance_fields {
-  auctionId: Float
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
 order by variance() on columns of table "auction_reserve_price_updated_event"
 """
 input AuctionReservePriceUpdatedEvent_variance_order_by {
-  auctionId: order_by
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 scalar bid_event_status_enum
@@ -3334,6 +3083,135 @@ input Boolean_comparison_exp {
 }
 
 """
+columns and relationships of "currency"
+"""
+type Currency {
+  address: String!
+  decimals: Int!
+  name: String!
+  symbol: String!
+}
+
+"""
+aggregated selection of "currency"
+"""
+type Currency_aggregate {
+  aggregate: Currency_aggregate_fields
+  nodes: [Currency!]!
+}
+
+"""
+aggregate fields of "currency"
+"""
+type Currency_aggregate_fields {
+  avg: Currency_avg_fields
+  count(columns: [Currency_select_column!], distinct: Boolean): Int!
+  max: Currency_max_fields
+  min: Currency_min_fields
+  stddev: Currency_stddev_fields
+  stddev_pop: Currency_stddev_pop_fields
+  stddev_samp: Currency_stddev_samp_fields
+  sum: Currency_sum_fields
+  var_pop: Currency_var_pop_fields
+  var_samp: Currency_var_samp_fields
+  variance: Currency_variance_fields
+}
+
+"""aggregate avg on columns"""
+type Currency_avg_fields {
+  decimals: Float
+}
+
+"""
+Boolean expression to filter rows from the table "currency". All fields are combined with a logical 'AND'.
+"""
+input Currency_bool_exp {
+  _and: [Currency_bool_exp!]
+  _not: Currency_bool_exp
+  _or: [Currency_bool_exp!]
+  address: String_comparison_exp
+  decimals: Int_comparison_exp
+  name: String_comparison_exp
+  symbol: String_comparison_exp
+}
+
+"""aggregate max on columns"""
+type Currency_max_fields {
+  address: String
+  decimals: Int
+  name: String
+  symbol: String
+}
+
+"""aggregate min on columns"""
+type Currency_min_fields {
+  address: String
+  decimals: Int
+  name: String
+  symbol: String
+}
+
+"""Ordering options when selecting data from "currency"."""
+input Currency_order_by {
+  address: order_by
+  decimals: order_by
+  name: order_by
+  symbol: order_by
+}
+
+"""
+select columns of table "currency"
+"""
+enum Currency_select_column {
+  """column name"""
+  address
+
+  """column name"""
+  decimals
+
+  """column name"""
+  name
+
+  """column name"""
+  symbol
+}
+
+"""aggregate stddev on columns"""
+type Currency_stddev_fields {
+  decimals: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type Currency_stddev_pop_fields {
+  decimals: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type Currency_stddev_samp_fields {
+  decimals: Float
+}
+
+"""aggregate sum on columns"""
+type Currency_sum_fields {
+  decimals: Int
+}
+
+"""aggregate var_pop on columns"""
+type Currency_var_pop_fields {
+  decimals: Float
+}
+
+"""aggregate var_samp on columns"""
+type Currency_var_samp_fields {
+  decimals: Float
+}
+
+"""aggregate variance on columns"""
+type Currency_variance_fields {
+  decimals: Float
+}
+
+"""
 columns and relationships of "raw_log"
 """
 type EventLog {
@@ -3364,7 +3242,6 @@ type EventLog {
   blockTimestamp: timestamp!
   data: String!
   id: String!
-  ingestStatus: raw_log_ingeststatus_enum!
   logIndex: Int!
 
   """An object relationship"""
@@ -3377,7 +3254,7 @@ type EventLog {
   marketBidShareUpdatedEvent: MarketBidShareEvent
 
   """An object relationship"""
-  mediaMintEvent: MediaMint
+  mediaMint: MediaMint
 
   """An object relationship"""
   mediaTokenMetadataURIUpdatedEvent: MediaTokenMetadataURIUpdatedEvent
@@ -3473,12 +3350,11 @@ input EventLog_bool_exp {
   blockTimestamp: timestamp_comparison_exp
   data: String_comparison_exp
   id: String_comparison_exp
-  ingestStatus: raw_log_ingeststatus_enum_comparison_exp
   logIndex: Int_comparison_exp
   marketAskEvent: MarketAskEvent_bool_exp
   marketBidEvent: MarketBidEvent_bool_exp
   marketBidShareUpdatedEvent: MarketBidShareEvent_bool_exp
-  mediaMintEvent: MediaMint_bool_exp
+  mediaMint: MediaMint_bool_exp
   mediaTokenMetadataURIUpdatedEvent: MediaTokenMetadataURIUpdatedEvent_bool_exp
   mediaTokenURIUpdatedEvent: MediaTokenURIUpdatedEvent_bool_exp
   tokenTransferEvent: TokenTransferEvent_bool_exp
@@ -3554,12 +3430,11 @@ input EventLog_order_by {
   blockTimestamp: order_by
   data: order_by
   id: order_by
-  ingestStatus: order_by
   logIndex: order_by
   marketAskEvent: MarketAskEvent_order_by
   marketBidEvent: MarketBidEvent_order_by
   marketBidShareUpdatedEvent: MarketBidShareEvent_order_by
-  mediaMintEvent: MediaMint_order_by
+  mediaMint: MediaMint_order_by
   mediaTokenMetadataURIUpdatedEvent: MediaTokenMetadataURIUpdatedEvent_order_by
   mediaTokenURIUpdatedEvent: MediaTokenURIUpdatedEvent_order_by
   tokenTransferEvent: TokenTransferEvent_order_by
@@ -3589,9 +3464,6 @@ enum EventLog_select_column {
 
   """column name"""
   id
-
-  """column name"""
-  ingestStatus
 
   """column name"""
   logIndex
@@ -3753,12 +3625,12 @@ columns and relationships of "ask"
 type MarketAsk {
   address: String
   amount: String
-  currency: String
+  currencyAddress: String
 
   """An object relationship"""
   media: Media
   status: ask_event_status_enum
-  tokenId: Int
+  tokenId: String
 }
 
 """
@@ -3773,46 +3645,18 @@ type MarketAsk_aggregate {
 aggregate fields of "ask"
 """
 type MarketAsk_aggregate_fields {
-  avg: MarketAsk_avg_fields
   count(columns: [MarketAsk_select_column!], distinct: Boolean): Int!
   max: MarketAsk_max_fields
   min: MarketAsk_min_fields
-  stddev: MarketAsk_stddev_fields
-  stddev_pop: MarketAsk_stddev_pop_fields
-  stddev_samp: MarketAsk_stddev_samp_fields
-  sum: MarketAsk_sum_fields
-  var_pop: MarketAsk_var_pop_fields
-  var_samp: MarketAsk_var_samp_fields
-  variance: MarketAsk_variance_fields
 }
 
 """
 order by aggregate values of table "ask"
 """
 input MarketAsk_aggregate_order_by {
-  avg: MarketAsk_avg_order_by
   count: order_by
   max: MarketAsk_max_order_by
   min: MarketAsk_min_order_by
-  stddev: MarketAsk_stddev_order_by
-  stddev_pop: MarketAsk_stddev_pop_order_by
-  stddev_samp: MarketAsk_stddev_samp_order_by
-  sum: MarketAsk_sum_order_by
-  var_pop: MarketAsk_var_pop_order_by
-  var_samp: MarketAsk_var_samp_order_by
-  variance: MarketAsk_variance_order_by
-}
-
-"""aggregate avg on columns"""
-type MarketAsk_avg_fields {
-  tokenId: Float
-}
-
-"""
-order by avg() on columns of table "ask"
-"""
-input MarketAsk_avg_order_by {
-  tokenId: order_by
 }
 
 """
@@ -3824,18 +3668,18 @@ input MarketAsk_bool_exp {
   _or: [MarketAsk_bool_exp!]
   address: String_comparison_exp
   amount: String_comparison_exp
-  currency: String_comparison_exp
+  currencyAddress: String_comparison_exp
   media: Media_bool_exp
   status: ask_event_status_enum_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
 }
 
 """aggregate max on columns"""
 type MarketAsk_max_fields {
   address: String
   amount: String
-  currency: String
-  tokenId: Int
+  currencyAddress: String
+  tokenId: String
 }
 
 """
@@ -3844,7 +3688,7 @@ order by max() on columns of table "ask"
 input MarketAsk_max_order_by {
   address: order_by
   amount: order_by
-  currency: order_by
+  currencyAddress: order_by
   tokenId: order_by
 }
 
@@ -3852,8 +3696,8 @@ input MarketAsk_max_order_by {
 type MarketAsk_min_fields {
   address: String
   amount: String
-  currency: String
-  tokenId: Int
+  currencyAddress: String
+  tokenId: String
 }
 
 """
@@ -3862,7 +3706,7 @@ order by min() on columns of table "ask"
 input MarketAsk_min_order_by {
   address: order_by
   amount: order_by
-  currency: order_by
+  currencyAddress: order_by
   tokenId: order_by
 }
 
@@ -3870,7 +3714,7 @@ input MarketAsk_min_order_by {
 input MarketAsk_order_by {
   address: order_by
   amount: order_by
-  currency: order_by
+  currencyAddress: order_by
   media: Media_order_by
   status: order_by
   tokenId: order_by
@@ -3887,97 +3731,13 @@ enum MarketAsk_select_column {
   amount
 
   """column name"""
-  currency
+  currencyAddress
 
   """column name"""
   status
 
   """column name"""
   tokenId
-}
-
-"""aggregate stddev on columns"""
-type MarketAsk_stddev_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev() on columns of table "ask"
-"""
-input MarketAsk_stddev_order_by {
-  tokenId: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type MarketAsk_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev_pop() on columns of table "ask"
-"""
-input MarketAsk_stddev_pop_order_by {
-  tokenId: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type MarketAsk_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev_samp() on columns of table "ask"
-"""
-input MarketAsk_stddev_samp_order_by {
-  tokenId: order_by
-}
-
-"""aggregate sum on columns"""
-type MarketAsk_sum_fields {
-  tokenId: Int
-}
-
-"""
-order by sum() on columns of table "ask"
-"""
-input MarketAsk_sum_order_by {
-  tokenId: order_by
-}
-
-"""aggregate var_pop on columns"""
-type MarketAsk_var_pop_fields {
-  tokenId: Float
-}
-
-"""
-order by var_pop() on columns of table "ask"
-"""
-input MarketAsk_var_pop_order_by {
-  tokenId: order_by
-}
-
-"""aggregate var_samp on columns"""
-type MarketAsk_var_samp_fields {
-  tokenId: Float
-}
-
-"""
-order by var_samp() on columns of table "ask"
-"""
-input MarketAsk_var_samp_order_by {
-  tokenId: order_by
-}
-
-"""aggregate variance on columns"""
-type MarketAsk_variance_fields {
-  tokenId: Float
-}
-
-"""
-order by variance() on columns of table "ask"
-"""
-input MarketAsk_variance_order_by {
-  tokenId: order_by
 }
 
 """
@@ -3999,7 +3759,7 @@ type MarketAskEvent {
   """An object relationship"""
   media: Media
   status: ask_event_status_enum!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -4052,7 +3812,6 @@ input MarketAskEvent_aggregate_order_by {
 type MarketAskEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4061,7 +3820,6 @@ order by avg() on columns of table "ask_event"
 input MarketAskEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -4082,7 +3840,7 @@ input MarketAskEvent_bool_exp {
   logIndex: Int_comparison_exp
   media: Media_bool_exp
   status: ask_event_status_enum_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -4097,7 +3855,7 @@ type MarketAskEvent_max_fields {
   eventLogId: String
   id: String
   logIndex: Int
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -4127,7 +3885,7 @@ type MarketAskEvent_min_fields {
   eventLogId: String
   id: String
   logIndex: Int
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -4207,7 +3965,6 @@ enum MarketAskEvent_select_column {
 type MarketAskEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4216,14 +3973,12 @@ order by stddev() on columns of table "ask_event"
 input MarketAskEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MarketAskEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4232,14 +3987,12 @@ order by stddev_pop() on columns of table "ask_event"
 input MarketAskEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MarketAskEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4248,14 +4001,12 @@ order by stddev_samp() on columns of table "ask_event"
 input MarketAskEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MarketAskEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -4264,14 +4015,12 @@ order by sum() on columns of table "ask_event"
 input MarketAskEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MarketAskEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4280,14 +4029,12 @@ order by var_pop() on columns of table "ask_event"
 input MarketAskEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MarketAskEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4296,14 +4043,12 @@ order by var_samp() on columns of table "ask_event"
 input MarketAskEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MarketAskEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4312,7 +4057,6 @@ order by variance() on columns of table "ask_event"
 input MarketAskEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -4321,6 +4065,9 @@ columns and relationships of "bid"
 type MarketBid {
   amount: String!
   bidder: String!
+
+  """An object relationship"""
+  currency: Currency
   currencyAddress: String!
   id: String!
 
@@ -4329,7 +4076,7 @@ type MarketBid {
   recipient: String!
   sellOnShare: String!
   status: bid_status_enum!
-  tokenId: Int!
+  tokenId: String!
 }
 
 """
@@ -4344,46 +4091,18 @@ type MarketBid_aggregate {
 aggregate fields of "bid"
 """
 type MarketBid_aggregate_fields {
-  avg: MarketBid_avg_fields
   count(columns: [MarketBid_select_column!], distinct: Boolean): Int!
   max: MarketBid_max_fields
   min: MarketBid_min_fields
-  stddev: MarketBid_stddev_fields
-  stddev_pop: MarketBid_stddev_pop_fields
-  stddev_samp: MarketBid_stddev_samp_fields
-  sum: MarketBid_sum_fields
-  var_pop: MarketBid_var_pop_fields
-  var_samp: MarketBid_var_samp_fields
-  variance: MarketBid_variance_fields
 }
 
 """
 order by aggregate values of table "bid"
 """
 input MarketBid_aggregate_order_by {
-  avg: MarketBid_avg_order_by
   count: order_by
   max: MarketBid_max_order_by
   min: MarketBid_min_order_by
-  stddev: MarketBid_stddev_order_by
-  stddev_pop: MarketBid_stddev_pop_order_by
-  stddev_samp: MarketBid_stddev_samp_order_by
-  sum: MarketBid_sum_order_by
-  var_pop: MarketBid_var_pop_order_by
-  var_samp: MarketBid_var_samp_order_by
-  variance: MarketBid_variance_order_by
-}
-
-"""aggregate avg on columns"""
-type MarketBid_avg_fields {
-  tokenId: Float
-}
-
-"""
-order by avg() on columns of table "bid"
-"""
-input MarketBid_avg_order_by {
-  tokenId: order_by
 }
 
 """
@@ -4395,13 +4114,14 @@ input MarketBid_bool_exp {
   _or: [MarketBid_bool_exp!]
   amount: String_comparison_exp
   bidder: String_comparison_exp
+  currency: Currency_bool_exp
   currencyAddress: String_comparison_exp
   id: String_comparison_exp
   media: Media_bool_exp
   recipient: String_comparison_exp
   sellOnShare: String_comparison_exp
   status: bid_status_enum_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
 }
 
 """aggregate max on columns"""
@@ -4412,7 +4132,7 @@ type MarketBid_max_fields {
   id: String
   recipient: String
   sellOnShare: String
-  tokenId: Int
+  tokenId: String
 }
 
 """
@@ -4436,7 +4156,7 @@ type MarketBid_min_fields {
   id: String
   recipient: String
   sellOnShare: String
-  tokenId: Int
+  tokenId: String
 }
 
 """
@@ -4456,6 +4176,7 @@ input MarketBid_min_order_by {
 input MarketBid_order_by {
   amount: order_by
   bidder: order_by
+  currency: Currency_order_by
   currencyAddress: order_by
   id: order_by
   media: Media_order_by
@@ -4494,90 +4215,6 @@ enum MarketBid_select_column {
   tokenId
 }
 
-"""aggregate stddev on columns"""
-type MarketBid_stddev_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev() on columns of table "bid"
-"""
-input MarketBid_stddev_order_by {
-  tokenId: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type MarketBid_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev_pop() on columns of table "bid"
-"""
-input MarketBid_stddev_pop_order_by {
-  tokenId: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type MarketBid_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""
-order by stddev_samp() on columns of table "bid"
-"""
-input MarketBid_stddev_samp_order_by {
-  tokenId: order_by
-}
-
-"""aggregate sum on columns"""
-type MarketBid_sum_fields {
-  tokenId: Int
-}
-
-"""
-order by sum() on columns of table "bid"
-"""
-input MarketBid_sum_order_by {
-  tokenId: order_by
-}
-
-"""aggregate var_pop on columns"""
-type MarketBid_var_pop_fields {
-  tokenId: Float
-}
-
-"""
-order by var_pop() on columns of table "bid"
-"""
-input MarketBid_var_pop_order_by {
-  tokenId: order_by
-}
-
-"""aggregate var_samp on columns"""
-type MarketBid_var_samp_fields {
-  tokenId: Float
-}
-
-"""
-order by var_samp() on columns of table "bid"
-"""
-input MarketBid_var_samp_order_by {
-  tokenId: order_by
-}
-
-"""aggregate variance on columns"""
-type MarketBid_variance_fields {
-  tokenId: Float
-}
-
-"""
-order by variance() on columns of table "bid"
-"""
-input MarketBid_variance_order_by {
-  tokenId: order_by
-}
-
 """
 columns and relationships of "bid_event"
 """
@@ -4587,6 +4224,9 @@ type MarketBidEvent {
   bidder: String!
   blockNumber: Int!
   blockTimestamp: timestamp!
+
+  """An object relationship"""
+  currency: Currency
   currencyAddress: String!
 
   """An object relationship"""
@@ -4600,7 +4240,7 @@ type MarketBidEvent {
   recipient: String!
   sellOnShare: String!
   status: bid_event_status_enum!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -4653,7 +4293,6 @@ input MarketBidEvent_aggregate_order_by {
 type MarketBidEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4662,7 +4301,6 @@ order by avg() on columns of table "bid_event"
 input MarketBidEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -4677,6 +4315,7 @@ input MarketBidEvent_bool_exp {
   bidder: String_comparison_exp
   blockNumber: Int_comparison_exp
   blockTimestamp: timestamp_comparison_exp
+  currency: Currency_bool_exp
   currencyAddress: String_comparison_exp
   eventLog: EventLog_bool_exp
   eventLogId: String_comparison_exp
@@ -4686,7 +4325,7 @@ input MarketBidEvent_bool_exp {
   recipient: String_comparison_exp
   sellOnShare: String_comparison_exp
   status: bid_event_status_enum_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -4704,7 +4343,7 @@ type MarketBidEvent_max_fields {
   logIndex: Int
   recipient: String
   sellOnShare: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -4740,7 +4379,7 @@ type MarketBidEvent_min_fields {
   logIndex: Int
   recipient: String
   sellOnShare: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -4770,6 +4409,7 @@ input MarketBidEvent_order_by {
   bidder: order_by
   blockNumber: order_by
   blockTimestamp: order_by
+  currency: Currency_order_by
   currencyAddress: order_by
   eventLog: EventLog_order_by
   eventLogId: order_by
@@ -4835,7 +4475,6 @@ enum MarketBidEvent_select_column {
 type MarketBidEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4844,14 +4483,12 @@ order by stddev() on columns of table "bid_event"
 input MarketBidEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MarketBidEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4860,14 +4497,12 @@ order by stddev_pop() on columns of table "bid_event"
 input MarketBidEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MarketBidEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4876,14 +4511,12 @@ order by stddev_samp() on columns of table "bid_event"
 input MarketBidEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MarketBidEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -4892,14 +4525,12 @@ order by sum() on columns of table "bid_event"
 input MarketBidEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MarketBidEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4908,14 +4539,12 @@ order by var_pop() on columns of table "bid_event"
 input MarketBidEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MarketBidEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4924,14 +4553,12 @@ order by var_samp() on columns of table "bid_event"
 input MarketBidEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MarketBidEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -4940,7 +4567,6 @@ order by variance() on columns of table "bid_event"
 input MarketBidEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -4953,7 +4579,7 @@ type MarketBidShare {
   media: Media
   owner: String
   prevOwner: String
-  tokenId: Int
+  tokenId: String
 }
 
 """
@@ -4968,22 +4594,9 @@ type MarketBidShare_aggregate {
 aggregate fields of "bid_share"
 """
 type MarketBidShare_aggregate_fields {
-  avg: MarketBidShare_avg_fields
   count(columns: [MarketBidShare_select_column!], distinct: Boolean): Int!
   max: MarketBidShare_max_fields
   min: MarketBidShare_min_fields
-  stddev: MarketBidShare_stddev_fields
-  stddev_pop: MarketBidShare_stddev_pop_fields
-  stddev_samp: MarketBidShare_stddev_samp_fields
-  sum: MarketBidShare_sum_fields
-  var_pop: MarketBidShare_var_pop_fields
-  var_samp: MarketBidShare_var_samp_fields
-  variance: MarketBidShare_variance_fields
-}
-
-"""aggregate avg on columns"""
-type MarketBidShare_avg_fields {
-  tokenId: Float
 }
 
 """
@@ -4997,7 +4610,7 @@ input MarketBidShare_bool_exp {
   media: Media_bool_exp
   owner: String_comparison_exp
   prevOwner: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
 }
 
 """aggregate max on columns"""
@@ -5005,7 +4618,7 @@ type MarketBidShare_max_fields {
   creator: String
   owner: String
   prevOwner: String
-  tokenId: Int
+  tokenId: String
 }
 
 """aggregate min on columns"""
@@ -5013,7 +4626,7 @@ type MarketBidShare_min_fields {
   creator: String
   owner: String
   prevOwner: String
-  tokenId: Int
+  tokenId: String
 }
 
 """Ordering options when selecting data from "bid_share"."""
@@ -5042,41 +4655,6 @@ enum MarketBidShare_select_column {
   tokenId
 }
 
-"""aggregate stddev on columns"""
-type MarketBidShare_stddev_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type MarketBidShare_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type MarketBidShare_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate sum on columns"""
-type MarketBidShare_sum_fields {
-  tokenId: Int
-}
-
-"""aggregate var_pop on columns"""
-type MarketBidShare_var_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate var_samp on columns"""
-type MarketBidShare_var_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate variance on columns"""
-type MarketBidShare_variance_fields {
-  tokenId: Float
-}
-
 """
 columns and relationships of "bid_share_event"
 """
@@ -5096,7 +4674,7 @@ type MarketBidShareEvent {
   media: Media
   owner: String!
   prevOwner: String!
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -5149,7 +4727,6 @@ input MarketBidShareEvent_aggregate_order_by {
 type MarketBidShareEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5158,7 +4735,6 @@ order by avg() on columns of table "bid_share_event"
 input MarketBidShareEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -5179,7 +4755,7 @@ input MarketBidShareEvent_bool_exp {
   media: Media_bool_exp
   owner: String_comparison_exp
   prevOwner: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -5195,7 +4771,7 @@ type MarketBidShareEvent_max_fields {
   logIndex: Int
   owner: String
   prevOwner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -5227,7 +4803,7 @@ type MarketBidShareEvent_min_fields {
   logIndex: Int
   owner: String
   prevOwner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -5308,7 +4884,6 @@ enum MarketBidShareEvent_select_column {
 type MarketBidShareEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5317,14 +4892,12 @@ order by stddev() on columns of table "bid_share_event"
 input MarketBidShareEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MarketBidShareEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5333,14 +4906,12 @@ order by stddev_pop() on columns of table "bid_share_event"
 input MarketBidShareEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MarketBidShareEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5349,14 +4920,12 @@ order by stddev_samp() on columns of table "bid_share_event"
 input MarketBidShareEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MarketBidShareEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -5365,14 +4934,12 @@ order by sum() on columns of table "bid_share_event"
 input MarketBidShareEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MarketBidShareEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5381,14 +4948,12 @@ order by var_pop() on columns of table "bid_share_event"
 input MarketBidShareEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MarketBidShareEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5397,14 +4962,12 @@ order by var_samp() on columns of table "bid_share_event"
 input MarketBidShareEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MarketBidShareEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5413,7 +4976,6 @@ order by variance() on columns of table "bid_share_event"
 input MarketBidShareEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -5618,7 +5180,7 @@ type Media {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
 
   """An array relationship"""
   tokenMetadataURIUpdatedEvents(
@@ -5741,22 +5303,9 @@ type Media_aggregate {
 aggregate fields of "media"
 """
 type Media_aggregate_fields {
-  avg: Media_avg_fields
   count(columns: [Media_select_column!], distinct: Boolean): Int!
   max: Media_max_fields
   min: Media_min_fields
-  stddev: Media_stddev_fields
-  stddev_pop: Media_stddev_pop_fields
-  stddev_samp: Media_stddev_samp_fields
-  sum: Media_sum_fields
-  var_pop: Media_var_pop_fields
-  var_samp: Media_var_samp_fields
-  variance: Media_variance_fields
-}
-
-"""aggregate avg on columns"""
-type Media_avg_fields {
-  tokenId: Float
 }
 
 """
@@ -5785,7 +5334,7 @@ input Media_bool_exp {
   prevOwner: String_comparison_exp
   prevOwnerBidShare: String_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenMetadataURIUpdatedEvents: MediaTokenMetadataURIUpdatedEvent_bool_exp
   tokenURIUpdatedEvents: MediaTokenURIUpdatedEvent_bool_exp
   transferEvents: TokenTransferEvent_bool_exp
@@ -5805,7 +5354,7 @@ type Media_max_fields {
   ownerBidShare: String
   prevOwner: String
   prevOwnerBidShare: String
-  tokenId: Int
+  tokenId: String
 }
 
 """aggregate min on columns"""
@@ -5822,7 +5371,7 @@ type Media_min_fields {
   ownerBidShare: String
   prevOwner: String
   prevOwnerBidShare: String
-  tokenId: Int
+  tokenId: String
 }
 
 """Ordering options when selecting data from "media"."""
@@ -5896,41 +5445,6 @@ enum Media_select_column {
   tokenId
 }
 
-"""aggregate stddev on columns"""
-type Media_stddev_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type Media_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type Media_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate sum on columns"""
-type Media_sum_fields {
-  tokenId: Int
-}
-
-"""aggregate var_pop on columns"""
-type Media_var_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate var_samp on columns"""
-type Media_var_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate variance on columns"""
-type Media_variance_fields {
-  tokenId: Float
-}
-
 """
 columns and relationships of "metadata"
 """
@@ -5946,7 +5460,7 @@ type MediaMetadata {
 
   """An object relationship"""
   media: Media
-  tokenId: Int!
+  tokenId: String!
   updatedAt: timestamp!
   uri: String!
 }
@@ -5980,7 +5494,6 @@ type MediaMetadata_aggregate_fields {
 type MediaMetadata_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -5996,7 +5509,7 @@ input MediaMetadata_bool_exp {
   json: jsonb_comparison_exp
   logIndex: Int_comparison_exp
   media: Media_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   updatedAt: timestamp_comparison_exp
   uri: String_comparison_exp
 }
@@ -6007,7 +5520,7 @@ type MediaMetadata_max_fields {
   createdAt: timestamp
   id: String
   logIndex: Int
-  tokenId: Int
+  tokenId: String
   updatedAt: timestamp
   uri: String
 }
@@ -6018,7 +5531,7 @@ type MediaMetadata_min_fields {
   createdAt: timestamp
   id: String
   logIndex: Int
-  tokenId: Int
+  tokenId: String
   updatedAt: timestamp
   uri: String
 }
@@ -6069,49 +5582,42 @@ enum MediaMetadata_select_column {
 type MediaMetadata_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """aggregate stddev_pop on columns"""
 type MediaMetadata_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """aggregate stddev_samp on columns"""
 type MediaMetadata_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """aggregate sum on columns"""
 type MediaMetadata_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """aggregate var_pop on columns"""
 type MediaMetadata_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """aggregate var_samp on columns"""
 type MediaMetadata_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """aggregate variance on columns"""
 type MediaMetadata_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6138,7 +5644,7 @@ type MediaMint {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -6191,7 +5697,6 @@ input MediaMint_aggregate_order_by {
 type MediaMint_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6200,7 +5705,6 @@ order by avg() on columns of table "mint_event"
 input MediaMint_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -6224,7 +5728,7 @@ input MediaMint_bool_exp {
   metadataHash: String_comparison_exp
   metadataURI: String_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -6242,7 +5746,7 @@ type MediaMint_max_fields {
   logIndex: Int
   metadataHash: String
   metadataURI: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -6278,7 +5782,7 @@ type MediaMint_min_fields {
   logIndex: Int
   metadataHash: String
   metadataURI: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -6370,7 +5874,6 @@ enum MediaMint_select_column {
 type MediaMint_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6379,14 +5882,12 @@ order by stddev() on columns of table "mint_event"
 input MediaMint_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MediaMint_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6395,14 +5896,12 @@ order by stddev_pop() on columns of table "mint_event"
 input MediaMint_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MediaMint_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6411,14 +5910,12 @@ order by stddev_samp() on columns of table "mint_event"
 input MediaMint_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MediaMint_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -6427,14 +5924,12 @@ order by sum() on columns of table "mint_event"
 input MediaMint_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MediaMint_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6443,14 +5938,12 @@ order by var_pop() on columns of table "mint_event"
 input MediaMint_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MediaMint_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6459,14 +5952,12 @@ order by var_samp() on columns of table "mint_event"
 input MediaMint_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MediaMint_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6475,7 +5966,6 @@ order by variance() on columns of table "mint_event"
 input MediaMint_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -6498,7 +5988,7 @@ type MediaTokenMetadataURIUpdatedEvent {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -6552,7 +6042,6 @@ input MediaTokenMetadataURIUpdatedEvent_aggregate_order_by {
 type MediaTokenMetadataURIUpdatedEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6561,7 +6050,6 @@ order by avg() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -6581,7 +6069,7 @@ input MediaTokenMetadataURIUpdatedEvent_bool_exp {
   media: Media_bool_exp
   owner: String_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
   uri: String_comparison_exp
@@ -6596,7 +6084,7 @@ type MediaTokenMetadataURIUpdatedEvent_max_fields {
   id: String
   logIndex: Int
   owner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   uri: String
 }
@@ -6626,7 +6114,7 @@ type MediaTokenMetadataURIUpdatedEvent_min_fields {
   id: String
   logIndex: Int
   owner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   uri: String
 }
@@ -6706,7 +6194,6 @@ enum MediaTokenMetadataURIUpdatedEvent_select_column {
 type MediaTokenMetadataURIUpdatedEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6715,14 +6202,12 @@ order by stddev() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MediaTokenMetadataURIUpdatedEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6731,14 +6216,12 @@ order by stddev_pop() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MediaTokenMetadataURIUpdatedEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6747,14 +6230,12 @@ order by stddev_samp() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MediaTokenMetadataURIUpdatedEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -6763,14 +6244,12 @@ order by sum() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MediaTokenMetadataURIUpdatedEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6779,14 +6258,12 @@ order by var_pop() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MediaTokenMetadataURIUpdatedEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6795,14 +6272,12 @@ order by var_samp() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MediaTokenMetadataURIUpdatedEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6811,7 +6286,6 @@ order by variance() on columns of table "metadata_uri_updated_event"
 input MediaTokenMetadataURIUpdatedEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -6834,7 +6308,7 @@ type MediaTokenURIUpdatedEvent {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -6888,7 +6362,6 @@ input MediaTokenURIUpdatedEvent_aggregate_order_by {
 type MediaTokenURIUpdatedEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -6897,7 +6370,6 @@ order by avg() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -6917,7 +6389,7 @@ input MediaTokenURIUpdatedEvent_bool_exp {
   media: Media_bool_exp
   owner: String_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
   uri: String_comparison_exp
@@ -6932,7 +6404,7 @@ type MediaTokenURIUpdatedEvent_max_fields {
   id: String
   logIndex: Int
   owner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   uri: String
 }
@@ -6962,7 +6434,7 @@ type MediaTokenURIUpdatedEvent_min_fields {
   id: String
   logIndex: Int
   owner: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
   uri: String
 }
@@ -7040,7 +6512,6 @@ enum MediaTokenURIUpdatedEvent_select_column {
 type MediaTokenURIUpdatedEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7049,14 +6520,12 @@ order by stddev() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type MediaTokenURIUpdatedEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7065,14 +6534,12 @@ order by stddev_pop() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type MediaTokenURIUpdatedEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7081,14 +6548,12 @@ order by stddev_samp() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type MediaTokenURIUpdatedEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -7097,14 +6562,12 @@ order by sum() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type MediaTokenURIUpdatedEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7113,14 +6576,12 @@ order by var_pop() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type MediaTokenURIUpdatedEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7129,14 +6590,12 @@ order by var_samp() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type MediaTokenURIUpdatedEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -7145,7 +6604,6 @@ order by variance() on columns of table "media_uri_updated_event"
 input MediaTokenURIUpdatedEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """column ordering options"""
@@ -7526,7 +6984,50 @@ type query_root {
   ): Auction_aggregate!
 
   """fetch data from the table: "auction" using primary key columns"""
-  Auction_by_pk(auctionId: Int!): Auction
+  Auction_by_pk(auctionId: String!): Auction
+
+  """
+  fetch data from the table: "currency"
+  """
+  Currency(
+    """distinct select on columns"""
+    distinct_on: [Currency_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Currency_order_by!]
+
+    """filter the rows returned"""
+    where: Currency_bool_exp
+  ): [Currency!]!
+
+  """
+  fetch aggregated fields from the table: "currency"
+  """
+  Currency_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Currency_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Currency_order_by!]
+
+    """filter the rows returned"""
+    where: Currency_bool_exp
+  ): Currency_aggregate!
+
+  """fetch data from the table: "currency" using primary key columns"""
+  Currency_by_pk(address: String!): Currency
 
   """
   fetch data from the table: "raw_log"
@@ -8040,7 +7541,7 @@ type query_root {
   ): Media_aggregate!
 
   """fetch data from the table: "media" using primary key columns"""
-  Media_by_pk(tokenId: Int!): Media
+  Media_by_pk(tokenId: String!): Media
 
   """
   fetch data from the table: "token"
@@ -8258,23 +7759,6 @@ type query_root {
 
   """fetch data from the table: "transaction" using primary key columns"""
   Transaction_by_pk(hash: String!): Transaction
-}
-
-scalar raw_log_ingeststatus_enum
-
-"""
-Boolean expression to compare columns of type "raw_log_ingeststatus_enum". All fields are combined with logical 'AND'.
-"""
-input raw_log_ingeststatus_enum_comparison_exp {
-  _eq: raw_log_ingeststatus_enum
-  _gt: raw_log_ingeststatus_enum
-  _gte: raw_log_ingeststatus_enum
-  _in: [raw_log_ingeststatus_enum!]
-  _is_null: Boolean
-  _lt: raw_log_ingeststatus_enum
-  _lte: raw_log_ingeststatus_enum
-  _neq: raw_log_ingeststatus_enum
-  _nin: [raw_log_ingeststatus_enum!]
 }
 
 """
@@ -8687,7 +8171,50 @@ type subscription_root {
   ): Auction_aggregate!
 
   """fetch data from the table: "auction" using primary key columns"""
-  Auction_by_pk(auctionId: Int!): Auction
+  Auction_by_pk(auctionId: String!): Auction
+
+  """
+  fetch data from the table: "currency"
+  """
+  Currency(
+    """distinct select on columns"""
+    distinct_on: [Currency_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Currency_order_by!]
+
+    """filter the rows returned"""
+    where: Currency_bool_exp
+  ): [Currency!]!
+
+  """
+  fetch aggregated fields from the table: "currency"
+  """
+  Currency_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Currency_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Currency_order_by!]
+
+    """filter the rows returned"""
+    where: Currency_bool_exp
+  ): Currency_aggregate!
+
+  """fetch data from the table: "currency" using primary key columns"""
+  Currency_by_pk(address: String!): Currency
 
   """
   fetch data from the table: "raw_log"
@@ -9201,7 +8728,7 @@ type subscription_root {
   ): Media_aggregate!
 
   """fetch data from the table: "media" using primary key columns"""
-  Media_by_pk(tokenId: Int!): Media
+  Media_by_pk(tokenId: String!): Media
 
   """
   fetch data from the table: "token"
@@ -9513,7 +9040,10 @@ type Token {
   owner: String!
   supportsMetadata: Boolean
   symbol: String
-  tokenId: Int!
+
+  """An object relationship"""
+  tokenContract: TokenContract
+  tokenId: String!
   tokenURI: String
 
   """An array relationship"""
@@ -9565,22 +9095,9 @@ type Token_aggregate {
 aggregate fields of "token"
 """
 type Token_aggregate_fields {
-  avg: Token_avg_fields
   count(columns: [Token_select_column!], distinct: Boolean): Int!
   max: Token_max_fields
   min: Token_min_fields
-  stddev: Token_stddev_fields
-  stddev_pop: Token_stddev_pop_fields
-  stddev_samp: Token_stddev_samp_fields
-  sum: Token_sum_fields
-  var_pop: Token_var_pop_fields
-  var_samp: Token_var_samp_fields
-  variance: Token_variance_fields
-}
-
-"""aggregate avg on columns"""
-type Token_avg_fields {
-  tokenId: Float
 }
 
 """
@@ -9603,7 +9120,8 @@ input Token_bool_exp {
   owner: String_comparison_exp
   supportsMetadata: Boolean_comparison_exp
   symbol: String_comparison_exp
-  tokenId: Int_comparison_exp
+  tokenContract: TokenContract_bool_exp
+  tokenId: String_comparison_exp
   tokenURI: String_comparison_exp
   transferEvents: TokenTransferEvent_bool_exp
 }
@@ -9618,7 +9136,7 @@ type Token_max_fields {
   name: String
   owner: String
   symbol: String
-  tokenId: Int
+  tokenId: String
   tokenURI: String
 }
 
@@ -9632,7 +9150,7 @@ type Token_min_fields {
   name: String
   owner: String
   symbol: String
-  tokenId: Int
+  tokenId: String
   tokenURI: String
 }
 
@@ -9651,6 +9169,7 @@ input Token_order_by {
   owner: order_by
   supportsMetadata: order_by
   symbol: order_by
+  tokenContract: TokenContract_order_by
   tokenId: order_by
   tokenURI: order_by
   transferEvents_aggregate: TokenTransferEvent_aggregate_order_by
@@ -9692,41 +9211,6 @@ enum Token_select_column {
 
   """column name"""
   tokenURI
-}
-
-"""aggregate stddev on columns"""
-type Token_stddev_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type Token_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type Token_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate sum on columns"""
-type Token_sum_fields {
-  tokenId: Int
-}
-
-"""aggregate var_pop on columns"""
-type Token_var_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate var_samp on columns"""
-type Token_var_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate variance on columns"""
-type Token_variance_fields {
-  tokenId: Float
 }
 
 """
@@ -9878,7 +9362,7 @@ type TokenMetadata {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
   tokenURI: String!
 }
 
@@ -9894,22 +9378,9 @@ type TokenMetadata_aggregate {
 aggregate fields of "nft_metadata"
 """
 type TokenMetadata_aggregate_fields {
-  avg: TokenMetadata_avg_fields
   count(columns: [TokenMetadata_select_column!], distinct: Boolean): Int!
   max: TokenMetadata_max_fields
   min: TokenMetadata_min_fields
-  stddev: TokenMetadata_stddev_fields
-  stddev_pop: TokenMetadata_stddev_pop_fields
-  stddev_samp: TokenMetadata_stddev_samp_fields
-  sum: TokenMetadata_sum_fields
-  var_pop: TokenMetadata_var_pop_fields
-  var_samp: TokenMetadata_var_samp_fields
-  variance: TokenMetadata_variance_fields
-}
-
-"""aggregate avg on columns"""
-type TokenMetadata_avg_fields {
-  tokenId: Float
 }
 
 """
@@ -9924,7 +9395,7 @@ input TokenMetadata_bool_exp {
   id: uuid_comparison_exp
   json: jsonb_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   tokenURI: String_comparison_exp
 }
 
@@ -9933,7 +9404,7 @@ type TokenMetadata_max_fields {
   address: String
   createdAt: timestamp
   id: uuid
-  tokenId: Int
+  tokenId: String
   tokenURI: String
 }
 
@@ -9942,7 +9413,7 @@ type TokenMetadata_min_fields {
   address: String
   createdAt: timestamp
   id: uuid
-  tokenId: Int
+  tokenId: String
   tokenURI: String
 }
 
@@ -9980,41 +9451,6 @@ enum TokenMetadata_select_column {
   tokenURI
 }
 
-"""aggregate stddev on columns"""
-type TokenMetadata_stddev_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type TokenMetadata_stddev_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type TokenMetadata_stddev_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate sum on columns"""
-type TokenMetadata_sum_fields {
-  tokenId: Int
-}
-
-"""aggregate var_pop on columns"""
-type TokenMetadata_var_pop_fields {
-  tokenId: Float
-}
-
-"""aggregate var_samp on columns"""
-type TokenMetadata_var_samp_fields {
-  tokenId: Float
-}
-
-"""aggregate variance on columns"""
-type TokenMetadata_variance_fields {
-  tokenId: Float
-}
-
 """
 columns and relationships of "nft_transfer_event"
 """
@@ -10036,7 +9472,7 @@ type TokenTransferEvent {
 
   """An object relationship"""
   token: Token
-  tokenId: Int!
+  tokenId: String!
 
   """An object relationship"""
   transaction: Transaction!
@@ -10089,7 +9525,6 @@ input TokenTransferEvent_aggregate_order_by {
 type TokenTransferEvent_avg_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10098,7 +9533,6 @@ order by avg() on columns of table "nft_transfer_event"
 input TokenTransferEvent_avg_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
@@ -10119,7 +9553,7 @@ input TokenTransferEvent_bool_exp {
   rawLogId: String_comparison_exp
   to: String_comparison_exp
   token: Token_bool_exp
-  tokenId: Int_comparison_exp
+  tokenId: String_comparison_exp
   transaction: Transaction_bool_exp
   transactionHash: String_comparison_exp
 }
@@ -10134,7 +9568,7 @@ type TokenTransferEvent_max_fields {
   logIndex: Int
   rawLogId: String
   to: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -10164,7 +9598,7 @@ type TokenTransferEvent_min_fields {
   logIndex: Int
   rawLogId: String
   to: String
-  tokenId: Int
+  tokenId: String
   transactionHash: String
 }
 
@@ -10241,7 +9675,6 @@ enum TokenTransferEvent_select_column {
 type TokenTransferEvent_stddev_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10250,14 +9683,12 @@ order by stddev() on columns of table "nft_transfer_event"
 input TokenTransferEvent_stddev_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type TokenTransferEvent_stddev_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10266,14 +9697,12 @@ order by stddev_pop() on columns of table "nft_transfer_event"
 input TokenTransferEvent_stddev_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type TokenTransferEvent_stddev_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10282,14 +9711,12 @@ order by stddev_samp() on columns of table "nft_transfer_event"
 input TokenTransferEvent_stddev_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate sum on columns"""
 type TokenTransferEvent_sum_fields {
   blockNumber: Int
   logIndex: Int
-  tokenId: Int
 }
 
 """
@@ -10298,14 +9725,12 @@ order by sum() on columns of table "nft_transfer_event"
 input TokenTransferEvent_sum_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_pop on columns"""
 type TokenTransferEvent_var_pop_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10314,14 +9739,12 @@ order by var_pop() on columns of table "nft_transfer_event"
 input TokenTransferEvent_var_pop_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate var_samp on columns"""
 type TokenTransferEvent_var_samp_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10330,14 +9753,12 @@ order by var_samp() on columns of table "nft_transfer_event"
 input TokenTransferEvent_var_samp_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """aggregate variance on columns"""
 type TokenTransferEvent_variance_fields {
   blockNumber: Float
   logIndex: Float
-  tokenId: Float
 }
 
 """
@@ -10346,7 +9767,6 @@ order by variance() on columns of table "nft_transfer_event"
 input TokenTransferEvent_variance_order_by {
   blockNumber: order_by
   logIndex: order_by
-  tokenId: order_by
 }
 
 """
