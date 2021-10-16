@@ -4,7 +4,7 @@ import useSWR, { SWRConfiguration } from 'swr';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 
 /**
- * useZoraUsername - Load zora username or ens for pretty display of user addresses
+ * useZoraUsername - Load zora username for pretty display
  *
  * @param address string address to fetch zora username of
  * @returns UsernameResponseType
@@ -12,9 +12,9 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
 export function useZoraUsername(address: string, options?: SWRConfiguration<any>) {
   const fetcher = useContext(NFTFetchContext);
   const { error, data } = useSWR(
-    address ? ['loadUsername', address] : null,
+    ['loadUsername', address],
     (_, address: string) => fetcher.loadUsername(address),
-    options
+    options,
   );
 
   return { error, username: data };
