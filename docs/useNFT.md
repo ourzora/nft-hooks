@@ -125,20 +125,24 @@ type useZNFT = (id: string) => {
   data?: NFTDataType; // undefined in error or loading states
 }
 
+const contractAddress = 'ZORA_CONTRACT_ADDRESS';
+
 // Example with usage:
-const {chainNFT, loading} = useZNFT("2");
+const {data, error} = useNFT(contractAddress, "2");
 ```
 
 Alternatively, the same information can be fetched using the base MediaFetchAgentfor server-side or non-react use:
 
 ```ts
-import {MediaFetchAgent, Networks} from "@zoralabs/nft-hooks";
+import {MediaFetchAgent, FetchStaticData, Networks} from "@zoralabs/nft-hooks";
 
 // Be careful making multiple instances of the fetch agent
 // Each instance contains a different request cache.
 const fetchAgent = new MediaFetchAgent(Networks.MAINNET);
 
+const contractAddress = 'ZORA_CONTRACT_ADDRESS';
+
 // Get result from the server
-const result = await fetchAgent.loadZNFTData("2");
+const result = FetchStaticData.fetchNFTData(contractAddress, "2", fetchAgent)
 // result type is NFTDataType
 ```

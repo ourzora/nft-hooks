@@ -18,7 +18,7 @@ type OptionsType = {
 };
 
 /**
- * Fetches on-chain NFT data and pricing for the given zNFT id
+ * Fetches on-chain NFT data and pricing for the given NFT id and contract address
  *
  * @param contractAddress address of the contract, if null and tokenID is passed in, a ZNFT is assumed
  * @param tokenId id of NFT to fetch blockchain information for
