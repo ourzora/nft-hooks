@@ -10,7 +10,7 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
  * @param address string address to fetch zora username of
  * @returns DomainResolvedPartFragment
  */
-export function useENSAddress(address: string, options?: SWRConfiguration<any>) {
+export function useENSAddress(address?: string, options?: SWRConfiguration<any>) {
   const fetcher = useContext(NFTFetchContext);
   return useSWR<DomainResolvedPartFragment>(
     address ? ['loadENS', address.toLowerCase()] : null,
