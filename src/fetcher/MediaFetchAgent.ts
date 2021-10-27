@@ -227,7 +227,6 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
-
     const ensResponse = (await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
       addresses: addresses.map((address) => address.toLowerCase()),
     })) as ResolveNamesQuery;
@@ -297,7 +296,7 @@ export class MediaFetchAgent {
     if (collectionAddresses) {
       queryStatement.push({ address: { _in: addresses } });
     }
-    let approvedStatement = {};
+    let approvedStatement = undefined;
     if (approved !== null) {
       approvedStatement = { approved: { _eq: approved } };
     }
@@ -305,10 +304,15 @@ export class MediaFetchAgent {
       queryStatement.push({
         auctions: { curator: { _eq: curatorAddress }, ...approvedStatement },
       });
-    } else if (!curatorAddress) {
-      queryStatement.push({ auctions: { _not: {}, ...approvedStatement } });
+    } else if (approvedStatement || onlyAuctions) {
+      let auctionsQueryStmt = {};
+      if (onlyAuctions) {
+        auctionsQueryStmt = { _not: {} };
+      }
+      queryStatement.push({ auctions: { ...auctionsQueryStmt, ...approvedStatement } });
     }
 
+    console.log(JSON.stringify(queryStatement));
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
