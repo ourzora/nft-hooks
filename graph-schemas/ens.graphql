@@ -1243,6 +1243,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Domain
   domains(
     skip: Int = 0
@@ -1257,6 +1262,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Domain!]!
   transfer(
     id: ID!
@@ -1267,6 +1277,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Transfer
   transfers(
     skip: Int = 0
@@ -1281,6 +1296,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
   newOwner(
     id: ID!
@@ -1291,6 +1311,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewOwner
   newOwners(
     skip: Int = 0
@@ -1305,6 +1330,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewOwner!]!
   newResolver(
     id: ID!
@@ -1315,6 +1345,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewResolver
   newResolvers(
     skip: Int = 0
@@ -1329,6 +1364,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewResolver!]!
   newTTL(
     id: ID!
@@ -1339,6 +1379,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewTTL
   newTTLs(
     skip: Int = 0
@@ -1353,6 +1398,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewTTL!]!
   account(
     id: ID!
@@ -1363,6 +1413,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Account
   accounts(
     skip: Int = 0
@@ -1377,6 +1432,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Account!]!
   registration(
     id: ID!
@@ -1387,6 +1447,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Registration
   registrations(
     skip: Int = 0
@@ -1401,6 +1466,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Registration!]!
   nameRegistered(
     id: ID!
@@ -1411,6 +1481,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameRegistered
   nameRegistereds(
     skip: Int = 0
@@ -1425,6 +1500,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameRegistered!]!
   nameRenewed(
     id: ID!
@@ -1435,6 +1515,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameRenewed
   nameReneweds(
     skip: Int = 0
@@ -1449,6 +1534,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameRenewed!]!
   nameTransferred(
     id: ID!
@@ -1459,6 +1549,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameTransferred
   nameTransferreds(
     skip: Int = 0
@@ -1473,6 +1568,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameTransferred!]!
   resolver(
     id: ID!
@@ -1483,6 +1583,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Resolver
   resolvers(
     skip: Int = 0
@@ -1497,6 +1602,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Resolver!]!
   addrChanged(
     id: ID!
@@ -1507,6 +1617,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AddrChanged
   addrChangeds(
     skip: Int = 0
@@ -1521,6 +1636,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AddrChanged!]!
   multicoinAddrChanged(
     id: ID!
@@ -1531,6 +1651,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): MulticoinAddrChanged
   multicoinAddrChangeds(
     skip: Int = 0
@@ -1545,6 +1670,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [MulticoinAddrChanged!]!
   nameChanged(
     id: ID!
@@ -1555,6 +1685,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameChanged
   nameChangeds(
     skip: Int = 0
@@ -1569,6 +1704,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameChanged!]!
   abiChanged(
     id: ID!
@@ -1579,6 +1719,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AbiChanged
   abiChangeds(
     skip: Int = 0
@@ -1593,6 +1738,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AbiChanged!]!
   pubkeyChanged(
     id: ID!
@@ -1603,6 +1753,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): PubkeyChanged
   pubkeyChangeds(
     skip: Int = 0
@@ -1617,6 +1772,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [PubkeyChanged!]!
   textChanged(
     id: ID!
@@ -1627,6 +1787,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): TextChanged
   textChangeds(
     skip: Int = 0
@@ -1641,6 +1806,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [TextChanged!]!
   contenthashChanged(
     id: ID!
@@ -1651,6 +1821,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ContenthashChanged
   contenthashChangeds(
     skip: Int = 0
@@ -1665,6 +1840,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ContenthashChanged!]!
   interfaceChanged(
     id: ID!
@@ -1675,6 +1855,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InterfaceChanged
   interfaceChangeds(
     skip: Int = 0
@@ -1689,6 +1874,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InterfaceChanged!]!
   authorisationChanged(
     id: ID!
@@ -1699,6 +1889,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AuthorisationChanged
   authorisationChangeds(
     skip: Int = 0
@@ -1713,6 +1908,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AuthorisationChanged!]!
   domainEvent(
     id: ID!
@@ -1723,6 +1923,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): DomainEvent
   domainEvents(
     skip: Int = 0
@@ -1737,6 +1942,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [DomainEvent!]!
   registrationEvent(
     id: ID!
@@ -1747,6 +1957,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): RegistrationEvent
   registrationEvents(
     skip: Int = 0
@@ -1761,6 +1976,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [RegistrationEvent!]!
   resolverEvent(
     id: ID!
@@ -1771,6 +1991,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ResolverEvent
   resolverEvents(
     skip: Int = 0
@@ -1785,6 +2010,11 @@ type Query {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ResolverEvent!]!
 
   """Access to subgraph metadata"""
@@ -2077,6 +2307,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Domain
   domains(
     skip: Int = 0
@@ -2091,6 +2326,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Domain!]!
   transfer(
     id: ID!
@@ -2101,6 +2341,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Transfer
   transfers(
     skip: Int = 0
@@ -2115,6 +2360,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
   newOwner(
     id: ID!
@@ -2125,6 +2375,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewOwner
   newOwners(
     skip: Int = 0
@@ -2139,6 +2394,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewOwner!]!
   newResolver(
     id: ID!
@@ -2149,6 +2409,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewResolver
   newResolvers(
     skip: Int = 0
@@ -2163,6 +2428,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewResolver!]!
   newTTL(
     id: ID!
@@ -2173,6 +2443,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NewTTL
   newTTLs(
     skip: Int = 0
@@ -2187,6 +2462,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NewTTL!]!
   account(
     id: ID!
@@ -2197,6 +2477,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Account
   accounts(
     skip: Int = 0
@@ -2211,6 +2496,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Account!]!
   registration(
     id: ID!
@@ -2221,6 +2511,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Registration
   registrations(
     skip: Int = 0
@@ -2235,6 +2530,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Registration!]!
   nameRegistered(
     id: ID!
@@ -2245,6 +2545,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameRegistered
   nameRegistereds(
     skip: Int = 0
@@ -2259,6 +2564,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameRegistered!]!
   nameRenewed(
     id: ID!
@@ -2269,6 +2579,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameRenewed
   nameReneweds(
     skip: Int = 0
@@ -2283,6 +2598,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameRenewed!]!
   nameTransferred(
     id: ID!
@@ -2293,6 +2613,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameTransferred
   nameTransferreds(
     skip: Int = 0
@@ -2307,6 +2632,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameTransferred!]!
   resolver(
     id: ID!
@@ -2317,6 +2647,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): Resolver
   resolvers(
     skip: Int = 0
@@ -2331,6 +2666,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Resolver!]!
   addrChanged(
     id: ID!
@@ -2341,6 +2681,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AddrChanged
   addrChangeds(
     skip: Int = 0
@@ -2355,6 +2700,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AddrChanged!]!
   multicoinAddrChanged(
     id: ID!
@@ -2365,6 +2715,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): MulticoinAddrChanged
   multicoinAddrChangeds(
     skip: Int = 0
@@ -2379,6 +2734,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [MulticoinAddrChanged!]!
   nameChanged(
     id: ID!
@@ -2389,6 +2749,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): NameChanged
   nameChangeds(
     skip: Int = 0
@@ -2403,6 +2768,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [NameChanged!]!
   abiChanged(
     id: ID!
@@ -2413,6 +2783,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AbiChanged
   abiChangeds(
     skip: Int = 0
@@ -2427,6 +2802,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AbiChanged!]!
   pubkeyChanged(
     id: ID!
@@ -2437,6 +2817,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): PubkeyChanged
   pubkeyChangeds(
     skip: Int = 0
@@ -2451,6 +2836,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [PubkeyChanged!]!
   textChanged(
     id: ID!
@@ -2461,6 +2851,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): TextChanged
   textChangeds(
     skip: Int = 0
@@ -2475,6 +2870,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [TextChanged!]!
   contenthashChanged(
     id: ID!
@@ -2485,6 +2885,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ContenthashChanged
   contenthashChangeds(
     skip: Int = 0
@@ -2499,6 +2904,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ContenthashChanged!]!
   interfaceChanged(
     id: ID!
@@ -2509,6 +2919,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): InterfaceChanged
   interfaceChangeds(
     skip: Int = 0
@@ -2523,6 +2938,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [InterfaceChanged!]!
   authorisationChanged(
     id: ID!
@@ -2533,6 +2953,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): AuthorisationChanged
   authorisationChangeds(
     skip: Int = 0
@@ -2547,6 +2972,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [AuthorisationChanged!]!
   domainEvent(
     id: ID!
@@ -2557,6 +2987,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): DomainEvent
   domainEvents(
     skip: Int = 0
@@ -2571,6 +3006,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [DomainEvent!]!
   registrationEvent(
     id: ID!
@@ -2581,6 +3021,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): RegistrationEvent
   registrationEvents(
     skip: Int = 0
@@ -2595,6 +3040,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [RegistrationEvent!]!
   resolverEvent(
     id: ID!
@@ -2605,6 +3055,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): ResolverEvent
   resolverEvents(
     skip: Int = 0
@@ -2619,6 +3074,11 @@ type Subscription {
     block hash. Defaults to the latest block when omitted.
     """
     block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ResolverEvent!]!
 
   """Access to subgraph metadata"""

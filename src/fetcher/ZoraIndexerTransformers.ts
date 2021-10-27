@@ -1,11 +1,11 @@
 import Big from 'big.js';
 import { ReserveAuctionPartialFragment } from '../graph-queries/zora-graph-types';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import { IndexerTokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
 import { CurrencyLookupType, IndexerDataType } from './AuctionInfoTypes';
 import { addAuctionInformation, auctionDataToPricing } from './TransformFetchResults';
 
 export function transformNFTIndexerResponse(
-  data: TokenWithAuctionFragment,
+  data: IndexerTokenWithAuctionFragment,
   auction?: ReserveAuctionPartialFragment,
   currency?: CurrencyLookupType
 ): IndexerDataType {

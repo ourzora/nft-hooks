@@ -24,7 +24,10 @@ import type {
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
 } from '../graph-queries/zora-graph-types';
-import { TokenWithAuctionFragment } from '../graph-queries/zora-indexer-types';
+import {
+  IndexerTokenWithAuctionFragment,
+  Token_Bool_Exp,
+} from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -39,6 +42,7 @@ import {
   transformMediaForKey,
   addAuctionInformation,
   transformMediaItem,
+  NULL_ETH_CURRENCY_ID,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
@@ -58,6 +62,7 @@ import {
   DomainResolvedPartFragment,
   ResolveNamesQuery,
 } from '../graph-queries/ens-graph-types';
+import { ArgumentsError, NotFoundError } from './ErrorUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -82,7 +87,7 @@ export class MediaFetchAgent {
     // genericNFTLoader currently uses opensea
     genericNFTLoader: DataLoader<string, OpenseaResponse>;
     // zoraNFTIndexer uses zora indexer
-    zoraNFTIndexerLoader: DataLoader<string, TokenWithAuctionFragment>;
+    zoraNFTIndexerLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
     // auctionInfoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
     // ensLoader
@@ -149,7 +154,7 @@ export class MediaFetchAgent {
           type: 'text',
           mimeType: contentType,
         };
-      } catch (e) {
+      } catch (e: any) {
         throw new RequestError('Issue fetching IPFS data', e);
       }
     }
@@ -222,7 +227,6 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
-
     const ensResponse = (await client.request(RESOLVE_ENS_FROM_ADDRESS_QUERY, {
       addresses: addresses.map((address) => address.toLowerCase()),
     })) as ResolveNamesQuery;
@@ -248,8 +252,9 @@ export class MediaFetchAgent {
 
     return keys.map(
       (key: string) =>
-        response.Token.find((token: TokenWithAuctionFragment) => token.id === key) ||
-        new Error('Did not find token')
+        response.Token.find(
+          (token: IndexerTokenWithAuctionFragment) => token.id === key
+        ) || new NotFoundError('Did not find token')
     );
   }
 
@@ -266,47 +271,76 @@ export class MediaFetchAgent {
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
    *
-   * @param ids list of ids to query
-   * @param type type of ids: creator, id (of media), owner
-   * @returns
+   * @param collectionAddresses list of collections to include
+   * @param curatorAddress curator to query
+   * @param approved boolean if the auction is approved (null for approved and un-approved auctions)
    */
   async fetchZoraIndexerGroupData({
-    collectionAddress,
+    collectionAddresses = [],
     curatorAddress,
-    limit = 120,
+    approved = null,
+    onlyAuctions = false,
+    limit = 200,
     offset = 0,
-  }: FetchZoraIndexerListCollectionType) {
-    if (!collectionAddress && !curatorAddress) {
-      throw new Error('Needs to have at least one curator or collector');
+  }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
+    if (!collectionAddresses.length && !curatorAddress) {
+      throw new ArgumentsError('Needs to have at least one curator or collector');
     }
+    if (!onlyAuctions && approved !== null) {
+      throw new ArgumentsError(
+        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
+      );
+    }
+    let queryStatement: Token_Bool_Exp[] = [];
+    const addresses = collectionAddresses.map((address) => getAddress(address));
+    if (collectionAddresses) {
+      queryStatement.push({ address: { _in: addresses } });
+    }
+    let approvedStatement = undefined;
+    if (approved !== null) {
+      approvedStatement = { approved: { _eq: approved } };
+    }
+    if (curatorAddress) {
+      queryStatement.push({
+        auctions: { curator: { _eq: curatorAddress }, ...approvedStatement },
+      });
+    } else if (approvedStatement || onlyAuctions) {
+      let auctionsQueryStmt = {};
+      if (onlyAuctions) {
+        auctionsQueryStmt = { _not: {} };
+      }
+      queryStatement.push({ auctions: { ...auctionsQueryStmt, ...approvedStatement } });
+    }
+
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
     });
 
-    const response = await client.request(ACTIVE_AUCTIONS_QUERY, {
-      addresses: collectionAddress ? [getAddress(collectionAddress)] : [],
-      curators: curatorAddress ? [getAddress(curatorAddress)] : [],
-      offset,
-      limit,
-    });
-    return response.Token as TokenWithAuctionFragment[];
+    return (
+      await client.request(ACTIVE_AUCTIONS_QUERY, {
+        andQuery: queryStatement,
+        offset,
+        limit,
+      })
+    ).Token as IndexerTokenWithAuctionFragment[];
   }
 
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
    *
-   * @param ids list of ids to query
+   * @param collectionAddresses list of addresses for collection
+   * @param userAddress address of user
    * @param type type of ids: creator, id (of media), owner
    * @returns
    */
   async fetchZoraIndexerUserOwnedNFTs({
-    collectionAddress,
+    collectionAddresses,
     userAddress,
     offset = 0,
     limit = 250,
   }: {
-    collectionAddress: string;
+    collectionAddresses: string[];
     userAddress: string;
     offset?: number;
     limit?: number;
@@ -317,12 +351,12 @@ export class MediaFetchAgent {
     });
 
     const response = await client.request(BY_OWNER, {
-      address: getAddress(collectionAddress),
+      addresses: collectionAddresses.map((address) => getAddress(address)),
       owner: getAddress(userAddress),
       offset,
       limit,
     });
-    return response.Token as TokenWithAuctionFragment[];
+    return response.Token as IndexerTokenWithAuctionFragment[];
   }
 
   /**
@@ -354,7 +388,14 @@ export class MediaFetchAgent {
     const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
     const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
     if (!auctionData) {
-      auctionData = await this.loadAuctionInfo(contractAddress, tokenId);
+      try {
+        auctionData = await this.loadAuctionInfo(contractAddress, tokenId);
+      } catch (err) {
+        if (!(err instanceof NotFoundError)) {
+          // Log any not-found error
+          console.error(err);
+        }
+      }
     }
     if (!nftInfo) {
       throw new RequestError('Cannot fetch NFT information');
@@ -445,7 +486,7 @@ export class MediaFetchAgent {
     return tokenAndAddresses.map(
       (tokenAndAddress: string) =>
         response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
-        new Error('Missing Record')
+        new NotFoundError('Missing Auction')
     );
   }
 
@@ -538,7 +579,9 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
     const currencies = (await client.request(GET_TOKEN_VALUES_QUERY, {
-      currencyContracts,
+      currencyContracts: currencyContracts.filter(
+        (contract) => contract !== NULL_ETH_CURRENCY_ID
+      ),
     })) as GetTokenPricesQuery;
 
     return currencyContracts.map((key) => transformCurrencyForKey(currencies, key));
