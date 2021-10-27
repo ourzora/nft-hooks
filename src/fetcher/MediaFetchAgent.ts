@@ -312,7 +312,6 @@ export class MediaFetchAgent {
       queryStatement.push({ auctions: { ...auctionsQueryStmt, ...approvedStatement } });
     }
 
-    console.log(JSON.stringify(queryStatement));
     const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
     const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
