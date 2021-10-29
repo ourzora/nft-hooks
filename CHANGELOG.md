@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+- Fix Zora API uris with ipfs:// base
+
 ## [0.7.0] - 2021-10-27
 * [breaking] address arguments for indexer query is now a list (collectionAddresses) instead of a single address
 * Updated query for indexer homepage StaticQuery to use more performant query

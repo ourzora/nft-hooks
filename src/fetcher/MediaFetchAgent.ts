@@ -63,6 +63,7 @@ import {
   ResolveNamesQuery,
 } from '../graph-queries/ens-graph-types';
 import { ArgumentsError, NotFoundError } from './ErrorUtils';
+import { convertURIToHTTPS } from './UriUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -148,7 +149,9 @@ export class MediaFetchAgent {
   async fetchContent(url: string, contentType: string): Promise<MediaContentType> {
     if (contentType.startsWith('text/')) {
       try {
-        const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(url);
+        const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(
+          convertURIToHTTPS(url)
+        );
         return {
           text: await response.text(),
           type: 'text',
@@ -597,11 +600,11 @@ export class MediaFetchAgent {
    * @throws RequestError
    */
   public async fetchIPFSMetadata(url: string) {
-    // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas
+    // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas`
     const request = await new FetchWithTimeout(
       this.timeouts.IPFS,
       'application/json'
-    ).fetch(url);
+    ).fetch(convertURIToHTTPS(url));
     try {
       return await request.json();
     } catch (e) {
