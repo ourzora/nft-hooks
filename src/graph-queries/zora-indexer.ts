@@ -73,13 +73,13 @@ const BASE_FRAGMENTS = gql`
 // Get list of nfts owned by user from contracts
 export const BY_OWNER = gql`
   ${BASE_FRAGMENTS}
-  query byOwner($addresses: [String!], $owner: String, $offset: Int, $limit: Int)
+  query byOwner($addressQueryPart: String_comparison_exp!, $owner: String, $offset: Int, $limit: Int)
   @cached {
     Token(
       limit: $limit
       offset: $offset
       where: {
-        address: { _in: $addresses }
+        address: $addressQueryPart
         _or: [
           { owner: { _eq: $owner } }
           {
