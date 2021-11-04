@@ -26,6 +26,7 @@ import type {
 } from '../graph-queries/zora-graph-types';
 import {
   IndexerTokenWithAuctionFragment,
+  String_Comparison_Exp,
   Token_Bool_Exp,
 } from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
@@ -279,14 +280,14 @@ export class MediaFetchAgent {
    * @param approved boolean if the auction is approved (null for approved and un-approved auctions)
    */
   async fetchZoraIndexerGroupData({
-    collectionAddresses = [],
+    collectionAddresses,
     curatorAddress,
     approved = null,
     onlyAuctions = false,
     limit = 200,
     offset = 0,
   }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
-    if (!collectionAddresses.length && !curatorAddress) {
+    if (!collectionAddresses?.length && !curatorAddress) {
       throw new ArgumentsError('Needs to have at least one curator or collector');
     }
     if (!onlyAuctions && approved !== null) {
@@ -295,8 +296,8 @@ export class MediaFetchAgent {
       );
     }
     let queryStatement: Token_Bool_Exp[] = [];
-    const addresses = collectionAddresses.map((address) => getAddress(address));
     if (collectionAddresses) {
+      const addresses = collectionAddresses.map((address) => getAddress(address));
       queryStatement.push({ address: { _in: addresses } });
     }
     let approvedStatement = undefined;
@@ -343,7 +344,7 @@ export class MediaFetchAgent {
     offset = 0,
     limit = 250,
   }: {
-    collectionAddresses: string[];
+    collectionAddresses?: string[];
     userAddress: string;
     offset?: number;
     limit?: number;
@@ -353,8 +354,13 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
 
+    let addressQueryPart = {} as String_Comparison_Exp;
+    if (collectionAddresses?.length) {
+      addressQueryPart['_in'] = collectionAddresses.map(getAddress);
+    }
+
     const response = await client.request(BY_OWNER, {
-      addresses: collectionAddresses.map((address) => getAddress(address)),
+      addressQueryPart,
       owner: getAddress(userAddress),
       offset,
       limit,
