@@ -208,7 +208,7 @@ export const fetchUserOwnedNFTs = async (
     offset,
     limit,
   }: {
-    collectionAddresses: string[];
+    collectionAddresses?: string[];
     userAddress: string;
     offset?: number;
     limit?: number;
