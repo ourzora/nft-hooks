@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.2] - 2021-11-04
+- Add ability to search owned NFTs for all collections
+- Add ability to show curated NFTs for all collectionsk
+
 ## [0.7.1] - 2021-10-29
 - Fix Zora API uris with ipfs:// base
 
