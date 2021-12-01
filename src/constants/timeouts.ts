@@ -1,4 +1,4 @@
-export type RequestType = 'Zora' | 'ZoraIndexer' | 'Graph' | 'IPFS' | 'OpenSea';
+export type RequestType = 'Zora' | 'ZoraIndexer' | 'Graph' | 'IPFS' | 'OpenSea' | 'Rpc';
 export type TimeoutsLookupType = Record<RequestType, number>;
 export const DEFAULT_NETWORK_TIMEOUTS_MS: TimeoutsLookupType = {
   Zora: 2 * 1000,
@@ -6,4 +6,5 @@ export const DEFAULT_NETWORK_TIMEOUTS_MS: TimeoutsLookupType = {
   IPFS: 10 * 1000,
   OpenSea: 8 * 1000,
   ZoraIndexer: 2 * 1000,
+  Rpc: 1 * 1000,
 };
