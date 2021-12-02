@@ -6,6 +6,12 @@ const MEDIA_FRAGMENTS = gql`
     tokenId
     owner
     address
+    tokenContract {
+      name
+      symbol
+      address
+      supportsMetadata
+    }
     tokenURI
     minter
     metadata {
