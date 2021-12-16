@@ -226,9 +226,6 @@ export class MediaFetchAgent {
       this.networkId,
       this.timeouts.Rpc
     );
-
-    console.log(addressToNames);
-
     return addresses.map((address) => addressToNames[address] || Error('Not found'));
   }
 

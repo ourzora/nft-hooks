@@ -5,8 +5,6 @@ import { Networks, NFTFetchConfiguration, useENSAddress} from '../src';
 
 describe('useENSAddress', () => {
   beforeEach(() => {
-    console.log('setup');
-    // fetchMock.reset();
     cache.clear();
   });
 
@@ -22,9 +20,8 @@ describe('useENSAddress', () => {
     );
 
     await waitFor(() => !!result.current.data);
-    console.log(result.current);
     expect(result.current.error).toEqual(undefined);
-    expect(result.current.data).toEqual('isiain.eth');
+    expect(result.current.data).toEqual('iain.eth');
   });
 
   it('loads an ens batch correctly', async () => {
@@ -36,29 +33,20 @@ describe('useENSAddress', () => {
 
     const { waitFor, result } = renderHook(
       () => [
-        useENSAddress('0xE7dd1252f50B3d845590Da0c5eADd985049a03ce'),
-        useENSAddress('0xA9dd1252f50B3d845590Da0c5eADd985049a03ca'),
+        useENSAddress('0x660F6D6c9BCD08b86B50e8e53B537F2B40f243Bd'),
+        useENSAddress('0x18C8dF1fb7FB44549F90d1C2BB1DC8b690CD0559'),
+        // invalid address
+        useENSAddress('0x00000000000749f3Ba62f30374Be55841a8c7146'),
       ],
       { wrapper: NetworkWrapper }
     );
 
-    await waitFor(() => !!result.current[1].error);
+    await waitFor(() => !!result.current[2].error);
 
     expect(result.current[0].error).toBeUndefined();
-    expect(result.current[0].data).toMatchInlineSnapshot(`
-      Object {
-        "labelName": "testens.ens",
-        "labelhash": "ByTeSStrInG",
-        "name": "testens",
-        "resolvedAddress": Object {
-          "id": "0xE7dd1252f50B3d845590Da0c5eADd985049a03ce",
-        },
-        "resolver": Object {
-          "id": "2",
-        },
-      }
-    `);
-    expect(result.current[1].data).toMatchInlineSnapshot(`undefined`);
-    expect(result.current[1].error).toMatchInlineSnapshot(`[Error: Not found]`);
+    expect(result.current[0].data).toEqual('fwb.eth');
+    expect(result.current[1].data).toEqual('isiain.eth');
+    expect(result.current[2].data).toEqual(undefined);
+    expect(result.current[2].error).toMatchInlineSnapshot(`[Error: Not found]`);
   });
 });
