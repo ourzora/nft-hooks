@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.0] - 2021-12-16
+- Fix ENS resolution to properly use reverse dns, simplify return object
+- Breaking change to ENS hook to only return the string name from the reverse ens domain.
+
 ## [0.7.2] - 2021-11-04
 - Add ability to search owned NFTs for all collections
 - Add ability to show curated NFTs for all collectionsk
