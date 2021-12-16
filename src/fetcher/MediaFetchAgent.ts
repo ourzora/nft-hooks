@@ -168,9 +168,12 @@ export class MediaFetchAgent {
    * @throws RequestError
    */
   async fetchContentMimeType(url: string): Promise<string> {
-    const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(url, {
-      method: 'HEAD',
-    });
+    const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(
+      convertURIToHTTPS(url),
+      {
+        method: 'HEAD',
+      }
+    );
     const header = response.headers.get('content-type');
     if (!header) {
       throw new RequestError('No content type returned for URI');

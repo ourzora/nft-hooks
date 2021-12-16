@@ -6,6 +6,12 @@ const MEDIA_FRAGMENTS = gql`
     tokenId
     owner
     address
+    tokenContract {
+      name
+      symbol
+      address
+      supportsMetadata
+    }
     tokenURI
     minter
     metadata {
@@ -73,8 +79,12 @@ const BASE_FRAGMENTS = gql`
 // Get list of nfts owned by user from contracts
 export const BY_OWNER = gql`
   ${BASE_FRAGMENTS}
-  query byOwner($addressQueryPart: String_comparison_exp!, $owner: String, $offset: Int, $limit: Int)
-  @cached {
+  query byOwner(
+    $addressQueryPart: String_comparison_exp!
+    $owner: String
+    $offset: Int
+    $limit: Int
+  ) @cached {
     Token(
       limit: $limit
       offset: $offset
@@ -131,7 +141,11 @@ export const TOKENS_WITHOUT_AUCTIONS = gql`
   ${MEDIA_FRAGMENTS}
   query tokensWithoutAuctions($addresses: [String!], $limit: Int, $offset: Int) @cached {
     Token(
-      where: { address: { _in: $addresses }, _not: { auctions: {} } }
+      where: {
+        address: { _in: $addresses }
+        _not: { auctions: {} }
+        owner: { _neq: "0x0000000000000000000000000000000000000000" }
+      }
       limit: $limit
       offset: $offset
     ) {
