@@ -52,6 +52,9 @@ export type NFTResultType = {
   contract: {
     address: string;
     knownContract?: KNOWN_CONTRACTS;
+    name?: string;
+    symbol?: string;
+    image?: string;
   },
   owner: ETHAddress;
   creator?: ETHAddress;

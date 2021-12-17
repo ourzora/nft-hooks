@@ -6,6 +6,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -231,6 +233,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -456,6 +460,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -681,6 +687,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -906,6 +914,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "https://zora.co/content",
@@ -1136,6 +1146,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "https://zora.co/content",
@@ -1366,6 +1378,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -1591,6 +1605,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "Hello World",
@@ -1816,6 +1832,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "https://zora.co/content",
@@ -2022,6 +2040,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "https://zora.co/content",
@@ -2194,6 +2214,8 @@ Object {
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "knownContract": "zora",
+      "name": "Zora",
+      "symbol": "ZORA",
     },
     "creator": "10",
     "metadataURI": "https://zora.co/content",

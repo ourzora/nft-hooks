@@ -57,6 +57,8 @@ export function transformMediaItem(
       contract: {
         address: ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId],
         knownContract: KNOWN_CONTRACTS.ZORA,
+        name: 'Zora',
+        symbol: 'ZORA',
       },
       owner: nft.owner.id,
       creator: nft.creator.id,

@@ -8984,7 +8984,10 @@ export type Uuid_Comparison_Exp = {
 export type IndexerTokenPartFragment = (
   { __typename?: 'Token' }
   & Pick<Token, 'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'>
-  & { metadata?: Maybe<(
+  & { tokenContract?: Maybe<(
+    { __typename?: 'TokenContract' }
+    & Pick<TokenContract, 'name' | 'symbol' | 'address' | 'supportsMetadata'>
+  )>, metadata?: Maybe<(
     { __typename?: 'TokenMetadata' }
     & Pick<TokenMetadata, 'json'>
   )>, mintTransferEvent?: Maybe<(
@@ -9030,7 +9033,7 @@ export type IndexerTokenWithAuctionFragment = (
 );
 
 export type ByOwnerQueryVariables = Exact<{
-  addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  addressQueryPart: String_Comparison_Exp;
   owner?: Maybe<Scalars['String']>;
   offset?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
