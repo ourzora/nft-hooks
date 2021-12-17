@@ -10,7 +10,12 @@ export const THEGRAPH_API_URL_BY_NETWORK = {
 export const ENS_GRAPH_URL_BY_NETWORK = {
   [Networks.MAINNET]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
   [Networks.RINKEBY]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby',
-}
+};
+
+export const RPC_URL_BY_NETWORK = {
+  [Networks.MAINNET]: 'https://cloudflare-eth.com',
+  [Networks.RINKEBY]: 'https://rinkeby-light.eth.linkpool.io',
+};
 
 export const ZORA_INDEXER_URL_BY_NETWORK = {
   [Networks.MAINNET]: 'https://indexer-prod-mainnet.zora.co/v1/graphql',
@@ -30,4 +35,4 @@ export const OPENSEA_API_URL_BY_NETWORK = {
 
 export const ZORA_USERNAME_API_URL = 'https://zora.co/api/users';
 
-export const ZORA_IPFS_GATEWAY = 'https://zora-prod.mypinata.cloud/ipfs/'
+export const ZORA_IPFS_GATEWAY = 'https://zora-prod.mypinata.cloud/ipfs/';
