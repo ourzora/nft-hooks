@@ -14,6 +14,8 @@ export function transformNFTIndexerResponse(
       tokenId: data.tokenId.toString(),
       contract: {
         address: data.address,
+        name: data.tokenContract?.name?.toString(),
+        symbol: data.tokenContract?.symbol?.toString(),
       },
       owner: data.owner,
       creator: data.minter || undefined,

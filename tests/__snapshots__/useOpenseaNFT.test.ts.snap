@@ -5,6 +5,9 @@ Object {
   "nft": Object {
     "contract": Object {
       "address": "0xb7f7f6c52f2e2fdb1963eab30438024864c313f6",
+      "image": "https://lh3.googleusercontent.com/OnBu_tLdS59m_tThijZTUwikivyOdPFSY30VrD15Ucg8uW0x_bJ9iHQqP1iaQGh6Q5RllO_wFgfzVJunWgL6OWQw=s120",
+      "name": "Wrapped Cryptopunks",
+      "symbol": "WPUNKS",
     },
     "creator": "0x53ede7cae3eb6a7d11429fe589c0278c9acbe21a",
     "metadataURI": "https://wrappedpunks.com:3000/api/punks/metadata/5683",
@@ -389,6 +392,9 @@ Object {
   "nft": Object {
     "contract": Object {
       "address": "0xb7f7f6c52f2e2fdb1963eab30438024864c313f6",
+      "image": "https://lh3.googleusercontent.com/OnBu_tLdS59m_tThijZTUwikivyOdPFSY30VrD15Ucg8uW0x_bJ9iHQqP1iaQGh6Q5RllO_wFgfzVJunWgL6OWQw=s120",
+      "name": "Wrapped Cryptopunks",
+      "symbol": "WPUNKS",
     },
     "creator": "0x53ede7cae3eb6a7d11429fe589c0278c9acbe21a",
     "metadataURI": "https://wrappedpunks.com:3000/api/punks/metadata/5683",
