@@ -274,6 +274,7 @@ export enum AuthorisationChanged_OrderBy {
 export type Block_Height = {
   hash?: Maybe<Scalars['Bytes']>;
   number?: Maybe<Scalars['Int']>;
+  number_gte?: Maybe<Scalars['Int']>;
 };
 
 
@@ -352,6 +353,7 @@ export type Domain = {
   resolver?: Maybe<Resolver>;
   ttl?: Maybe<Scalars['BigInt']>;
   isMigrated: Scalars['Boolean'];
+  createdAt: Scalars['BigInt'];
   events: Array<DomainEvent>;
 };
 
@@ -537,6 +539,14 @@ export type Domain_Filter = {
   isMigrated_not?: Maybe<Scalars['Boolean']>;
   isMigrated_in?: Maybe<Array<Scalars['Boolean']>>;
   isMigrated_not_in?: Maybe<Array<Scalars['Boolean']>>;
+  createdAt?: Maybe<Scalars['BigInt']>;
+  createdAt_not?: Maybe<Scalars['BigInt']>;
+  createdAt_gt?: Maybe<Scalars['BigInt']>;
+  createdAt_lt?: Maybe<Scalars['BigInt']>;
+  createdAt_gte?: Maybe<Scalars['BigInt']>;
+  createdAt_lte?: Maybe<Scalars['BigInt']>;
+  createdAt_in?: Maybe<Array<Scalars['BigInt']>>;
+  createdAt_not_in?: Maybe<Array<Scalars['BigInt']>>;
 };
 
 export enum Domain_OrderBy {
@@ -551,6 +561,7 @@ export enum Domain_OrderBy {
   Resolver = 'resolver',
   Ttl = 'ttl',
   IsMigrated = 'isMigrated',
+  CreatedAt = 'createdAt',
   Events = 'events'
 }
 
@@ -630,7 +641,7 @@ export type MulticoinAddrChanged = ResolverEvent & {
   resolver: Resolver;
   blockNumber: Scalars['Int'];
   transactionID: Scalars['Bytes'];
-  coinType: Scalars['Int'];
+  coinType: Scalars['BigInt'];
   addr: Scalars['Bytes'];
 };
 
@@ -671,14 +682,14 @@ export type MulticoinAddrChanged_Filter = {
   transactionID_not_in?: Maybe<Array<Scalars['Bytes']>>;
   transactionID_contains?: Maybe<Scalars['Bytes']>;
   transactionID_not_contains?: Maybe<Scalars['Bytes']>;
-  coinType?: Maybe<Scalars['Int']>;
-  coinType_not?: Maybe<Scalars['Int']>;
-  coinType_gt?: Maybe<Scalars['Int']>;
-  coinType_lt?: Maybe<Scalars['Int']>;
-  coinType_gte?: Maybe<Scalars['Int']>;
-  coinType_lte?: Maybe<Scalars['Int']>;
-  coinType_in?: Maybe<Array<Scalars['Int']>>;
-  coinType_not_in?: Maybe<Array<Scalars['Int']>>;
+  coinType?: Maybe<Scalars['BigInt']>;
+  coinType_not?: Maybe<Scalars['BigInt']>;
+  coinType_gt?: Maybe<Scalars['BigInt']>;
+  coinType_lt?: Maybe<Scalars['BigInt']>;
+  coinType_gte?: Maybe<Scalars['BigInt']>;
+  coinType_lte?: Maybe<Scalars['BigInt']>;
+  coinType_in?: Maybe<Array<Scalars['BigInt']>>;
+  coinType_not_in?: Maybe<Array<Scalars['BigInt']>>;
   addr?: Maybe<Scalars['Bytes']>;
   addr_not?: Maybe<Scalars['Bytes']>;
   addr_in?: Maybe<Array<Scalars['Bytes']>>;
@@ -983,6 +994,7 @@ export enum NameTransferred_OrderBy {
 export type NewOwner = DomainEvent & {
   __typename?: 'NewOwner';
   id: Scalars['ID'];
+  parentDomain: Domain;
   domain: Domain;
   blockNumber: Scalars['Int'];
   transactionID: Scalars['Bytes'];
@@ -998,6 +1010,20 @@ export type NewOwner_Filter = {
   id_lte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Scalars['ID']>>;
   id_not_in?: Maybe<Array<Scalars['ID']>>;
+  parentDomain?: Maybe<Scalars['String']>;
+  parentDomain_not?: Maybe<Scalars['String']>;
+  parentDomain_gt?: Maybe<Scalars['String']>;
+  parentDomain_lt?: Maybe<Scalars['String']>;
+  parentDomain_gte?: Maybe<Scalars['String']>;
+  parentDomain_lte?: Maybe<Scalars['String']>;
+  parentDomain_in?: Maybe<Array<Scalars['String']>>;
+  parentDomain_not_in?: Maybe<Array<Scalars['String']>>;
+  parentDomain_contains?: Maybe<Scalars['String']>;
+  parentDomain_not_contains?: Maybe<Scalars['String']>;
+  parentDomain_starts_with?: Maybe<Scalars['String']>;
+  parentDomain_not_starts_with?: Maybe<Scalars['String']>;
+  parentDomain_ends_with?: Maybe<Scalars['String']>;
+  parentDomain_not_ends_with?: Maybe<Scalars['String']>;
   domain?: Maybe<Scalars['String']>;
   domain_not?: Maybe<Scalars['String']>;
   domain_gt?: Maybe<Scalars['String']>;
@@ -1044,6 +1070,7 @@ export type NewOwner_Filter = {
 
 export enum NewOwner_OrderBy {
   Id = 'id',
+  ParentDomain = 'parentDomain',
   Domain = 'domain',
   BlockNumber = 'blockNumber',
   TransactionId = 'transactionID',
@@ -1736,6 +1763,7 @@ export type Registration = {
   domain?: Maybe<Domain>;
   registrationDate: Scalars['BigInt'];
   expiryDate: Scalars['BigInt'];
+  cost?: Maybe<Scalars['BigInt']>;
   registrant: Account;
   labelName?: Maybe<Scalars['String']>;
   events: Array<RegistrationEvent>;
@@ -1842,6 +1870,14 @@ export type Registration_Filter = {
   expiryDate_lte?: Maybe<Scalars['BigInt']>;
   expiryDate_in?: Maybe<Array<Scalars['BigInt']>>;
   expiryDate_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  cost?: Maybe<Scalars['BigInt']>;
+  cost_not?: Maybe<Scalars['BigInt']>;
+  cost_gt?: Maybe<Scalars['BigInt']>;
+  cost_lt?: Maybe<Scalars['BigInt']>;
+  cost_gte?: Maybe<Scalars['BigInt']>;
+  cost_lte?: Maybe<Scalars['BigInt']>;
+  cost_in?: Maybe<Array<Scalars['BigInt']>>;
+  cost_not_in?: Maybe<Array<Scalars['BigInt']>>;
   registrant?: Maybe<Scalars['String']>;
   registrant_not?: Maybe<Scalars['String']>;
   registrant_gt?: Maybe<Scalars['String']>;
@@ -1877,6 +1913,7 @@ export enum Registration_OrderBy {
   Domain = 'domain',
   RegistrationDate = 'registrationDate',
   ExpiryDate = 'expiryDate',
+  Cost = 'cost',
   Registrant = 'registrant',
   LabelName = 'labelName',
   Events = 'events'
@@ -1890,7 +1927,7 @@ export type Resolver = {
   addr?: Maybe<Account>;
   contentHash?: Maybe<Scalars['Bytes']>;
   texts?: Maybe<Array<Scalars['String']>>;
-  coinTypes?: Maybe<Array<Scalars['Int']>>;
+  coinTypes?: Maybe<Array<Scalars['BigInt']>>;
   events: Array<ResolverEvent>;
 };
 
@@ -2009,10 +2046,10 @@ export type Resolver_Filter = {
   texts_not?: Maybe<Array<Scalars['String']>>;
   texts_contains?: Maybe<Array<Scalars['String']>>;
   texts_not_contains?: Maybe<Array<Scalars['String']>>;
-  coinTypes?: Maybe<Array<Scalars['Int']>>;
-  coinTypes_not?: Maybe<Array<Scalars['Int']>>;
-  coinTypes_contains?: Maybe<Array<Scalars['Int']>>;
-  coinTypes_not_contains?: Maybe<Array<Scalars['Int']>>;
+  coinTypes?: Maybe<Array<Scalars['BigInt']>>;
+  coinTypes_not?: Maybe<Array<Scalars['BigInt']>>;
+  coinTypes_contains?: Maybe<Array<Scalars['BigInt']>>;
+  coinTypes_not_contains?: Maybe<Array<Scalars['BigInt']>>;
 };
 
 export enum Resolver_OrderBy {
