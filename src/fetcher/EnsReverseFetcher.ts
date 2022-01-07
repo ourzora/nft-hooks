@@ -35,6 +35,9 @@ export async function reverseResolveEnsAddresses(
   networkId: any,
   timeout: number
 ) {
+  if (!ENS_REVERSE_LOOKUP_CONTRACT_BY_NETWORK[networkId]) {
+    throw new Error('Undefined ENS lookup for network');
+  }
   const mapping = addresses.reduce((last, at) => {
     if (!isAddress(at)) {
       return last;
@@ -78,5 +81,5 @@ export async function reverseResolveEnsAddresses(
   return mappingKeys.reduce((last, at, index) => {
     last[at] = resultAddresses[index];
     return last;
-  }, {} as {[name: string]: string});
+  }, {} as { [name: string]: string });
 }

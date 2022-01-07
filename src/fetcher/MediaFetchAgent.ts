@@ -217,7 +217,7 @@ export class MediaFetchAgent {
 
     const response = (await client.request(
       GET_MEDIAS_QUERY,
-      getQuery
+      getQuery()
     )) as GetMediaAndAuctionsQuery;
     const medias = [...response.creator, ...response.owner, ...response.id];
     return medias.map((media) => transformMediaItem(media, this.networkId));
