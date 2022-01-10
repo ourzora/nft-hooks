@@ -35,21 +35,23 @@ export function useNFT(
 ): useNFTType {
   const fetcher = useContext(NFTFetchContext);
 
-  if (!contractAddress) {
-    contractAddress = ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
-  }
+  const resolvedContractAddress = !contractAddress
+    ? ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId]
+    : contractAddress;
 
   const isZoraContractAddress =
-    contractAddress === ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
+    resolvedContractAddress === ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
 
   const openseaNFT = useOpenseaNFT(
-    !options.useBetaIndexer && !isZoraContractAddress ? contractAddress : undefined,
+    !options.useBetaIndexer && !isZoraContractAddress
+      ? resolvedContractAddress
+      : undefined,
     !options.useBetaIndexer && !isZoraContractAddress ? tokenId : undefined,
     options
   );
 
   const betaIndexerNFT = useNFTIndexer(
-    options.useBetaIndexer ? contractAddress : undefined,
+    options.useBetaIndexer ? resolvedContractAddress : undefined,
     options.useBetaIndexer ? tokenId : undefined,
     options
   );

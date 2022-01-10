@@ -35,9 +35,7 @@ export function useNFTIndexer(
   const { refreshInterval, initialData, loadCurrencyInfo = true } = options || {};
 
   const nftData = useSWR(
-    contractAddress && tokenId
-      ? ['loadIndexerNFT', contractAddress, tokenId]
-      : null,
+    contractAddress && tokenId ? ['loadIndexerNFT', contractAddress, tokenId] : null,
     (_, contractAddress, tokenId) =>
       fetcher.loadZoraNFTIndexerNFTUntransformed(contractAddress, tokenId),
     { dedupingInterval: 0, initialData: initialData?.tokenData, onErrorRetry }
@@ -61,12 +59,10 @@ export function useNFTIndexer(
     }
   );
 
-  let data: IndexerDataType | undefined = undefined;
-  if (nftData.data !== undefined) {
-    data = transformNFTIndexerResponse(nftData.data, auctionData.data, currencyData.data);
-  } else {
-    data = initialData;
-  }
+  const data: IndexerDataType | undefined =
+    nftData.data !== undefined
+      ? transformNFTIndexerResponse(nftData.data, auctionData.data, currencyData.data)
+      : initialData;
 
   return {
     currencyLoaded: !!currencyData.data,
