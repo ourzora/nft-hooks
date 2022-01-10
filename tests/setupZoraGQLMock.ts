@@ -6,18 +6,15 @@ import { graphql } from 'graphql';
 import zoraSchema from '../graph-schemas/zora-graph.graphql';
 // @ts-ignore
 import uniswapSchema from '../graph-schemas/uniswap.graphql';
-// @ts-ignore
-import ensSchema from '../graph-schemas/ens.graphql';
+
 
 import fetchMock from './setupFetchMock';
 
-
-export type SchemaName = 'Zora' | 'Uniswap' | 'ENS';
+export type SchemaName = 'Zora' | 'Uniswap';
 
 const Schemas: Record<SchemaName, any> = {
   Zora: zoraSchema,
   Uniswap: uniswapSchema,
-  ENS: ensSchema,
 };
 
 async function makeQuery(
