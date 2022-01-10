@@ -1,0 +1,3225 @@
+directive @entity on OBJECT
+
+directive @derivedFrom(field: String) on FIELD_DEFINITION
+
+directive @subgraphId(id: String) on OBJECT
+
+type _Block_ {
+  """The hash of the block"""
+  hash: Bytes
+
+  """The block number"""
+  number: Int!
+}
+
+"""The type for the top-level _meta field"""
+type _Meta_ {
+  """
+  Information about a specific subgraph block. The hash of the block
+  will be null if the _meta field has a block constraint that asks for
+  a block number. It will be filled if the _meta field has no block constraint
+  and therefore asks for the latest  block
+  
+  """
+  block: _Block_!
+
+  """The deployment ID"""
+  deployment: String!
+
+  """If `true`, the subgraph encountered indexing errors at some past block"""
+  hasIndexingErrors: Boolean!
+}
+
+enum _SubgraphErrorPolicy_ {
+  """Data will be returned even if the subgraph has indexing errors"""
+  allow
+
+  """
+  If the subgraph has indexing errors, data will be omitted. The default.
+  """
+  deny
+}
+
+type AbiChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  contentType: BigInt!
+}
+
+input AbiChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  contentType: BigInt
+  contentType_not: BigInt
+  contentType_gt: BigInt
+  contentType_lt: BigInt
+  contentType_gte: BigInt
+  contentType_lte: BigInt
+  contentType_in: [BigInt!]
+  contentType_not_in: [BigInt!]
+}
+
+enum AbiChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  contentType
+}
+
+type Account {
+  id: ID!
+  domains(skip: Int = 0, first: Int = 100, orderBy: Domain_orderBy, orderDirection: OrderDirection, where: Domain_filter): [Domain!]!
+  registrations(skip: Int = 0, first: Int = 100, orderBy: Registration_orderBy, orderDirection: OrderDirection, where: Registration_filter): [Registration!]
+}
+
+input Account_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+}
+
+enum Account_orderBy {
+  id
+  domains
+  registrations
+}
+
+type AddrChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  addr: Account!
+}
+
+input AddrChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  addr: String
+  addr_not: String
+  addr_gt: String
+  addr_lt: String
+  addr_gte: String
+  addr_lte: String
+  addr_in: [String!]
+  addr_not_in: [String!]
+  addr_contains: String
+  addr_not_contains: String
+  addr_starts_with: String
+  addr_not_starts_with: String
+  addr_ends_with: String
+  addr_not_ends_with: String
+}
+
+enum AddrChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  addr
+}
+
+type AuthorisationChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Bytes!
+  target: Bytes!
+  isAuthorized: Boolean!
+}
+
+input AuthorisationChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  owner: Bytes
+  owner_not: Bytes
+  owner_in: [Bytes!]
+  owner_not_in: [Bytes!]
+  owner_contains: Bytes
+  owner_not_contains: Bytes
+  target: Bytes
+  target_not: Bytes
+  target_in: [Bytes!]
+  target_not_in: [Bytes!]
+  target_contains: Bytes
+  target_not_contains: Bytes
+  isAuthorized: Boolean
+  isAuthorized_not: Boolean
+  isAuthorized_in: [Boolean!]
+  isAuthorized_not_in: [Boolean!]
+}
+
+enum AuthorisationChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  owner
+  target
+  isAuthorized
+}
+
+scalar BigDecimal
+
+scalar BigInt
+
+input Block_height {
+  hash: Bytes
+  number: Int
+}
+
+scalar Bytes
+
+type ContenthashChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  hash: Bytes!
+}
+
+input ContenthashChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  hash: Bytes
+  hash_not: Bytes
+  hash_in: [Bytes!]
+  hash_not_in: [Bytes!]
+  hash_contains: Bytes
+  hash_not_contains: Bytes
+}
+
+enum ContenthashChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  hash
+}
+
+type Domain {
+  id: ID!
+  name: String
+  labelName: String
+  labelhash: Bytes
+  parent: Domain
+  subdomains(skip: Int = 0, first: Int = 100, orderBy: Domain_orderBy, orderDirection: OrderDirection, where: Domain_filter): [Domain!]!
+  resolvedAddress: Account
+  owner: Account!
+  resolver: Resolver
+  ttl: BigInt
+  isMigrated: Boolean!
+  events(skip: Int = 0, first: Int = 100, orderBy: DomainEvent_orderBy, orderDirection: OrderDirection, where: DomainEvent_filter): [DomainEvent!]!
+}
+
+input Domain_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_gt: String
+  name_lt: String
+  name_gte: String
+  name_lte: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  labelName: String
+  labelName_not: String
+  labelName_gt: String
+  labelName_lt: String
+  labelName_gte: String
+  labelName_lte: String
+  labelName_in: [String!]
+  labelName_not_in: [String!]
+  labelName_contains: String
+  labelName_not_contains: String
+  labelName_starts_with: String
+  labelName_not_starts_with: String
+  labelName_ends_with: String
+  labelName_not_ends_with: String
+  labelhash: Bytes
+  labelhash_not: Bytes
+  labelhash_in: [Bytes!]
+  labelhash_not_in: [Bytes!]
+  labelhash_contains: Bytes
+  labelhash_not_contains: Bytes
+  parent: String
+  parent_not: String
+  parent_gt: String
+  parent_lt: String
+  parent_gte: String
+  parent_lte: String
+  parent_in: [String!]
+  parent_not_in: [String!]
+  parent_contains: String
+  parent_not_contains: String
+  parent_starts_with: String
+  parent_not_starts_with: String
+  parent_ends_with: String
+  parent_not_ends_with: String
+  resolvedAddress: String
+  resolvedAddress_not: String
+  resolvedAddress_gt: String
+  resolvedAddress_lt: String
+  resolvedAddress_gte: String
+  resolvedAddress_lte: String
+  resolvedAddress_in: [String!]
+  resolvedAddress_not_in: [String!]
+  resolvedAddress_contains: String
+  resolvedAddress_not_contains: String
+  resolvedAddress_starts_with: String
+  resolvedAddress_not_starts_with: String
+  resolvedAddress_ends_with: String
+  resolvedAddress_not_ends_with: String
+  owner: String
+  owner_not: String
+  owner_gt: String
+  owner_lt: String
+  owner_gte: String
+  owner_lte: String
+  owner_in: [String!]
+  owner_not_in: [String!]
+  owner_contains: String
+  owner_not_contains: String
+  owner_starts_with: String
+  owner_not_starts_with: String
+  owner_ends_with: String
+  owner_not_ends_with: String
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  ttl: BigInt
+  ttl_not: BigInt
+  ttl_gt: BigInt
+  ttl_lt: BigInt
+  ttl_gte: BigInt
+  ttl_lte: BigInt
+  ttl_in: [BigInt!]
+  ttl_not_in: [BigInt!]
+  isMigrated: Boolean
+  isMigrated_not: Boolean
+  isMigrated_in: [Boolean!]
+  isMigrated_not_in: [Boolean!]
+}
+
+enum Domain_orderBy {
+  id
+  name
+  labelName
+  labelhash
+  parent
+  subdomains
+  resolvedAddress
+  owner
+  resolver
+  ttl
+  isMigrated
+  events
+}
+
+interface DomainEvent {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+input DomainEvent_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+}
+
+enum DomainEvent_orderBy {
+  id
+  domain
+  blockNumber
+  transactionID
+}
+
+type InterfaceChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  interfaceID: Bytes!
+  implementer: Bytes!
+}
+
+input InterfaceChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  interfaceID: Bytes
+  interfaceID_not: Bytes
+  interfaceID_in: [Bytes!]
+  interfaceID_not_in: [Bytes!]
+  interfaceID_contains: Bytes
+  interfaceID_not_contains: Bytes
+  implementer: Bytes
+  implementer_not: Bytes
+  implementer_in: [Bytes!]
+  implementer_not_in: [Bytes!]
+  implementer_contains: Bytes
+  implementer_not_contains: Bytes
+}
+
+enum InterfaceChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  interfaceID
+  implementer
+}
+
+type MulticoinAddrChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  coinType: Int!
+  addr: Bytes!
+}
+
+input MulticoinAddrChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  coinType: Int
+  coinType_not: Int
+  coinType_gt: Int
+  coinType_lt: Int
+  coinType_gte: Int
+  coinType_lte: Int
+  coinType_in: [Int!]
+  coinType_not_in: [Int!]
+  addr: Bytes
+  addr_not: Bytes
+  addr_in: [Bytes!]
+  addr_not_in: [Bytes!]
+  addr_contains: Bytes
+  addr_not_contains: Bytes
+}
+
+enum MulticoinAddrChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  coinType
+  addr
+}
+
+type NameChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  name: String!
+}
+
+input NameChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  name: String
+  name_not: String
+  name_gt: String
+  name_lt: String
+  name_gte: String
+  name_lte: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+}
+
+enum NameChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  name
+}
+
+type NameRegistered implements RegistrationEvent {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  registrant: Account!
+  expiryDate: BigInt!
+}
+
+input NameRegistered_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  registration: String
+  registration_not: String
+  registration_gt: String
+  registration_lt: String
+  registration_gte: String
+  registration_lte: String
+  registration_in: [String!]
+  registration_not_in: [String!]
+  registration_contains: String
+  registration_not_contains: String
+  registration_starts_with: String
+  registration_not_starts_with: String
+  registration_ends_with: String
+  registration_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  registrant: String
+  registrant_not: String
+  registrant_gt: String
+  registrant_lt: String
+  registrant_gte: String
+  registrant_lte: String
+  registrant_in: [String!]
+  registrant_not_in: [String!]
+  registrant_contains: String
+  registrant_not_contains: String
+  registrant_starts_with: String
+  registrant_not_starts_with: String
+  registrant_ends_with: String
+  registrant_not_ends_with: String
+  expiryDate: BigInt
+  expiryDate_not: BigInt
+  expiryDate_gt: BigInt
+  expiryDate_lt: BigInt
+  expiryDate_gte: BigInt
+  expiryDate_lte: BigInt
+  expiryDate_in: [BigInt!]
+  expiryDate_not_in: [BigInt!]
+}
+
+enum NameRegistered_orderBy {
+  id
+  registration
+  blockNumber
+  transactionID
+  registrant
+  expiryDate
+}
+
+type NameRenewed implements RegistrationEvent {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  expiryDate: BigInt!
+}
+
+input NameRenewed_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  registration: String
+  registration_not: String
+  registration_gt: String
+  registration_lt: String
+  registration_gte: String
+  registration_lte: String
+  registration_in: [String!]
+  registration_not_in: [String!]
+  registration_contains: String
+  registration_not_contains: String
+  registration_starts_with: String
+  registration_not_starts_with: String
+  registration_ends_with: String
+  registration_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  expiryDate: BigInt
+  expiryDate_not: BigInt
+  expiryDate_gt: BigInt
+  expiryDate_lt: BigInt
+  expiryDate_gte: BigInt
+  expiryDate_lte: BigInt
+  expiryDate_in: [BigInt!]
+  expiryDate_not_in: [BigInt!]
+}
+
+enum NameRenewed_orderBy {
+  id
+  registration
+  blockNumber
+  transactionID
+  expiryDate
+}
+
+type NameTransferred implements RegistrationEvent {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  newOwner: Account!
+}
+
+input NameTransferred_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  registration: String
+  registration_not: String
+  registration_gt: String
+  registration_lt: String
+  registration_gte: String
+  registration_lte: String
+  registration_in: [String!]
+  registration_not_in: [String!]
+  registration_contains: String
+  registration_not_contains: String
+  registration_starts_with: String
+  registration_not_starts_with: String
+  registration_ends_with: String
+  registration_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  newOwner: String
+  newOwner_not: String
+  newOwner_gt: String
+  newOwner_lt: String
+  newOwner_gte: String
+  newOwner_lte: String
+  newOwner_in: [String!]
+  newOwner_not_in: [String!]
+  newOwner_contains: String
+  newOwner_not_contains: String
+  newOwner_starts_with: String
+  newOwner_not_starts_with: String
+  newOwner_ends_with: String
+  newOwner_not_ends_with: String
+}
+
+enum NameTransferred_orderBy {
+  id
+  registration
+  blockNumber
+  transactionID
+  newOwner
+}
+
+type NewOwner implements DomainEvent {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+input NewOwner_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  owner: String
+  owner_not: String
+  owner_gt: String
+  owner_lt: String
+  owner_gte: String
+  owner_lte: String
+  owner_in: [String!]
+  owner_not_in: [String!]
+  owner_contains: String
+  owner_not_contains: String
+  owner_starts_with: String
+  owner_not_starts_with: String
+  owner_ends_with: String
+  owner_not_ends_with: String
+}
+
+enum NewOwner_orderBy {
+  id
+  domain
+  blockNumber
+  transactionID
+  owner
+}
+
+type NewResolver implements DomainEvent {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  resolver: Resolver!
+}
+
+input NewResolver_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+}
+
+enum NewResolver_orderBy {
+  id
+  domain
+  blockNumber
+  transactionID
+  resolver
+}
+
+type NewTTL implements DomainEvent {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  ttl: BigInt!
+}
+
+input NewTTL_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  ttl: BigInt
+  ttl_not: BigInt
+  ttl_gt: BigInt
+  ttl_lt: BigInt
+  ttl_gte: BigInt
+  ttl_lte: BigInt
+  ttl_in: [BigInt!]
+  ttl_not_in: [BigInt!]
+}
+
+enum NewTTL_orderBy {
+  id
+  domain
+  blockNumber
+  transactionID
+  ttl
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+type PubkeyChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  x: Bytes!
+  y: Bytes!
+}
+
+input PubkeyChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  x: Bytes
+  x_not: Bytes
+  x_in: [Bytes!]
+  x_not_in: [Bytes!]
+  x_contains: Bytes
+  x_not_contains: Bytes
+  y: Bytes
+  y_not: Bytes
+  y_in: [Bytes!]
+  y_not_in: [Bytes!]
+  y_contains: Bytes
+  y_not_contains: Bytes
+}
+
+enum PubkeyChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  x
+  y
+}
+
+type Query {
+  domain(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Domain
+  domains(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Domain_orderBy
+    orderDirection: OrderDirection
+    where: Domain_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Domain!]!
+  transfer(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Transfer
+  transfers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Transfer_orderBy
+    orderDirection: OrderDirection
+    where: Transfer_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Transfer!]!
+  newOwner(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewOwner
+  newOwners(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewOwner_orderBy
+    orderDirection: OrderDirection
+    where: NewOwner_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewOwner!]!
+  newResolver(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewResolver
+  newResolvers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewResolver_orderBy
+    orderDirection: OrderDirection
+    where: NewResolver_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewResolver!]!
+  newTTL(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewTTL
+  newTTLs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewTTL_orderBy
+    orderDirection: OrderDirection
+    where: NewTTL_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewTTL!]!
+  account(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Account
+  accounts(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Account_orderBy
+    orderDirection: OrderDirection
+    where: Account_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Account!]!
+  registration(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Registration
+  registrations(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Registration_orderBy
+    orderDirection: OrderDirection
+    where: Registration_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Registration!]!
+  nameRegistered(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameRegistered
+  nameRegistereds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameRegistered_orderBy
+    orderDirection: OrderDirection
+    where: NameRegistered_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameRegistered!]!
+  nameRenewed(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameRenewed
+  nameReneweds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameRenewed_orderBy
+    orderDirection: OrderDirection
+    where: NameRenewed_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameRenewed!]!
+  nameTransferred(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameTransferred
+  nameTransferreds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameTransferred_orderBy
+    orderDirection: OrderDirection
+    where: NameTransferred_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameTransferred!]!
+  resolver(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Resolver
+  resolvers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Resolver_orderBy
+    orderDirection: OrderDirection
+    where: Resolver_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Resolver!]!
+  addrChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AddrChanged
+  addrChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AddrChanged_orderBy
+    orderDirection: OrderDirection
+    where: AddrChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AddrChanged!]!
+  multicoinAddrChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): MulticoinAddrChanged
+  multicoinAddrChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: MulticoinAddrChanged_orderBy
+    orderDirection: OrderDirection
+    where: MulticoinAddrChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [MulticoinAddrChanged!]!
+  nameChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameChanged
+  nameChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameChanged_orderBy
+    orderDirection: OrderDirection
+    where: NameChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameChanged!]!
+  abiChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AbiChanged
+  abiChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AbiChanged_orderBy
+    orderDirection: OrderDirection
+    where: AbiChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AbiChanged!]!
+  pubkeyChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): PubkeyChanged
+  pubkeyChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: PubkeyChanged_orderBy
+    orderDirection: OrderDirection
+    where: PubkeyChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [PubkeyChanged!]!
+  textChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): TextChanged
+  textChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: TextChanged_orderBy
+    orderDirection: OrderDirection
+    where: TextChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [TextChanged!]!
+  contenthashChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ContenthashChanged
+  contenthashChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ContenthashChanged_orderBy
+    orderDirection: OrderDirection
+    where: ContenthashChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ContenthashChanged!]!
+  interfaceChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): InterfaceChanged
+  interfaceChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: InterfaceChanged_orderBy
+    orderDirection: OrderDirection
+    where: InterfaceChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [InterfaceChanged!]!
+  authorisationChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AuthorisationChanged
+  authorisationChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AuthorisationChanged_orderBy
+    orderDirection: OrderDirection
+    where: AuthorisationChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AuthorisationChanged!]!
+  domainEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DomainEvent
+  domainEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DomainEvent_orderBy
+    orderDirection: OrderDirection
+    where: DomainEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DomainEvent!]!
+  registrationEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): RegistrationEvent
+  registrationEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: RegistrationEvent_orderBy
+    orderDirection: OrderDirection
+    where: RegistrationEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [RegistrationEvent!]!
+  resolverEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ResolverEvent
+  resolverEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ResolverEvent_orderBy
+    orderDirection: OrderDirection
+    where: ResolverEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ResolverEvent!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+type Registration {
+  id: ID!
+  domain: Domain
+  registrationDate: BigInt!
+  expiryDate: BigInt!
+  registrant: Account!
+  labelName: String
+  events(skip: Int = 0, first: Int = 100, orderBy: RegistrationEvent_orderBy, orderDirection: OrderDirection, where: RegistrationEvent_filter): [RegistrationEvent!]!
+}
+
+input Registration_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  registrationDate: BigInt
+  registrationDate_not: BigInt
+  registrationDate_gt: BigInt
+  registrationDate_lt: BigInt
+  registrationDate_gte: BigInt
+  registrationDate_lte: BigInt
+  registrationDate_in: [BigInt!]
+  registrationDate_not_in: [BigInt!]
+  expiryDate: BigInt
+  expiryDate_not: BigInt
+  expiryDate_gt: BigInt
+  expiryDate_lt: BigInt
+  expiryDate_gte: BigInt
+  expiryDate_lte: BigInt
+  expiryDate_in: [BigInt!]
+  expiryDate_not_in: [BigInt!]
+  registrant: String
+  registrant_not: String
+  registrant_gt: String
+  registrant_lt: String
+  registrant_gte: String
+  registrant_lte: String
+  registrant_in: [String!]
+  registrant_not_in: [String!]
+  registrant_contains: String
+  registrant_not_contains: String
+  registrant_starts_with: String
+  registrant_not_starts_with: String
+  registrant_ends_with: String
+  registrant_not_ends_with: String
+  labelName: String
+  labelName_not: String
+  labelName_gt: String
+  labelName_lt: String
+  labelName_gte: String
+  labelName_lte: String
+  labelName_in: [String!]
+  labelName_not_in: [String!]
+  labelName_contains: String
+  labelName_not_contains: String
+  labelName_starts_with: String
+  labelName_not_starts_with: String
+  labelName_ends_with: String
+  labelName_not_ends_with: String
+}
+
+enum Registration_orderBy {
+  id
+  domain
+  registrationDate
+  expiryDate
+  registrant
+  labelName
+  events
+}
+
+interface RegistrationEvent {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+input RegistrationEvent_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  registration: String
+  registration_not: String
+  registration_gt: String
+  registration_lt: String
+  registration_gte: String
+  registration_lte: String
+  registration_in: [String!]
+  registration_not_in: [String!]
+  registration_contains: String
+  registration_not_contains: String
+  registration_starts_with: String
+  registration_not_starts_with: String
+  registration_ends_with: String
+  registration_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+}
+
+enum RegistrationEvent_orderBy {
+  id
+  registration
+  blockNumber
+  transactionID
+}
+
+type Resolver {
+  id: ID!
+  domain: Domain
+  address: Bytes!
+  addr: Account
+  contentHash: Bytes
+  texts: [String!]
+  coinTypes: [Int!]
+  events(skip: Int = 0, first: Int = 100, orderBy: ResolverEvent_orderBy, orderDirection: OrderDirection, where: ResolverEvent_filter): [ResolverEvent!]!
+}
+
+input Resolver_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  address: Bytes
+  address_not: Bytes
+  address_in: [Bytes!]
+  address_not_in: [Bytes!]
+  address_contains: Bytes
+  address_not_contains: Bytes
+  addr: String
+  addr_not: String
+  addr_gt: String
+  addr_lt: String
+  addr_gte: String
+  addr_lte: String
+  addr_in: [String!]
+  addr_not_in: [String!]
+  addr_contains: String
+  addr_not_contains: String
+  addr_starts_with: String
+  addr_not_starts_with: String
+  addr_ends_with: String
+  addr_not_ends_with: String
+  contentHash: Bytes
+  contentHash_not: Bytes
+  contentHash_in: [Bytes!]
+  contentHash_not_in: [Bytes!]
+  contentHash_contains: Bytes
+  contentHash_not_contains: Bytes
+  texts: [String!]
+  texts_not: [String!]
+  texts_contains: [String!]
+  texts_not_contains: [String!]
+  coinTypes: [Int!]
+  coinTypes_not: [Int!]
+  coinTypes_contains: [Int!]
+  coinTypes_not_contains: [Int!]
+}
+
+enum Resolver_orderBy {
+  id
+  domain
+  address
+  addr
+  contentHash
+  texts
+  coinTypes
+  events
+}
+
+interface ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+input ResolverEvent_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+}
+
+enum ResolverEvent_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+}
+
+type Subscription {
+  domain(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Domain
+  domains(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Domain_orderBy
+    orderDirection: OrderDirection
+    where: Domain_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Domain!]!
+  transfer(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Transfer
+  transfers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Transfer_orderBy
+    orderDirection: OrderDirection
+    where: Transfer_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Transfer!]!
+  newOwner(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewOwner
+  newOwners(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewOwner_orderBy
+    orderDirection: OrderDirection
+    where: NewOwner_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewOwner!]!
+  newResolver(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewResolver
+  newResolvers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewResolver_orderBy
+    orderDirection: OrderDirection
+    where: NewResolver_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewResolver!]!
+  newTTL(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NewTTL
+  newTTLs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NewTTL_orderBy
+    orderDirection: OrderDirection
+    where: NewTTL_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NewTTL!]!
+  account(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Account
+  accounts(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Account_orderBy
+    orderDirection: OrderDirection
+    where: Account_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Account!]!
+  registration(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Registration
+  registrations(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Registration_orderBy
+    orderDirection: OrderDirection
+    where: Registration_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Registration!]!
+  nameRegistered(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameRegistered
+  nameRegistereds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameRegistered_orderBy
+    orderDirection: OrderDirection
+    where: NameRegistered_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameRegistered!]!
+  nameRenewed(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameRenewed
+  nameReneweds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameRenewed_orderBy
+    orderDirection: OrderDirection
+    where: NameRenewed_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameRenewed!]!
+  nameTransferred(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameTransferred
+  nameTransferreds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameTransferred_orderBy
+    orderDirection: OrderDirection
+    where: NameTransferred_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameTransferred!]!
+  resolver(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Resolver
+  resolvers(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Resolver_orderBy
+    orderDirection: OrderDirection
+    where: Resolver_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Resolver!]!
+  addrChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AddrChanged
+  addrChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AddrChanged_orderBy
+    orderDirection: OrderDirection
+    where: AddrChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AddrChanged!]!
+  multicoinAddrChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): MulticoinAddrChanged
+  multicoinAddrChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: MulticoinAddrChanged_orderBy
+    orderDirection: OrderDirection
+    where: MulticoinAddrChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [MulticoinAddrChanged!]!
+  nameChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): NameChanged
+  nameChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: NameChanged_orderBy
+    orderDirection: OrderDirection
+    where: NameChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [NameChanged!]!
+  abiChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AbiChanged
+  abiChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AbiChanged_orderBy
+    orderDirection: OrderDirection
+    where: AbiChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AbiChanged!]!
+  pubkeyChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): PubkeyChanged
+  pubkeyChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: PubkeyChanged_orderBy
+    orderDirection: OrderDirection
+    where: PubkeyChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [PubkeyChanged!]!
+  textChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): TextChanged
+  textChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: TextChanged_orderBy
+    orderDirection: OrderDirection
+    where: TextChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [TextChanged!]!
+  contenthashChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ContenthashChanged
+  contenthashChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ContenthashChanged_orderBy
+    orderDirection: OrderDirection
+    where: ContenthashChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ContenthashChanged!]!
+  interfaceChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): InterfaceChanged
+  interfaceChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: InterfaceChanged_orderBy
+    orderDirection: OrderDirection
+    where: InterfaceChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [InterfaceChanged!]!
+  authorisationChanged(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): AuthorisationChanged
+  authorisationChangeds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AuthorisationChanged_orderBy
+    orderDirection: OrderDirection
+    where: AuthorisationChanged_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [AuthorisationChanged!]!
+  domainEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DomainEvent
+  domainEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DomainEvent_orderBy
+    orderDirection: OrderDirection
+    where: DomainEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DomainEvent!]!
+  registrationEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): RegistrationEvent
+  registrationEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: RegistrationEvent_orderBy
+    orderDirection: OrderDirection
+    where: RegistrationEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [RegistrationEvent!]!
+  resolverEvent(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): ResolverEvent
+  resolverEvents(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: ResolverEvent_orderBy
+    orderDirection: OrderDirection
+    where: ResolverEvent_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [ResolverEvent!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+type TextChanged implements ResolverEvent {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  key: String!
+}
+
+input TextChanged_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  resolver: String
+  resolver_not: String
+  resolver_gt: String
+  resolver_lt: String
+  resolver_gte: String
+  resolver_lte: String
+  resolver_in: [String!]
+  resolver_not_in: [String!]
+  resolver_contains: String
+  resolver_not_contains: String
+  resolver_starts_with: String
+  resolver_not_starts_with: String
+  resolver_ends_with: String
+  resolver_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  key: String
+  key_not: String
+  key_gt: String
+  key_lt: String
+  key_gte: String
+  key_lte: String
+  key_in: [String!]
+  key_not_in: [String!]
+  key_contains: String
+  key_not_contains: String
+  key_starts_with: String
+  key_not_starts_with: String
+  key_ends_with: String
+  key_not_ends_with: String
+}
+
+enum TextChanged_orderBy {
+  id
+  resolver
+  blockNumber
+  transactionID
+  key
+}
+
+type Transfer implements DomainEvent {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+input Transfer_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  domain: String
+  domain_not: String
+  domain_gt: String
+  domain_lt: String
+  domain_gte: String
+  domain_lte: String
+  domain_in: [String!]
+  domain_not_in: [String!]
+  domain_contains: String
+  domain_not_contains: String
+  domain_starts_with: String
+  domain_not_starts_with: String
+  domain_ends_with: String
+  domain_not_ends_with: String
+  blockNumber: Int
+  blockNumber_not: Int
+  blockNumber_gt: Int
+  blockNumber_lt: Int
+  blockNumber_gte: Int
+  blockNumber_lte: Int
+  blockNumber_in: [Int!]
+  blockNumber_not_in: [Int!]
+  transactionID: Bytes
+  transactionID_not: Bytes
+  transactionID_in: [Bytes!]
+  transactionID_not_in: [Bytes!]
+  transactionID_contains: Bytes
+  transactionID_not_contains: Bytes
+  owner: String
+  owner_not: String
+  owner_gt: String
+  owner_lt: String
+  owner_gte: String
+  owner_lte: String
+  owner_in: [String!]
+  owner_not_in: [String!]
+  owner_contains: String
+  owner_not_contains: String
+  owner_starts_with: String
+  owner_not_starts_with: String
+  owner_ends_with: String
+  owner_not_ends_with: String
+}
+
+enum Transfer_orderBy {
+  id
+  domain
+  blockNumber
+  transactionID
+  owner
+}
+

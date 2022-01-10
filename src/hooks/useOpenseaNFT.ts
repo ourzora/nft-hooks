@@ -40,7 +40,7 @@ export function useOpenseaNFT(
   );
   const auctionData = useSWR(
     contractAddress && tokenId ? ['loadAuctionForNFT', contractAddress, tokenId] : null,
-    (_, contractAddress, tokenId) => fetcher.loadAuctionInfo(contractAddress, tokenId)
+    async (_, contractAddress, tokenId) => fetcher.loadAuctionInfo(contractAddress, tokenId)
   );
 
   const nftResponseData = nftData.data as any;

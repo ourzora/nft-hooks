@@ -1,26 +1,34 @@
 import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
+import { getAddress } from '@ethersproject/address';
 
 import { RequestError } from './RequestError';
 import {
   OPENSEA_API_URL_BY_NETWORK,
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
+  ZORA_INDEXER_URL_BY_NETWORK,
   ZORA_USERNAME_API_URL,
 } from '../constants/urls';
+import { reverseResolveEnsAddresses } from './EnsReverseFetcher';
 import type { NetworkIDs } from '../constants/networks';
 import {
   GET_ALL_AUCTIONS,
   GET_AUCTION_BY_CURATOR,
   GET_AUCTION_BY_MEDIA,
   GET_MEDIAS_QUERY,
-} from '../graph-queries/zora';
+} from '../graph-queries/zora-graph';
 import type {
   GetMediaAndAuctionsQuery,
   GetAllAuctionsQuery,
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
+import {
+  IndexerTokenWithAuctionFragment,
+  String_Comparison_Exp,
+  Token_Bool_Exp,
+} from '../graph-queries/zora-indexer-types';
 import { GET_TOKEN_VALUES_QUERY } from '../graph-queries/uniswap';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { TimeoutsLookupType, DEFAULT_NETWORK_TIMEOUTS_MS } from '../constants/timeouts';
@@ -35,6 +43,7 @@ import {
   transformMediaForKey,
   addAuctionInformation,
   transformMediaItem,
+  NULL_ETH_CURRENCY_ID,
 } from './TransformFetchResults';
 import { FetchWithTimeout } from './FetchWithTimeout';
 import { CurrencyLookupType, NFTDataType, ZNFTMediaDataType } from './AuctionInfoTypes';
@@ -43,6 +52,14 @@ import {
   transformGenericNFTForKey,
   transformOpenseaResponse,
 } from './OpenseaUtils';
+import {
+  ACTIVE_AUCTIONS_QUERY,
+  BY_IDS as INDEXER_BY_IDS_QUERY,
+  BY_OWNER,
+} from '../graph-queries/zora-indexer';
+import { FetchZoraIndexerListCollectionType } from './ZoraIndexerTypes';
+import { ArgumentsError, NotFoundError } from './ErrorUtils';
+import { convertURIToHTTPS } from './UriUtils';
 
 /**
  * Internal agent for NFT Hooks to fetch NFT information.
@@ -66,8 +83,12 @@ export class MediaFetchAgent {
     usernameLoader: DataLoader<string, UsernameResponseType>;
     // genericNFTLoader currently uses opensea
     genericNFTLoader: DataLoader<string, OpenseaResponse>;
-    // auctionIfnoLoader fetches auction info for non-zora NFTs
+    // zoraNFTIndexer uses zora indexer
+    zoraNFTIndexerLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
+    // auctionInfoLoader fetches auction info for non-zora NFTs
     auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
+    // ensLoader
+    ensLoader: DataLoader<string, string>;
   };
 
   constructor(network: NetworkIDs) {
@@ -79,11 +100,13 @@ export class MediaFetchAgent {
       currencyLoader: new DataLoader((keys) => this.fetchCurrenciesGraph(keys), {
         cache: false,
       }),
+      zoraNFTIndexerLoader: new DataLoader((keys) => this.fetchZoraNFTIndexerNFTs(keys)),
       usernameLoader: new DataLoader((keys) => this.fetchZoraUsernames(keys)),
       genericNFTLoader: new DataLoader((keys) => this.fetchGenericNFT(keys), {
         cache: false,
         maxBatchSize: 30,
       }),
+      ensLoader: new DataLoader((keys) => this.loadEnsBatch(keys), { maxBatchSize: 100 }),
       auctionInfoLoader: new DataLoader((keys) => this.fetchAuctionNFTInfo(keys), {
         cache: false,
         maxBatchSize: 300,
@@ -122,13 +145,15 @@ export class MediaFetchAgent {
   async fetchContent(url: string, contentType: string): Promise<MediaContentType> {
     if (contentType.startsWith('text/')) {
       try {
-        const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(url);
+        const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(
+          convertURIToHTTPS(url)
+        );
         return {
           text: await response.text(),
           type: 'text',
           mimeType: contentType,
         };
-      } catch (e) {
+      } catch (e: any) {
         throw new RequestError('Issue fetching IPFS data', e);
       }
     }
@@ -143,9 +168,12 @@ export class MediaFetchAgent {
    * @throws RequestError
    */
   async fetchContentMimeType(url: string): Promise<string> {
-    const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(url, {
-      method: 'HEAD',
-    });
+    const response = await new FetchWithTimeout(this.timeouts.IPFS).fetch(
+      convertURIToHTTPS(url),
+      {
+        method: 'HEAD',
+      }
+    );
     const header = response.headers.get('content-type');
     if (!header) {
       throw new RequestError('No content type returned for URI');
@@ -189,10 +217,145 @@ export class MediaFetchAgent {
 
     const response = (await client.request(
       GET_MEDIAS_QUERY,
-      getQuery
+      getQuery()
     )) as GetMediaAndAuctionsQuery;
     const medias = [...response.creator, ...response.owner, ...response.id];
     return medias.map((media) => transformMediaItem(media, this.networkId));
+  }
+
+  async loadEnsBatch(addresses: readonly string[]) {
+    const addressToNames = await reverseResolveEnsAddresses(
+      addresses,
+      this.networkId,
+      this.timeouts.Rpc
+    );
+    return addresses.map((address) => addressToNames[address] || Error('Not found'));
+  }
+
+  // Alpha: uses zora indexer
+  // format CONTRACT_ID-TOKEN_ID
+  async fetchZoraNFTIndexerNFTs(keys: readonly string[]) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    const response = await client.request(INDEXER_BY_IDS_QUERY, {
+      ids: keys,
+    });
+
+    return keys.map(
+      (key: string) =>
+        response.Token.find(
+          (token: IndexerTokenWithAuctionFragment) => token.id === key
+        ) || new NotFoundError('Did not find token')
+    );
+  }
+
+  async loadZoraNFTIndexerNFTUntransformed(contractAddress: string, tokenId: string) {
+    return this.loaders.zoraNFTIndexerLoader.load(
+      `${getAddress(contractAddress)}-${tokenId}`
+    );
+  }
+
+  async loadZoraNFTIndexerNFTsUntransformed(tokenAndIds: readonly string[]) {
+    return this.loaders.zoraNFTIndexerLoader.loadMany(tokenAndIds);
+  }
+
+  /**
+   * Un-batched fetch function to fetch a group of NFT data from the zora indexer
+   *
+   * @param collectionAddresses list of collections to include
+   * @param curatorAddress curator to query
+   * @param approved boolean if the auction is approved (null for approved and un-approved auctions)
+   */
+  async fetchZoraIndexerGroupData({
+    collectionAddresses,
+    curatorAddress,
+    approved = null,
+    onlyAuctions = false,
+    limit = 200,
+    offset = 0,
+  }: FetchZoraIndexerListCollectionType): Promise<IndexerTokenWithAuctionFragment[]> {
+    if (!collectionAddresses?.length && !curatorAddress) {
+      throw new ArgumentsError('Needs to have at least one curator or collector');
+    }
+    if (!onlyAuctions && approved !== null) {
+      throw new ArgumentsError(
+        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
+      );
+    }
+    let queryStatement: Token_Bool_Exp[] = [];
+    if (collectionAddresses) {
+      const addresses = collectionAddresses.map((address) => getAddress(address));
+      queryStatement.push({ address: { _in: addresses } });
+    }
+    let approvedStatement = undefined;
+    if (approved !== null) {
+      approvedStatement = { approved: { _eq: approved } };
+    }
+    if (curatorAddress) {
+      queryStatement.push({
+        auctions: { curator: { _eq: curatorAddress }, ...approvedStatement },
+      });
+    } else if (approvedStatement || onlyAuctions) {
+      let auctionsQueryStmt = {};
+      if (onlyAuctions) {
+        auctionsQueryStmt = { _not: {} };
+      }
+      queryStatement.push({ auctions: { ...auctionsQueryStmt, ...approvedStatement } });
+    }
+
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    return (
+      await client.request(ACTIVE_AUCTIONS_QUERY, {
+        andQuery: queryStatement,
+        offset,
+        limit,
+      })
+    ).Token as IndexerTokenWithAuctionFragment[];
+  }
+
+  /**
+   * Un-batched fetch function to fetch a group of NFT data from the zora indexer
+   *
+   * @param collectionAddresses list of addresses for collection
+   * @param userAddress address of user
+   * @param type type of ids: creator, id (of media), owner
+   * @returns
+   */
+  async fetchZoraIndexerUserOwnedNFTs({
+    collectionAddresses,
+    userAddress,
+    offset = 0,
+    limit = 250,
+  }: {
+    collectionAddresses?: string[];
+    userAddress: string;
+    offset?: number;
+    limit?: number;
+  }) {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeouts.ZoraIndexer);
+    const client = new GraphQLClient(ZORA_INDEXER_URL_BY_NETWORK[this.networkId], {
+      fetch: fetchWithTimeout.fetch,
+    });
+
+    let addressQueryPart = {} as String_Comparison_Exp;
+    if (collectionAddresses?.length) {
+      addressQueryPart['_in'] = collectionAddresses.map(getAddress);
+    }
+
+    const response = await client.request(BY_OWNER, {
+      addressQueryPart,
+      owner: getAddress(userAddress),
+      offset,
+      limit,
+    });
+    return response.Token as IndexerTokenWithAuctionFragment[];
   }
 
   /**
@@ -224,7 +387,14 @@ export class MediaFetchAgent {
     const contractAndToken = `${contractAddress.toLowerCase()}:${tokenId}`;
     const nftInfo = await this.loaders.genericNFTLoader.load(contractAndToken);
     if (!auctionData) {
-      auctionData = await this.loadAuctionInfo(contractAddress, tokenId);
+      try {
+        auctionData = await this.loadAuctionInfo(contractAddress, tokenId);
+      } catch (err) {
+        if (!(err instanceof NotFoundError)) {
+          // Log any not-found error
+          console.error(err);
+        }
+      }
     }
     if (!nftInfo) {
       throw new RequestError('Cannot fetch NFT information');
@@ -251,6 +421,11 @@ export class MediaFetchAgent {
     );
   }
 
+  // use dash between lowercase contract id and token id
+  async loadAuctionInfos(tokenContractAndIds: readonly string[]) {
+    return await this.loaders.auctionInfoLoader.loadMany(tokenContractAndIds);
+  }
+
   /**
    *
    * @param address string address of username to load
@@ -258,6 +433,10 @@ export class MediaFetchAgent {
    */
   async loadUsername(address: string) {
     return this.loaders.usernameLoader.load(address.toLowerCase());
+  }
+
+  async loadEnsName(address: string) {
+    return this.loaders.ensLoader.load(address.toLowerCase());
   }
 
   /**
@@ -303,8 +482,10 @@ export class MediaFetchAgent {
     if (!response.reserveAuctions) {
       throw new RequestError('Missing auction in reponse');
     }
-    return tokenAndAddresses.map((tokenAndAddress: string) =>
-      response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) || new Error('Missing Record')
+    return tokenAndAddresses.map(
+      (tokenAndAddress: string) =>
+        response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
+        new NotFoundError('Missing Auction')
     );
   }
 
@@ -397,7 +578,9 @@ export class MediaFetchAgent {
       fetch: fetchWithTimeout.fetch,
     });
     const currencies = (await client.request(GET_TOKEN_VALUES_QUERY, {
-      currencyContracts,
+      currencyContracts: currencyContracts.filter(
+        (contract) => contract !== NULL_ETH_CURRENCY_ID
+      ),
     })) as GetTokenPricesQuery;
 
     return currencyContracts.map((key) => transformCurrencyForKey(currencies, key));
@@ -413,11 +596,11 @@ export class MediaFetchAgent {
    * @throws RequestError
    */
   public async fetchIPFSMetadata(url: string) {
-    // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas
+    // TODO(iain): Properly parse metadata from `ourzora/media-metadata-schemas`
     const request = await new FetchWithTimeout(
       this.timeouts.IPFS,
       'application/json'
-    ).fetch(url);
+    ).fetch(convertURIToHTTPS(url));
     try {
       return await request.json();
     } catch (e) {

@@ -7,6 +7,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -219,6 +221,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -226,6 +231,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -438,6 +445,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -445,6 +455,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -657,6 +669,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -664,6 +679,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -876,6 +893,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -883,6 +903,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -1095,6 +1117,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -1102,6 +1127,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -1314,6 +1341,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -1326,6 +1356,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -1538,6 +1570,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -1545,6 +1580,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -1757,6 +1794,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -1764,6 +1804,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -1976,6 +2018,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -1983,6 +2028,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -2195,6 +2242,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -2202,6 +2252,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -2414,6 +2466,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -2421,6 +2476,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "Hello World",
@@ -2633,6 +2690,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "Hello World",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -2645,6 +2705,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -2862,6 +2924,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -2869,6 +2934,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -3086,6 +3153,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -3093,6 +3163,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -3310,6 +3382,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -3317,6 +3392,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -3534,6 +3611,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -3541,6 +3621,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -3758,6 +3840,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -3765,6 +3850,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -3982,6 +4069,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -3994,6 +4084,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -4211,6 +4303,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -4218,6 +4313,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -4435,6 +4532,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -4442,6 +4542,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -4659,6 +4761,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -4666,6 +4771,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -4883,6 +4990,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -4890,6 +5000,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -5107,6 +5219,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -5114,6 +5229,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -5331,6 +5448,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -5343,6 +5463,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -5536,6 +5658,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -5543,6 +5668,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -5736,6 +5863,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -5743,6 +5873,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -5936,6 +6068,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -5943,6 +6078,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -6136,6 +6273,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -6143,6 +6283,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -6336,6 +6478,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -6343,6 +6488,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -6536,6 +6683,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -6548,6 +6698,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -6707,6 +6859,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -6714,6 +6869,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -6873,6 +7030,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -6880,6 +7040,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7039,6 +7201,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -7046,6 +7211,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7205,6 +7372,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -7212,6 +7382,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7371,6 +7543,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -7378,6 +7553,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7537,6 +7714,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]
@@ -7549,6 +7729,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7742,6 +7924,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -7749,6 +7934,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -7942,6 +8129,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -7949,6 +8139,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -8142,6 +8334,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -8149,6 +8344,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -8342,6 +8539,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -8349,6 +8549,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -8542,6 +8744,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
   Object {
@@ -8549,6 +8754,8 @@ Array [
       "contract": Object {
         "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
         "knownContract": "zora",
+        "name": "Zora",
+        "symbol": "ZORA",
       },
       "creator": "10",
       "metadataURI": "https://zora.co/content",
@@ -8742,6 +8949,9 @@ Array [
       "creatorBidShare": "12974",
       "creatorBidSharePercentage": 1.2974e-14,
       "metadataHash": "ByTeSStrInG",
+      "metadataURI": "https://zora.co/content",
+      "ownerBidShare": "12974",
+      "ownerBidSharePercentage": 1.2974e-14,
     },
   },
 ]

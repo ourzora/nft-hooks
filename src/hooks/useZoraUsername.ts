@@ -9,10 +9,10 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
  * @param address string address to fetch zora username of
  * @returns UsernameResponseType
  */
-export function useZoraUsername(address: string, options?: SWRConfiguration<any>) {
+export function useZoraUsername(address?: string, options?: SWRConfiguration<any>) {
   const fetcher = useContext(NFTFetchContext);
   const { error, data } = useSWR(
-    ['loadUsername', address],
+    address ? ['loadUsername', address.toLowerCase()] : null,
     (_, address: string) => fetcher.loadUsername(address),
     options,
   );

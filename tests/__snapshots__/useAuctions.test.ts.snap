@@ -188,6 +188,7 @@ Array [
       "owner": Object {
         "id": "10",
       },
+      "ownerBidShare": "12974",
     },
     "previousBids": Array [
       Object {
@@ -278,6 +279,7 @@ Array [
       "owner": Object {
         "id": "10",
       },
+      "ownerBidShare": "12974",
     },
     "previousBids": Array [
       Object {

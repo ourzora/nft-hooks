@@ -9,7 +9,7 @@ import type {
   GetMediaAndAuctionsQuery,
   NftMediaFullDataFragment,
   ReserveAuctionPartialFragment,
-} from '../graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import type { GetTokenPricesQuery } from '../graph-queries/uniswap-types';
 import { ChainCurrencyType, KNOWN_CONTRACTS } from './FetchResultTypes';
 import { RequestError } from './RequestError';
@@ -24,7 +24,7 @@ import { AuctionStateInfo, getAuctionState } from './AuctionState';
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
 import { NetworkIDs } from '../constants/networks';
 
-const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
+export const NULL_ETH_CURRENCY_ID = '0x0000000000000000000000000000000000000000';
 
 export function transformCurrencyEth(currency: CurrencyShortFragment) {
   let updatedCurrency = { ...currency };
@@ -57,18 +57,25 @@ export function transformMediaItem(
       contract: {
         address: ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId],
         knownContract: KNOWN_CONTRACTS.ZORA,
+        name: 'Zora',
+        symbol: 'ZORA',
       },
       owner: nft.owner.id,
       creator: nft.creator.id,
       metadataURI: nft.metadataURI,
     },
     zoraNFT: {
+      metadataURI: nft.metadataURI,
       metadataHash: nft.metadataHash,
       contentURI: nft.contentURI,
       contentHash: nft.contentHash,
       creatorBidShare: nft.creatorBidShare,
+      ownerBidShare: nft.ownerBidShare,
       createdAtTimestamp: nft.createdAtTimestamp,
       creatorBidSharePercentage: new Big(nft.creatorBidShare)
+        .div(new Big(10).pow(18))
+        .toNumber(),
+      ownerBidSharePercentage: new Big(nft.ownerBidShare)
         .div(new Big(10).pow(18))
         .toNumber(),
     },
@@ -87,7 +94,7 @@ export function transformMediaForKey(
   key: string,
   networkId: NetworkIDs
 ): ZNFTMediaDataType {
-  const media = result.id.find((media) => media.id === key);
+  const media = result.id.find((media: any) => media.id === key);
   if (!media) {
     throw new RequestError('No media in response');
   }
@@ -110,7 +117,6 @@ export function transformCurrencyForKey(
   result: GetTokenPricesQuery,
   key: string
 ): ChainCurrencyType {
-  const currency = result.tokens.find((token) => token.id === key);
   // Special case ETH
   if (key === NULL_ETH_CURRENCY_ID) {
     return {
@@ -124,6 +130,7 @@ export function transformCurrencyForKey(
       },
     };
   }
+  const currency = result.tokens.find((token) => token.id === key);
   if (!currency) {
     throw new RequestError('No currency in response');
   }

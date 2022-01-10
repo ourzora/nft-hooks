@@ -3,6 +3,7 @@ import { useNFT, useNFTType } from './hooks/useNFT';
 import { useZNFT, useZNFTType } from './hooks/useZNFT';
 import { useOpenseaNFT, useOpenseaNFTType } from './hooks/useOpenseaNFT';
 import { useNFTContent, useNFTContentType } from './hooks/useNFTContent';
+import { useENSAddress } from './hooks/useENSAddress';
 import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
 import { NFTFetchConfiguration } from './context/NFTFetchContext';
 import { MediaFetchAgent } from './fetcher/MediaFetchAgent';
@@ -15,6 +16,8 @@ import * as DataTransformers from './fetcher/DataTransformers';
 import * as FetchStaticData from './fetcher/FetchStaticData';
 import { RequestError } from './fetcher/RequestError';
 import { useZNFTGroup } from './hooks/useZNFTGroup';
+import { useNFTIndexer } from './hooks/useNFTIndexer';
+import { useNFTIndexerQuery } from './hooks/useNFTIndexerQuery';
 
 export {
   // Hooks
@@ -25,8 +28,11 @@ export {
   // Wrapped by useNFT, can use the underlying hooks here
   useZNFT,
   useZNFTGroup,
+  useNFTIndexer,
+  useNFTIndexerQuery,
   useOpenseaNFT,
   useZoraUsername,
+  useENSAddress,
   // Hook types
   useNFTContentType,
   useNFTMetadataType,

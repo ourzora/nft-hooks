@@ -487,6 +487,8 @@ export type InactiveAsk_Filter = {
   media_not_ends_with?: Maybe<Scalars['String']>;
   type?: Maybe<MarketEventType>;
   type_not?: Maybe<MarketEventType>;
+  type_in?: Maybe<Array<MarketEventType>>;
+  type_not_in?: Maybe<Array<MarketEventType>>;
   currency?: Maybe<Scalars['String']>;
   currency_not?: Maybe<Scalars['String']>;
   currency_gt?: Maybe<Scalars['String']>;
@@ -640,6 +642,8 @@ export type InactiveBid_Filter = {
   media_not_ends_with?: Maybe<Scalars['String']>;
   type?: Maybe<MarketEventType>;
   type_not?: Maybe<MarketEventType>;
+  type_in?: Maybe<Array<MarketEventType>>;
+  type_not_in?: Maybe<Array<MarketEventType>>;
   currency?: Maybe<Scalars['String']>;
   currency_not?: Maybe<Scalars['String']>;
   currency_gt?: Maybe<Scalars['String']>;
@@ -833,6 +837,8 @@ export type InactiveReserveAuctionBid_Filter = {
   bidder_not_ends_with?: Maybe<Scalars['String']>;
   bidType?: Maybe<ReserveAuctionBidType>;
   bidType_not?: Maybe<ReserveAuctionBidType>;
+  bidType_in?: Maybe<Array<ReserveAuctionBidType>>;
+  bidType_not_in?: Maybe<Array<ReserveAuctionBidType>>;
   bidInactivatedAtTimestamp?: Maybe<Scalars['BigInt']>;
   bidInactivatedAtTimestamp_not?: Maybe<Scalars['BigInt']>;
   bidInactivatedAtTimestamp_gt?: Maybe<Scalars['BigInt']>;
@@ -1223,6 +1229,7 @@ export type Query = {
 export type QueryMediaArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1233,12 +1240,14 @@ export type QueryMediasArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Media_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1249,12 +1258,14 @@ export type QueryUsersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<User_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1265,12 +1276,14 @@ export type QueryAsksArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Ask_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1281,12 +1294,14 @@ export type QueryBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Bid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryInactiveBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1297,12 +1312,14 @@ export type QueryInactiveBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryInactiveAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1313,12 +1330,14 @@ export type QueryInactiveAsksArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveAsk_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryCurrencyArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1329,12 +1348,14 @@ export type QueryCurrenciesArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Currency_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryTransferArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1345,12 +1366,14 @@ export type QueryTransfersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Transfer_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryUriupdateArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1361,12 +1384,14 @@ export type QueryUriupdatesArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<UriUpdate_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1377,12 +1402,14 @@ export type QueryReserveAuctionBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<ReserveAuctionBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryInactiveReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1393,12 +1420,14 @@ export type QueryInactiveReserveAuctionBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveReserveAuctionBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type QueryReserveAuctionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1409,6 +1438,7 @@ export type QueryReserveAuctionsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<ReserveAuction_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1566,6 +1596,8 @@ export type ReserveAuctionBid_Filter = {
   bidder_not_ends_with?: Maybe<Scalars['String']>;
   bidType?: Maybe<ReserveAuctionBidType>;
   bidType_not?: Maybe<ReserveAuctionBidType>;
+  bidType_in?: Maybe<Array<ReserveAuctionBidType>>;
+  bidType_not_in?: Maybe<Array<ReserveAuctionBidType>>;
   createdAtTimestamp?: Maybe<Scalars['BigInt']>;
   createdAtTimestamp_not?: Maybe<Scalars['BigInt']>;
   createdAtTimestamp_gt?: Maybe<Scalars['BigInt']>;
@@ -1763,6 +1795,8 @@ export type ReserveAuction_Filter = {
   auctionCurrency_not_ends_with?: Maybe<Scalars['String']>;
   status?: Maybe<ReserveAuctionStatus>;
   status_not?: Maybe<ReserveAuctionStatus>;
+  status_in?: Maybe<Array<ReserveAuctionStatus>>;
+  status_not_in?: Maybe<Array<ReserveAuctionStatus>>;
   currentBid?: Maybe<Scalars['String']>;
   currentBid_not?: Maybe<Scalars['String']>;
   currentBid_gt?: Maybe<Scalars['String']>;
@@ -1888,6 +1922,7 @@ export type Subscription = {
 export type SubscriptionMediaArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1898,12 +1933,14 @@ export type SubscriptionMediasArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Media_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1914,12 +1951,14 @@ export type SubscriptionUsersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<User_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1930,12 +1969,14 @@ export type SubscriptionAsksArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Ask_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1946,12 +1987,14 @@ export type SubscriptionBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Bid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionInactiveBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1962,12 +2005,14 @@ export type SubscriptionInactiveBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionInactiveAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1978,12 +2023,14 @@ export type SubscriptionInactiveAsksArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveAsk_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionCurrencyArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -1994,12 +2041,14 @@ export type SubscriptionCurrenciesArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Currency_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionTransferArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2010,12 +2059,14 @@ export type SubscriptionTransfersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Transfer_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionUriupdateArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2026,12 +2077,14 @@ export type SubscriptionUriupdatesArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<UriUpdate_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2042,12 +2095,14 @@ export type SubscriptionReserveAuctionBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<ReserveAuctionBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionInactiveReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2058,12 +2113,14 @@ export type SubscriptionInactiveReserveAuctionBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveReserveAuctionBid_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
 export type SubscriptionReserveAuctionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2074,6 +2131,7 @@ export type SubscriptionReserveAuctionsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<ReserveAuction_Filter>;
   block?: Maybe<Block_Height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -2247,6 +2305,8 @@ export type UriUpdate_Filter = {
   transactionHash_not_ends_with?: Maybe<Scalars['String']>;
   type?: Maybe<UriUpdateType>;
   type_not?: Maybe<UriUpdateType>;
+  type_in?: Maybe<Array<UriUpdateType>>;
+  type_not_in?: Maybe<Array<UriUpdateType>>;
   from?: Maybe<Scalars['String']>;
   from_not?: Maybe<Scalars['String']>;
   from_gt?: Maybe<Scalars['String']>;
@@ -2463,7 +2523,7 @@ export type AskPriceFragment = (
 
 export type NftMediaFragment = (
   { __typename?: 'Media' }
-  & Pick<Media, 'id' | 'creatorBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & Pick<Media, 'id' | 'creatorBidShare' | 'ownerBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
   & { owner: (
     { __typename?: 'User' }
     & Pick<User, 'id'>

@@ -1,5 +1,10 @@
+## __Deprecated:__
+This hook has been deprecated in favor of useNFT
+
+
 This hook fetches data found on the blockchain from the given zNFT. The only argument for the hook is the NFT id. To fetch data for zNFTs on other networks, use the `NFTFetchConfiguration` wrapper component to set the correct network for loading the NFT data.
 The main types are within the result `data.nft` object. This object contains the on-chain NFT data itself. The pricing information can be found in `data.pricing` which corresponds to data on-chain for Zora's perpetual zNFT auctions along with the reserve auction functionality.
+
 
 ```ts
 import {useZNFT} from "@zoralabs/nft-hooks";

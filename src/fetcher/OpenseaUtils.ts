@@ -1,4 +1,4 @@
-import { ReserveAuctionPartialFragment } from '../graph-queries/zora-types';
+import { ReserveAuctionPartialFragment } from '../graph-queries/zora-graph-types';
 import { CurrencyLookupType, OpenseaNFTDataType } from './AuctionInfoTypes';
 import { RequestError } from './RequestError';
 import { addAuctionInformation, auctionDataToPricing } from './TransformFetchResults';
@@ -18,6 +18,8 @@ export type OpenseaResponse = {
     address: string;
     created_date: string;
     name: string;
+    symbol: string;
+    image_url: string;
     // should be ERC721
     schema_name: string;
   };
@@ -49,6 +51,9 @@ export const transformOpenseaResponse = (
       tokenId: data.token_id,
       contract: {
         address: data.asset_contract.address,
+        name: data.asset_contract.name,
+        image: data.asset_contract.image_url,
+        symbol: data.asset_contract.symbol,
       },
       owner: data.owner.address,
       creator: data.creator?.address,

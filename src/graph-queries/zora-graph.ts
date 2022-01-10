@@ -13,6 +13,7 @@ const MEDIA_PARTIALS = gql`
   fragment NFTMedia on Media {
     id
     creatorBidShare
+    ownerBidShare
     owner {
       id
     }
