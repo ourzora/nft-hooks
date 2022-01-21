@@ -1,20 +1,31 @@
 import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
-import { RequestError } from 'src';
-import { NetworkIDs } from 'src/constants/networks';
-import { THEGRAPH_API_URL_BY_NETWORK } from 'src/constants/urls';
-import { FetchWithTimeout } from 'src/fetcher/FetchWithTimeout';
-import { GET_AUCTION_BY_MEDIA } from 'src/graph-queries/zora';
+import { RequestError } from '../';
+import { NetworkIDs } from '../constants/networks';
+import { THEGRAPH_API_URL_BY_NETWORK } from '../constants/urls';
+import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
+import { GET_AUCTION_BY_MEDIA } from '../graph-queries/zora-graph';
+import type { AuctionBidEvent, AuctionLike, NFTObject } from './NFTInterface';
 import {
   GetAuctionByMediaQuery,
   ReserveAuctionPartialFragment,
-} from 'src/graph-queries/zora-types';
+} from '../graph-queries/zora-graph-types';
 import { GraphAuctionInterface } from './GraphAuctionInterface';
-import { NFTObject } from './NFTInterface';
+import Big from 'big.js';
 
+function unixTimeNow() {
+  return Math.floor(new Date().getTime() / 1000);
+}
+
+function priceToPretty(number: string, decimals?: number | null) {
+  return new Big(number)
+    .div(new Big(10).pow(decimals || 18))
+    .toFixed(2)
+    .toString();
+}
 export class GraphAuctionDataSource implements GraphAuctionInterface {
   // auctionInfoLoader fetches auction info for non-zora NFTs
-  auctionInfoLoader: DataLoader<string, ReserveAuctionPartialFragment>;
+  auctionInfoLoader: DataLoader<string, NFTObject>;
   networkId: NetworkIDs;
   timeout: number;
 
@@ -27,59 +38,107 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
     this.networkId = networkId;
   }
 
-  loadAuctionInfo(
-    contractAddress: string,
-    tokenId: string
-  ): Promise<ReserveAuctionPartialFragment> {
-    return this.auctionInfoLoader.load(`${contractAddress.toLowerCase()}:${tokenId}`);
+  loadAuctionInfo(contractAddress: string, tokenId: string): Promise<NFTObject> {
+    return this.auctionInfoLoader.load(`${contractAddress.toLowerCase()}-${tokenId}`);
   }
 
-  transformNFT(response: ReserveAuctionPartialFragment, currentObject: NFTObject) {
+  static transformNFT(response: ReserveAuctionPartialFragment) {
+    const currentObject: NFTObject = { rawData: {}, markets: [] };
+
+    const getStatus = () => {
+      if (!response.approved) {
+        return 'pending';
+      }
+      if (response.firstBidTime) {
+        return 'active';
+      }
+      if (response.finalizedAtTimestamp) {
+        return 'complete';
+      }
+      if (
+        response.expectedEndTimestamp ||
+        response.expectedEndTimestamp >= unixTimeNow()
+      ) {
+        return 'complete';
+      }
+      return 'unknown';
+    };
+
+    function addCurrencyInfo(amount: string) {
+      if (response.auctionCurrency.id === '0x0000000000000000000000000000000000000000') {
+        return {
+          currency: response.auctionCurrency.id,
+          name: 'Ethereum',
+          symbol: 'ETH',
+          decimals: 18,
+          amount,
+          prettyAmount: priceToPretty(amount, 18),
+        };
+      }
+      return {
+        currency: response.auctionCurrency.id,
+        name: response.auctionCurrency.name,
+        symbol: response.auctionCurrency.symbol,
+        decimals: response.auctionCurrency.decimals || undefined,
+        amount,
+        prettyAmount: priceToPretty(amount, response.auctionCurrency.decimals || 18),
+      };
+    }
+
+    const getAmount = () => {
+      // current bid
+      if (response.currentBid?.amount) {
+        return addCurrencyInfo(response.currentBid.amount);
+      }
+
+      return addCurrencyInfo(response.reservePrice);
+    };
+
+    const formatBid = (bid: any): AuctionBidEvent => {
+      return {
+        creator: bid.bidder.id,
+        amount: addCurrencyInfo(bid.amount),
+        block: {
+          timestamp: bid.createdAtTimestamp,
+          number: bid.createdAtBlockNumber,
+          txn: bid.transactionHash,
+        },
+      };
+    };
+
     const getHighestBid = () => {
       if (response.currentBid) {
-        return {
-          pricing: response.auctionCurrency,
-          placedBy: response.currentBid.bidder.id,
-          placedAt: response.currentBid.createdAtTimestamp,
-        };
+        return formatBid(response.currentBid);
       }
       if (response.previousBids) {
         const topBid = response.previousBids[response.previousBids.length - 1];
-        return {
-          pricing: {
-            currency: response.auctionCurrency,
-            amount: topBid.amount,
-            prettyAmount: topBid.amount,
-          },
-          placedBy: topBid.bidder.id,
-          placedAt: topBid.createdAtTimestamp,
-        };
+        return formatBid(topBid);
       }
       return undefined;
     };
-    currentObject.market = {
-      reserve: {
-        current: {
-          highestBid: getHighestBid(),
-          likelyHasEnded:
-            response.expectedEndTimestamp >= Math.floor(new Date().getTime() / 1000),
-          reserveMet: !!(response.previousBids?.length || response.currentBid),
-          reservePrice: {
-            amount: response.reservePrice,
-            prettyAmount: response.reservePrice,
-            currency: response.auctionCurrency,
-          },
-          bids: [
-            ...(response.currentBid ? [response.currentBid] : []),
-            ...(response.previousBids ? response.previousBids : []),
-          ],
-        },
-      },
+
+    const auction: AuctionLike = {
+      status: getStatus(),
+      amount: getAmount(),
+      raw: response,
+      createdAt: response.createdAtTimestamp,
+      finishedAt: response.finalizedAtTimestamp,
+      startedAt: response.firstBidTime,
+      // if cancelled record is deleted
+      cancelledAt: undefined,
+      winner: response.currentBid?.bidder.id,
+      endsAt: response.expectedEndTimestamp,
+      duration: response.duration,
+      currentBid: getHighestBid(),
+      source: 'ZoraReserveV0',
+      bids: [...(response.previousBids?.map(formatBid) || [])],
     };
+    currentObject.markets = [auction];
+
     return currentObject;
   }
 
-  async fetchAuctionNFTInfo(tokenAndAddresses: readonly string[]) {
+  fetchAuctionNFTInfo = async (tokenAndAddresses: readonly string[]) => {
     const fetchWithTimeout = new FetchWithTimeout(this.timeout);
     const client = new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
       fetch: fetchWithTimeout.fetch,
@@ -92,10 +151,14 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
     if (!response.reserveAuctions) {
       throw new RequestError('Missing auction in reponse');
     }
-    return tokenAndAddresses.map(
-      (tokenAndAddress: string) =>
-        response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
-        new Error('Missing Record')
-    );
-  }
+    return tokenAndAddresses
+      .map(
+        (tokenAndAddress: string) =>
+          response.reserveAuctions.find((auction) => auction.token === tokenAndAddress) ||
+          new Error('Missing Record')
+      )
+      .map((response) =>
+        response instanceof Error ? response : GraphAuctionDataSource.transformNFT(response)
+      );
+  };
 }

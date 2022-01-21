@@ -22,12 +22,15 @@ export class OpenseaDataSource implements OpenseaInterface {
     this.endpoint = OPENSEA_API_URL_BY_NETWORK[networkId];
     this.timeout = timeout;
   }
-  async loadNFT(tokenContract: string, tokenId: string): Promise<OpenseaAsset | Error> {
+  loadNFT = async (
+    tokenContract: string,
+    tokenId: string
+  ): Promise<OpenseaAsset | Error> => {
     return await this.nftsLoader.load(`${tokenContract}:${tokenId}`);
-  }
-  async loadNFTs(tokenContractAndId: string[]): Promise<(OpenseaAsset | Error)[]> {
+  };
+  loadNFTs = async (tokenContractAndId: string[]): Promise<(OpenseaAsset | Error)[]> => {
     return await this.nftsLoader.loadMany(tokenContractAndId);
-  }
+  };
   canLoadNFT() {
     return true;
   }
@@ -42,22 +45,36 @@ export class OpenseaDataSource implements OpenseaInterface {
       },
       owner: asset.owner.address,
       creator: asset.creator.address,
-      metadataURI: null,
-      contentURI: null,
+      metadataURI: asset.token_metadata,
+      contentURI: asset.animation_original_url || asset.image_original_url,
     };
     object.metadata = {
       name: asset.name,
       description: asset.description,
       animation_url: asset.animation_url,
       image: asset.image_url,
+      attributes: asset.traits.map((trait) => ({
+        name: trait.trait_type,
+        value: trait.value,
+        display: trait.display_type,
+      })),
+    };
+    object.media = {
+      thumbnail: asset.image_thumbnail_url,
+      preview: asset.image_preview_url,
+      full: asset.animation_url || asset.image_url,
+      source: 'opensea',
+    };
+    if (!object.rawData) {
+      object.rawData = {};
     }
     object.rawData['opensea'] = asset;
     return object;
   }
 
-  async fetchNFTsOpensea(
+  fetchNFTsOpensea = async (
     nftAddressesAndTokens: readonly string[]
-  ): Promise<(Error | OpenseaAsset)[]> {
+  ): Promise<(Error | OpenseaAsset)[]> => {
     const urlParams: string[] = [];
     const nftTuples = nftAddressesAndTokens.map((address) =>
       address.toLowerCase().split(':')
@@ -80,5 +97,5 @@ export class OpenseaDataSource implements OpenseaInterface {
             asset.asset_contract.address.toLowerCase() === address
         ) || new Error('No asset')
     );
-  }
+  };
 }

@@ -31,13 +31,11 @@ export function useNFTIndexer(
   tokenId?: string,
   options: OptionsType = {}
 ): useNFTType {
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
   const { refreshInterval, initialData, loadCurrencyInfo = true } = options || {};
 
   const nftData = useSWR(
-    contractAddress && tokenId
-      ? ['loadIndexerNFT', contractAddress, tokenId]
-      : null,
+    contractAddress && tokenId ? ['loadIndexerNFT', contractAddress, tokenId] : null,
     (_, contractAddress, tokenId) =>
       fetcher.loadZoraNFTIndexerNFTUntransformed(contractAddress, tokenId),
     { dedupingInterval: 0, initialData: initialData?.tokenData, onErrorRetry }

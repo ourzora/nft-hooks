@@ -13,7 +13,7 @@ const getId = () => id++;
 describe('useNFT', () => {
   beforeEach(() => {
     fetchMock.reset();
-    defaultFetchAgent.clearCache();
+    defaultFetchAgent.fetcher.clearCache();
   });
   const RESERVE_AUCTION_MOCK = {
     tokenId: getId,

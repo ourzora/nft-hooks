@@ -44,7 +44,7 @@ export function useNFTIndexerQuery(
   options: OptionsType = {}
 ): useNFTType {
   options.onErrorRetry = onErrorRetry;
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
 
   if (owner && curatorAddress) {
     throw new Error('Owner and curator address cannot be specified at the same time');

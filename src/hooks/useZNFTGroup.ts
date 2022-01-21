@@ -31,7 +31,7 @@ export function useZNFTGroup(
   type: FetchGroupTypes = 'creator',
   options: OptionsType = {}
 ): useZNFTType {
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
   const { loadCurrencyInfo = false, refreshInterval, initialData } = options || {};
 
   const nftData = useSWR(
@@ -44,8 +44,8 @@ export function useZNFTGroup(
       ? [
           'loadCurrencies',
           ...nftData.data
-            .map((item) => getCurrenciesInUse(addAuctionInformation(item.pricing)))
-            .reduce((last, item) => last.concat(item), []),
+            .map((item: any) => getCurrenciesInUse(addAuctionInformation(item.pricing)))
+            .reduce((last: any, item: any) => last.concat(item), []),
         ]
       : null,
     (_, ...currencies) => fetcher.loadCurrencies(currencies),
@@ -57,7 +57,7 @@ export function useZNFTGroup(
 
   let medias;
   if (nftData.data !== undefined) {
-    medias = nftData.data.map((media) => ({
+    medias = nftData.data.map((media: any) => ({
       ...media,
       pricing: addAuctionInformation(media.pricing, currencyData.data),
     }));

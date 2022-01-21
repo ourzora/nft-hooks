@@ -7,7 +7,7 @@ import { defaultFetchAgent } from '../src/context/NFTFetchContext';
 
 describe('useNFTContent', () => {
   afterEach(() => {
-    defaultFetchAgent.clearCache();
+    defaultFetchAgent.fetcher.clearCache();
     fetchMock.reset();
   });
 

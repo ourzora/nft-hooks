@@ -2,14 +2,13 @@ import { useContext } from 'react';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { NFTDataType } from '../fetcher/AuctionInfoTypes';
-import { useOpenseaNFT } from './useOpenseaNFT';
-import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
-import { useZNFT } from './useZNFT';
-import { useNFTIndexer } from './useNFTIndexer';
+import merge from 'merge-deep';
+import useSWR from 'swr';
 
 export type useNFTType = {
   currencyLoaded: boolean;
-  error?: string;
+  error?: any;
+  marketError?: any;
   data?: NFTDataType;
 };
 
@@ -33,41 +32,24 @@ export function useNFT(
   tokenId?: string,
   options: OptionsType = {}
 ): useNFTType {
-  const fetcher = useContext(NFTFetchContext);
+  const { strategy } = useContext(NFTFetchContext);
 
-  if (!contractAddress) {
-    contractAddress = ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
-  }
-
-  const isZoraContractAddress =
-    contractAddress === ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
-
-  const openseaNFT = useOpenseaNFT(
-    !options.useBetaIndexer && !isZoraContractAddress ? contractAddress : undefined,
-    !options.useBetaIndexer && !isZoraContractAddress ? tokenId : undefined,
+  const { data: nftData, error: nftError } = useSWR(
+    contractAddress && tokenId ? ['fetchNFTData', contractAddress, tokenId] : null,
+    (_, address: string, tokenId: string) => strategy.fetchNFT(address, tokenId),
     options
   );
 
-  const betaIndexerNFT = useNFTIndexer(
-    options.useBetaIndexer ? contractAddress : undefined,
-    options.useBetaIndexer ? tokenId : undefined,
+  const { data: nftMarketData, error: nftMarketError } = useSWR(
+    strategy.shouldFetchMarket() && contractAddress && tokenId ? ['fetchNFTMarket', contractAddress, tokenId] : null,
+    (_, address: string, tokenId: string) => strategy.fetchMarket(address, tokenId),
     options
   );
-
-  const zoraNFT = useZNFT(
-    !options.useBetaIndexer && isZoraContractAddress ? tokenId : undefined,
-    options
-  );
-
-  let data = options.useBetaIndexer
-    ? betaIndexerNFT
-    : isZoraContractAddress
-    ? zoraNFT
-    : openseaNFT;
 
   return {
-    currencyLoaded: !!data.currencyLoaded,
-    error: data.error,
-    data: data.data,
+    data: nftData ? merge(nftData, nftMarketData) : undefined,
+    currencyLoaded: false,
+    error: nftError,
+    marketError: nftMarketError,
   };
 }

@@ -18,7 +18,7 @@ export type useNFTMetadataType = {
  * @returns @type useNFTMetadataType
  */
 export function useNFTMetadata(uri?: string, initialData?: any): useNFTMetadataType {
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
   const { error, data } = useSWR(
     uri ? ['loadMetadata', uri] : null,
     (_, uri) => fetcher.fetchIPFSMetadata(uri),

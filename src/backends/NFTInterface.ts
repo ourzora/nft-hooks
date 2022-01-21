@@ -1,15 +1,59 @@
-import {
-  CurrentReserveBid,
-  HighestBidType,
-  PerpetualAsk,
-  PerpetualBid,
-  PricingInfo,
-} from 'src/fetcher/AuctionInfoTypes';
-import { AuctionStateInfo } from 'src/fetcher/AuctionState';
 import { KNOWN_CONTRACTS } from '../fetcher/FetchResultTypes';
 import { ETHAddress } from '../types/standard';
 
 type Nullable<T> = T | null;
+
+
+type CurrencyValue = {
+  usdValue?: string,
+  ethValue?: string,
+  symbol: string,
+  decimals?: number,
+  amount: string,
+  prettyAmount: string,
+};
+
+export type AuctionBidEvent = {
+  creator: string,
+  amount: CurrencyValue,
+  block: {
+    timestamp: string,
+    txn: string,
+    number: string,
+  },
+};
+
+export type AuctionLike = {
+  winner?: string,
+  endsAt?: number,
+  duration: number,
+  startedAt?: number,
+  currentBid?: AuctionBidEvent,
+  // current bid is duplicated within bids
+  bids: AuctionBidEvent[],
+  source: 'ZoraReserveV0' | 'OpenseaEnglish',
+} & MarketInfo;
+
+type FixedPriceLike = {
+  type: 'ask' | 'offer',
+  expires: string,
+  source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'OpenseaFixed'
+} & MarketInfo;
+
+type MarketInfo = {
+  raw: any,
+  amount: CurrencyValue,
+  // pending - inactive pending some event
+  // active - can be filled / auction is ongoing
+  // completed - auction end fill complete
+  // cancelled - user cancels at some point
+  status: 'pending' | 'active' | 'complete' | 'cancelled' | 'unknown';
+  createdAt: number,
+  finishedAt?: number,
+  cancelledAt?: number,
+}
+
+export type MarketModule = AuctionLike | FixedPriceLike;
 
 export type NFTObject = {
   rawData: {
@@ -20,6 +64,12 @@ export type NFTObject = {
     description: string;
     component: string;
   };
+  media?: {
+    thumbnail: Nullable<string>,
+    preview: Nullable<string>,
+    full: Nullable<string>,
+    source: 'opensea' | 'zora' | 'derived',
+  },
   nft?: {
     tokenId: string;
     contract: {
@@ -40,25 +90,14 @@ export type NFTObject = {
     image: Nullable<string>;
     description: Nullable<string>;
     animation_url: Nullable<string>;
+    attributes: {
+      name: Nullable<string>,
+      value: Nullable<string>,
+      display: Nullable<string>,
+    }[],
     raw?: any;
   };
-  market?: {
-    status: AuctionStateInfo;
-    perpetual: {
-      bids: PerpetualBid[];
-      ask?: PerpetualAsk;
-      highestBid?: HighestBidType;
-    };
-    reserve?: {
-      current: {
-        highestBid?: HighestBidType;
-        likelyHasEnded: boolean;
-        reserveMet: boolean;
-        reservePrice?: PricingInfo;
-        bids?: CurrentReserveBid[];
-      };
-    };
-  };
+  markets?: MarketModule[],
 };
 
 export interface NFTInterface<T> {

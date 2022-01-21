@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 
-const MEDIA_PARTIALS = gql`
+const AUCTION_PARTIALS = gql`
   fragment AskPrice on Ask {
     id
     currency {
@@ -29,14 +29,24 @@ const MEDIA_PARTIALS = gql`
     contentURI
     contentHash
   }
-`;
 
-const AUCTION_PARTIALS = gql`
   fragment CurrencyShort on Currency {
     id
     name
     symbol
     decimals
+  }
+  fragment TransferPartial on Transfer {
+    id
+    transactionHash
+    from {
+      id
+    }
+    to {
+      id
+    }
+    createdAtTimestamp
+    createdAtBlockNumber
   }
 
   fragment PreviousReserveBid on InactiveReserveAuctionBid {
@@ -72,6 +82,7 @@ const AUCTION_PARTIALS = gql`
     reservePrice
     firstBidTime
     token
+    createdAtBlockNumber
     createdAtTimestamp
     approvedTimestamp
     curator {
@@ -94,11 +105,36 @@ const AUCTION_PARTIALS = gql`
     expectedEndTimestamp
     finalizedAtTimestamp
   }
+
+  fragment BidDataPartial on Bid {
+    id
+    bidder {
+      id
+    }
+    createdAtTimestamp
+    transactionHash
+    amount
+    currency {
+      ...CurrencyShort
+    }
+  }
+
+  fragment NFTMediaFullData on Media {
+    ...NFTMedia
+    currentBids {
+      ...BidDataPartial
+    }
+    transfers {
+      ...TransferPartial
+    }
+    reserveAuctions(orderBy: createdAtTimestamp, orderDirection: desc, first: 1) {
+      ...ReserveAuctionPartial
+    }
+  }
 `;
 
 export const GET_AUCTION_BY_CURATOR = gql`
   ${AUCTION_PARTIALS}
-  ${MEDIA_PARTIALS}
 
   fragment ReserveAuctionPartialWithMedia on ReserveAuction {
     ...ReserveAuctionPartial
@@ -131,6 +167,9 @@ export const GET_ALL_AUCTIONS = gql`
   query getAllAuctions($approved: [Boolean!], $first: Int, $skip: Int) {
     reserveAuctions(where: { approved_in: $approved }, first: $first, skip: $skip) {
       ...ReserveAuctionPartial
+      media {
+        ...NFTMediaFullData
+      }
     }
   }
 `;
@@ -146,74 +185,28 @@ export const GET_AUCTION_BY_MEDIA = gql`
       orderDirection: desc
     ) {
       ...ReserveAuctionPartial
+      media {
+        ...NFTMediaFullData
+      }
     }
   }
 `;
 
 export const GET_MEDIAS_QUERY = gql`
   ${AUCTION_PARTIALS}
-  ${MEDIA_PARTIALS}
-
-  fragment BidDataPartial on Bid {
-    id
-    bidder {
-      id
-    }
-    createdAtTimestamp
-    transactionHash
-    amount
-    currency {
-      ...CurrencyShort
-    }
-  }
-
-  fragment TransferPartial on Transfer {
-    id
-    transactionHash
-    from {
-      id
-    }
-    to {
-      id
-    }
-    createdAtTimestamp
-    createdAtBlockNumber
-  }
-
-  fragment NFTMediaFullData on Media {
-    ...NFTMedia
-    currentBids {
-      ...BidDataPartial
-    }
-    transfers {
-      ...TransferPartial
-    }
-    reserveAuctions(orderBy: createdAtTimestamp, orderDirection: desc, first: 1) {
-      ...ReserveAuctionPartial
-    }
-  }
 
   query getMediaAndAuctions(
     $id_ids: [ID!]
     $creator_ids: [String!]
     $owner_ids: [String!]
   ) {
-    id: medias(
-      where: { id_in: $id_ids }
-      first: 500
-    ) {
+    id: medias(where: { id_in: $id_ids }, first: 500) {
       ...NFTMediaFullData
     }
-    creator: medias(
-      where: { creator_in: $creator_ids }
-      first: 500
-    ) {
+    creator: medias(where: { creator_in: $creator_ids }, first: 500) {
       ...NFTMediaFullData
     }
-    owner: medias(
-      where: { owner_in: $owner_ids }
-      first: 500
-    ) {
+    owner: medias(where: { owner_in: $owner_ids }, first: 500) {
       ...NFTMediaFullData
     }
   }

@@ -24,7 +24,7 @@ export function useAuctions(
   options: SWRConfiguration<ReserveAuctionPartialWithMediaFragment[]> = {}
 ): useAuctionHouseType {
   options.onErrorRetry = onErrorRetry;
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
   const queryKey = JSON.stringify({ type: 'useAuctions', curators, approved });
   const { data, error } = useSWR<ReserveAuctionPartialWithMediaFragment[]>(
     queryKey,

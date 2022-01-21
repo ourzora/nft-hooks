@@ -14,11 +14,6 @@
       "schema": "./graph-schemas/uniswap.graphql",
       "documents": "./src/graph-queries/uniswap.ts",
       "plugins": ["typescript", "typescript-operations"]
-    },
-    "./src/graph-queries/ens-graph-types.ts": {
-      "schema": "./graph-schemas/ens.graphql",
-      "documents": "./src/graph-queries/ens-graph.ts",
-      "plugins": ["typescript", "typescript-operations"]
     }
   }
 }

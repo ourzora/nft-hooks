@@ -2,7 +2,6 @@ import * as bytes from '@ethersproject/bytes';
 import { isAddress } from '@ethersproject/address';
 
 import { FetchWithTimeout } from './FetchWithTimeout';
-import { RPC_URL_BY_NETWORK } from '../constants/urls';
 import { ENS_REVERSE_LOOKUP_CONTRACT_BY_NETWORK } from '../constants/addresses';
 
 function parseHexNumber(hex: string) {
@@ -32,11 +31,12 @@ function processReturnData(result: string) {
 
 export async function reverseResolveEnsAddresses(
   addresses: readonly string[],
-  networkId: any,
+  networkId: string,
+  endpoint: string,
   timeout: number
 ) {
   if (!ENS_REVERSE_LOOKUP_CONTRACT_BY_NETWORK[networkId]) {
-    throw new Error('Undefined ENS lookup for network');
+    throw new Error('Cannot lookup reverse for network');
   }
   const mapping = addresses.reduce((last, at) => {
     if (!isAddress(at)) {
@@ -72,7 +72,7 @@ export async function reverseResolveEnsAddresses(
     }),
   };
   const fetcher = new FetchWithTimeout(timeout, 'application/json');
-  const result = await fetcher.fetch(RPC_URL_BY_NETWORK[networkId], requestOptions);
+  const result = await fetcher.fetch(endpoint, requestOptions);
   const json = await result.json();
   const resultAddresses = processReturnData(json.result);
   if (resultAddresses.length !== mappingKeys.length) {

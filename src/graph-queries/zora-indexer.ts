@@ -127,7 +127,7 @@ export const ACTIVE_AUCTIONS_QUERY = gql`
       order_by: [
         { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
         { auctions_aggregate: { count: desc } }
-        { tokenId: asc }
+        { mintTransferEvent: { blockNumber: desc } }
       ]
       limit: $limit
       offset: $offset

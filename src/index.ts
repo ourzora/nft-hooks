@@ -1,7 +1,5 @@
 import { Networks, NetworkIDs } from './constants/networks';
 import { useNFT, useNFTType } from './hooks/useNFT';
-import { useZNFT, useZNFTType } from './hooks/useZNFT';
-import { useOpenseaNFT, useOpenseaNFTType } from './hooks/useOpenseaNFT';
 import { useNFTContent, useNFTContentType } from './hooks/useNFTContent';
 import { useENSAddress } from './hooks/useENSAddress';
 import { useNFTMetadata, useNFTMetadataType } from './hooks/useNFTMetadata';
@@ -26,19 +24,15 @@ export {
   useNFTContent,
   useNFTMetadata,
   // Wrapped by useNFT, can use the underlying hooks here
-  useZNFT,
   useZNFTGroup,
   useNFTIndexer,
   useNFTIndexerQuery,
-  useOpenseaNFT,
   useZoraUsername,
   useENSAddress,
   // Hook types
   useNFTContentType,
   useNFTMetadataType,
   useNFTType,
-  useOpenseaNFTType,
-  useZNFTType,
   // Types
   PricingInfo,
   // Configuration

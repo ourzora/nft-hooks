@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
-import { ZORA_USERNAME_API_URL } from 'src/constants/urls';
-import { FetchWithTimeout } from 'src/fetcher/FetchWithTimeout';
+import { ZORA_USERNAME_API_URL } from '../constants/urls';
+import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
 import { UsernameResponseType, ZoraUserInterface } from './ZoraUserInterface';
 
 export class ZoraUserDataSource implements ZoraUserInterface {

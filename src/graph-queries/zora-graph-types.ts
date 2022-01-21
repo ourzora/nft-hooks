@@ -2541,6 +2541,18 @@ export type CurrencyShortFragment = (
   & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
 );
 
+export type TransferPartialFragment = (
+  { __typename?: 'Transfer' }
+  & Pick<Transfer, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'>
+  & { from: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), to: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
 export type PreviousReserveBidFragment = (
   { __typename?: 'InactiveReserveAuctionBid' }
   & Pick<InactiveReserveAuctionBid, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
@@ -2561,7 +2573,7 @@ export type CurrentReserveBidFragment = (
 
 export type ReserveAuctionPartialFragment = (
   { __typename?: 'ReserveAuction' }
-  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'token' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'token' | 'createdAtBlockNumber' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
   & { curator: (
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -2578,6 +2590,33 @@ export type ReserveAuctionPartialFragment = (
     { __typename?: 'InactiveReserveAuctionBid' }
     & PreviousReserveBidFragment
   )>> }
+);
+
+export type BidDataPartialFragment = (
+  { __typename?: 'Bid' }
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
+
+export type NftMediaFullDataFragment = (
+  { __typename?: 'Media' }
+  & { currentBids?: Maybe<Array<(
+    { __typename?: 'Bid' }
+    & BidDataPartialFragment
+  )>>, transfers?: Maybe<Array<(
+    { __typename?: 'Transfer' }
+    & TransferPartialFragment
+  )>>, reserveAuctions?: Maybe<Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )>> }
+  & NftMediaFragment
 );
 
 export type ReserveAuctionPartialWithMediaFragment = (
@@ -2616,6 +2655,10 @@ export type GetAllAuctionsQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
+    & { media?: Maybe<(
+      { __typename?: 'Media' }
+      & NftMediaFullDataFragment
+    )> }
     & ReserveAuctionPartialFragment
   )> }
 );
@@ -2629,47 +2672,12 @@ export type GetAuctionByMediaQuery = (
   { __typename?: 'Query' }
   & { reserveAuctions: Array<(
     { __typename?: 'ReserveAuction' }
+    & { media?: Maybe<(
+      { __typename?: 'Media' }
+      & NftMediaFullDataFragment
+    )> }
     & ReserveAuctionPartialFragment
   )> }
-);
-
-export type BidDataPartialFragment = (
-  { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
-  & { bidder: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), currency: (
-    { __typename?: 'Currency' }
-    & CurrencyShortFragment
-  ) }
-);
-
-export type TransferPartialFragment = (
-  { __typename?: 'Transfer' }
-  & Pick<Transfer, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'>
-  & { from: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ), to: (
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  ) }
-);
-
-export type NftMediaFullDataFragment = (
-  { __typename?: 'Media' }
-  & { currentBids?: Maybe<Array<(
-    { __typename?: 'Bid' }
-    & BidDataPartialFragment
-  )>>, transfers?: Maybe<Array<(
-    { __typename?: 'Transfer' }
-    & TransferPartialFragment
-  )>>, reserveAuctions?: Maybe<Array<(
-    { __typename?: 'ReserveAuction' }
-    & ReserveAuctionPartialFragment
-  )>> }
-  & NftMediaFragment
 );
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{

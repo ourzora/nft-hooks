@@ -1,31 +1,44 @@
-import React, { useContext, useMemo } from 'react';
-import { Networks, NetworkIDs } from '../constants/networks';
+import React, { useMemo } from 'react';
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
+import { NFTStrategy } from '../strategies/NFTStrategy';
+import { ZoraGraphStrategy } from '../strategies/ZoraGraphStrategy';
+import { NetworkIDs, Networks } from '../constants/networks';
 
-export type FetchContext = InstanceType<typeof MediaFetchAgent>;
+export type FetchContext = { strategy: InstanceType<typeof NFTStrategy> };
 
-export const defaultFetchAgent = new MediaFetchAgent(Networks.MAINNET);
+const fetcher = new MediaFetchAgent(Networks.MAINNET);
+
+export const defaultFetchAgent: { strategy: NFTStrategy; fetcher: any } = {
+  strategy: new ZoraGraphStrategy(Networks.MAINNET),
+  fetcher,
+};
 
 export const NFTFetchContext = React.createContext(defaultFetchAgent);
 
 type NFTFetchConfigurationProps = {
+  strategy?: NFTStrategy;
   networkId: NetworkIDs;
   // TODO(iain): fix children type
   children: React.ReactNode;
 };
 
 export const NFTFetchConfiguration = ({
-  networkId,
+  strategy: userStrategy,
   children,
+  networkId,
 }: NFTFetchConfigurationProps) => {
-  const lastFetchContext = useContext(NFTFetchContext);
-  const fetchAgent = useMemo(() => {
-    if (lastFetchContext.networkId === networkId) {
-      return lastFetchContext;
+  const strategy = useMemo(() => {
+    if (userStrategy) {
+      return userStrategy;
     }
+    return new ZoraGraphStrategy(Networks.MAINNET);
+  }, [userStrategy]);
+  const fetcher = useMemo(() => {
     return new MediaFetchAgent(networkId);
   }, [networkId]);
   return (
-    <NFTFetchContext.Provider value={fetchAgent}>{children}</NFTFetchContext.Provider>
+    <NFTFetchContext.Provider value={{ strategy, fetcher }}>
+      {children}
+    </NFTFetchContext.Provider>
   );
 };
