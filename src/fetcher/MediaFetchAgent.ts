@@ -5,6 +5,7 @@ import { getAddress } from '@ethersproject/address';
 import { RequestError } from './RequestError';
 import {
   OPENSEA_API_URL_BY_NETWORK,
+  RPC_URL_BY_NETWORK,
   THEGRAPH_API_URL_BY_NETWORK,
   THEGRAPH_UNISWAP_URL_BY_NETWORK,
   ZORA_INDEXER_URL_BY_NETWORK,
@@ -226,6 +227,7 @@ export class MediaFetchAgent {
   async loadEnsBatch(addresses: readonly string[]) {
     const addressToNames = await reverseResolveEnsAddresses(
       addresses,
+      RPC_URL_BY_NETWORK[this.networkId],
       this.networkId,
       this.timeouts.Rpc
     );

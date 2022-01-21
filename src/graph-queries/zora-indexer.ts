@@ -31,12 +31,21 @@ const MEDIA_FRAGMENTS = gql`
       creatorBidShare
     }
   }
+  fragment AuctionBidEventPart on AuctionBidEvent {
+    id
+    value
+    sender
+    transactionHash
+    blockNumber
+    blockTimestamp
+  }
   fragment IndexerAuctionPart on Auction {
     winner
     lastBidAmount
     duration
     tokenId
     auctionId
+    approved
     tokenContract
     reservePrice
     firstBidTime
@@ -45,17 +54,29 @@ const MEDIA_FRAGMENTS = gql`
     curator
     curatorFee
     curatorFeePercentage
+    createdEvent {
+      blockNumber
+      blockTimestamp
+      transactionHash
+    }
+    currency {
+      name
+      symbol
+      decimals
+      address
+    }
     canceledEvent {
-      id
+      transactionHash
+      blockNumber
+      blockTimestamp
     }
     endedEvent {
-      id
+      transactionHash
+      blockNumber
+      blockTimestamp
     }
     bidEvents {
-      id
-      value
-      sender
-      transactionHash
+      ...AuctionBidEventPart
     }
   }
   fragment IndexerAuctionWithToken on Auction {

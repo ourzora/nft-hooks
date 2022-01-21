@@ -8999,18 +8999,29 @@ export type IndexerTokenPartFragment = (
   )> }
 );
 
+export type AuctionBidEventPartFragment = (
+  { __typename?: 'AuctionBidEvent' }
+  & Pick<AuctionBidEvent, 'id' | 'value' | 'sender' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+);
+
 export type IndexerAuctionPartFragment = (
   { __typename?: 'Auction' }
-  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner' | 'curator' | 'curatorFee' | 'curatorFeePercentage'>
-  & { canceledEvent?: Maybe<(
+  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'approved' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner' | 'curator' | 'curatorFee' | 'curatorFeePercentage'>
+  & { createdEvent?: Maybe<(
+    { __typename?: 'AuctionCreatedEvent' }
+    & Pick<AuctionCreatedEvent, 'blockNumber' | 'blockTimestamp' | 'transactionHash'>
+  )>, currency?: Maybe<(
+    { __typename?: 'Currency' }
+    & Pick<Currency, 'name' | 'symbol' | 'decimals' | 'address'>
+  )>, canceledEvent?: Maybe<(
     { __typename?: 'AuctionCanceledEvent' }
-    & Pick<AuctionCanceledEvent, 'id'>
+    & Pick<AuctionCanceledEvent, 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
   )>, endedEvent?: Maybe<(
     { __typename?: 'AuctionEndedEvent' }
-    & Pick<AuctionEndedEvent, 'id'>
+    & Pick<AuctionEndedEvent, 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
   )>, bidEvents: Array<(
     { __typename?: 'AuctionBidEvent' }
-    & Pick<AuctionBidEvent, 'id' | 'value' | 'sender' | 'transactionHash'>
+    & AuctionBidEventPartFragment
   )> }
 );
 

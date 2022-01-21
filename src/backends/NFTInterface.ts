@@ -13,21 +13,23 @@ type CurrencyValue = {
   prettyAmount: string,
 };
 
+export type TimedAction = {
+  timestamp: number;
+  blockNumber: Nullable<string>;
+  transactionHash: Nullable<string>;
+}
+
 export type AuctionBidEvent = {
   creator: string,
   amount: CurrencyValue,
-  block: {
-    timestamp: string,
-    txn: string,
-    number: string,
-  },
+  created: TimedAction;
 };
 
 export type AuctionLike = {
   winner?: string,
-  endsAt?: number,
+  endsAt?: TimedAction,
   duration: number,
-  startedAt?: number,
+  startedAt?: TimedAction,
   currentBid?: AuctionBidEvent,
   // current bid is duplicated within bids
   bids: AuctionBidEvent[],
@@ -48,12 +50,18 @@ type MarketInfo = {
   // completed - auction end fill complete
   // cancelled - user cancels at some point
   status: 'pending' | 'active' | 'complete' | 'cancelled' | 'unknown';
-  createdAt: number,
-  finishedAt?: number,
-  cancelledAt?: number,
+  createdAt: TimedAction,
+  finishedAt?: TimedAction,
+  cancelledAt?: TimedAction,
 }
 
 export type MarketModule = AuctionLike | FixedPriceLike;
+
+export type MetadataAttributeType = {
+  name: Nullable<string>,
+  value: Nullable<string>,
+  display: Nullable<string>,
+}
 
 export type NFTObject = {
   rawData: {
@@ -90,11 +98,7 @@ export type NFTObject = {
     image: Nullable<string>;
     description: Nullable<string>;
     animation_url: Nullable<string>;
-    attributes: {
-      name: Nullable<string>,
-      value: Nullable<string>,
-      display: Nullable<string>,
-    }[],
+    attributes: MetadataAttributeType[],
     raw?: any;
   };
   markets?: MarketModule[],

@@ -4,11 +4,11 @@ import { NFTStrategy } from '../strategies/NFTStrategy';
 import { ZoraGraphStrategy } from '../strategies/ZoraGraphStrategy';
 import { NetworkIDs, Networks } from '../constants/networks';
 
-export type FetchContext = { strategy: InstanceType<typeof NFTStrategy> };
+export type FetchContext = { strategy: typeof NFTStrategy };
 
 const fetcher = new MediaFetchAgent(Networks.MAINNET);
 
-export const defaultFetchAgent: { strategy: NFTStrategy; fetcher: any } = {
+export const defaultFetchAgent: { strategy: any; fetcher: any } = {
   strategy: new ZoraGraphStrategy(Networks.MAINNET),
   fetcher,
 };

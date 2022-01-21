@@ -22,10 +22,10 @@ Object {
             "prettyAmount": "0.12",
             "symbol": "ETH",
           },
-          "block": Object {
-            "number": undefined,
+          "created": Object {
+            "blockNumber": undefined,
             "timestamp": "1632472960",
-            "txn": "0x4a06bca5ede42d00b5651f7c0dc55e8a963c34f8e128ebf3ad30b601256589dd",
+            "transactionHash": "0x4a06bca5ede42d00b5651f7c0dc55e8a963c34f8e128ebf3ad30b601256589dd",
           },
           "creator": "0xc3d062a208d6cd89a606c88265efcee430339eaa",
         },
@@ -38,16 +38,20 @@ Object {
             "prettyAmount": "0.10",
             "symbol": "ETH",
           },
-          "block": Object {
-            "number": undefined,
+          "created": Object {
+            "blockNumber": undefined,
             "timestamp": "1632472105",
-            "txn": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
+            "transactionHash": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
           },
           "creator": "0xac298abdbdd3a2c758546070ce54f3b98818969d",
         },
       ],
       "cancelledAt": undefined,
-      "createdAt": "1632472015",
+      "createdAt": Object {
+        "blockNumber": "9347718",
+        "timestamp": "1632472015",
+        "transactionHash": "0x806812e7f75b2d4b132d0ef5264e9d36fe615ce97e75264ccc0d498d6290d33d",
+      },
       "currentBid": Object {
         "amount": Object {
           "amount": "100000000000000000",
@@ -57,16 +61,24 @@ Object {
           "prettyAmount": "0.10",
           "symbol": "ETH",
         },
-        "block": Object {
-          "number": undefined,
+        "created": Object {
+          "blockNumber": undefined,
           "timestamp": "1632472105",
-          "txn": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
+          "transactionHash": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
         },
         "creator": "0xac298abdbdd3a2c758546070ce54f3b98818969d",
       },
       "duration": "1755",
-      "endsAt": "1632473860",
-      "finishedAt": "1632473906",
+      "endsAt": Object {
+        "blockNumber": null,
+        "timestamp": "1632473860",
+        "transactionHash": null,
+      },
+      "finishedAt": Object {
+        "blockNumber": null,
+        "timestamp": "1632473906",
+        "transactionHash": null,
+      },
       "raw": Object {
         "approved": true,
         "approvedTimestamp": "1632472015",
@@ -127,7 +139,7 @@ Object {
       },
       "source": "ZoraReserveV0",
       "startedAt": "1632472105",
-      "status": "active",
+      "status": "complete",
       "winner": undefined,
     },
   ],
@@ -139,6 +151,28 @@ Object {
   },
   "metadata": Object {
     "animation_url": null,
+    "attributes": Array [
+      Object {
+        "display": null,
+        "name": "Team",
+        "value": "Donkeys",
+      },
+      Object {
+        "display": null,
+        "name": "Position",
+        "value": "Flex",
+      },
+      Object {
+        "display": null,
+        "name": "Slabbed",
+        "value": "No",
+      },
+      Object {
+        "display": null,
+        "name": "Field Access",
+        "value": "1",
+      },
+    ],
     "description": null,
     "image": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     "name": null,
@@ -313,10 +347,10 @@ Object {
             "prettyAmount": "0.12",
             "symbol": "ETH",
           },
-          "block": Object {
-            "number": undefined,
+          "created": Object {
+            "blockNumber": undefined,
             "timestamp": "1632472960",
-            "txn": "0x4a06bca5ede42d00b5651f7c0dc55e8a963c34f8e128ebf3ad30b601256589dd",
+            "transactionHash": "0x4a06bca5ede42d00b5651f7c0dc55e8a963c34f8e128ebf3ad30b601256589dd",
           },
           "creator": "0xc3d062a208d6cd89a606c88265efcee430339eaa",
         },
@@ -329,16 +363,20 @@ Object {
             "prettyAmount": "0.10",
             "symbol": "ETH",
           },
-          "block": Object {
-            "number": undefined,
+          "created": Object {
+            "blockNumber": undefined,
             "timestamp": "1632472105",
-            "txn": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
+            "transactionHash": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
           },
           "creator": "0xac298abdbdd3a2c758546070ce54f3b98818969d",
         },
       ],
       "cancelledAt": undefined,
-      "createdAt": "1632472015",
+      "createdAt": Object {
+        "blockNumber": "9347718",
+        "timestamp": "1632472015",
+        "transactionHash": "0x806812e7f75b2d4b132d0ef5264e9d36fe615ce97e75264ccc0d498d6290d33d",
+      },
       "currentBid": Object {
         "amount": Object {
           "amount": "100000000000000000",
@@ -348,16 +386,24 @@ Object {
           "prettyAmount": "0.10",
           "symbol": "ETH",
         },
-        "block": Object {
-          "number": undefined,
+        "created": Object {
+          "blockNumber": undefined,
           "timestamp": "1632472105",
-          "txn": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
+          "transactionHash": "0x9588c5f70d60b7c43eb25bc528e08b39f3458b03bde4b6d0fc48d6a874e29971",
         },
         "creator": "0xac298abdbdd3a2c758546070ce54f3b98818969d",
       },
       "duration": "1755",
-      "endsAt": "1632473860",
-      "finishedAt": "1632473906",
+      "endsAt": Object {
+        "blockNumber": null,
+        "timestamp": "1632473860",
+        "transactionHash": null,
+      },
+      "finishedAt": Object {
+        "blockNumber": null,
+        "timestamp": "1632473906",
+        "transactionHash": null,
+      },
       "raw": Object {
         "approved": true,
         "approvedTimestamp": "1632472015",
@@ -418,7 +464,7 @@ Object {
       },
       "source": "ZoraReserveV0",
       "startedAt": "1632472105",
-      "status": "active",
+      "status": "complete",
       "winner": undefined,
     },
   ],
@@ -430,6 +476,28 @@ Object {
   },
   "metadata": Object {
     "animation_url": null,
+    "attributes": Array [
+      Object {
+        "display": null,
+        "name": "Team",
+        "value": "Donkeys",
+      },
+      Object {
+        "display": null,
+        "name": "Position",
+        "value": "Flex",
+      },
+      Object {
+        "display": null,
+        "name": "Slabbed",
+        "value": "No",
+      },
+      Object {
+        "display": null,
+        "name": "Field Access",
+        "value": "1",
+      },
+    ],
     "description": null,
     "image": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     "name": null,
@@ -596,7 +664,11 @@ Object {
       },
       "bids": Array [],
       "cancelledAt": undefined,
-      "createdAt": "1642607884",
+      "createdAt": Object {
+        "blockNumber": "14036894",
+        "timestamp": "1642607884",
+        "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
+      },
       "currentBid": Object {
         "amount": Object {
           "amount": "3000000000000000000",
@@ -606,16 +678,20 @@ Object {
           "prettyAmount": "3.00",
           "symbol": "ETH",
         },
-        "block": Object {
-          "number": undefined,
+        "created": Object {
+          "blockNumber": undefined,
           "timestamp": "1642723306",
-          "txn": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+          "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
         },
         "creator": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
       },
       "duration": "86400",
-      "endsAt": "1642809706",
-      "finishedAt": null,
+      "endsAt": Object {
+        "blockNumber": null,
+        "timestamp": "1642809706",
+        "transactionHash": null,
+      },
+      "finishedAt": undefined,
       "raw": Object {
         "approved": true,
         "approvedTimestamp": "1642607884",
@@ -658,7 +734,7 @@ Object {
       },
       "source": "ZoraReserveV0",
       "startedAt": "1642723306",
-      "status": "active",
+      "status": "complete",
       "winner": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
     },
   ],

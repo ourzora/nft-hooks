@@ -5,12 +5,20 @@ import { NetworkIDs } from '../constants/networks';
 import { THEGRAPH_API_URL_BY_NETWORK } from '../constants/urls';
 import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
 import {
+  AuctionBidEventPartFragment,
   ByIdsQuery,
+  IndexerAuctionPartFragment,
   IndexerTokenWithAuctionFragment,
   String_Comparison_Exp,
   Token_Bool_Exp,
 } from '../graph-queries/zora-indexer-types';
-import { NFTObject } from './NFTInterface';
+import {
+  AuctionBidEvent,
+  AuctionLike,
+  MarketModule,
+  MetadataAttributeType,
+  NFTObject,
+} from './NFTInterface';
 import { ZoraIndexerNFTDataInterface } from './ZoraIndexerNFTInterface';
 import {
   ACTIVE_AUCTIONS_QUERY,
@@ -19,6 +27,146 @@ import {
 } from '../graph-queries/zora-indexer';
 import { ArgumentsError } from '../fetcher/ErrorUtils';
 import { getAddress } from '@ethersproject/address';
+import Big from 'big.js';
+
+function dateToUnix(date?: string) {
+  if (!date) {
+    return undefined;
+  }
+  return Math.floor(new Date(date).getTime() / 1000);
+}
+
+function priceToPretty(number: string, decimals?: number | null) {
+  return new Big(number)
+    .div(new Big(10).pow(decimals || 18))
+    .toFixed(2)
+    .toString();
+}
+
+function getAttributes(json: any) {
+  const result: MetadataAttributeType[] = [];
+  if (json.properties) {
+    try {
+      Object.keys(json.properties).forEach((name: string) => {
+        result.push({ name, value: json.properties[name] as string, display: null });
+      });
+    } catch {}
+  }
+  if (json.attributes) {
+    try {
+      json.attributes.forEach((attribute: any) => {
+        result.push({
+          name: attribute.trait_type,
+          value: attribute.value,
+          display: attribute.display_type,
+        });
+      });
+    } catch {}
+  }
+  return result;
+}
+
+function timeIsPast(time: string) {
+  return new Date(time).getTime() < new Date().getTime();
+}
+
+function extractAuction(auction: IndexerAuctionPartFragment) {
+  const getStatus = () => {
+    if (!auction.approved) {
+      return 'pending';
+    }
+    if (auction.endedEvent) {
+      return 'complete';
+    }
+    if (auction.expiresAt && timeIsPast(auction.expiresAt)) {
+      return 'complete';
+    }
+    if (auction.firstBidTime) {
+      return 'active';
+    }
+    return 'unknown';
+  };
+
+  const addCurrencyInfo = (amount: string) => {
+    const currency = auction.currency!;
+    return {
+      currency: currency.address,
+      name: currency.name,
+      symbol: currency.symbol,
+      decimals: currency.decimals,
+      amount,
+      prettyAmount: priceToPretty(amount, currency.decimals || 18),
+    };
+  };
+
+  const getAmount = () => {
+    if (auction.lastBidAmount) {
+      return addCurrencyInfo(auction.lastBidAmount);
+    }
+    return addCurrencyInfo(auction.reservePrice!);
+  };
+
+  const formatBid = (bid: AuctionBidEventPartFragment): AuctionBidEvent => ({
+    creator: bid.sender,
+    amount: addCurrencyInfo(bid.value),
+    created: {
+      timestamp: dateToUnix(bid.blockTimestamp)!,
+      blockNumber: bid.blockNumber.toString(),
+      transactionHash: bid.transactionHash,
+    },
+  });
+
+  const getHighestBid = () => {
+    return auction.bidEvents[auction.bidEvents.length - 1];
+  };
+
+  const resultAuction: AuctionLike = {
+    status: getStatus(),
+    amount: getAmount(),
+    raw: auction,
+    createdAt: {
+      timestamp: dateToUnix(auction.createdEvent!.blockTimestamp)!,
+      blockNumber: auction.createdEvent!.blockNumber.toString(),
+      transactionHash: auction.createdEvent!.transactionHash,
+    },
+    finishedAt: auction.endedEvent
+      ? {
+          timestamp: dateToUnix(auction.endedEvent.blockTimestamp)!,
+          blockNumber: auction.endedEvent.blockNumber.toString(),
+          transactionHash: auction.endedEvent.transactionHash,
+        }
+      : undefined,
+    startedAt: auction.firstBidTime
+      ? {
+          timestamp: dateToUnix(auction.firstBidTime)!,
+          blockNumber: null,
+          transactionHash: null,
+        }
+      : undefined,
+    cancelledAt: auction.canceledEvent
+      ? {
+          timestamp: dateToUnix(auction.canceledEvent.blockTimestamp)!,
+          blockNumber: null,
+          transactionHash: null,
+        }
+      : undefined,
+    endsAt: {
+      timestamp: dateToUnix(auction.expiresAt)!,
+      blockNumber: null,
+      transactionHash: null,
+    },
+    winner: getHighestBid().sender,
+    duration: dateToUnix(auction.duration!)!,
+    currentBid: formatBid(getHighestBid()),
+    source: 'ZoraReserveV0',
+    bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
+  };
+  return resultAuction;
+}
+
+function extractMarketData(response: IndexerTokenWithAuctionFragment, object: NFTObject) {
+  return response.auctions.map((auction) => extractAuction(auction));
+}
 
 export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
   nftGraphDataLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
@@ -55,6 +203,19 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
       metadataURI: asset.media ? asset.media.metadataURI! : asset.tokenURI!,
       contentURI: asset.media?.contentURI!,
     };
+    const metadata_json = asset.metadata?.json || {};
+    object.metadata = {
+      name: metadata_json.name,
+      description: metadata_json.description,
+      animation_url: metadata_json.animation_url,
+      image: metadata_json.image,
+      attributes: getAttributes(metadata_json),
+      raw: asset.metadata?.json,
+    };
+    if (!object.rawData) {
+      object.rawData = {};
+    }
+    object.markets = extractMarketData(asset, object);
     object.rawData['zora-indexer'] = asset;
     return object;
   }

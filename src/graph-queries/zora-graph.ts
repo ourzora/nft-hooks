@@ -104,6 +104,7 @@ const AUCTION_PARTIALS = gql`
     duration
     expectedEndTimestamp
     finalizedAtTimestamp
+    
   }
 
   fragment BidDataPartial on Bid {
@@ -112,6 +113,7 @@ const AUCTION_PARTIALS = gql`
       id
     }
     createdAtTimestamp
+    createdAtBlockNumber
     transactionHash
     amount
     currency {

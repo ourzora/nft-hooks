@@ -49,17 +49,17 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       if (!response.approved) {
         return 'pending';
       }
-      if (response.firstBidTime) {
-        return 'active';
-      }
       if (response.finalizedAtTimestamp) {
         return 'complete';
       }
       if (
-        response.expectedEndTimestamp ||
+        response.expectedEndTimestamp &&
         response.expectedEndTimestamp >= unixTimeNow()
       ) {
         return 'complete';
+      }
+      if (response.firstBidTime) {
+        return 'active';
       }
       return 'unknown';
     };
@@ -98,10 +98,10 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       return {
         creator: bid.bidder.id,
         amount: addCurrencyInfo(bid.amount),
-        block: {
+        created: {
+          blockNumber: bid.createdAtBlockNumber,
+          transactionHash: bid.transactionHash,
           timestamp: bid.createdAtTimestamp,
-          number: bid.createdAtBlockNumber,
-          txn: bid.transactionHash,
         },
       };
     };
@@ -121,13 +121,27 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       status: getStatus(),
       amount: getAmount(),
       raw: response,
-      createdAt: response.createdAtTimestamp,
-      finishedAt: response.finalizedAtTimestamp,
+      createdAt: {
+        timestamp: response.createdAtTimestamp,
+        blockNumber: response.createdAtBlockNumber,
+        transactionHash: response.transactionHash,
+      },
+      finishedAt: response.finalizedAtTimestamp
+        ? {
+            timestamp: response.finalizedAtTimestamp,
+            blockNumber: null,
+            transactionHash: null,
+          }
+        : undefined,
       startedAt: response.firstBidTime,
       // if cancelled record is deleted
       cancelledAt: undefined,
       winner: response.currentBid?.bidder.id,
-      endsAt: response.expectedEndTimestamp,
+      endsAt: {
+        timestamp: response.expectedEndTimestamp,
+        blockNumber: null,
+        transactionHash: null,
+      },
       duration: response.duration,
       currentBid: getHighestBid(),
       source: 'ZoraReserveV0',
@@ -158,7 +172,9 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
           new Error('Missing Record')
       )
       .map((response) =>
-        response instanceof Error ? response : GraphAuctionDataSource.transformNFT(response)
+        response instanceof Error
+          ? response
+          : GraphAuctionDataSource.transformNFT(response)
       );
   };
 }
