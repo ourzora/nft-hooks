@@ -8,6 +8,8 @@ type CurrencyValue = {
   usdValue?: string,
   ethValue?: string,
   symbol: string,
+  name?: string,
+  currency: string,
   decimals?: number,
   amount: string,
   prettyAmount: string,
@@ -15,7 +17,7 @@ type CurrencyValue = {
 
 export type TimedAction = {
   timestamp: number;
-  blockNumber: Nullable<string>;
+  blockNumber: Nullable<number>;
   transactionHash: Nullable<string>;
 }
 
@@ -36,9 +38,9 @@ export type AuctionLike = {
   source: 'ZoraReserveV0' | 'OpenseaEnglish',
 } & MarketInfo;
 
-type FixedPriceLike = {
+export type FixedPriceLike = {
   type: 'ask' | 'offer',
-  expires: string,
+  // expires: string,
   source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'OpenseaFixed'
 } & MarketInfo;
 

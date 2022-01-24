@@ -1,6 +1,18 @@
 import { gql } from 'graphql-request';
 
 const MEDIA_FRAGMENTS = gql`
+  fragment V3AskPart on V3Ask {
+    askPrice
+    askCurrency
+    status
+    events {
+      eventType
+      address
+      transactionHash
+      blockNumber
+      blockTimestamp
+    }
+  }
   fragment IndexerTokenPart on Token {
     id
     tokenId
@@ -29,6 +41,9 @@ const MEDIA_FRAGMENTS = gql`
       metadataURI
       ownerBidShare
       creatorBidShare
+    }
+    v3Ask {
+      ...V3AskPart
     }
   }
   fragment AuctionBidEventPart on AuctionBidEvent {
@@ -94,6 +109,7 @@ const BASE_FRAGMENTS = gql`
     auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
       ...IndexerAuctionPart
     }
+    
   }
 `;
 

@@ -76,4 +76,31 @@ describe('useNFT', () => {
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
   });
+  it('test zora indexer buy now load', async () => {
+    const openseaStrategy = new ZoraGraphStrategy(Networks.MAINNET);
+
+    const NetworkWrapper = ({ children }: any) => (
+      <NFTFetchConfiguration networkId={Networks.RINKEBY} strategy={openseaStrategy}>
+        {children}
+      </NFTFetchConfiguration>
+    );
+
+    const { waitFor, result } = renderHook(
+      () => useNFT('0xCa21d4228cDCc68D4e23807E5e370C07577Dd152', '54382'),
+      { wrapper: NetworkWrapper }
+    );
+
+    await waitFor(
+      () => {
+        console.log(result.current);
+        return !!result.current.data;
+      },
+      { timeout: 4000 }
+    );
+
+    console.log(result.current);
+
+    expect(result.current.error).toBeUndefined();
+    expect(result.current.data).toMatchSnapshot();
+  });
 });

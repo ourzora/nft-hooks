@@ -12,11 +12,14 @@ export type Scalars = {
   ask_event_status_enum: any;
   auction_status_enum: any;
   bid_event_status_enum: any;
+  event_eventtype_enum: any;
+  event_parententitytype_enum: any;
   jsonb: any;
   nft_contract_status_enum: any;
   timestamp: any;
   timestamptz: any;
   uuid: any;
+  v3_ask_status_enum: any;
 };
 
 
@@ -2894,6 +2897,29 @@ export type Currency_Variance_Fields = {
   decimals?: Maybe<Scalars['Float']>;
 };
 
+/** columns and relationships of "event" */
+export type Event = {
+  __typename?: 'Event';
+  address: Scalars['String'];
+  blockNumber: Scalars['Int'];
+  blockTimestamp: Scalars['timestamp'];
+  details?: Maybe<Scalars['jsonb']>;
+  eventType: Scalars['event_eventtype_enum'];
+  id: Scalars['String'];
+  logIndex: Scalars['Int'];
+  parentEntityId: Scalars['String'];
+  parentEntityType: Scalars['event_parententitytype_enum'];
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+  transactionHash: Scalars['String'];
+};
+
+
+/** columns and relationships of "event" */
+export type EventDetailsArgs = {
+  path?: Maybe<Scalars['String']>;
+};
+
 /** columns and relationships of "raw_log" */
 export type EventLog = {
   __typename?: 'EventLog';
@@ -3220,6 +3246,272 @@ export type EventLog_Variance_Fields = {
 
 /** order by variance() on columns of table "raw_log" */
 export type EventLog_Variance_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregated selection of "event" */
+export type Event_Aggregate = {
+  __typename?: 'Event_aggregate';
+  aggregate?: Maybe<Event_Aggregate_Fields>;
+  nodes: Array<Event>;
+};
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_Fields = {
+  __typename?: 'Event_aggregate_fields';
+  avg?: Maybe<Event_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Event_Max_Fields>;
+  min?: Maybe<Event_Min_Fields>;
+  stddev?: Maybe<Event_Stddev_Fields>;
+  stddev_pop?: Maybe<Event_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Event_Stddev_Samp_Fields>;
+  sum?: Maybe<Event_Sum_Fields>;
+  var_pop?: Maybe<Event_Var_Pop_Fields>;
+  var_samp?: Maybe<Event_Var_Samp_Fields>;
+  variance?: Maybe<Event_Variance_Fields>;
+};
+
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Event_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "event" */
+export type Event_Aggregate_Order_By = {
+  avg?: Maybe<Event_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Event_Max_Order_By>;
+  min?: Maybe<Event_Min_Order_By>;
+  stddev?: Maybe<Event_Stddev_Order_By>;
+  stddev_pop?: Maybe<Event_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Event_Stddev_Samp_Order_By>;
+  sum?: Maybe<Event_Sum_Order_By>;
+  var_pop?: Maybe<Event_Var_Pop_Order_By>;
+  var_samp?: Maybe<Event_Var_Samp_Order_By>;
+  variance?: Maybe<Event_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Event_Avg_Fields = {
+  __typename?: 'Event_avg_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "event" */
+export type Event_Avg_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "event". All fields are combined with a logical 'AND'. */
+export type Event_Bool_Exp = {
+  _and?: Maybe<Array<Event_Bool_Exp>>;
+  _not?: Maybe<Event_Bool_Exp>;
+  _or?: Maybe<Array<Event_Bool_Exp>>;
+  address?: Maybe<String_Comparison_Exp>;
+  blockNumber?: Maybe<Int_Comparison_Exp>;
+  blockTimestamp?: Maybe<Timestamp_Comparison_Exp>;
+  details?: Maybe<Jsonb_Comparison_Exp>;
+  eventType?: Maybe<Event_Eventtype_Enum_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  logIndex?: Maybe<Int_Comparison_Exp>;
+  parentEntityId?: Maybe<String_Comparison_Exp>;
+  parentEntityType?: Maybe<Event_Parententitytype_Enum_Comparison_Exp>;
+  tokenContract?: Maybe<String_Comparison_Exp>;
+  tokenId?: Maybe<String_Comparison_Exp>;
+  transactionHash?: Maybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Event_Max_Fields = {
+  __typename?: 'Event_max_fields';
+  address?: Maybe<Scalars['String']>;
+  blockNumber?: Maybe<Scalars['Int']>;
+  blockTimestamp?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  logIndex?: Maybe<Scalars['Int']>;
+  parentEntityId?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+  transactionHash?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "event" */
+export type Event_Max_Order_By = {
+  address?: Maybe<Order_By>;
+  blockNumber?: Maybe<Order_By>;
+  blockTimestamp?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+  parentEntityId?: Maybe<Order_By>;
+  tokenContract?: Maybe<Order_By>;
+  tokenId?: Maybe<Order_By>;
+  transactionHash?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Event_Min_Fields = {
+  __typename?: 'Event_min_fields';
+  address?: Maybe<Scalars['String']>;
+  blockNumber?: Maybe<Scalars['Int']>;
+  blockTimestamp?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  logIndex?: Maybe<Scalars['Int']>;
+  parentEntityId?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+  transactionHash?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "event" */
+export type Event_Min_Order_By = {
+  address?: Maybe<Order_By>;
+  blockNumber?: Maybe<Order_By>;
+  blockTimestamp?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+  parentEntityId?: Maybe<Order_By>;
+  tokenContract?: Maybe<Order_By>;
+  tokenId?: Maybe<Order_By>;
+  transactionHash?: Maybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "event". */
+export type Event_Order_By = {
+  address?: Maybe<Order_By>;
+  blockNumber?: Maybe<Order_By>;
+  blockTimestamp?: Maybe<Order_By>;
+  details?: Maybe<Order_By>;
+  eventType?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+  parentEntityId?: Maybe<Order_By>;
+  parentEntityType?: Maybe<Order_By>;
+  tokenContract?: Maybe<Order_By>;
+  tokenId?: Maybe<Order_By>;
+  transactionHash?: Maybe<Order_By>;
+};
+
+/** select columns of table "event" */
+export enum Event_Select_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  BlockNumber = 'blockNumber',
+  /** column name */
+  BlockTimestamp = 'blockTimestamp',
+  /** column name */
+  Details = 'details',
+  /** column name */
+  EventType = 'eventType',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LogIndex = 'logIndex',
+  /** column name */
+  ParentEntityId = 'parentEntityId',
+  /** column name */
+  ParentEntityType = 'parentEntityType',
+  /** column name */
+  TokenContract = 'tokenContract',
+  /** column name */
+  TokenId = 'tokenId',
+  /** column name */
+  TransactionHash = 'transactionHash'
+}
+
+/** aggregate stddev on columns */
+export type Event_Stddev_Fields = {
+  __typename?: 'Event_stddev_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "event" */
+export type Event_Stddev_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Event_Stddev_Pop_Fields = {
+  __typename?: 'Event_stddev_pop_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "event" */
+export type Event_Stddev_Pop_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Event_Stddev_Samp_Fields = {
+  __typename?: 'Event_stddev_samp_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "event" */
+export type Event_Stddev_Samp_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Event_Sum_Fields = {
+  __typename?: 'Event_sum_fields';
+  blockNumber?: Maybe<Scalars['Int']>;
+  logIndex?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "event" */
+export type Event_Sum_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Event_Var_Pop_Fields = {
+  __typename?: 'Event_var_pop_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "event" */
+export type Event_Var_Pop_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Event_Var_Samp_Fields = {
+  __typename?: 'Event_var_samp_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "event" */
+export type Event_Var_Samp_Order_By = {
+  blockNumber?: Maybe<Order_By>;
+  logIndex?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Event_Variance_Fields = {
+  __typename?: 'Event_variance_fields';
+  blockNumber?: Maybe<Scalars['Float']>;
+  logIndex?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "event" */
+export type Event_Variance_Order_By = {
   blockNumber?: Maybe<Order_By>;
   logIndex?: Maybe<Order_By>;
 };
@@ -6022,6 +6314,8 @@ export type Token = {
   transferEvents: Array<TokenTransferEvent>;
   /** An aggregate relationship */
   transferEvents_aggregate: TokenTransferEvent_Aggregate;
+  /** An object relationship */
+  v3Ask?: Maybe<V3Ask>;
 };
 
 
@@ -6649,6 +6943,7 @@ export type Token_Bool_Exp = {
   tokenId?: Maybe<String_Comparison_Exp>;
   tokenURI?: Maybe<String_Comparison_Exp>;
   transferEvents?: Maybe<TokenTransferEvent_Bool_Exp>;
+  v3Ask?: Maybe<V3Ask_Bool_Exp>;
 };
 
 /** aggregate max on columns */
@@ -6700,6 +6995,7 @@ export type Token_Order_By = {
   tokenId?: Maybe<Order_By>;
   tokenURI?: Maybe<Order_By>;
   transferEvents_aggregate?: Maybe<TokenTransferEvent_Aggregate_Order_By>;
+  v3Ask?: Maybe<V3Ask_Order_By>;
 };
 
 /** select columns of table "token" */
@@ -7355,6 +7651,226 @@ export type Transaction_Variance_Fields = {
   transactionIndex?: Maybe<Scalars['Float']>;
 };
 
+/** columns and relationships of "v3_ask" */
+export type V3Ask = {
+  __typename?: 'V3Ask';
+  address: Scalars['String'];
+  askCurrency: Scalars['String'];
+  askPrice: Scalars['String'];
+  buyer?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  events: Array<Event>;
+  /** An aggregate relationship */
+  events_aggregate: Event_Aggregate;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps: Scalars['Int'];
+  id: Scalars['String'];
+  /** An object relationship */
+  lastFilledEvent?: Maybe<Event>;
+  seller: Scalars['String'];
+  sellerFundsRecipient: Scalars['String'];
+  status: Scalars['v3_ask_status_enum'];
+  tokenContract: Scalars['String'];
+  tokenId: Scalars['String'];
+};
+
+
+/** columns and relationships of "v3_ask" */
+export type V3AskEventsArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
+/** columns and relationships of "v3_ask" */
+export type V3AskEvents_AggregateArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+/** aggregated selection of "v3_ask" */
+export type V3Ask_Aggregate = {
+  __typename?: 'V3Ask_aggregate';
+  aggregate?: Maybe<V3Ask_Aggregate_Fields>;
+  nodes: Array<V3Ask>;
+};
+
+/** aggregate fields of "v3_ask" */
+export type V3Ask_Aggregate_Fields = {
+  __typename?: 'V3Ask_aggregate_fields';
+  avg?: Maybe<V3Ask_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<V3Ask_Max_Fields>;
+  min?: Maybe<V3Ask_Min_Fields>;
+  stddev?: Maybe<V3Ask_Stddev_Fields>;
+  stddev_pop?: Maybe<V3Ask_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<V3Ask_Stddev_Samp_Fields>;
+  sum?: Maybe<V3Ask_Sum_Fields>;
+  var_pop?: Maybe<V3Ask_Var_Pop_Fields>;
+  var_samp?: Maybe<V3Ask_Var_Samp_Fields>;
+  variance?: Maybe<V3Ask_Variance_Fields>;
+};
+
+
+/** aggregate fields of "v3_ask" */
+export type V3Ask_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<V3Ask_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type V3Ask_Avg_Fields = {
+  __typename?: 'V3Ask_avg_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "v3_ask". All fields are combined with a logical 'AND'. */
+export type V3Ask_Bool_Exp = {
+  _and?: Maybe<Array<V3Ask_Bool_Exp>>;
+  _not?: Maybe<V3Ask_Bool_Exp>;
+  _or?: Maybe<Array<V3Ask_Bool_Exp>>;
+  address?: Maybe<String_Comparison_Exp>;
+  askCurrency?: Maybe<String_Comparison_Exp>;
+  askPrice?: Maybe<String_Comparison_Exp>;
+  buyer?: Maybe<String_Comparison_Exp>;
+  events?: Maybe<Event_Bool_Exp>;
+  finder?: Maybe<String_Comparison_Exp>;
+  findersFeeBps?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  lastFilledEvent?: Maybe<Event_Bool_Exp>;
+  seller?: Maybe<String_Comparison_Exp>;
+  sellerFundsRecipient?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<V3_Ask_Status_Enum_Comparison_Exp>;
+  tokenContract?: Maybe<String_Comparison_Exp>;
+  tokenId?: Maybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type V3Ask_Max_Fields = {
+  __typename?: 'V3Ask_max_fields';
+  address?: Maybe<Scalars['String']>;
+  askCurrency?: Maybe<Scalars['String']>;
+  askPrice?: Maybe<Scalars['String']>;
+  buyer?: Maybe<Scalars['String']>;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  seller?: Maybe<Scalars['String']>;
+  sellerFundsRecipient?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type V3Ask_Min_Fields = {
+  __typename?: 'V3Ask_min_fields';
+  address?: Maybe<Scalars['String']>;
+  askCurrency?: Maybe<Scalars['String']>;
+  askPrice?: Maybe<Scalars['String']>;
+  buyer?: Maybe<Scalars['String']>;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  seller?: Maybe<Scalars['String']>;
+  sellerFundsRecipient?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+};
+
+/** Ordering options when selecting data from "v3_ask". */
+export type V3Ask_Order_By = {
+  address?: Maybe<Order_By>;
+  askCurrency?: Maybe<Order_By>;
+  askPrice?: Maybe<Order_By>;
+  buyer?: Maybe<Order_By>;
+  events_aggregate?: Maybe<Event_Aggregate_Order_By>;
+  finder?: Maybe<Order_By>;
+  findersFeeBps?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  lastFilledEvent?: Maybe<Event_Order_By>;
+  seller?: Maybe<Order_By>;
+  sellerFundsRecipient?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  tokenContract?: Maybe<Order_By>;
+  tokenId?: Maybe<Order_By>;
+};
+
+/** select columns of table "v3_ask" */
+export enum V3Ask_Select_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  AskCurrency = 'askCurrency',
+  /** column name */
+  AskPrice = 'askPrice',
+  /** column name */
+  Buyer = 'buyer',
+  /** column name */
+  Finder = 'finder',
+  /** column name */
+  FindersFeeBps = 'findersFeeBps',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Seller = 'seller',
+  /** column name */
+  SellerFundsRecipient = 'sellerFundsRecipient',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  TokenContract = 'tokenContract',
+  /** column name */
+  TokenId = 'tokenId'
+}
+
+/** aggregate stddev on columns */
+export type V3Ask_Stddev_Fields = {
+  __typename?: 'V3Ask_stddev_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type V3Ask_Stddev_Pop_Fields = {
+  __typename?: 'V3Ask_stddev_pop_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type V3Ask_Stddev_Samp_Fields = {
+  __typename?: 'V3Ask_stddev_samp_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type V3Ask_Sum_Fields = {
+  __typename?: 'V3Ask_sum_fields';
+  findersFeeBps?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate var_pop on columns */
+export type V3Ask_Var_Pop_Fields = {
+  __typename?: 'V3Ask_var_pop_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type V3Ask_Var_Samp_Fields = {
+  __typename?: 'V3Ask_var_samp_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type V3Ask_Variance_Fields = {
+  __typename?: 'V3Ask_variance_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+};
+
 
 /** Boolean expression to compare columns of type "ask_event_status_enum". All fields are combined with logical 'AND'. */
 export type Ask_Event_Status_Enum_Comparison_Exp = {
@@ -7395,6 +7911,34 @@ export type Bid_Event_Status_Enum_Comparison_Exp = {
   _lte?: Maybe<Scalars['bid_event_status_enum']>;
   _neq?: Maybe<Scalars['bid_event_status_enum']>;
   _nin?: Maybe<Array<Scalars['bid_event_status_enum']>>;
+};
+
+
+/** Boolean expression to compare columns of type "event_eventtype_enum". All fields are combined with logical 'AND'. */
+export type Event_Eventtype_Enum_Comparison_Exp = {
+  _eq?: Maybe<Scalars['event_eventtype_enum']>;
+  _gt?: Maybe<Scalars['event_eventtype_enum']>;
+  _gte?: Maybe<Scalars['event_eventtype_enum']>;
+  _in?: Maybe<Array<Scalars['event_eventtype_enum']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['event_eventtype_enum']>;
+  _lte?: Maybe<Scalars['event_eventtype_enum']>;
+  _neq?: Maybe<Scalars['event_eventtype_enum']>;
+  _nin?: Maybe<Array<Scalars['event_eventtype_enum']>>;
+};
+
+
+/** Boolean expression to compare columns of type "event_parententitytype_enum". All fields are combined with logical 'AND'. */
+export type Event_Parententitytype_Enum_Comparison_Exp = {
+  _eq?: Maybe<Scalars['event_parententitytype_enum']>;
+  _gt?: Maybe<Scalars['event_parententitytype_enum']>;
+  _gte?: Maybe<Scalars['event_parententitytype_enum']>;
+  _in?: Maybe<Array<Scalars['event_parententitytype_enum']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['event_parententitytype_enum']>;
+  _lte?: Maybe<Scalars['event_parententitytype_enum']>;
+  _neq?: Maybe<Scalars['event_parententitytype_enum']>;
+  _nin?: Maybe<Array<Scalars['event_parententitytype_enum']>>;
 };
 
 
@@ -7507,12 +8051,18 @@ export type Query_Root = {
   Currency_aggregate: Currency_Aggregate;
   /** fetch data from the table: "currency" using primary key columns */
   Currency_by_pk?: Maybe<Currency>;
+  /** fetch data from the table: "event" */
+  Event: Array<Event>;
   /** fetch data from the table: "raw_log" */
   EventLog: Array<EventLog>;
   /** fetch aggregated fields from the table: "raw_log" */
   EventLog_aggregate: EventLog_Aggregate;
   /** fetch data from the table: "raw_log" using primary key columns */
   EventLog_by_pk?: Maybe<EventLog>;
+  /** fetch aggregated fields from the table: "event" */
+  Event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  Event_by_pk?: Maybe<Event>;
   /** fetch data from the table: "ask" */
   MarketAsk: Array<MarketAsk>;
   /** fetch data from the table: "ask_event" */
@@ -7605,6 +8155,12 @@ export type Query_Root = {
   Transaction_aggregate: Transaction_Aggregate;
   /** fetch data from the table: "transaction" using primary key columns */
   Transaction_by_pk?: Maybe<Transaction>;
+  /** fetch data from the table: "v3_ask" */
+  V3Ask: Array<V3Ask>;
+  /** fetch aggregated fields from the table: "v3_ask" */
+  V3Ask_aggregate: V3Ask_Aggregate;
+  /** fetch data from the table: "v3_ask" using primary key columns */
+  V3Ask_by_pk?: Maybe<V3Ask>;
 };
 
 
@@ -7815,6 +8371,15 @@ export type Query_RootCurrency_By_PkArgs = {
 };
 
 
+export type Query_RootEventArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
 export type Query_RootEventLogArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7834,6 +8399,20 @@ export type Query_RootEventLog_AggregateArgs = {
 
 
 export type Query_RootEventLog_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootEvent_AggregateArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
+export type Query_RootEvent_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -8195,6 +8774,29 @@ export type Query_RootTransaction_By_PkArgs = {
   hash: Scalars['String'];
 };
 
+
+export type Query_RootV3AskArgs = {
+  distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3Ask_Order_By>>;
+  where?: Maybe<V3Ask_Bool_Exp>;
+};
+
+
+export type Query_RootV3Ask_AggregateArgs = {
+  distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3Ask_Order_By>>;
+  where?: Maybe<V3Ask_Bool_Exp>;
+};
+
+
+export type Query_RootV3Ask_By_PkArgs = {
+  id: Scalars['String'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "auction" */
@@ -8251,12 +8853,18 @@ export type Subscription_Root = {
   Currency_aggregate: Currency_Aggregate;
   /** fetch data from the table: "currency" using primary key columns */
   Currency_by_pk?: Maybe<Currency>;
+  /** fetch data from the table: "event" */
+  Event: Array<Event>;
   /** fetch data from the table: "raw_log" */
   EventLog: Array<EventLog>;
   /** fetch aggregated fields from the table: "raw_log" */
   EventLog_aggregate: EventLog_Aggregate;
   /** fetch data from the table: "raw_log" using primary key columns */
   EventLog_by_pk?: Maybe<EventLog>;
+  /** fetch aggregated fields from the table: "event" */
+  Event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  Event_by_pk?: Maybe<Event>;
   /** fetch data from the table: "ask" */
   MarketAsk: Array<MarketAsk>;
   /** fetch data from the table: "ask_event" */
@@ -8349,6 +8957,12 @@ export type Subscription_Root = {
   Transaction_aggregate: Transaction_Aggregate;
   /** fetch data from the table: "transaction" using primary key columns */
   Transaction_by_pk?: Maybe<Transaction>;
+  /** fetch data from the table: "v3_ask" */
+  V3Ask: Array<V3Ask>;
+  /** fetch aggregated fields from the table: "v3_ask" */
+  V3Ask_aggregate: V3Ask_Aggregate;
+  /** fetch data from the table: "v3_ask" using primary key columns */
+  V3Ask_by_pk?: Maybe<V3Ask>;
 };
 
 
@@ -8559,6 +9173,15 @@ export type Subscription_RootCurrency_By_PkArgs = {
 };
 
 
+export type Subscription_RootEventArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
 export type Subscription_RootEventLogArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8578,6 +9201,20 @@ export type Subscription_RootEventLog_AggregateArgs = {
 
 
 export type Subscription_RootEventLog_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootEvent_AggregateArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
+export type Subscription_RootEvent_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -8940,6 +9577,29 @@ export type Subscription_RootTransaction_By_PkArgs = {
 };
 
 
+export type Subscription_RootV3AskArgs = {
+  distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3Ask_Order_By>>;
+  where?: Maybe<V3Ask_Bool_Exp>;
+};
+
+
+export type Subscription_RootV3Ask_AggregateArgs = {
+  distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3Ask_Order_By>>;
+  where?: Maybe<V3Ask_Bool_Exp>;
+};
+
+
+export type Subscription_RootV3Ask_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamp']>;
@@ -8981,6 +9641,29 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+
+/** Boolean expression to compare columns of type "v3_ask_status_enum". All fields are combined with logical 'AND'. */
+export type V3_Ask_Status_Enum_Comparison_Exp = {
+  _eq?: Maybe<Scalars['v3_ask_status_enum']>;
+  _gt?: Maybe<Scalars['v3_ask_status_enum']>;
+  _gte?: Maybe<Scalars['v3_ask_status_enum']>;
+  _in?: Maybe<Array<Scalars['v3_ask_status_enum']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['v3_ask_status_enum']>;
+  _lte?: Maybe<Scalars['v3_ask_status_enum']>;
+  _neq?: Maybe<Scalars['v3_ask_status_enum']>;
+  _nin?: Maybe<Array<Scalars['v3_ask_status_enum']>>;
+};
+
+export type V3AskPartFragment = (
+  { __typename?: 'V3Ask' }
+  & Pick<V3Ask, 'askPrice' | 'askCurrency' | 'status'>
+  & { events: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'eventType' | 'address' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+  )> }
+);
+
 export type IndexerTokenPartFragment = (
   { __typename?: 'Token' }
   & Pick<Token, 'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'>
@@ -8996,6 +9679,9 @@ export type IndexerTokenPartFragment = (
   )>, media?: Maybe<(
     { __typename?: 'Media' }
     & Pick<Media, 'contentURI' | 'contentHash' | 'metadataHash' | 'metadataURI' | 'ownerBidShare' | 'creatorBidShare'>
+  )>, v3Ask?: Maybe<(
+    { __typename?: 'V3Ask' }
+    & V3AskPartFragment
   )> }
 );
 

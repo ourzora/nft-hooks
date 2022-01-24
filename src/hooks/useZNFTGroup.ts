@@ -21,6 +21,8 @@ type OptionsType = {
 
 /**
  * Fetches on-chain NFT data and pricing for the given zNFT id
+ * 
+ * @deprecated Uses old graph indexer, please use strategy-specific fetch functions insteads.
  *
  * @param id id of zNFT to fetch blockchain information for
  * @param options SWR flags and an option to load currency info

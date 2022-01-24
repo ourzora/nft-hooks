@@ -2595,7 +2595,7 @@ export type ReserveAuctionPartialFragment = (
 
 export type BidDataPartialFragment = (
   { __typename?: 'Bid' }
-  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'transactionHash' | 'amount'>
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'createdAtBlockNumber' | 'transactionHash' | 'amount'>
   & { bidder: (
     { __typename?: 'User' }
     & Pick<User, 'id'>

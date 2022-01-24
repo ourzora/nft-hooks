@@ -34,18 +34,21 @@ export function useNFT(
 ): useNFTType {
   const { strategy } = useContext(NFTFetchContext);
 
+  // Fetch media data
   const { data: nftData, error: nftError } = useSWR(
     contractAddress && tokenId ? ['fetchNFTData', contractAddress, tokenId] : null,
     (_, address: string, tokenId: string) => strategy.fetchNFT(address, tokenId),
     options
   );
 
+  // Fetch market data (if needed)
   const { data: nftMarketData, error: nftMarketError } = useSWR(
     strategy.shouldFetchMarket() && contractAddress && tokenId ? ['fetchNFTMarket', contractAddress, tokenId] : null,
     (_, address: string, tokenId: string) => strategy.fetchMarket(address, tokenId),
     options
   );
 
+  // ...
   return {
     data: nftData ? merge(nftData, nftMarketData) : undefined,
     currencyLoaded: false,
