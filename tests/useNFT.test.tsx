@@ -4,6 +4,8 @@ import { OpenseaStrategy } from '../src/strategies/OpenseaStrategy';
 import { ZoraGraphStrategy } from '../src/strategies/ZoraGraphStrategy';
 import { ZoraV2IndexerStrategy } from '../src/strategies/ZoraV2IndexerStrategy';
 
+const NETWORK_TIMEOUT_MS = 6000;
+
 describe('useNFT', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -22,7 +24,7 @@ describe('useNFT', () => {
       { wrapper: NetworkWrapper }
     );
 
-    await waitFor(() => !!result.current.data, { timeout: 4000 });
+    await waitFor(() => !!result.current.data, { timeout: NETWORK_TIMEOUT_MS });
 
     console.log(result.current);
 
@@ -43,7 +45,7 @@ describe('useNFT', () => {
       { wrapper: NetworkWrapper }
     );
 
-    await waitFor(() => !!result.current.data, { timeout: 4000 });
+    await waitFor(() => !!result.current.data, { timeout: NETWORK_TIMEOUT_MS });
 
     console.log(result.current);
 
@@ -68,7 +70,7 @@ describe('useNFT', () => {
       () => {
         return !!result.current.data;
       },
-      { timeout: 4000 }
+      { timeout: NETWORK_TIMEOUT_MS }
     );
 
     console.log(result.current);
@@ -94,7 +96,7 @@ describe('useNFT', () => {
       () => {
         return !!result.current.data;
       },
-      { timeout: 4000 }
+      { timeout: NETWORK_TIMEOUT_MS }
     );
 
     console.log(result.current);
