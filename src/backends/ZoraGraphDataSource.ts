@@ -2,7 +2,9 @@ import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
 import { NetworkIDs } from '../constants/networks';
-import { THEGRAPH_API_URL_BY_NETWORK } from '../constants/urls';
+import {
+  THEGRAPH_API_URL_BY_NETWORK,
+} from '../constants/urls';
 import { KNOWN_CONTRACTS } from '../fetcher/FetchResultTypes';
 import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
 import {
@@ -24,13 +26,16 @@ export class GraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, NftMediaFullDataFragment>;
   networkId: NetworkIDs;
   timeout: number;
+  endpoint: string;
   mediaContractAddress: string;
 
   constructor(
     networkId: NetworkIDs,
     timeout: number = 6,
-    mediaContractAddress: string = ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId]
+    mediaContractAddress: string = ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId],
+    endpoint: string = THEGRAPH_API_URL_BY_NETWORK[networkId]
   ) {
+    this.endpoint = endpoint;
     this.nftGraphDataLoader = new DataLoader(this.fetchNFTs);
     this.timeout = timeout;
     this.networkId = networkId;
@@ -42,9 +47,10 @@ export class GraphDataSource implements ZoraGraphDataInterface {
   }
 
   transformNFT(asset: NftMediaFullDataFragment, object: NFTObject) {
-    object.markets = asset.reserveAuctions?.map(
-      (auction) => GraphAuctionDataSource.transformNFT(auction).markets
-    ).filter((el) => !!el && el.length).map((item) => (item as any)[0])
+    object.markets = asset.reserveAuctions
+      ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
+      .filter((el) => !!el && el.length)
+      .map((item) => (item as any)[0]);
     object.nft = {
       tokenId: asset.id,
       contract: {
@@ -78,14 +84,14 @@ export class GraphDataSource implements ZoraGraphDataInterface {
       throw new Error('Not zora media contract');
     }
     return await this.nftGraphDataLoader.load(tokenId);
-  }
+  };
   async loadNFTs(tokenContractAndId: readonly string[]) {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
   }
 
   getClient() {
     const fetchWithTimeout = new FetchWithTimeout(this.timeout);
-    return new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
+    return new GraphQLClient(this.endpoint, {
       fetch: fetchWithTimeout.fetch,
     });
   }

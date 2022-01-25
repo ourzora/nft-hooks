@@ -650,200 +650,553 @@ Object {
 }
 `;
 
+exports[`useNFT test zora indexer buy now load 1`] = `
+Object {
+  "markets": Array [
+    Object {
+      "amount": Object {
+        "amount": "250000000",
+        "currency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "decimals": undefined,
+        "name": "UNKN",
+        "prettyAmount": "0.00",
+        "symbol": "UNKN",
+      },
+      "cancelledAt": undefined,
+      "createdAt": Object {
+        "blockNumber": 14043337,
+        "timestamp": "2022-01-20T15:48:27",
+        "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
+      },
+      "finishedAt": Object {
+        "blockNumber": 14046911,
+        "timestamp": "2022-01-21T04:50:50",
+        "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
+      },
+      "raw": Object {
+        "askCurrency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "askPrice": "250000000",
+        "events": Array [
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14046911,
+            "blockTimestamp": "2022-01-21T04:50:50",
+            "eventType": "Ask_v1_AskFilled",
+            "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14070471,
+            "blockTimestamp": "2022-01-24T20:30:42",
+            "eventType": "Ask_v1_AskFilled",
+            "transactionHash": "0x17dda3d3bacd73f3c73d98a7c4fddeeac688ab9707ffcfc269dd1fdbbcde35fc",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14043337,
+            "blockTimestamp": "2022-01-20T15:48:27",
+            "eventType": "Ask_v1_AskCreated",
+            "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14069247,
+            "blockTimestamp": "2022-01-24T15:54:05",
+            "eventType": "Ask_v1_AskCreated",
+            "transactionHash": "0x5f28cbc8b4d9676570fe0ba0f16432918693b2157204808991e125806b7f1322",
+          },
+        ],
+        "status": "FILLED",
+      },
+      "source": "ZoraAskV1",
+      "status": "complete",
+      "type": "ask",
+    },
+  ],
+  "metadata": Object {
+    "animation_url": undefined,
+    "attributes": Array [],
+    "description": "Zorbs were distributed for free by ZORA on New Year’s 2022. Each NFT imbues the properties of its wallet holder, and when sent to someone else, will transform.
+
+View this NFT at [zorb.dev/nft/54382](https://zorb.dev/nft/54382)",
+    "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTAgMTEwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9Imd6ciIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg2Ni40NTc4IDI0LjM1NzUpIHNjYWxlKDc1LjI5MDgpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcj0iMSIgY3g9IjAiIGN5PSIwJSI+PHN0b3Agb2Zmc2V0PSIxNS42MiUiIHN0b3AtY29sb3I9ImhzbCgxNjgsIDcwJSwgODklKSIgLz48c3RvcCBvZmZzZXQ9IjM5LjU4JSIgc3RvcC1jb2xvcj0iaHNsKDE2OCwgNzElLCA3NCUpIiAvPjxzdG9wIG9mZnNldD0iNzIuOTIlIiBzdG9wLWNvbG9yPSJoc2woMTk1LCA3MyUsIDUzJSkiIC8+PHN0b3Agb2Zmc2V0PSI5MC42MyUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgwJSwgNDUlKSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgzJSwgNDQlKSIgLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LDUpIj48cGF0aCBkPSJNMTAwIDUwQzEwMCAyMi4zODU4IDc3LjYxNDIgMCA1MCAwQzIyLjM4NTggMCAwIDIyLjM4NTggMCA1MEMwIDc3LjYxNDIgMjIuMzg1OCAxMDAgNTAgMTAwQzc3LjYxNDIgMTAwIDEwMCA3Ny42MTQyIDEwMCA1MFoiIGZpbGw9InVybCgjZ3pyKSIgLz48cGF0aCBzdHJva2U9InJnYmEoMCwwLDAsMC4wNzUpIiBmaWxsPSJ0cmFuc3BhcmVudCIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNNTAsMC41YzI3LjMsMCw0OS41LDIyLjIsNDkuNSw0OS41Uzc3LjMsOTkuNSw1MCw5OS41UzAuNSw3Ny4zLDAuNSw1MFMyMi43LDAuNSw1MCwwLjV6IiAvPjwvZz48L3N2Zz4=",
+    "name": "Zorb #54382",
+    "raw": Object {
+      "description": "Zorbs were distributed for free by ZORA on New Year’s 2022. Each NFT imbues the properties of its wallet holder, and when sent to someone else, will transform.
+
+View this NFT at [zorb.dev/nft/54382](https://zorb.dev/nft/54382)",
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTAgMTEwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9Imd6ciIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg2Ni40NTc4IDI0LjM1NzUpIHNjYWxlKDc1LjI5MDgpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcj0iMSIgY3g9IjAiIGN5PSIwJSI+PHN0b3Agb2Zmc2V0PSIxNS42MiUiIHN0b3AtY29sb3I9ImhzbCgxNjgsIDcwJSwgODklKSIgLz48c3RvcCBvZmZzZXQ9IjM5LjU4JSIgc3RvcC1jb2xvcj0iaHNsKDE2OCwgNzElLCA3NCUpIiAvPjxzdG9wIG9mZnNldD0iNzIuOTIlIiBzdG9wLWNvbG9yPSJoc2woMTk1LCA3MyUsIDUzJSkiIC8+PHN0b3Agb2Zmc2V0PSI5MC42MyUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgwJSwgNDUlKSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgzJSwgNDQlKSIgLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LDUpIj48cGF0aCBkPSJNMTAwIDUwQzEwMCAyMi4zODU4IDc3LjYxNDIgMCA1MCAwQzIyLjM4NTggMCAwIDIyLjM4NTggMCA1MEMwIDc3LjYxNDIgMjIuMzg1OCAxMDAgNTAgMTAwQzc3LjYxNDIgMTAwIDEwMCA3Ny42MTQyIDEwMCA1MFoiIGZpbGw9InVybCgjZ3pyKSIgLz48cGF0aCBzdHJva2U9InJnYmEoMCwwLDAsMC4wNzUpIiBmaWxsPSJ0cmFuc3BhcmVudCIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNNTAsMC41YzI3LjMsMCw0OS41LDIyLjIsNDkuNSw0OS41Uzc3LjMsOTkuNSw1MCw5OS41UzAuNSw3Ny4zLDAuNSw1MFMyMi43LDAuNSw1MCwwLjV6IiAvPjwvZz48L3N2Zz4=",
+      "name": "Zorb #54382",
+    },
+  },
+  "nft": Object {
+    "contentURI": undefined,
+    "contract": Object {
+      "address": "0xCa21d4228cDCc68D4e23807E5e370C07577Dd152",
+      "description": null,
+      "name": "Zorbs",
+      "symbol": "ZORB",
+    },
+    "creator": "0x18C8dF1fb7FB44549F90d1C2BB1DC8b690CD0559",
+    "metadataURI": "data:application/json;base64,eyJuYW1lIjogIlpvcmIgIzU0MzgyIiwgImRlc2NyaXB0aW9uIjogIlpvcmJzIHdlcmUgZGlzdHJpYnV0ZWQgZm9yIGZyZWUgYnkgWk9SQSBvbiBOZXcgWWVhcuKAmXMgMjAyMi4gRWFjaCBORlQgaW1idWVzIHRoZSBwcm9wZXJ0aWVzIG9mIGl0cyB3YWxsZXQgaG9sZGVyLCBhbmQgd2hlbiBzZW50IHRvIHNvbWVvbmUgZWxzZSwgd2lsbCB0cmFuc2Zvcm0uXG5cblZpZXcgdGhpcyBORlQgYXQgW3pvcmIuZGV2L25mdC81NDM4Ml0oaHR0cHM6Ly96b3JiLmRldi9uZnQvNTQzODIpIiwgImltYWdlIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F4TVRBZ01URXdJajQ4WkdWbWN6NDhjbUZrYVdGc1IzSmhaR2xsYm5RZ2FXUTlJbWQ2Y2lJZ1ozSmhaR2xsYm5SVWNtRnVjMlp2Y20wOUluUnlZVzV6YkdGMFpTZzJOaTQwTlRjNElESTBMak0xTnpVcElITmpZV3hsS0RjMUxqSTVNRGdwSWlCbmNtRmthV1Z1ZEZWdWFYUnpQU0oxYzJWeVUzQmhZMlZQYmxWelpTSWdjajBpTVNJZ1kzZzlJakFpSUdONVBTSXdKU0krUEhOMGIzQWdiMlptYzJWMFBTSXhOUzQyTWlVaUlITjBiM0F0WTI5c2IzSTlJbWh6YkNneE5qZ3NJRGN3SlN3Z09Ea2xLU0lnTHo0OGMzUnZjQ0J2Wm1aelpYUTlJak01TGpVNEpTSWdjM1J2Y0MxamIyeHZjajBpYUhOc0tERTJPQ3dnTnpFbExDQTNOQ1VwSWlBdlBqeHpkRzl3SUc5bVpuTmxkRDBpTnpJdU9USWxJaUJ6ZEc5d0xXTnZiRzl5UFNKb2Myd29NVGsxTENBM015VXNJRFV6SlNraUlDOCtQSE4wYjNBZ2IyWm1jMlYwUFNJNU1DNDJNeVVpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3dKU3dnTkRVbEtTSWdMejQ4YzNSdmNDQnZabVp6WlhROUlqRXdNQ1VpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3pKU3dnTkRRbEtTSWdMejQ4TDNKaFpHbGhiRWR5WVdScFpXNTBQand2WkdWbWN6NDhaeUIwY21GdWMyWnZjbTA5SW5SeVlXNXpiR0YwWlNnMUxEVXBJajQ4Y0dGMGFDQmtQU0pOTVRBd0lEVXdRekV3TUNBeU1pNHpPRFU0SURjM0xqWXhORElnTUNBMU1DQXdRekl5TGpNNE5UZ2dNQ0F3SURJeUxqTTROVGdnTUNBMU1FTXdJRGMzTGpZeE5ESWdNakl1TXpnMU9DQXhNREFnTlRBZ01UQXdRemMzTGpZeE5ESWdNVEF3SURFd01DQTNOeTQyTVRReUlERXdNQ0ExTUZvaUlHWnBiR3c5SW5WeWJDZ2paM3B5S1NJZ0x6NDhjR0YwYUNCemRISnZhMlU5SW5KblltRW9NQ3d3TERBc01DNHdOelVwSWlCbWFXeHNQU0owY21GdWMzQmhjbVZ1ZENJZ2MzUnliMnRsTFhkcFpIUm9QU0l4SWlCa1BTSk5OVEFzTUM0MVl6STNMak1zTUN3ME9TNDFMREl5TGpJc05Ea3VOU3cwT1M0MVV6YzNMak1zT1RrdU5TdzFNQ3c1T1M0MVV6QXVOU3czTnk0ekxEQXVOU3cxTUZNeU1pNDNMREF1TlN3MU1Dd3dMalY2SWlBdlBqd3ZaejQ4TDNOMlp6ND0ifQ==",
+    "owner": "0x63b95AB76f771f77E9Aeb9972bE252974353989c",
+    "tokenId": "54382",
+  },
+  "rawData": Object {
+    "zora-indexer": Object {
+      "address": "0xCa21d4228cDCc68D4e23807E5e370C07577Dd152",
+      "auctions": Array [],
+      "id": "0xCa21d4228cDCc68D4e23807E5e370C07577Dd152-54382",
+      "media": null,
+      "metadata": Object {
+        "json": Object {
+          "description": "Zorbs were distributed for free by ZORA on New Year’s 2022. Each NFT imbues the properties of its wallet holder, and when sent to someone else, will transform.
+
+View this NFT at [zorb.dev/nft/54382](https://zorb.dev/nft/54382)",
+          "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTAgMTEwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9Imd6ciIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg2Ni40NTc4IDI0LjM1NzUpIHNjYWxlKDc1LjI5MDgpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcj0iMSIgY3g9IjAiIGN5PSIwJSI+PHN0b3Agb2Zmc2V0PSIxNS42MiUiIHN0b3AtY29sb3I9ImhzbCgxNjgsIDcwJSwgODklKSIgLz48c3RvcCBvZmZzZXQ9IjM5LjU4JSIgc3RvcC1jb2xvcj0iaHNsKDE2OCwgNzElLCA3NCUpIiAvPjxzdG9wIG9mZnNldD0iNzIuOTIlIiBzdG9wLWNvbG9yPSJoc2woMTk1LCA3MyUsIDUzJSkiIC8+PHN0b3Agb2Zmc2V0PSI5MC42MyUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgwJSwgNDUlKSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9ImhzbCgxOTcsIDgzJSwgNDQlKSIgLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LDUpIj48cGF0aCBkPSJNMTAwIDUwQzEwMCAyMi4zODU4IDc3LjYxNDIgMCA1MCAwQzIyLjM4NTggMCAwIDIyLjM4NTggMCA1MEMwIDc3LjYxNDIgMjIuMzg1OCAxMDAgNTAgMTAwQzc3LjYxNDIgMTAwIDEwMCA3Ny42MTQyIDEwMCA1MFoiIGZpbGw9InVybCgjZ3pyKSIgLz48cGF0aCBzdHJva2U9InJnYmEoMCwwLDAsMC4wNzUpIiBmaWxsPSJ0cmFuc3BhcmVudCIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNNTAsMC41YzI3LjMsMCw0OS41LDIyLjIsNDkuNSw0OS41Uzc3LjMsOTkuNSw1MCw5OS41UzAuNSw3Ny4zLDAuNSw1MFMyMi43LDAuNSw1MCwwLjV6IiAvPjwvZz48L3N2Zz4=",
+          "name": "Zorb #54382",
+        },
+      },
+      "mintTransferEvent": Object {
+        "blockNumber": 13928800,
+        "blockTimestamp": "2022-01-02T22:39:11",
+        "transactionHash": "0x10e7aba6379f3b36b565a25387e5a92423ee7859b8d0401a323d8190301349f0",
+      },
+      "minter": "0x18C8dF1fb7FB44549F90d1C2BB1DC8b690CD0559",
+      "owner": "0x63b95AB76f771f77E9Aeb9972bE252974353989c",
+      "tokenContract": Object {
+        "address": "0xCa21d4228cDCc68D4e23807E5e370C07577Dd152",
+        "name": "Zorbs",
+        "supportsMetadata": true,
+        "symbol": "ZORB",
+      },
+      "tokenId": "54382",
+      "tokenURI": "data:application/json;base64,eyJuYW1lIjogIlpvcmIgIzU0MzgyIiwgImRlc2NyaXB0aW9uIjogIlpvcmJzIHdlcmUgZGlzdHJpYnV0ZWQgZm9yIGZyZWUgYnkgWk9SQSBvbiBOZXcgWWVhcuKAmXMgMjAyMi4gRWFjaCBORlQgaW1idWVzIHRoZSBwcm9wZXJ0aWVzIG9mIGl0cyB3YWxsZXQgaG9sZGVyLCBhbmQgd2hlbiBzZW50IHRvIHNvbWVvbmUgZWxzZSwgd2lsbCB0cmFuc2Zvcm0uXG5cblZpZXcgdGhpcyBORlQgYXQgW3pvcmIuZGV2L25mdC81NDM4Ml0oaHR0cHM6Ly96b3JiLmRldi9uZnQvNTQzODIpIiwgImltYWdlIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F4TVRBZ01URXdJajQ4WkdWbWN6NDhjbUZrYVdGc1IzSmhaR2xsYm5RZ2FXUTlJbWQ2Y2lJZ1ozSmhaR2xsYm5SVWNtRnVjMlp2Y20wOUluUnlZVzV6YkdGMFpTZzJOaTQwTlRjNElESTBMak0xTnpVcElITmpZV3hsS0RjMUxqSTVNRGdwSWlCbmNtRmthV1Z1ZEZWdWFYUnpQU0oxYzJWeVUzQmhZMlZQYmxWelpTSWdjajBpTVNJZ1kzZzlJakFpSUdONVBTSXdKU0krUEhOMGIzQWdiMlptYzJWMFBTSXhOUzQyTWlVaUlITjBiM0F0WTI5c2IzSTlJbWh6YkNneE5qZ3NJRGN3SlN3Z09Ea2xLU0lnTHo0OGMzUnZjQ0J2Wm1aelpYUTlJak01TGpVNEpTSWdjM1J2Y0MxamIyeHZjajBpYUhOc0tERTJPQ3dnTnpFbExDQTNOQ1VwSWlBdlBqeHpkRzl3SUc5bVpuTmxkRDBpTnpJdU9USWxJaUJ6ZEc5d0xXTnZiRzl5UFNKb2Myd29NVGsxTENBM015VXNJRFV6SlNraUlDOCtQSE4wYjNBZ2IyWm1jMlYwUFNJNU1DNDJNeVVpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3dKU3dnTkRVbEtTSWdMejQ4YzNSdmNDQnZabVp6WlhROUlqRXdNQ1VpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3pKU3dnTkRRbEtTSWdMejQ4TDNKaFpHbGhiRWR5WVdScFpXNTBQand2WkdWbWN6NDhaeUIwY21GdWMyWnZjbTA5SW5SeVlXNXpiR0YwWlNnMUxEVXBJajQ4Y0dGMGFDQmtQU0pOTVRBd0lEVXdRekV3TUNBeU1pNHpPRFU0SURjM0xqWXhORElnTUNBMU1DQXdRekl5TGpNNE5UZ2dNQ0F3SURJeUxqTTROVGdnTUNBMU1FTXdJRGMzTGpZeE5ESWdNakl1TXpnMU9DQXhNREFnTlRBZ01UQXdRemMzTGpZeE5ESWdNVEF3SURFd01DQTNOeTQyTVRReUlERXdNQ0ExTUZvaUlHWnBiR3c5SW5WeWJDZ2paM3B5S1NJZ0x6NDhjR0YwYUNCemRISnZhMlU5SW5KblltRW9NQ3d3TERBc01DNHdOelVwSWlCbWFXeHNQU0owY21GdWMzQmhjbVZ1ZENJZ2MzUnliMnRsTFhkcFpIUm9QU0l4SWlCa1BTSk5OVEFzTUM0MVl6STNMak1zTUN3ME9TNDFMREl5TGpJc05Ea3VOU3cwT1M0MVV6YzNMak1zT1RrdU5TdzFNQ3c1T1M0MVV6QXVOU3czTnk0ekxEQXVOU3cxTUZNeU1pNDNMREF1TlN3MU1Dd3dMalY2SWlBdlBqd3ZaejQ4TDNOMlp6ND0ifQ==",
+      "v3Ask": Object {
+        "askCurrency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "askPrice": "250000000",
+        "events": Array [
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14046911,
+            "blockTimestamp": "2022-01-21T04:50:50",
+            "eventType": "Ask_v1_AskFilled",
+            "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14070471,
+            "blockTimestamp": "2022-01-24T20:30:42",
+            "eventType": "Ask_v1_AskFilled",
+            "transactionHash": "0x17dda3d3bacd73f3c73d98a7c4fddeeac688ab9707ffcfc269dd1fdbbcde35fc",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14043337,
+            "blockTimestamp": "2022-01-20T15:48:27",
+            "eventType": "Ask_v1_AskCreated",
+            "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
+          },
+          Object {
+            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
+            "blockNumber": 14069247,
+            "blockTimestamp": "2022-01-24T15:54:05",
+            "eventType": "Ask_v1_AskCreated",
+            "transactionHash": "0x5f28cbc8b4d9676570fe0ba0f16432918693b2157204808991e125806b7f1322",
+          },
+        ],
+        "status": "FILLED",
+      },
+    },
+  },
+}
+`;
+
 exports[`useNFT test zora indexer media load 1`] = `
 Object {
   "markets": Array [
     Object {
       "amount": Object {
-        "amount": "3000000000000000000",
+        "amount": "4417300000000000000",
         "currency": "0x0000000000000000000000000000000000000000",
         "decimals": 18,
-        "name": "Ethereum",
-        "prettyAmount": "3.00",
+        "name": "Ether",
+        "prettyAmount": "4.42",
         "symbol": "ETH",
       },
-      "bids": Array [],
+      "bids": Array [
+        Object {
+          "amount": Object {
+            "amount": "3000000000000000000",
+            "currency": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "Ether",
+            "prettyAmount": "3.00",
+            "symbol": "ETH",
+          },
+          "created": Object {
+            "blockNumber": 14045606,
+            "timestamp": 1642744906,
+            "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+          },
+          "creator": "0x5B93FF82faaF241c15997ea3975419DDDd8362c5",
+        },
+        Object {
+          "amount": Object {
+            "amount": "3150000000000000000",
+            "currency": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "Ether",
+            "prettyAmount": "3.15",
+            "symbol": "ETH",
+          },
+          "created": Object {
+            "blockNumber": 14050377,
+            "timestamp": 1642809616,
+            "transactionHash": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03",
+          },
+          "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+        },
+        Object {
+          "amount": Object {
+            "amount": "4206900000000000000",
+            "currency": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "Ether",
+            "prettyAmount": "4.21",
+            "symbol": "ETH",
+          },
+          "created": Object {
+            "blockNumber": 14050920,
+            "timestamp": 1642816385,
+            "transactionHash": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7",
+          },
+          "creator": "0x0BC91edE1C95d1e5A11e86eEaA2a873070eE571c",
+        },
+        Object {
+          "amount": Object {
+            "amount": "4417300000000000000",
+            "currency": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "Ether",
+            "prettyAmount": "4.42",
+            "symbol": "ETH",
+          },
+          "created": Object {
+            "blockNumber": 14051002,
+            "timestamp": 1642817520,
+            "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
+          },
+          "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+        },
+      ],
       "cancelledAt": undefined,
       "createdAt": Object {
-        "blockNumber": "14036894",
-        "timestamp": "1642607884",
+        "blockNumber": 14036894,
+        "timestamp": 1642629484,
         "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
       },
       "currentBid": Object {
         "amount": Object {
-          "amount": "3000000000000000000",
+          "amount": "4417300000000000000",
           "currency": "0x0000000000000000000000000000000000000000",
           "decimals": 18,
-          "name": "Ethereum",
-          "prettyAmount": "3.00",
+          "name": "Ether",
+          "prettyAmount": "4.42",
           "symbol": "ETH",
         },
         "created": Object {
-          "blockNumber": undefined,
-          "timestamp": "1642723306",
-          "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+          "blockNumber": 14051002,
+          "timestamp": 1642817520,
+          "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
         },
-        "creator": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+        "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
       },
-      "duration": "86400",
+      "duration": 2664353455200,
       "endsAt": Object {
-        "blockNumber": null,
-        "timestamp": "1642809706",
-        "transactionHash": null,
+        "blockNumber": 14052297,
+        "timestamp": 1642809706,
+        "transactionHash": "0x7c6221d72fccaa72bc453f16f8ac362394e1c68cacf14ae6fd62a202b01e7b9d",
       },
-      "finishedAt": undefined,
+      "finishedAt": Object {
+        "blockNumber": 14052297,
+        "timestamp": 1642835479,
+        "transactionHash": "0x7c6221d72fccaa72bc453f16f8ac362394e1c68cacf14ae6fd62a202b01e7b9d",
+      },
       "raw": Object {
         "approved": true,
-        "approvedTimestamp": "1642607884",
-        "auctionCurrency": Object {
-          "decimals": 0,
-          "id": "0x0000000000000000000000000000000000000000",
-          "name": "unknown",
-          "symbol": "unknown",
-        },
-        "createdAtBlockNumber": "14036894",
-        "createdAtTimestamp": "1642607884",
-        "curator": Object {
-          "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
-        },
-        "curatorFeePercentage": 0,
-        "currentBid": Object {
-          "amount": "3000000000000000000",
-          "bidType": "Active",
-          "bidder": Object {
-            "id": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+        "auctionId": "3586",
+        "bidEvents": Array [
+          Object {
+            "blockNumber": 14045606,
+            "blockTimestamp": "2022-01-21T00:01:46",
+            "id": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916-146",
+            "sender": "0x5B93FF82faaF241c15997ea3975419DDDd8362c5",
+            "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+            "value": "3000000000000000000",
           },
-          "createdAtTimestamp": "1642723306",
-          "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+          Object {
+            "blockNumber": 14050377,
+            "blockTimestamp": "2022-01-21T18:00:16",
+            "id": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03-373",
+            "sender": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+            "transactionHash": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03",
+            "value": "3150000000000000000",
+          },
+          Object {
+            "blockNumber": 14050920,
+            "blockTimestamp": "2022-01-21T19:53:05",
+            "id": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7-369",
+            "sender": "0x0BC91edE1C95d1e5A11e86eEaA2a873070eE571c",
+            "transactionHash": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7",
+            "value": "4206900000000000000",
+          },
+          Object {
+            "blockNumber": 14051002,
+            "blockTimestamp": "2022-01-21T20:12:00",
+            "id": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a-408",
+            "sender": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+            "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
+            "value": "4417300000000000000",
+          },
+        ],
+        "canceledEvent": null,
+        "createdEvent": Object {
+          "blockNumber": 14036894,
+          "blockTimestamp": "2022-01-19T15:58:04",
+          "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
+        },
+        "curator": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
+        "curatorFee": "0",
+        "curatorFeePercentage": 0,
+        "currency": Object {
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18,
+          "name": "Ether",
+          "symbol": "ETH",
         },
         "duration": "86400",
-        "expectedEndTimestamp": "1642809706",
-        "finalizedAtTimestamp": null,
-        "firstBidTime": "1642723306",
-        "id": "3586",
-        "previousBids": Array [],
-        "reservePrice": "3000000000000000000",
-        "status": "Active",
-        "token": "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7-7504",
-        "tokenContract": "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7",
-        "tokenId": "7504",
-        "tokenOwner": Object {
-          "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
+        "endedEvent": Object {
+          "blockNumber": 14052297,
+          "blockTimestamp": "2022-01-22T01:11:19",
+          "transactionHash": "0x7c6221d72fccaa72bc453f16f8ac362394e1c68cacf14ae6fd62a202b01e7b9d",
         },
-        "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
+        "expiresAt": "2022-01-22T00:01:46+00:00",
+        "firstBidTime": "1642723306",
+        "lastBidAmount": "4417300000000000000",
+        "reservePrice": "3000000000000000000",
+        "tokenContract": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
+        "tokenId": "7504",
+        "tokenOwner": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
+        "winner": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
       },
       "source": "ZoraReserveV0",
-      "startedAt": "1642723306",
+      "startedAt": Object {
+        "blockNumber": null,
+        "timestamp": NaN,
+        "transactionHash": null,
+      },
       "status": "complete",
-      "winner": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+      "winner": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
     },
   ],
-  "media": Object {
-    "full": "https://ipfs.io/ipfs/bafybeia7gvvmwoyf4aoqix2bpvhms4yqqh7fs5ajn6eb2lbxtuhdbkwztm",
-    "preview": null,
-    "source": "zora",
-    "thumbnail": null,
+  "metadata": Object {
+    "animation_url": undefined,
+    "attributes": Array [],
+    "description": undefined,
+    "image": undefined,
+    "name": undefined,
+    "raw": Object {
+      "body": Object {
+        "artist": "Allan Kingdom",
+        "artwork": Object {
+          "info": Object {
+            "mimeType": "image/jpeg",
+            "uri": "https://ipfs.io/ipfs/bafybeihglfkggst4dcamvptpihpxafequjhj7qsxvpfn6ygett75ltbbbq",
+          },
+          "isNft": false,
+          "nft": null,
+        },
+        "duration": 240.065,
+        "mimeType": "audio/wav",
+        "notes": "Yebo means “Yes” in the South African language of Zulu. Yebo Life is also the name of Allan Kingdom’s  non-for-profit organization.
+
+“Yebo” is also a word you’ll hear across the continent of Africa when the community gets lit! The song was produced by Blk Orchid, & written by Allan Kingdom and TiKA. The song was mixed, engineered, and mastered by Allan Kingdom. The artwork was also created by Allan Kingdom. 
+
+The inspiration for the artwork is a play on the American Gothic classic painting. The intention was to show what taking up space can look like for Black Folk in art. Although a parody, the picture is a powerful reminder that we are all Kings and Queens. Hence the importance of the Nefertiti Chain on TiKA and the Chain of the continent of Africa on Allan.
+
+With Blk Orchid's being of Jamaican descent, and TiKA’s being of Trinidadian and Jamaican descent, this collaboration is an amalgamation of the unification of the diaspora.
+
+Allan Kingdom being of South African/Tanzanian descent was deeply inspired to give back to his community and members of the diaspora. His mother being his influence, built wells for her home village in the Serengeti once she was able to give back. 
+
+Allan is honored to be able to carry the torch, and use his notoriety to donate thousands of pounds of goods every year starting in his hometown of St. Paul, Minnesota. 
+
+In life, we hear more no’s than yes’s which amplifies the importance of the song and the organization! Say yes to a life of love, health, and prosperity.",
+        "project": null,
+        "title": "Yebo Life ft. Tika",
+        "trackNumber": null,
+        "version": "catalog-20210202",
+        "visualizer": null,
+      },
+      "origin": Object {
+        "algorithm": "secp256k1",
+        "encoding": "rlp",
+        "publicKey": "0xc236541380fc0C2C05c2F2c6c52a21ED57c37952",
+        "signature": "0x7f82b34bc4bf87f7eb55c7793461fb064285836186e51ca9305f8efb1e95d82b0b73a1752d079e57d1188db835697e16a4138170e9c6e2906866771d9fd2f01b1c",
+      },
+    },
   },
   "nft": Object {
     "contentURI": "https://ipfs.io/ipfs/bafybeia7gvvmwoyf4aoqix2bpvhms4yqqh7fs5ajn6eb2lbxtuhdbkwztm",
     "contract": Object {
       "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
       "description": null,
-      "knownContract": "zora",
       "name": "Zora",
       "symbol": "ZORA",
     },
-    "creator": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
+    "creator": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
     "metadataURI": "https://ipfs.io/ipfs/bafybeigrutnapcelmoutefrrizjmqc6swet2jxtfnb26otbihtnhtmbcsa",
-    "owner": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    "owner": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
     "tokenId": "7504",
   },
   "rawData": Object {
-    "zora-graph": Object {
-      "contentHash": "0xe81b1681a6690ccf25ca9cc41a2489cdac6e81781c054386fa8387f45f254789",
-      "contentURI": "https://ipfs.io/ipfs/bafybeia7gvvmwoyf4aoqix2bpvhms4yqqh7fs5ajn6eb2lbxtuhdbkwztm",
-      "createdAtTimestamp": "1642607758",
-      "creator": Object {
-        "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
-      },
-      "creatorBidShare": "33000000000000000000",
-      "currentAsk": null,
-      "currentBids": Array [],
-      "id": "7504",
-      "metadataHash": "0xfdce1c50a0df8f3195e7fce09dd98813f1f65c45adefd648aa2e4c64ca50d9c6",
-      "metadataURI": "https://ipfs.io/ipfs/bafybeigrutnapcelmoutefrrizjmqc6swet2jxtfnb26otbihtnhtmbcsa",
-      "owner": Object {
-        "id": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
-      },
-      "ownerBidShare": "67000000000000000000",
-      "reserveAuctions": Array [
+    "zora-indexer": Object {
+      "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
+      "auctions": Array [
         Object {
           "approved": true,
-          "approvedTimestamp": "1642607884",
-          "auctionCurrency": Object {
-            "decimals": 0,
-            "id": "0x0000000000000000000000000000000000000000",
-            "name": "unknown",
-            "symbol": "unknown",
-          },
-          "createdAtBlockNumber": "14036894",
-          "createdAtTimestamp": "1642607884",
-          "curator": Object {
-            "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
-          },
-          "curatorFeePercentage": 0,
-          "currentBid": Object {
-            "amount": "3000000000000000000",
-            "bidType": "Active",
-            "bidder": Object {
-              "id": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+          "auctionId": "3586",
+          "bidEvents": Array [
+            Object {
+              "blockNumber": 14045606,
+              "blockTimestamp": "2022-01-21T00:01:46",
+              "id": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916-146",
+              "sender": "0x5B93FF82faaF241c15997ea3975419DDDd8362c5",
+              "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+              "value": "3000000000000000000",
             },
-            "createdAtTimestamp": "1642723306",
-            "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
+            Object {
+              "blockNumber": 14050377,
+              "blockTimestamp": "2022-01-21T18:00:16",
+              "id": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03-373",
+              "sender": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+              "transactionHash": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03",
+              "value": "3150000000000000000",
+            },
+            Object {
+              "blockNumber": 14050920,
+              "blockTimestamp": "2022-01-21T19:53:05",
+              "id": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7-369",
+              "sender": "0x0BC91edE1C95d1e5A11e86eEaA2a873070eE571c",
+              "transactionHash": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7",
+              "value": "4206900000000000000",
+            },
+            Object {
+              "blockNumber": 14051002,
+              "blockTimestamp": "2022-01-21T20:12:00",
+              "id": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a-408",
+              "sender": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+              "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
+              "value": "4417300000000000000",
+            },
+          ],
+          "canceledEvent": null,
+          "createdEvent": Object {
+            "blockNumber": 14036894,
+            "blockTimestamp": "2022-01-19T15:58:04",
+            "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
+          },
+          "curator": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
+          "curatorFee": "0",
+          "curatorFeePercentage": 0,
+          "currency": Object {
+            "address": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "Ether",
+            "symbol": "ETH",
           },
           "duration": "86400",
-          "expectedEndTimestamp": "1642809706",
-          "finalizedAtTimestamp": null,
+          "endedEvent": Object {
+            "blockNumber": 14052297,
+            "blockTimestamp": "2022-01-22T01:11:19",
+            "transactionHash": "0x7c6221d72fccaa72bc453f16f8ac362394e1c68cacf14ae6fd62a202b01e7b9d",
+          },
+          "expiresAt": "2022-01-22T00:01:46+00:00",
           "firstBidTime": "1642723306",
-          "id": "3586",
-          "previousBids": Array [],
+          "lastBidAmount": "4417300000000000000",
           "reservePrice": "3000000000000000000",
-          "status": "Active",
-          "token": "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7-7504",
-          "tokenContract": "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7",
+          "tokenContract": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
           "tokenId": "7504",
-          "tokenOwner": Object {
-            "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
-          },
-          "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
+          "tokenOwner": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
+          "winner": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
         },
       ],
-      "transfers": Array [
-        Object {
-          "createdAtBlockNumber": "14036883",
-          "createdAtTimestamp": "1642607758",
-          "from": Object {
-            "id": "0x0000000000000000000000000000000000000000",
+      "id": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7-7504",
+      "media": Object {
+        "contentHash": "0xe81b1681a6690ccf25ca9cc41a2489cdac6e81781c054386fa8387f45f254789",
+        "contentURI": "https://ipfs.io/ipfs/bafybeia7gvvmwoyf4aoqix2bpvhms4yqqh7fs5ajn6eb2lbxtuhdbkwztm",
+        "creatorBidShare": "33000000000000000000",
+        "metadataHash": "0xfdce1c50a0df8f3195e7fce09dd98813f1f65c45adefd648aa2e4c64ca50d9c6",
+        "metadataURI": "https://ipfs.io/ipfs/bafybeigrutnapcelmoutefrrizjmqc6swet2jxtfnb26otbihtnhtmbcsa",
+        "ownerBidShare": "67000000000000000000",
+      },
+      "metadata": Object {
+        "json": Object {
+          "body": Object {
+            "artist": "Allan Kingdom",
+            "artwork": Object {
+              "info": Object {
+                "mimeType": "image/jpeg",
+                "uri": "https://ipfs.io/ipfs/bafybeihglfkggst4dcamvptpihpxafequjhj7qsxvpfn6ygett75ltbbbq",
+              },
+              "isNft": false,
+              "nft": null,
+            },
+            "duration": 240.065,
+            "mimeType": "audio/wav",
+            "notes": "Yebo means “Yes” in the South African language of Zulu. Yebo Life is also the name of Allan Kingdom’s  non-for-profit organization.
+
+“Yebo” is also a word you’ll hear across the continent of Africa when the community gets lit! The song was produced by Blk Orchid, & written by Allan Kingdom and TiKA. The song was mixed, engineered, and mastered by Allan Kingdom. The artwork was also created by Allan Kingdom. 
+
+The inspiration for the artwork is a play on the American Gothic classic painting. The intention was to show what taking up space can look like for Black Folk in art. Although a parody, the picture is a powerful reminder that we are all Kings and Queens. Hence the importance of the Nefertiti Chain on TiKA and the Chain of the continent of Africa on Allan.
+
+With Blk Orchid's being of Jamaican descent, and TiKA’s being of Trinidadian and Jamaican descent, this collaboration is an amalgamation of the unification of the diaspora.
+
+Allan Kingdom being of South African/Tanzanian descent was deeply inspired to give back to his community and members of the diaspora. His mother being his influence, built wells for her home village in the Serengeti once she was able to give back. 
+
+Allan is honored to be able to carry the torch, and use his notoriety to donate thousands of pounds of goods every year starting in his hometown of St. Paul, Minnesota. 
+
+In life, we hear more no’s than yes’s which amplifies the importance of the song and the organization! Say yes to a life of love, health, and prosperity.",
+            "project": null,
+            "title": "Yebo Life ft. Tika",
+            "trackNumber": null,
+            "version": "catalog-20210202",
+            "visualizer": null,
           },
-          "id": "7504-0x0754a4e2e136e222d263efb3f34cec7ada3f770af4fc64d7aab4ee7deb03d61f-268",
-          "to": Object {
-            "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
+          "origin": Object {
+            "algorithm": "secp256k1",
+            "encoding": "rlp",
+            "publicKey": "0xc236541380fc0C2C05c2F2c6c52a21ED57c37952",
+            "signature": "0x7f82b34bc4bf87f7eb55c7793461fb064285836186e51ca9305f8efb1e95d82b0b73a1752d079e57d1188db835697e16a4138170e9c6e2906866771d9fd2f01b1c",
           },
-          "transactionHash": "0x0754a4e2e136e222d263efb3f34cec7ada3f770af4fc64d7aab4ee7deb03d61f",
         },
-        Object {
-          "createdAtBlockNumber": "14036894",
-          "createdAtTimestamp": "1642607884",
-          "from": Object {
-            "id": "0x51761d3cf3d6c954e5016ccf6f67f2d3a7749459",
-          },
-          "id": "7504-0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065-99",
-          "to": Object {
-            "id": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
-          },
-          "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
-        },
-      ],
+      },
+      "mintTransferEvent": Object {
+        "blockNumber": 14036883,
+        "blockTimestamp": "2022-01-19T15:55:58",
+        "transactionHash": "0x0754a4e2e136e222d263efb3f34cec7ada3f770af4fc64d7aab4ee7deb03d61f",
+      },
+      "minter": "0x51761D3cF3d6c954E5016ccF6f67F2d3a7749459",
+      "owner": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
+      "tokenContract": Object {
+        "address": "0xabEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
+        "name": "Zora",
+        "supportsMetadata": true,
+        "symbol": "ZORA",
+      },
+      "tokenId": "7504",
+      "tokenURI": "https://ipfs.io/ipfs/bafybeigrutnapcelmoutefrrizjmqc6swet2jxtfnb26otbihtnhtmbcsa",
+      "v3Ask": null,
     },
   },
 }

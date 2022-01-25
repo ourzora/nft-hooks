@@ -5,7 +5,7 @@ import Big from 'big.js';
 
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
 import { NetworkIDs } from '../constants/networks';
-import { THEGRAPH_API_URL_BY_NETWORK } from '../constants/urls';
+import { ZORA_INDEXER_URL_BY_NETWORK } from '../constants/urls';
 import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
 import {
   AuctionBidEventPartFragment,
@@ -239,15 +239,18 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
   nftGraphDataLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
   networkId: NetworkIDs;
   timeout: number;
+  endpoint: string;
   mediaContractAddress: string;
 
   constructor(
     networkId: NetworkIDs,
     timeout: number = 5,
-    mediaContractAddress: string = ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId]
+    mediaContractAddress: string = ZORA_MEDIA_CONTRACT_BY_NETWORK[networkId],
+    endpoint: string = ZORA_INDEXER_URL_BY_NETWORK[networkId]
   ) {
     this.nftGraphDataLoader = new DataLoader(this.fetchNFTs);
     this.timeout = timeout;
+    this.endpoint = endpoint;
     this.networkId = networkId;
     this.mediaContractAddress = mediaContractAddress;
   }
@@ -398,7 +401,7 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
 
   getClient() {
     const fetchWithTimeout = new FetchWithTimeout(this.timeout);
-    return new GraphQLClient(THEGRAPH_API_URL_BY_NETWORK[this.networkId], {
+    return new GraphQLClient(this.endpoint, {
       fetch: fetchWithTimeout.fetch,
     });
   }
