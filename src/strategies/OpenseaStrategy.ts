@@ -23,6 +23,7 @@ export class OpenseaStrategy extends NFTStrategy {
 
   fetchNFT = async (contract: string, id: string) => {
     const openseaNFT = await this.openseaBackend.loadNFT(contract, id);
+    console.log({openseaNFT});
     if (openseaNFT instanceof Error) {
       throw openseaNFT;
     }

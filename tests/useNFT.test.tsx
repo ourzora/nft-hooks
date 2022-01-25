@@ -66,7 +66,6 @@ describe('useNFT', () => {
 
     await waitFor(
       () => {
-        console.log(result.current);
         return !!result.current.data;
       },
       { timeout: 4000 }
@@ -93,7 +92,6 @@ describe('useNFT', () => {
 
     await waitFor(
       () => {
-        console.log(result.current);
         return !!result.current.data;
       },
       { timeout: 4000 }

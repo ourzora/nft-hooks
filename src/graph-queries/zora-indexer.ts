@@ -109,7 +109,6 @@ const BASE_FRAGMENTS = gql`
     auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
       ...IndexerAuctionPart
     }
-    
   }
 `;
 
