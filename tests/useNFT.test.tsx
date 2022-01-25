@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Networks, NFTFetchConfiguration, useNFT } from '../src';
 import { OpenseaStrategy } from '../src/strategies/OpenseaStrategy';
 import { ZoraGraphStrategy } from '../src/strategies/ZoraGraphStrategy';
+import { ZoraV2IndexerStrategy } from '../src/strategies/ZoraV2IndexerStrategy';
 
 describe('useNFT', () => {
   beforeEach(() => {
@@ -29,7 +30,7 @@ describe('useNFT', () => {
     expect(result.current.data).toMatchSnapshot();
   });
   it('test zora graph media load', async () => {
-    const openseaStrategy = new OpenseaStrategy(Networks.RINKEBY);
+    const openseaStrategy = new ZoraGraphStrategy(Networks.RINKEBY);
 
     const NetworkWrapper = ({ children }: any) => (
       <NFTFetchConfiguration networkId={Networks.RINKEBY} strategy={openseaStrategy}>
@@ -50,7 +51,7 @@ describe('useNFT', () => {
     expect(result.current.data).toMatchSnapshot();
   });
   it('test zora indexer media load', async () => {
-    const openseaStrategy = new ZoraGraphStrategy(Networks.MAINNET);
+    const openseaStrategy = new ZoraV2IndexerStrategy(Networks.MAINNET);
 
     const NetworkWrapper = ({ children }: any) => (
       <NFTFetchConfiguration networkId={Networks.RINKEBY} strategy={openseaStrategy}>
@@ -77,7 +78,7 @@ describe('useNFT', () => {
     expect(result.current.data).toMatchSnapshot();
   });
   it('test zora indexer buy now load', async () => {
-    const openseaStrategy = new ZoraGraphStrategy(Networks.MAINNET);
+    const openseaStrategy = new ZoraV2IndexerStrategy(Networks.MAINNET);
 
     const NetworkWrapper = ({ children }: any) => (
       <NFTFetchConfiguration networkId={Networks.RINKEBY} strategy={openseaStrategy}>

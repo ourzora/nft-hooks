@@ -1,6 +1,5 @@
-import { ZoraIndexerNFTDataSource } from 'src/backends/ZoraIndexerNFTDataSource';
+import { ZoraIndexerNFTDataSource } from '../backends/ZoraIndexerNFTDataSource';
 import { CurrencyDataSourceUniswap } from '../backends/CurrencyDataSourceUniswap';
-import { GraphDataSource } from '../backends/ZoraGraphDataSource';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
 
@@ -17,7 +16,7 @@ export class ZoraV2IndexerStrategy extends NFTStrategy {
     return false;
   }
 
-  fetchNFT = async (contract: string, id: string) => {
+  fetchNFT = async (contract: string, id: string): Promise<any> => {
     const response = await this.zoraIndexerDataSource.loadNFT(contract, id);
     return this.zoraIndexerDataSource.transformNFT(response, {} as any);
   };

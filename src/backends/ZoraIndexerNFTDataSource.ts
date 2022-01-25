@@ -228,7 +228,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
   return resultAuction;
 }
 
-function extractMarketData(response: IndexerTokenWithAuctionFragment, object: NFTObject) {
+function extractMarketData(response: IndexerTokenWithAuctionFragment, _: NFTObject) {
   return [
     ...response.auctions.map((auction) => extractAuction(auction)),
     ...(response.v3Ask ? [extractAsk(response.v3Ask)] : []),
@@ -283,18 +283,21 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
       object.rawData = {};
     }
     object.markets = extractMarketData(asset, object);
+    if (!object.rawData) {
+      object.rawData = {};
+    }
     object.rawData['zora-indexer'] = asset;
     return object;
   }
 
-  async loadNFT(tokenContract: string, tokenId: string) {
+  loadNFT = async (tokenContract: string, tokenId: string) => {
     return await this.nftGraphDataLoader.load(`${tokenContract}-${tokenId}`);
-  }
-  async loadNFTs(tokenContractAndId: readonly string[]) {
+  };
+  loadNFTs = async (tokenContractAndId: readonly string[]) => {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
-  }
+  };
 
-  async fetchNFTs(mediaIds: readonly string[]) {
+  fetchNFTs = async (mediaIds: readonly string[]) => {
     const response = (await this.getClient().request(INDEXER_BY_IDS_QUERY, {
       ids: mediaIds,
     })) as ByIdsQuery;
@@ -302,16 +305,16 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
       (key) =>
         response.Token.find((media) => media.id === key) || new Error('Missing record')
     );
-  }
+  };
 
-  async fetchNFTSForQuery(
+  fetchNFTSForQuery = async (
     collectionAddresses: string[],
     curatorAddress: string,
     approved = null,
     onlyAuctions = false,
     limit = 200,
     offset = 0
-  ) {
+  ) => {
     if (!collectionAddresses?.length && !curatorAddress) {
       throw new ArgumentsError('Needs to have at least one curator or collector');
     }
@@ -353,7 +356,7 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
         rawData: {},
       })
     );
-  }
+  };
 
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
@@ -363,7 +366,7 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
    * @param type type of ids: creator, id (of media), owner
    * @returns
    */
-  async fetchUserOwnedNFTs({
+  fetchUserOwnedNFTs = async ({
     collectionAddresses,
     userAddress,
     offset = 0,
@@ -373,7 +376,7 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
     userAddress: string;
     offset?: number;
     limit?: number;
-  }) {
+  }) => {
     let addressQueryPart = {} as String_Comparison_Exp;
     if (collectionAddresses?.length) {
       addressQueryPart['_in'] = collectionAddresses.map(getAddress);
@@ -391,7 +394,7 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
         rawData: {},
       })
     );
-  }
+  };
 
   getClient() {
     const fetchWithTimeout = new FetchWithTimeout(this.timeout);
