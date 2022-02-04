@@ -511,67 +511,7 @@ Object {
 
 exports[`useNFT test zora indexer buy now load 1`] = `
 Object {
-  "markets": Array [
-    Object {
-      "amount": Object {
-        "amount": "250000000",
-        "currency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "decimals": undefined,
-        "name": "UNKN",
-        "prettyAmount": "0.00",
-        "symbol": "UNKN",
-      },
-      "cancelledAt": undefined,
-      "createdAt": Object {
-        "blockNumber": 14043337,
-        "timestamp": "2022-01-20T15:48:27",
-        "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
-      },
-      "finishedAt": Object {
-        "blockNumber": 14046911,
-        "timestamp": "2022-01-21T04:50:50",
-        "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
-      },
-      "raw": Object {
-        "askCurrency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "askPrice": "250000000",
-        "events": Array [
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14046911,
-            "blockTimestamp": "2022-01-21T04:50:50",
-            "eventType": "Ask_v1_AskFilled",
-            "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14070471,
-            "blockTimestamp": "2022-01-24T20:30:42",
-            "eventType": "Ask_v1_AskFilled",
-            "transactionHash": "0x17dda3d3bacd73f3c73d98a7c4fddeeac688ab9707ffcfc269dd1fdbbcde35fc",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14043337,
-            "blockTimestamp": "2022-01-20T15:48:27",
-            "eventType": "Ask_v1_AskCreated",
-            "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14069247,
-            "blockTimestamp": "2022-01-24T15:54:05",
-            "eventType": "Ask_v1_AskCreated",
-            "transactionHash": "0x5f28cbc8b4d9676570fe0ba0f16432918693b2157204808991e125806b7f1322",
-          },
-        ],
-        "status": "FILLED",
-      },
-      "source": "ZoraAskV1",
-      "status": "complete",
-      "type": "ask",
-    },
-  ],
+  "markets": Array [],
   "metadata": Object {
     "animation_url": undefined,
     "attributes": Array [],
@@ -631,41 +571,7 @@ View this NFT at [zorb.dev/nft/54382](https://zorb.dev/nft/54382)",
       },
       "tokenId": "54382",
       "tokenURI": "data:application/json;base64,eyJuYW1lIjogIlpvcmIgIzU0MzgyIiwgImRlc2NyaXB0aW9uIjogIlpvcmJzIHdlcmUgZGlzdHJpYnV0ZWQgZm9yIGZyZWUgYnkgWk9SQSBvbiBOZXcgWWVhcuKAmXMgMjAyMi4gRWFjaCBORlQgaW1idWVzIHRoZSBwcm9wZXJ0aWVzIG9mIGl0cyB3YWxsZXQgaG9sZGVyLCBhbmQgd2hlbiBzZW50IHRvIHNvbWVvbmUgZWxzZSwgd2lsbCB0cmFuc2Zvcm0uXG5cblZpZXcgdGhpcyBORlQgYXQgW3pvcmIuZGV2L25mdC81NDM4Ml0oaHR0cHM6Ly96b3JiLmRldi9uZnQvNTQzODIpIiwgImltYWdlIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0F4TVRBZ01URXdJajQ4WkdWbWN6NDhjbUZrYVdGc1IzSmhaR2xsYm5RZ2FXUTlJbWQ2Y2lJZ1ozSmhaR2xsYm5SVWNtRnVjMlp2Y20wOUluUnlZVzV6YkdGMFpTZzJOaTQwTlRjNElESTBMak0xTnpVcElITmpZV3hsS0RjMUxqSTVNRGdwSWlCbmNtRmthV1Z1ZEZWdWFYUnpQU0oxYzJWeVUzQmhZMlZQYmxWelpTSWdjajBpTVNJZ1kzZzlJakFpSUdONVBTSXdKU0krUEhOMGIzQWdiMlptYzJWMFBTSXhOUzQyTWlVaUlITjBiM0F0WTI5c2IzSTlJbWh6YkNneE5qZ3NJRGN3SlN3Z09Ea2xLU0lnTHo0OGMzUnZjQ0J2Wm1aelpYUTlJak01TGpVNEpTSWdjM1J2Y0MxamIyeHZjajBpYUhOc0tERTJPQ3dnTnpFbExDQTNOQ1VwSWlBdlBqeHpkRzl3SUc5bVpuTmxkRDBpTnpJdU9USWxJaUJ6ZEc5d0xXTnZiRzl5UFNKb2Myd29NVGsxTENBM015VXNJRFV6SlNraUlDOCtQSE4wYjNBZ2IyWm1jMlYwUFNJNU1DNDJNeVVpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3dKU3dnTkRVbEtTSWdMejQ4YzNSdmNDQnZabVp6WlhROUlqRXdNQ1VpSUhOMGIzQXRZMjlzYjNJOUltaHpiQ2d4T1Rjc0lEZ3pKU3dnTkRRbEtTSWdMejQ4TDNKaFpHbGhiRWR5WVdScFpXNTBQand2WkdWbWN6NDhaeUIwY21GdWMyWnZjbTA5SW5SeVlXNXpiR0YwWlNnMUxEVXBJajQ4Y0dGMGFDQmtQU0pOTVRBd0lEVXdRekV3TUNBeU1pNHpPRFU0SURjM0xqWXhORElnTUNBMU1DQXdRekl5TGpNNE5UZ2dNQ0F3SURJeUxqTTROVGdnTUNBMU1FTXdJRGMzTGpZeE5ESWdNakl1TXpnMU9DQXhNREFnTlRBZ01UQXdRemMzTGpZeE5ESWdNVEF3SURFd01DQTNOeTQyTVRReUlERXdNQ0ExTUZvaUlHWnBiR3c5SW5WeWJDZ2paM3B5S1NJZ0x6NDhjR0YwYUNCemRISnZhMlU5SW5KblltRW9NQ3d3TERBc01DNHdOelVwSWlCbWFXeHNQU0owY21GdWMzQmhjbVZ1ZENJZ2MzUnliMnRsTFhkcFpIUm9QU0l4SWlCa1BTSk5OVEFzTUM0MVl6STNMak1zTUN3ME9TNDFMREl5TGpJc05Ea3VOU3cwT1M0MVV6YzNMak1zT1RrdU5TdzFNQ3c1T1M0MVV6QXVOU3czTnk0ekxEQXVOU3cxTUZNeU1pNDNMREF1TlN3MU1Dd3dMalY2SWlBdlBqd3ZaejQ4TDNOMlp6ND0ifQ==",
-      "v3Ask": Object {
-        "askCurrency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "askPrice": "250000000",
-        "events": Array [
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14046911,
-            "blockTimestamp": "2022-01-21T04:50:50",
-            "eventType": "Ask_v1_AskFilled",
-            "transactionHash": "0x9b783cefc5fe9d299cdb9ad2ada5b1b7cd33e24de2e8e8b3f0acd0d9b718ffe6",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14070471,
-            "blockTimestamp": "2022-01-24T20:30:42",
-            "eventType": "Ask_v1_AskFilled",
-            "transactionHash": "0x17dda3d3bacd73f3c73d98a7c4fddeeac688ab9707ffcfc269dd1fdbbcde35fc",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14043337,
-            "blockTimestamp": "2022-01-20T15:48:27",
-            "eventType": "Ask_v1_AskCreated",
-            "transactionHash": "0x61105be332417e18e2e04f1da056c4dd1dd83acec4bd4a918d8d12fb942fb2a6",
-          },
-          Object {
-            "address": "0xCe6cEf2A9028e1C3B21647ae3B4251038109f42a",
-            "blockNumber": 14069247,
-            "blockTimestamp": "2022-01-24T15:54:05",
-            "eventType": "Ask_v1_AskCreated",
-            "transactionHash": "0x5f28cbc8b4d9676570fe0ba0f16432918693b2157204808991e125806b7f1322",
-          },
-        ],
-        "status": "FILLED",
-      },
+      "v3Ask": null,
     },
   },
 }
@@ -695,7 +601,7 @@ Object {
           },
           "created": Object {
             "blockNumber": 14045606,
-            "timestamp": 1642744906,
+            "timestamp": 1642741306,
             "transactionHash": "0xe2fecec422db663cb8f56206d667a1d1c791bf137781d4a57efbea675b574916",
           },
           "creator": "0x5B93FF82faaF241c15997ea3975419DDDd8362c5",
@@ -711,7 +617,7 @@ Object {
           },
           "created": Object {
             "blockNumber": 14050377,
-            "timestamp": 1642809616,
+            "timestamp": 1642806016,
             "transactionHash": "0x896e8400de26f1f5432b98badce0e00f8df8e8ae72cd2a7e45d3f3a3f4773a03",
           },
           "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
@@ -727,7 +633,7 @@ Object {
           },
           "created": Object {
             "blockNumber": 14050920,
-            "timestamp": 1642816385,
+            "timestamp": 1642812785,
             "transactionHash": "0x59940f23e00fdce88a964cb19489839cc726a8b309c4d475e3fec0f5f09229b7",
           },
           "creator": "0x0BC91edE1C95d1e5A11e86eEaA2a873070eE571c",
@@ -743,7 +649,7 @@ Object {
           },
           "created": Object {
             "blockNumber": 14051002,
-            "timestamp": 1642817520,
+            "timestamp": 1642813920,
             "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
           },
           "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
@@ -752,7 +658,7 @@ Object {
       "cancelledAt": undefined,
       "createdAt": Object {
         "blockNumber": 14036894,
-        "timestamp": 1642629484,
+        "timestamp": 1642625884,
         "transactionHash": "0x7caff978d50b807c5342ed61826d71fefa079937e75bfe8f6d6a3860f0d55065",
       },
       "currentBid": Object {
@@ -766,12 +672,12 @@ Object {
         },
         "created": Object {
           "blockNumber": 14051002,
-          "timestamp": 1642817520,
+          "timestamp": 1642813920,
           "transactionHash": "0xbec3cffe970e5c2b285edee941b15169f653a21b90e64be5a7a0117ab49d4f8a",
         },
         "creator": "0xd7a22C594a8874E53B9630922D13B014E83032Bf",
       },
-      "duration": 2664353455200,
+      "duration": 2664353451600,
       "endsAt": Object {
         "blockNumber": 14052297,
         "timestamp": 1642809706,
@@ -779,7 +685,7 @@ Object {
       },
       "finishedAt": Object {
         "blockNumber": 14052297,
-        "timestamp": 1642835479,
+        "timestamp": 1642831879,
         "transactionHash": "0x7c6221d72fccaa72bc453f16f8ac362394e1c68cacf14ae6fd62a202b01e7b9d",
       },
       "raw": Object {
