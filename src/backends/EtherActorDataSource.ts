@@ -49,12 +49,9 @@ export class EtherActorDataSource implements EtherActorDataInterface {
         description: null,
       },
       owner: asset.owner,
-      creator: '',
       metadataURI: asset.tokenURL,
       contentURI: asset.contentURL || null,
-      minted: {
-        minter: undefined,
-      },
+      minted: {},
     };
 
     object.metadata = asset.metadata;

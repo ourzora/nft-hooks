@@ -279,7 +279,6 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
         minter: asset.minter || undefined,
       },
       owner: asset.owner,
-      creator: asset.minter!,
       metadataURI: asset.media ? asset.media.metadataURI! : asset.tokenURI!,
       contentURI: asset.media?.contentURI!,
     };

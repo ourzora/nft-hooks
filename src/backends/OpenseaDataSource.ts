@@ -44,7 +44,6 @@ export class OpenseaDataSource implements OpenseaInterface {
         description: asset.asset_contract.description,
       },
       owner: asset.owner.address,
-      creator: asset.creator.address,
       metadataURI: asset.token_metadata,
       contentURI: asset.animation_original_url || asset.image_original_url,
       minted: {

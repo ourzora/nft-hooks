@@ -101,17 +101,16 @@ export type NFTObject = {
       at?: TimedAction;
     };
     owner: ETHAddress;
-    creator?: ETHAddress;
     metadataURI: Nullable<string>;
     // Zora-specific extension but used for our creator contracts
     contentURI: Nullable<string>;
   };
   metadata?: {
-    name: Nullable<string>;
-    image: Nullable<string>;
-    description: Nullable<string>;
-    animation_url: Nullable<string>;
-    attributes: MetadataAttributeType[];
+    name?: Nullable<string>;
+    image?: Nullable<string>;
+    description?: Nullable<string>;
+    animation_url?: Nullable<string>;
+    attributes?: MetadataAttributeType[];
     raw?: any;
   };
   markets?: MarketModule[];

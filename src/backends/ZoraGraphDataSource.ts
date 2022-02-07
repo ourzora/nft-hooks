@@ -62,7 +62,6 @@ export class GraphDataSource implements ZoraGraphDataInterface {
         knownContract: KNOWN_CONTRACTS.ZORA,
       },
       owner: asset.owner.id,
-      creator: asset.creator.id,
       minted: {
         minter: asset.creator.id,
         at: {
