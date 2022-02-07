@@ -16,6 +16,7 @@ import { RequestError } from './fetcher/RequestError';
 import { useZNFTGroup } from './hooks/useZNFTGroup';
 import { useNFTIndexer } from './hooks/useNFTIndexer';
 import { useNFTIndexerQuery } from './hooks/useNFTIndexerQuery';
+import { CurrencyValue, NFTObject } from './backends/NFTInterface';
 
 export {
   // Hooks
@@ -33,6 +34,8 @@ export {
   useNFTContentType,
   useNFTMetadataType,
   useNFTType,
+  NFTObject,
+  CurrencyValue,
   // Types
   PricingInfo,
   // Configuration

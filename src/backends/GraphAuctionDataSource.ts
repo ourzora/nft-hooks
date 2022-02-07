@@ -49,6 +49,13 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       if (!response.approved) {
         return 'pending';
       }
+      if (
+        (response.finalizedAtTimestamp &&
+          (!response.previousBids || response.previousBids?.length === 0)) ||
+        !response.currentBid
+      ) {
+        return 'cancelled';
+      }
       if (response.finalizedAtTimestamp) {
         return 'complete';
       }
@@ -110,7 +117,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       if (response.currentBid) {
         return formatBid(response.currentBid);
       }
-      if (response.previousBids) {
+      if (response.previousBids && response.previousBids.length) {
         const topBid = response.previousBids[response.previousBids.length - 1];
         return formatBid(topBid);
       }
@@ -121,6 +128,8 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       status: getStatus(),
       amount: getAmount(),
       raw: response,
+      type: 'Auction',
+      createdBy: response.curator.id,
       createdAt: {
         timestamp: response.createdAtTimestamp,
         blockNumber: response.createdAtBlockNumber,

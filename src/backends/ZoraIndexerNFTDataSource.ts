@@ -107,7 +107,8 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
       // other info not provided
       // currency.decimals / currency.name / currency.symbol
     },
-    type: 'ask',
+    side: 'ask',
+    type: 'FixedPrice',
     cancelledAt: cancelledEvent
       ? {
           timestamp: cancelledEvent.blockTimestamp,
@@ -191,6 +192,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       blockNumber: auction.createdEvent!.blockNumber,
       transactionHash: auction.createdEvent!.transactionHash,
     },
+    type: 'Auction',
     finishedAt: auction.endedEvent
       ? {
           timestamp: dateToUnix(auction.endedEvent.blockTimestamp)!,
@@ -267,6 +269,14 @@ export class ZoraIndexerNFTDataSource implements ZoraIndexerNFTDataInterface {
         name: asset.tokenContract?.name!,
         symbol: asset.tokenContract?.symbol!,
         description: null,
+      },
+      minted: {
+        at: {
+          blockNumber: asset.mintTransferEvent?.blockNumber || null,
+          timestamp: asset.mintTransferEvent?.blockTimestamp,
+          transactionHash: asset.mintTransferEvent?.transactionHash || null,
+        },
+        minter: asset.minter || undefined,
       },
       owner: asset.owner,
       creator: asset.minter!,

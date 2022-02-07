@@ -2,9 +2,7 @@ import DataLoader from 'dataloader';
 import { GraphQLClient } from 'graphql-request';
 import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
 import { NetworkIDs } from '../constants/networks';
-import {
-  THEGRAPH_API_URL_BY_NETWORK,
-} from '../constants/urls';
+import { THEGRAPH_API_URL_BY_NETWORK } from '../constants/urls';
 import { KNOWN_CONTRACTS } from '../fetcher/FetchResultTypes';
 import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
 import {
@@ -18,12 +16,12 @@ import {
   GetMediaAndAuctionsQuery,
   NftMediaFullDataFragment,
 } from '../graph-queries/zora-graph-types';
-import { ZoraGraphDataInterface } from './ZoraGraphDataInterface';
+import { ZoraGraphDataInterface, ZoraGraphDataResponse } from './ZoraGraphDataInterface';
 import { NFTObject } from './NFTInterface';
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 
 export class GraphDataSource implements ZoraGraphDataInterface {
-  nftGraphDataLoader: DataLoader<string, NftMediaFullDataFragment>;
+  nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
   networkId: NetworkIDs;
   timeout: number;
   endpoint: string;
@@ -46,7 +44,10 @@ export class GraphDataSource implements ZoraGraphDataInterface {
     return true;
   }
 
-  transformNFT(asset: NftMediaFullDataFragment, object: NFTObject) {
+  transformNFT(
+    { asset, metadata }: { asset: NftMediaFullDataFragment; metadata: any },
+    object: NFTObject
+  ) {
     object.markets = asset.reserveAuctions
       ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
       .filter((el) => !!el && el.length)
@@ -62,16 +63,25 @@ export class GraphDataSource implements ZoraGraphDataInterface {
       },
       owner: asset.owner.id,
       creator: asset.creator.id,
+      minted: {
+        minter: asset.creator.id,
+        at: {
+          timestamp: asset.createdAtTimestamp,
+          blockNumber: null,
+          transactionHash: null,
+        },
+      },
       metadataURI: asset.metadataURI,
       contentURI: asset.contentURI,
     };
     // TODO: load from CDN
     object.media = {
-      full: asset.contentURI,
+      content: { uri: asset.contentURI, mime: metadata.mimeType },
       thumbnail: null,
-      preview: null,
+      image: null,
       source: 'zora',
     };
+    object.metadata = metadata;
     if (!object.rawData) {
       object.rawData = {};
     }
@@ -85,6 +95,7 @@ export class GraphDataSource implements ZoraGraphDataInterface {
     }
     return await this.nftGraphDataLoader.load(tokenId);
   };
+
   async loadNFTs(tokenContractAndId: readonly string[]) {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
   }
@@ -96,15 +107,29 @@ export class GraphDataSource implements ZoraGraphDataInterface {
     });
   }
 
+  fetchMetadata = async (uri: string) => {
+    const fetchWithTimeout = new FetchWithTimeout(this.timeout);
+    const resp = await fetchWithTimeout.fetch(uri);
+    return await resp.json();
+  };
+
   fetchNFTs = async (mediaIds: readonly string[]) => {
     const response = (await this.getClient().request(GET_MEDIAS_QUERY, {
       id_ids: mediaIds,
       creator_ids: [],
       owner_ids: [],
     })) as GetMediaAndAuctionsQuery;
+    const metadatas = await Promise.all(
+      response.id.map((media) => media.metadataURI).map(this.fetchMetadata)
+    );
+    const mediaData = response.id.map((_, indx) => ({
+      asset: response.id[indx],
+      metadata: metadatas[indx],
+    }));
     return mediaIds.map(
       (key) =>
-        response.id.find((media) => media.id === key) || new Error('Missing record')
+        mediaData.find((response) => response.asset.id === key) ||
+        new Error('Missing record')
     );
   };
 

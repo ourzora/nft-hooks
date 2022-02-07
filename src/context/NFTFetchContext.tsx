@@ -3,13 +3,14 @@ import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { ZoraGraphStrategy } from '../strategies/ZoraGraphStrategy';
 import { NetworkIDs, Networks } from '../constants/networks';
+import { ZoraGraphEtherActorStrategy } from '../strategies/ZoraGraphEtherActorStrategy';
 
 export type FetchContext = { strategy: typeof NFTStrategy };
 
 const fetcher = new MediaFetchAgent(Networks.MAINNET);
 
 export const defaultFetchAgent: { strategy: any; fetcher: any } = {
-  strategy: new ZoraGraphStrategy(Networks.MAINNET),
+  strategy: new ZoraGraphStrategy(Networks.MAINNET) as NFTStrategy,
   fetcher,
 };
 
@@ -31,7 +32,7 @@ export const NFTFetchConfiguration = ({
     if (userStrategy) {
       return userStrategy;
     }
-    return new ZoraGraphStrategy(Networks.MAINNET);
+    return new ZoraGraphEtherActorStrategy(Networks.MAINNET);
   }, [userStrategy]);
   const fetcher = useMemo(() => {
     return new MediaFetchAgent(networkId);

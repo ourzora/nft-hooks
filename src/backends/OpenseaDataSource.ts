@@ -47,6 +47,9 @@ export class OpenseaDataSource implements OpenseaInterface {
       creator: asset.creator.address,
       metadataURI: asset.token_metadata,
       contentURI: asset.animation_original_url || asset.image_original_url,
+      minted: {
+        minter: asset.creator.address,
+      },
     };
     object.metadata = {
       name: asset.name,
@@ -60,9 +63,22 @@ export class OpenseaDataSource implements OpenseaInterface {
       })),
     };
     object.media = {
-      thumbnail: asset.image_thumbnail_url,
-      preview: asset.image_preview_url,
-      full: asset.animation_url || asset.image_url,
+      thumbnail: asset.image_thumbnail_url
+        ? {
+            uri: asset.image_thumbnail_url,
+          }
+        : null,
+      image:
+        asset.image_url || asset.animation_url
+          ? {
+              uri: asset.animation_url || asset.image_url!,
+            }
+          : null,
+      content: asset.animation_url
+        ? {
+            uri: asset.animation_url || asset.image_original_url!,
+          }
+        : null,
       source: 'opensea',
     };
     if (!object.rawData) {
@@ -85,7 +101,8 @@ export class OpenseaDataSource implements OpenseaInterface {
     const response = await new FetchWithTimeout(this.timeout).fetch(
       `${this.endpoint}assets?${urlParams.join(
         '&'
-      )}&order_direction=desc&offset=0&limit=${this.MAX_OPENSEA_SIZE}`
+      )}&order_direction=desc&offset=0&limit=${this.MAX_OPENSEA_SIZE}`,
+      { headers: { 'X-API-KEY': '2f6f419a083c46de9d83ce3dbe7db601' } }
     );
     const responseJson = (await response.json()) as OpenseaDataResponse;
 
