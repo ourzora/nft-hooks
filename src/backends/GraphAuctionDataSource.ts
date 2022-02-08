@@ -50,8 +50,8 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         return 'pending';
       }
       if (
-        (response.finalizedAtTimestamp &&
-          (!response.previousBids || response.previousBids?.length === 0)) ||
+        response.finalizedAtTimestamp &&
+        (!response.previousBids || response.previousBids?.length === 0) &&
         !response.currentBid
       ) {
         return 'cancelled';
