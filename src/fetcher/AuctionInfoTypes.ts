@@ -44,6 +44,7 @@ export type PricingInfoValue = {
   inETH: string;
 };
 
+/** @deprecated */
 export enum AuctionType {
   NONE = 'NONE',
   PERPETUAL = 'PERPETUAL',
@@ -116,6 +117,7 @@ export type IndexerDataType = Omit<CommonNFTMediaDataType, 'pricing'> & {
   pricing: PricingInfoData;
 };
 
+/** @deprecated deprecated */
 export type NFTDataType = ZNFTDataType | OpenseaNFTDataType | IndexerDataType;
 
 export type CurrencyLookupType = { [currencyId: string]: ChainCurrencyType };

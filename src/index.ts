@@ -17,6 +17,7 @@ import { useZNFTGroup } from './hooks/useZNFTGroup';
 import { useNFTIndexer } from './hooks/useNFTIndexer';
 import { useNFTIndexerQuery } from './hooks/useNFTIndexerQuery';
 import { CurrencyValue, NFTObject } from './backends/NFTInterface';
+import * as Strategies from './strategies';
 
 export {
   // Hooks
@@ -26,36 +27,45 @@ export {
   useNFTMetadata,
   // Wrapped by useNFT, can use the underlying hooks here
   useZNFTGroup,
+
+  // these hooks have been deprecated
   useNFTIndexer,
   useNFTIndexerQuery,
+
   useZoraUsername,
   useENSAddress,
-  // Hook types
+
+  // Media hook types
   useNFTContentType,
   useNFTMetadataType,
   useNFTType,
+
+  // New types
   NFTObject,
+  Strategies,
   CurrencyValue,
-  // Types
-  PricingInfo,
+
   // Configuration
   NFTFetchConfiguration,
   // Fetch Agent underlying helper
   MediaFetchAgent,
-  // Types
+
+  // Deprecated Types
   AuctionResultType,
   AuctionType,
   AuctionStateInfo,
   NFTDataType,
   ChainCurrencyType,
+  PricingInfo,
+  // Deprecated: Data Transfomers
+  DataTransformers,
+  // Deprecated: Static server-side data fetching utilities
+  FetchStaticData,
+
   // Constants
   Networks,
   // Constant Types
   NetworkIDs,
-  // Data Transfomers
-  DataTransformers,
-  // Static server-side data fetching utilities
-  FetchStaticData,
   // Error type
   RequestError,
 };

@@ -29,7 +29,11 @@ export type MetadataResultType = {
   metadata: MetadataIsh;
 };
 
+
+/** @deprecated type deprecated */
 export type AuctionResultType = ReserveAuctionPartialFragment;
+
+/** @deprecated type deprecated */
 export type AuctionsResult = AuctionResultType[];
 
 export type UsernameResponseType = {

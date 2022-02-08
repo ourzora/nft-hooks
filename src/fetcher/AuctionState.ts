@@ -1,5 +1,6 @@
 import { AuctionType, PricingInfoData } from './AuctionInfoTypes';
 
+/** @deprecated deprecated */
 export enum AuctionStateInfo {
   LOADING = 'LOADING',
   NO_PRICING = 'NO_PRICING',

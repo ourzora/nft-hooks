@@ -96,7 +96,6 @@ describe('useNFT', () => {
       () => {
         return !!result.current.data;
       },
-      { timeout: NETWORK_TIMEOUT_MS }
     );
 
     console.log(result.current);

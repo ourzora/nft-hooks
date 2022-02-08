@@ -73,25 +73,23 @@ export class EtherActorDataSource implements EtherActorDataInterface {
       source: 'derived',
     };
 
-    // object.media = {
-    //   thumbnail: asset.image_thumbnail_url
-    //     ? {
-    //         uri: asset.image_thumbnail_url,
-    //       }
-    //     : null,
-    //   image:
-    //     asset.image_url || asset.animation_url
-    //       ? {
-    //           uri: asset.animation_url || asset.image_url!,
-    //         }
-    //       : null,
-    //   content: asset.animation_url
-    //     ? {
-    //         uri: asset.animation_url || asset.image_original_url!,
-    //       }
-    //     : null,
-    //   source: 'opensea',
-    // };
+    object.media = {
+      image:
+        asset.imageURL || asset.contentURLMimeType?.startsWith('image')
+          ? {
+              uri: asset.imageURL || asset.contentURL!,
+              mime: asset.imageURLMimeType || asset.contentURLMimeType,
+            }
+          : null,
+      content: asset.contentURL
+        ? {
+            uri: asset.contentURL,
+            mime: asset.contentURLMimeType,
+          }
+        : null,
+      thumbnail: null,
+      source: 'derived',
+    };
 
     if (!object.rawData) {
       object.rawData = {};
