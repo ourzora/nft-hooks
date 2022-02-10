@@ -9,7 +9,7 @@ export type FetchContext = { strategy: typeof NFTStrategy };
 const fetcher = new MediaFetchAgent(Networks.MAINNET);
 
 export const defaultFetchAgent: { strategy: any; fetcher: any } = {
-  strategy: new ZoraGraphEtherActorStrategy(Networks.MAINNET) as NFTStrategy,
+  strategy: null,
   fetcher,
 };
 

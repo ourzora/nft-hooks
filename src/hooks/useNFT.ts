@@ -32,6 +32,7 @@ export function useNFT(
   contractAddress?: string,
   tokenId?: string,
   options: OptionsType = {}
+  marketOptions: OptionsType = {}
 ): useNFTType {
   const dataContext = useContext(NFTFetchContext);
 
@@ -50,7 +51,7 @@ export function useNFT(
       ? ['fetchNFTMarket', contractAddress, tokenId]
       : null,
     (_, address: string, tokenId: string) => strategy.fetchMarket(address, tokenId),
-    options
+    marketOptions
   );
 
   // ...
