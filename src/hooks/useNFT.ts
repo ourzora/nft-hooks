@@ -31,7 +31,7 @@ type OptionsType = {
 export function useNFT(
   contractAddress?: string,
   tokenId?: string,
-  options: OptionsType = {}
+  options: OptionsType = {},
   marketOptions: OptionsType = {}
 ): useNFTType {
   const dataContext = useContext(NFTFetchContext);
