@@ -1,15 +1,16 @@
-import { ZoraIndexerNFTDataSource } from '../backends/ZoraIndexerNFTDataSource';
-import { CurrencyDataSourceUniswap } from '../backends/CurrencyDataSourceUniswap';
+import { ZoraIndexerV1DataSource, ZoraIndexerV1Interface } from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
 
 export class ZoraV2IndexerStrategy extends NFTStrategy {
-  currencyFetchBackend: CurrencyDataSourceUniswap;
-  zoraIndexerDataSource: ZoraIndexerNFTDataSource;
+  zoraIndexerDataSource: ZoraIndexerV1Interface;
   constructor(networkId: NetworkIDs, timeout?: number, mediaContractAddress?: string) {
     super(networkId);
-    this.currencyFetchBackend = new CurrencyDataSourceUniswap(networkId);
-    this.zoraIndexerDataSource = new ZoraIndexerNFTDataSource(networkId, timeout, mediaContractAddress);
+    this.zoraIndexerDataSource = new ZoraIndexerV1DataSource(
+      networkId,
+      timeout,
+      mediaContractAddress
+    );
   }
 
   shouldFetchMarket() {

@@ -1,6 +1,6 @@
 import { NetworkIDs, NFTObject } from '../';
 import { NFTStrategy } from './';
-import { ZDKAlphaDataSource } from '../backends/ZDKAlphaDataSource';
+import { ZDKAlphaDataSource } from '../backends';
 
 export class ZDKAlphaFetchStrategy extends NFTStrategy {
   source: ZDKAlphaDataSource;

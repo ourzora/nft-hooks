@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
 
-import { MediaContentType } from '../fetcher/FetchResultTypes';
+import { MediaContentType } from '../backends/generic-media/GenericMediaInterface';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 
 export type useNFTContentType = {

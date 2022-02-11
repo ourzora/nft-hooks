@@ -1,18 +1,17 @@
-import { CurrencyDataSourceUniswap } from '../backends/CurrencyDataSourceUniswap';
-import { GraphAuctionDataSource } from '../backends/GraphAuctionDataSource';
-import { GraphAuctionInterface } from '../backends/GraphAuctionInterface';
-import { OpenseaDataSource } from '../backends/OpenseaDataSource';
-import { OpenseaInterface } from '../backends/OpenseaInterface';
+import {
+  OpenseaInterface,
+  OpenseaDataSource,
+  GraphAuctionInterface,
+  GraphAuctionDataSource,
+} from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
 
 export class OpenseaStrategy extends NFTStrategy {
   openseaBackend: OpenseaInterface;
-  currencyFetchBackend: CurrencyDataSourceUniswap;
   auctionBackend: GraphAuctionInterface;
   constructor(networkId: NetworkIDs) {
     super(networkId);
-    this.currencyFetchBackend = new CurrencyDataSourceUniswap(networkId);
     this.auctionBackend = new GraphAuctionDataSource(networkId);
     this.openseaBackend = new OpenseaDataSource(networkId);
   }

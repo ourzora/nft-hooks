@@ -56,7 +56,8 @@ export function useNFT(
 
   // ...
   return {
-    data: nftData || nftMarketData ? merge(nftData || {}, nftMarketData || {}) : undefined,
+    data:
+      nftData || nftMarketData ? merge(nftData || {}, nftMarketData || {}) : undefined,
     currencyLoaded: false,
     error: nftError,
     marketError: nftMarketError,

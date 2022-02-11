@@ -36,3 +36,4 @@ export const OPENSEA_API_URL_BY_NETWORK = {
 export const ZORA_USERNAME_API_URL = 'https://zora.co/api/users';
 
 export const ZORA_IPFS_GATEWAY = 'https://zora-prod.mypinata.cloud/ipfs/';
+export const DEFAULT_ARWEAVE_GATEWAY = 'https://arweave.net/';

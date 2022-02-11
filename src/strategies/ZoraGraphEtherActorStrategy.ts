@@ -1,17 +1,13 @@
-import { EtherActorDataSource } from '../backends/EtherActorDataSource';
-import { GraphAuctionDataSource } from '../backends/GraphAuctionDataSource';
-import { CurrencyDataSourceUniswap } from '../backends/CurrencyDataSourceUniswap';
+import { EtherActorDataSource, GraphAuctionDataSource } from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
 
 export class ZoraGraphEtherActorStrategy extends NFTStrategy {
-  currencyFetchBackend: CurrencyDataSourceUniswap;
   graphAuctionData: GraphAuctionDataSource;
   etherActorSource: EtherActorDataSource;
   constructor(networkId: NetworkIDs, timeout: number = 2) {
     super(networkId);
-    this.currencyFetchBackend = new CurrencyDataSourceUniswap(networkId);
-    this.graphAuctionData = new GraphAuctionDataSource(networkId, timeout);
+    this.graphAuctionData = new GraphAuctionDataSource(networkId);
     this.etherActorSource = new EtherActorDataSource(networkId, timeout);
   }
 

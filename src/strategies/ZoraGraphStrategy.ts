@@ -1,15 +1,16 @@
-import { CurrencyDataSourceUniswap } from '../backends/CurrencyDataSourceUniswap';
-import { GraphDataSource } from '../backends/ZoraGraphDataSource';
+import { ZoraGraphDataSource, ZoraGraphDataInterface } from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
 
 export class ZoraGraphStrategy extends NFTStrategy {
-  currencyFetchBackend: CurrencyDataSourceUniswap;
-  graphDataSource: GraphDataSource;
+  graphDataSource: ZoraGraphDataInterface;
   constructor(networkId: NetworkIDs, timeout?: number, mediaContractAddress?: string) {
     super(networkId);
-    this.currencyFetchBackend = new CurrencyDataSourceUniswap(networkId);
-    this.graphDataSource = new GraphDataSource(networkId, timeout, mediaContractAddress);
+    this.graphDataSource = new ZoraGraphDataSource(
+      networkId,
+      timeout,
+      mediaContractAddress
+    );
   }
 
   shouldFetchMarket() {
@@ -18,6 +19,9 @@ export class ZoraGraphStrategy extends NFTStrategy {
 
   fetchNFT = async (contract: string, id: string) => {
     const response = await this.graphDataSource.loadNFT(contract, id);
+    if (response instanceof Error) {
+      throw response;
+    }
     return this.graphDataSource.transformNFT(response, {} as any);
   };
 

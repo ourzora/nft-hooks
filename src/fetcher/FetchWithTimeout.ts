@@ -20,7 +20,7 @@ export class FetchWithTimeout {
     this.fetch = this.fetch.bind(this);
   }
   async fetch(url: string, options: any = {}) {
-    console.log({url})
+    console.log({ url });
     const controller = this.controller;
     const response = await fetch(url, {
       ...options,

@@ -1,7 +1,10 @@
-import { KNOWN_CONTRACTS } from '../fetcher/FetchResultTypes';
-import { ETHAddress } from '../types/standard';
+export enum KNOWN_CONTRACTS {
+  ZORA = 'zora',
+}
 
 type Nullable<T> = T | null;
+
+export type ETHAddress = string;
 
 export type CurrencyValue = {
   usdValue?: string;
