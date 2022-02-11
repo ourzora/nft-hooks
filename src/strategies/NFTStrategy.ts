@@ -1,5 +1,5 @@
 import { NetworkIDs } from 'src';
-import { NFTObject } from '../backends';
+import { NFTObject } from '../backends/NFTInterface';
 
 export abstract class NFTStrategy {
   networkId: string;

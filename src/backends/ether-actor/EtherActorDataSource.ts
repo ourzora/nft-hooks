@@ -1,11 +1,11 @@
 import DataLoader from 'dataloader';
-import { NetworkIDs, Networks } from '../constants/networks';
-import { FetchWithTimeout } from '../fetcher/FetchWithTimeout';
+import { NetworkIDs, Networks } from '../../constants/networks';
+import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
 import {
   EtherActorDataInterface,
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
-import { NFTObject } from './NFTInterface';
+import { NFTObject } from '../NFTInterface';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',

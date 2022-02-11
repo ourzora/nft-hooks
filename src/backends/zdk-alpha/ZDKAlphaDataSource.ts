@@ -1,4 +1,4 @@
-import { NetworkIDs, NFTObject } from '../../src';
+import { NetworkIDs, NFTObject } from '../../';
 import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {

@@ -26,5 +26,3 @@ export { ZoraIndexerV1Interface } from './zora-indexer-v1/ZoraIndexerV1Interface
 
 export { ZoraUserDataSource } from './zora-user/ZoraUserDataSource';
 export { ZoraUserInterface } from './zora-user/ZoraUserInterface';
-
-export {NFTObject} from './NFTInterface';

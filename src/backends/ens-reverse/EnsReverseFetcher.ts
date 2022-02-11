@@ -1,8 +1,8 @@
 import * as bytes from '@ethersproject/bytes';
 import { isAddress } from '@ethersproject/address';
 
-import { FetchWithTimeout } from './FetchWithTimeout';
-import { ENS_REVERSE_LOOKUP_CONTRACT_BY_NETWORK } from '../constants/addresses';
+import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
+import { ENS_REVERSE_LOOKUP_CONTRACT_BY_NETWORK } from '../../constants/addresses';
 
 function parseHexNumber(hex: string) {
   return parseInt(bytes.hexStripZeros(`0x${hex}`), 16);
@@ -11,7 +11,7 @@ function parseHexNumber(hex: string) {
 function processReturnData(result: string) {
   let pieces = [];
   for (let i = 2; i < result.length; i += 64) {
-    pieces.push(result.substr(i, 64));
+    pieces.push(result.substring(i, 64));
   }
   const numberEntries = parseHexNumber(pieces[1]);
   const addresses: string[] = [];
@@ -23,7 +23,7 @@ function processReturnData(result: string) {
   for (let i = 0; i < numberEntries; i++) {
     let pieceId = offsets[i] / 32 + 2;
     let strLen = parseHexNumber(pieces[pieceId]);
-    const strHex = result.substr((pieceId + 1) * 64 + 2, strLen * 2);
+    const strHex = result.substring((pieceId + 1) * 64 + 2, strLen * 2);
     addresses.push(Buffer.from(strHex, 'hex').toString());
   }
   return addresses;
