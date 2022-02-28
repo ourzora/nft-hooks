@@ -13,6 +13,14 @@ const MEDIA_FRAGMENTS = gql`
       blockTimestamp
     }
   }
+  fragment V3EventPart on Event {
+    eventType
+    address
+    blockNumber
+    blockTimestamp
+    transactionHash
+    details
+  }
   fragment IndexerTokenPart on Token {
     id
     tokenId
@@ -44,6 +52,10 @@ const MEDIA_FRAGMENTS = gql`
     }
     v3Ask {
       ...V3AskPart
+    }
+    # Ask events
+    v3Events {
+      ...V3EventPart
     }
   }
   fragment AuctionBidEventPart on AuctionBidEvent {

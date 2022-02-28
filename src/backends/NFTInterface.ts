@@ -44,7 +44,7 @@ export type AuctionLike = {
 export type FixedPriceLike = {
   side: 'ask' | 'offer';
   expires?: number;
-  source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'OpenseaFixed';
+  source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'ZoraAskV1Event' | 'OpenseaFixed';
   type: 'FixedPrice';
 } & MarketInfo;
 

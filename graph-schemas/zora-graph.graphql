@@ -1,8 +1,16 @@
+"""
+Marks the GraphQL type as indexable entity.  Each type that should be an entity
+is required to be annotated with this directive.
+"""
 directive @entity on OBJECT
 
-directive @derivedFrom(field: String) on FIELD_DEFINITION
+"""Defined a Subgraph ID for an object type"""
+directive @subgraphId(id: String!) on OBJECT
 
-directive @subgraphId(id: String) on OBJECT
+"""
+creates a virtual field on the entity that may be queried but cannot be set manually through the mappings API.
+"""
+directive @derivedFrom(field: String!) on FIELD_DEFINITION
 
 type _Block_ {
   """The hash of the block"""
@@ -330,9 +338,21 @@ scalar BigDecimal
 
 scalar BigInt
 
+"""The block at which the query should be executed."""
 input Block_height {
+  """Value containing a block hash"""
   hash: Bytes
+
+  """Value containing a block number"""
   number: Int
+
+  """
+  Value containing the minimum block number. 
+  In the case of `number_gte`, the query will be executed on the latest block only if
+  the subgraph has progressed to or past the minimum block number.
+  Defaults to the latest block when omitted.
+  
+  """
   number_gte: Int
 }
 
@@ -1210,6 +1230,7 @@ enum Media_orderBy {
   reserveAuctions
 }
 
+"""Defines the order direction, either ascending or descending"""
 enum OrderDirection {
   asc
   desc

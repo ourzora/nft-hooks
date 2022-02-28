@@ -1,18 +1,18 @@
 {
   "generates": {
-    "./src/graph-queries/zora-graph-types.ts": {
+    "./src/backends/zora-graph/zora-graph-types.ts": {
       "schema": "./graph-schemas/zora-graph.graphql",
-      "documents": "./src/graph-queries/zora-graph.ts",
+      "documents": "./src/backends/zora-graph/zora-graph.ts",
       "plugins": ["typescript", "typescript-operations"]
     },
-    "./src/graph-queries/zora-indexer-types.ts": {
+    "./src/backends/zora-indexer-v1/zora-indexer-types.ts": {
       "schema": "./graph-schemas/zora-indexer.graphql",
-      "documents": "./src/graph-queries/zora-indexer.ts",
+      "documents": "./src/backends/zora-indexer-v1/zora-indexer.ts",
       "plugins": ["typescript", "typescript-operations"]
     },
-    "./src/graph-queries/uniswap-types.ts": {
+    "./src/backends/currency/uniswap-types.ts": {
       "schema": "./graph-schemas/uniswap.graphql",
-      "documents": "./src/graph-queries/uniswap.ts",
+      "documents": "./src/backends/currency/uniswap.ts",
       "plugins": ["typescript", "typescript-operations"]
     }
   }

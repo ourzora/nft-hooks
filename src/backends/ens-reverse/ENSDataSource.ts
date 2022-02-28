@@ -23,7 +23,7 @@ export class ENSDataSource implements ENSInterface {
     this.timeout = timeout;
   }
 
-  async fetchEnsNames(addresses: readonly string[]) {
+  fetchEnsNames = async (addresses: readonly string[]) => {
     const results = await reverseResolveEnsAddresses(
       addresses,
       this.networkId,
@@ -35,9 +35,9 @@ export class ENSDataSource implements ENSInterface {
         ? { name: (results as any)[address], address: address }
         : Error('Cannot find')
     );
-  }
+  };
 
-  async loadEnsFromAddresses(addresses: string[]): Promise<ENSResultType> {
+  loadEnsFromAddresses = async (addresses: string[]): Promise<ENSResultType> => {
     const results = await this.ensLoader.loadMany(addresses);
     return results.reduce((last: ENSResultType, result) => {
       if (!(result instanceof Error)) {
@@ -45,5 +45,5 @@ export class ENSDataSource implements ENSInterface {
       }
       return last;
     }, {});
-  }
+  };
 }

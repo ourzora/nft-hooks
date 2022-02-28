@@ -1,9 +1,7 @@
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -16,9 +14,23 @@ export type Scalars = {
   Bytes: any;
 };
 
+
+
+
+
+
+/** The block at which the query should be executed. */
 export type Block_Height = {
+  /** Value containing a block hash */
   hash?: Maybe<Scalars['Bytes']>;
+  /** Value containing a block number */
   number?: Maybe<Scalars['Int']>;
+  /**
+   * Value containing the minimum block number.
+   * In the case of `number_gte`, the query will be executed on the latest block only if
+   * the subgraph has progressed to or past the minimum block number.
+   * Defaults to the latest block when omitted.
+   */
   number_gte?: Maybe<Scalars['Int']>;
 };
 
@@ -49,7 +61,7 @@ export type Bundle_Filter = {
 
 export enum Bundle_OrderBy {
   Id = 'id',
-  EthPrice = 'ethPrice',
+  EthPrice = 'ethPrice'
 }
 
 export type Burn = {
@@ -201,8 +213,9 @@ export enum Burn_OrderBy {
   AmountUsd = 'amountUSD',
   NeedsComplete = 'needsComplete',
   FeeTo = 'feeTo',
-  FeeLiquidity = 'feeLiquidity',
+  FeeLiquidity = 'feeLiquidity'
 }
+
 
 export type LiquidityPosition = {
   __typename?: 'LiquidityPosition';
@@ -367,7 +380,7 @@ export enum LiquidityPositionSnapshot_OrderBy {
   Reserve1 = 'reserve1',
   ReserveUsd = 'reserveUSD',
   LiquidityTokenTotalSupply = 'liquidityTokenTotalSupply',
-  LiquidityTokenBalance = 'liquidityTokenBalance',
+  LiquidityTokenBalance = 'liquidityTokenBalance'
 }
 
 export type LiquidityPosition_Filter = {
@@ -421,7 +434,7 @@ export enum LiquidityPosition_OrderBy {
   Id = 'id',
   User = 'user',
   Pair = 'pair',
-  LiquidityTokenBalance = 'liquidityTokenBalance',
+  LiquidityTokenBalance = 'liquidityTokenBalance'
 }
 
 export type Mint = {
@@ -567,12 +580,13 @@ export enum Mint_OrderBy {
   LogIndex = 'logIndex',
   AmountUsd = 'amountUSD',
   FeeTo = 'feeTo',
-  FeeLiquidity = 'feeLiquidity',
+  FeeLiquidity = 'feeLiquidity'
 }
 
+/** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc',
+  Desc = 'desc'
 }
 
 export type Pair = {
@@ -745,7 +759,7 @@ export enum PairDayData_OrderBy {
   DailyVolumeToken0 = 'dailyVolumeToken0',
   DailyVolumeToken1 = 'dailyVolumeToken1',
   DailyVolumeUsd = 'dailyVolumeUSD',
-  DailyTxns = 'dailyTxns',
+  DailyTxns = 'dailyTxns'
 }
 
 export type PairHourData = {
@@ -861,7 +875,7 @@ export enum PairHourData_OrderBy {
   HourlyVolumeToken0 = 'hourlyVolumeToken0',
   HourlyVolumeToken1 = 'hourlyVolumeToken1',
   HourlyVolumeUsd = 'hourlyVolumeUSD',
-  HourlyTxns = 'hourlyTxns',
+  HourlyTxns = 'hourlyTxns'
 }
 
 export type Pair_Filter = {
@@ -1050,7 +1064,7 @@ export enum Pair_OrderBy {
   TxCount = 'txCount',
   CreatedAtTimestamp = 'createdAtTimestamp',
   CreatedAtBlockNumber = 'createdAtBlockNumber',
-  LiquidityProviderCount = 'liquidityProviderCount',
+  LiquidityProviderCount = 'liquidityProviderCount'
 }
 
 export type Query = {
@@ -1089,11 +1103,13 @@ export type Query = {
   _meta?: Maybe<_Meta_>;
 };
 
+
 export type QueryUniswapFactoryArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryUniswapFactoriesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1105,11 +1121,13 @@ export type QueryUniswapFactoriesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryTokenArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryTokensArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1121,11 +1139,13 @@ export type QueryTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryPairArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryPairsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1137,11 +1157,13 @@ export type QueryPairsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1153,11 +1175,13 @@ export type QueryUsersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryLiquidityPositionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryLiquidityPositionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1169,11 +1193,13 @@ export type QueryLiquidityPositionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryLiquidityPositionSnapshotArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryLiquidityPositionSnapshotsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1185,11 +1211,13 @@ export type QueryLiquidityPositionSnapshotsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryTransactionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryTransactionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1201,11 +1229,13 @@ export type QueryTransactionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryMintArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryMintsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1217,11 +1247,13 @@ export type QueryMintsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryBurnArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryBurnsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1233,11 +1265,13 @@ export type QueryBurnsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QuerySwapArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QuerySwapsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1249,11 +1283,13 @@ export type QuerySwapsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryBundleArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryBundlesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1265,11 +1301,13 @@ export type QueryBundlesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryUniswapDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryUniswapDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1281,11 +1319,13 @@ export type QueryUniswapDayDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryPairHourDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryPairHourDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1297,11 +1337,13 @@ export type QueryPairHourDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryPairDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryPairDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1313,11 +1355,13 @@ export type QueryPairDayDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryTokenDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryTokenDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1328,6 +1372,7 @@ export type QueryTokenDayDatasArgs = {
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type Query_MetaArgs = {
   block?: Maybe<Block_Height>;
@@ -1369,11 +1414,13 @@ export type Subscription = {
   _meta?: Maybe<_Meta_>;
 };
 
+
 export type SubscriptionUniswapFactoryArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionUniswapFactoriesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1385,11 +1432,13 @@ export type SubscriptionUniswapFactoriesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionTokenArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionTokensArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1401,11 +1450,13 @@ export type SubscriptionTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionPairArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionPairsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1417,11 +1468,13 @@ export type SubscriptionPairsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1433,11 +1486,13 @@ export type SubscriptionUsersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionLiquidityPositionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionLiquidityPositionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1449,11 +1504,13 @@ export type SubscriptionLiquidityPositionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionLiquidityPositionSnapshotArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionLiquidityPositionSnapshotsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1465,11 +1522,13 @@ export type SubscriptionLiquidityPositionSnapshotsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionTransactionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionTransactionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1481,11 +1540,13 @@ export type SubscriptionTransactionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionMintArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionMintsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1497,11 +1558,13 @@ export type SubscriptionMintsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionBurnArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionBurnsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1513,11 +1576,13 @@ export type SubscriptionBurnsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionSwapArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionSwapsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1529,11 +1594,13 @@ export type SubscriptionSwapsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionBundleArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionBundlesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1545,11 +1612,13 @@ export type SubscriptionBundlesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionUniswapDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionUniswapDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1561,11 +1630,13 @@ export type SubscriptionUniswapDayDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionPairHourDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionPairHourDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1577,11 +1648,13 @@ export type SubscriptionPairHourDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionPairDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionPairDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1593,11 +1666,13 @@ export type SubscriptionPairDayDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionTokenDayDataArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionTokenDayDatasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1608,6 +1683,7 @@ export type SubscriptionTokenDayDatasArgs = {
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type Subscription_MetaArgs = {
   block?: Maybe<Block_Height>;
@@ -1748,7 +1824,7 @@ export enum Swap_OrderBy {
   Amount1Out = 'amount1Out',
   To = 'to',
   LogIndex = 'logIndex',
-  AmountUsd = 'amountUSD',
+  AmountUsd = 'amountUSD'
 }
 
 export type Token = {
@@ -1766,6 +1842,7 @@ export type Token = {
   derivedETH?: Maybe<Scalars['BigDecimal']>;
   mostLiquidPairs: Array<Maybe<PairDayData>>;
 };
+
 
 export type TokenMostLiquidPairsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1791,6 +1868,7 @@ export type TokenDayData = {
   maxStored: Scalars['Int'];
   mostLiquidPairs: Array<PairDayData>;
 };
+
 
 export type TokenDayDataMostLiquidPairsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1922,7 +2000,7 @@ export enum TokenDayData_OrderBy {
   TotalLiquidityUsd = 'totalLiquidityUSD',
   PriceUsd = 'priceUSD',
   MaxStored = 'maxStored',
-  MostLiquidPairs = 'mostLiquidPairs',
+  MostLiquidPairs = 'mostLiquidPairs'
 }
 
 export type Token_Filter = {
@@ -2044,7 +2122,7 @@ export enum Token_OrderBy {
   TxCount = 'txCount',
   TotalLiquidity = 'totalLiquidity',
   DerivedEth = 'derivedETH',
-  MostLiquidPairs = 'mostLiquidPairs',
+  MostLiquidPairs = 'mostLiquidPairs'
 }
 
 export type Transaction = {
@@ -2057,6 +2135,7 @@ export type Transaction = {
   swaps: Array<Maybe<Swap>>;
 };
 
+
 export type TransactionMintsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -2065,6 +2144,7 @@ export type TransactionMintsArgs = {
   where?: Maybe<Mint_Filter>;
 };
 
+
 export type TransactionBurnsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -2072,6 +2152,7 @@ export type TransactionBurnsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Burn_Filter>;
 };
+
 
 export type TransactionSwapsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2126,7 +2207,7 @@ export enum Transaction_OrderBy {
   Timestamp = 'timestamp',
   Mints = 'mints',
   Burns = 'burns',
-  Swaps = 'swaps',
+  Swaps = 'swaps'
 }
 
 export type UniswapDayData = {
@@ -2144,6 +2225,7 @@ export type UniswapDayData = {
   mostLiquidTokens: Array<TokenDayData>;
   txCount: Scalars['BigInt'];
 };
+
 
 export type UniswapDayDataMostLiquidTokensArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2260,7 +2342,7 @@ export enum UniswapDayData_OrderBy {
   TotalLiquidityUsd = 'totalLiquidityUSD',
   MaxStored = 'maxStored',
   MostLiquidTokens = 'mostLiquidTokens',
-  TxCount = 'txCount',
+  TxCount = 'txCount'
 }
 
 export type UniswapFactory = {
@@ -2275,6 +2357,7 @@ export type UniswapFactory = {
   txCount: Scalars['BigInt'];
   mostLiquidTokens: Array<TokenDayData>;
 };
+
 
 export type UniswapFactoryMostLiquidTokensArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2364,7 +2447,7 @@ export enum UniswapFactory_OrderBy {
   TotalLiquidityUsd = 'totalLiquidityUSD',
   TotalLiquidityEth = 'totalLiquidityETH',
   TxCount = 'txCount',
-  MostLiquidTokens = 'mostLiquidTokens',
+  MostLiquidTokens = 'mostLiquidTokens'
 }
 
 export type User = {
@@ -2373,6 +2456,7 @@ export type User = {
   liquidityPositions?: Maybe<Array<LiquidityPosition>>;
   usdSwapped: Scalars['BigDecimal'];
 };
+
 
 export type UserLiquidityPositionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2404,7 +2488,7 @@ export type User_Filter = {
 export enum User_OrderBy {
   Id = 'id',
   LiquidityPositions = 'liquidityPositions',
-  UsdSwapped = 'usdSwapped',
+  UsdSwapped = 'usdSwapped'
 }
 
 export type _Block_ = {
@@ -2435,19 +2519,26 @@ export enum _SubgraphErrorPolicy_ {
   /** Data will be returned even if the subgraph has indexing errors */
   Allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  Deny = 'deny',
+  Deny = 'deny'
 }
 
-export type TokenShortFragment = { __typename?: 'Token' } & Pick<
-  Token,
-  'id' | 'symbol' | 'name' | 'decimals' | 'derivedETH'
->;
+export type TokenShortFragment = (
+  { __typename?: 'Token' }
+  & Pick<Token, 'id' | 'symbol' | 'name' | 'decimals' | 'derivedETH'>
+);
 
 export type GetTokenPricesQueryVariables = Exact<{
   currencyContracts?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
-export type GetTokenPricesQuery = { __typename?: 'Query' } & {
-  bundle?: Maybe<{ __typename?: 'Bundle' } & Pick<Bundle, 'ethPrice'>>;
-  tokens: Array<{ __typename?: 'Token' } & TokenShortFragment>;
-};
+
+export type GetTokenPricesQuery = (
+  { __typename?: 'Query' }
+  & { bundle?: Maybe<(
+    { __typename?: 'Bundle' }
+    & Pick<Bundle, 'ethPrice'>
+  )>, tokens: Array<(
+    { __typename?: 'Token' }
+    & TokenShortFragment
+  )> }
+);

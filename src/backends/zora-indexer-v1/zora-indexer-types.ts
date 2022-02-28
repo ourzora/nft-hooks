@@ -1,9 +1,7 @@
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -24,6 +22,7 @@ export type Scalars = {
   v3_ask_status_enum: any;
 };
 
+
 /** columns and relationships of "auction" */
 export type Auction = {
   __typename?: 'Auction';
@@ -43,6 +42,7 @@ export type Auction = {
   canceledEvent?: Maybe<AuctionCanceledEvent>;
   /** An object relationship */
   createdEvent?: Maybe<AuctionCreatedEvent>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   curator?: Maybe<Scalars['String']>;
   curatorFee?: Maybe<Scalars['String']>;
   curatorFeePercentage?: Maybe<Scalars['Int']>;
@@ -61,6 +61,8 @@ export type Auction = {
   lastBidder?: Maybe<Scalars['String']>;
   /** An object relationship */
   media?: Maybe<Media>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   reservePrice?: Maybe<Scalars['String']>;
   /** An array relationship */
   reservePriceUpdatedEvents: Array<AuctionReservePriceUpdatedEvent>;
@@ -75,6 +77,7 @@ export type Auction = {
   winner?: Maybe<Scalars['String']>;
 };
 
+
 /** columns and relationships of "auction" */
 export type AuctionApprovalEventsArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
@@ -83,6 +86,7 @@ export type AuctionApprovalEventsArgs = {
   order_by?: Maybe<Array<AuctionApprovalUpdatedEvent_Order_By>>;
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "auction" */
 export type AuctionApprovalEvents_AggregateArgs = {
@@ -93,6 +97,7 @@ export type AuctionApprovalEvents_AggregateArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "auction" */
 export type AuctionBidEventsArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
@@ -101,6 +106,7 @@ export type AuctionBidEventsArgs = {
   order_by?: Maybe<Array<AuctionBidEvent_Order_By>>;
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "auction" */
 export type AuctionBidEvents_AggregateArgs = {
@@ -111,6 +117,7 @@ export type AuctionBidEvents_AggregateArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "auction" */
 export type AuctionDurationExtendedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
@@ -119,6 +126,7 @@ export type AuctionDurationExtendedEventsArgs = {
   order_by?: Maybe<Array<AuctionDurationExtendedEvent_Order_By>>;
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "auction" */
 export type AuctionDurationExtendedEvents_AggregateArgs = {
@@ -129,6 +137,7 @@ export type AuctionDurationExtendedEvents_AggregateArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "auction" */
 export type AuctionReservePriceUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
@@ -137,6 +146,7 @@ export type AuctionReservePriceUpdatedEventsArgs = {
   order_by?: Maybe<Array<AuctionReservePriceUpdatedEvent_Order_By>>;
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "auction" */
 export type AuctionReservePriceUpdatedEvents_AggregateArgs = {
@@ -195,6 +205,7 @@ export type AuctionApprovalUpdatedEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionApprovalUpdatedEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionApprovalUpdatedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_approval_updated_event" */
 export type AuctionApprovalUpdatedEvent_Aggregate_FieldsCountArgs = {
@@ -357,7 +368,7 @@ export enum AuctionApprovalUpdatedEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -502,6 +513,7 @@ export type AuctionBidEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionBidEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionBidEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_bid_event" */
 export type AuctionBidEvent_Aggregate_FieldsCountArgs = {
@@ -681,7 +693,7 @@ export enum AuctionBidEvent_Select_Column {
   /** column name */
   TransactionHash = 'transactionHash',
   /** column name */
-  Value = 'value',
+  Value = 'value'
 }
 
 /** aggregate stddev on columns */
@@ -823,6 +835,7 @@ export type AuctionCanceledEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionCanceledEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionCanceledEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_canceled_event" */
 export type AuctionCanceledEvent_Aggregate_FieldsCountArgs = {
@@ -986,7 +999,7 @@ export enum AuctionCanceledEvent_Select_Column {
   /** column name */
   TokenOwner = 'tokenOwner',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -1133,6 +1146,7 @@ export type AuctionCreatedEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionCreatedEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionCreatedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_created_event" */
 export type AuctionCreatedEvent_Aggregate_FieldsCountArgs = {
@@ -1338,7 +1352,7 @@ export enum AuctionCreatedEvent_Select_Column {
   /** column name */
   TokenOwner = 'tokenOwner',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -1494,6 +1508,7 @@ export type AuctionDurationExtendedEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionDurationExtendedEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionDurationExtendedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_duration_extended_event" */
 export type AuctionDurationExtendedEvent_Aggregate_FieldsCountArgs = {
@@ -1660,7 +1675,7 @@ export enum AuctionDurationExtendedEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -1807,6 +1822,7 @@ export type AuctionEndedEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionEndedEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionEndedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_ended_event" */
 export type AuctionEndedEvent_Aggregate_FieldsCountArgs = {
@@ -2010,7 +2026,7 @@ export enum AuctionEndedEvent_Select_Column {
   /** column name */
   TransactionHash = 'transactionHash',
   /** column name */
-  Winner = 'winner',
+  Winner = 'winner'
 }
 
 /** aggregate stddev on columns */
@@ -2152,6 +2168,7 @@ export type AuctionReservePriceUpdatedEvent_Aggregate_Fields = {
   var_samp?: Maybe<AuctionReservePriceUpdatedEvent_Var_Samp_Fields>;
   variance?: Maybe<AuctionReservePriceUpdatedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "auction_reserve_price_updated_event" */
 export type AuctionReservePriceUpdatedEvent_Aggregate_FieldsCountArgs = {
@@ -2318,7 +2335,7 @@ export enum AuctionReservePriceUpdatedEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -2435,6 +2452,7 @@ export type Auction_Aggregate_Fields = {
   variance?: Maybe<Auction_Variance_Fields>;
 };
 
+
 /** aggregate fields of "auction" */
 export type Auction_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Auction_Select_Column>>;
@@ -2480,6 +2498,7 @@ export type Auction_Bool_Exp = {
   bidEvents?: Maybe<AuctionBidEvent_Bool_Exp>;
   canceledEvent?: Maybe<AuctionCanceledEvent_Bool_Exp>;
   createdEvent?: Maybe<AuctionCreatedEvent_Bool_Exp>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
   curator?: Maybe<String_Comparison_Exp>;
   curatorFee?: Maybe<String_Comparison_Exp>;
   curatorFeePercentage?: Maybe<Int_Comparison_Exp>;
@@ -2492,6 +2511,8 @@ export type Auction_Bool_Exp = {
   lastBidAmount?: Maybe<String_Comparison_Exp>;
   lastBidder?: Maybe<String_Comparison_Exp>;
   media?: Maybe<Media_Bool_Exp>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
   reservePrice?: Maybe<String_Comparison_Exp>;
   reservePriceUpdatedEvents?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
   status?: Maybe<Auction_Status_Enum_Comparison_Exp>;
@@ -2508,6 +2529,7 @@ export type Auction_Max_Fields = {
   amountTokenOwnerReceived?: Maybe<Scalars['String']>;
   auctionCurrency?: Maybe<Scalars['String']>;
   auctionId?: Maybe<Scalars['String']>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   curator?: Maybe<Scalars['String']>;
   curatorFee?: Maybe<Scalars['String']>;
   curatorFeePercentage?: Maybe<Scalars['Int']>;
@@ -2516,6 +2538,8 @@ export type Auction_Max_Fields = {
   firstBidTime?: Maybe<Scalars['String']>;
   lastBidAmount?: Maybe<Scalars['String']>;
   lastBidder?: Maybe<Scalars['String']>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   reservePrice?: Maybe<Scalars['String']>;
   tokenContract?: Maybe<Scalars['String']>;
   tokenId?: Maybe<Scalars['String']>;
@@ -2528,6 +2552,7 @@ export type Auction_Max_Order_By = {
   amountTokenOwnerReceived?: Maybe<Order_By>;
   auctionCurrency?: Maybe<Order_By>;
   auctionId?: Maybe<Order_By>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   curator?: Maybe<Order_By>;
   curatorFee?: Maybe<Order_By>;
   curatorFeePercentage?: Maybe<Order_By>;
@@ -2536,6 +2561,8 @@ export type Auction_Max_Order_By = {
   firstBidTime?: Maybe<Order_By>;
   lastBidAmount?: Maybe<Order_By>;
   lastBidder?: Maybe<Order_By>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
   tokenContract?: Maybe<Order_By>;
   tokenId?: Maybe<Order_By>;
@@ -2549,6 +2576,7 @@ export type Auction_Min_Fields = {
   amountTokenOwnerReceived?: Maybe<Scalars['String']>;
   auctionCurrency?: Maybe<Scalars['String']>;
   auctionId?: Maybe<Scalars['String']>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   curator?: Maybe<Scalars['String']>;
   curatorFee?: Maybe<Scalars['String']>;
   curatorFeePercentage?: Maybe<Scalars['Int']>;
@@ -2557,6 +2585,8 @@ export type Auction_Min_Fields = {
   firstBidTime?: Maybe<Scalars['String']>;
   lastBidAmount?: Maybe<Scalars['String']>;
   lastBidder?: Maybe<Scalars['String']>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
   reservePrice?: Maybe<Scalars['String']>;
   tokenContract?: Maybe<Scalars['String']>;
   tokenId?: Maybe<Scalars['String']>;
@@ -2569,6 +2599,7 @@ export type Auction_Min_Order_By = {
   amountTokenOwnerReceived?: Maybe<Order_By>;
   auctionCurrency?: Maybe<Order_By>;
   auctionId?: Maybe<Order_By>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   curator?: Maybe<Order_By>;
   curatorFee?: Maybe<Order_By>;
   curatorFeePercentage?: Maybe<Order_By>;
@@ -2577,6 +2608,8 @@ export type Auction_Min_Order_By = {
   firstBidTime?: Maybe<Order_By>;
   lastBidAmount?: Maybe<Order_By>;
   lastBidder?: Maybe<Order_By>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
   tokenContract?: Maybe<Order_By>;
   tokenId?: Maybe<Order_By>;
@@ -2594,6 +2627,7 @@ export type Auction_Order_By = {
   bidEvents_aggregate?: Maybe<AuctionBidEvent_Aggregate_Order_By>;
   canceledEvent?: Maybe<AuctionCanceledEvent_Order_By>;
   createdEvent?: Maybe<AuctionCreatedEvent_Order_By>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   curator?: Maybe<Order_By>;
   curatorFee?: Maybe<Order_By>;
   curatorFeePercentage?: Maybe<Order_By>;
@@ -2606,6 +2640,8 @@ export type Auction_Order_By = {
   lastBidAmount?: Maybe<Order_By>;
   lastBidder?: Maybe<Order_By>;
   media?: Maybe<Media_Order_By>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
   reservePriceUpdatedEvents_aggregate?: Maybe<AuctionReservePriceUpdatedEvent_Aggregate_Order_By>;
   status?: Maybe<Order_By>;
@@ -2627,6 +2663,8 @@ export enum Auction_Select_Column {
   /** column name */
   AuctionId = 'auctionId',
   /** column name */
+  CreatorBidShareBeforeAuctionCreated = 'creatorBidShareBeforeAuctionCreated',
+  /** column name */
   Curator = 'curator',
   /** column name */
   CuratorFee = 'curatorFee',
@@ -2643,6 +2681,10 @@ export enum Auction_Select_Column {
   /** column name */
   LastBidder = 'lastBidder',
   /** column name */
+  OwnerBidShareBeforeAuctionCreated = 'ownerBidShareBeforeAuctionCreated',
+  /** column name */
+  PrevOwnerBidShareBeforeAuctionCreated = 'prevOwnerBidShareBeforeAuctionCreated',
+  /** column name */
   ReservePrice = 'reservePrice',
   /** column name */
   Status = 'status',
@@ -2653,7 +2695,7 @@ export enum Auction_Select_Column {
   /** column name */
   TokenOwner = 'tokenOwner',
   /** column name */
-  Winner = 'winner',
+  Winner = 'winner'
 }
 
 /** aggregate stddev on columns */
@@ -2778,6 +2820,7 @@ export type Currency_Aggregate_Fields = {
   variance?: Maybe<Currency_Variance_Fields>;
 };
 
+
 /** aggregate fields of "currency" */
 export type Currency_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Currency_Select_Column>>;
@@ -2836,7 +2879,7 @@ export enum Currency_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  Symbol = 'symbol',
+  Symbol = 'symbol'
 }
 
 /** aggregate stddev on columns */
@@ -2898,6 +2941,7 @@ export type Event = {
   transactionHash: Scalars['String'];
 };
 
+
 /** columns and relationships of "event" */
 export type EventDetailsArgs = {
   path?: Maybe<Scalars['String']>;
@@ -2947,6 +2991,7 @@ export type EventLog = {
   transactionHash: Scalars['String'];
 };
 
+
 /** columns and relationships of "raw_log" */
 export type EventLogTopicsArgs = {
   path?: Maybe<Scalars['String']>;
@@ -2974,6 +3019,7 @@ export type EventLog_Aggregate_Fields = {
   var_samp?: Maybe<EventLog_Var_Samp_Fields>;
   variance?: Maybe<EventLog_Variance_Fields>;
 };
+
 
 /** aggregate fields of "raw_log" */
 export type EventLog_Aggregate_FieldsCountArgs = {
@@ -3137,7 +3183,7 @@ export enum EventLog_Select_Column {
   /** column name */
   Topics = 'topics',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -3253,6 +3299,7 @@ export type Event_Aggregate_Fields = {
   var_samp?: Maybe<Event_Var_Samp_Fields>;
   variance?: Maybe<Event_Variance_Fields>;
 };
+
 
 /** aggregate fields of "event" */
 export type Event_Aggregate_FieldsCountArgs = {
@@ -3402,7 +3449,7 @@ export enum Event_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -3566,6 +3613,7 @@ export type MarketAskEvent_Aggregate_Fields = {
   variance?: Maybe<MarketAskEvent_Variance_Fields>;
 };
 
+
 /** aggregate fields of "ask_event" */
 export type MarketAskEvent_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<MarketAskEvent_Select_Column>>;
@@ -3720,7 +3768,7 @@ export enum MarketAskEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -3829,6 +3877,7 @@ export type MarketAsk_Aggregate_Fields = {
   min?: Maybe<MarketAsk_Min_Fields>;
 };
 
+
 /** aggregate fields of "ask" */
 export type MarketAsk_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -3910,7 +3959,7 @@ export enum MarketAsk_Select_Column {
   /** column name */
   Status = 'status',
   /** column name */
-  TokenId = 'tokenId',
+  TokenId = 'tokenId'
 }
 
 /** columns and relationships of "bid" */
@@ -3933,6 +3982,7 @@ export type MarketBid = {
   tokenId: Scalars['String'];
 };
 
+
 /** columns and relationships of "bid" */
 export type MarketBidBidEventsArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
@@ -3941,6 +3991,7 @@ export type MarketBidBidEventsArgs = {
   order_by?: Maybe<Array<MarketBidEvent_Order_By>>;
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "bid" */
 export type MarketBidBidEvents_AggregateArgs = {
@@ -4000,6 +4051,7 @@ export type MarketBidEvent_Aggregate_Fields = {
   var_samp?: Maybe<MarketBidEvent_Var_Samp_Fields>;
   variance?: Maybe<MarketBidEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "bid_event" */
 export type MarketBidEvent_Aggregate_FieldsCountArgs = {
@@ -4181,7 +4233,7 @@ export enum MarketBidEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -4330,6 +4382,7 @@ export type MarketBidShareEvent_Aggregate_Fields = {
   var_samp?: Maybe<MarketBidShareEvent_Var_Samp_Fields>;
   variance?: Maybe<MarketBidShareEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "bid_share_event" */
 export type MarketBidShareEvent_Aggregate_FieldsCountArgs = {
@@ -4489,7 +4542,7 @@ export enum MarketBidShareEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -4598,6 +4651,7 @@ export type MarketBidShare_Aggregate_Fields = {
   min?: Maybe<MarketBidShare_Min_Fields>;
 };
 
+
 /** aggregate fields of "bid_share" */
 export type MarketBidShare_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<MarketBidShare_Select_Column>>;
@@ -4652,7 +4706,7 @@ export enum MarketBidShare_Select_Column {
   /** column name */
   PrevOwner = 'prevOwner',
   /** column name */
-  TokenId = 'tokenId',
+  TokenId = 'tokenId'
 }
 
 /** aggregated selection of "bid" */
@@ -4669,6 +4723,7 @@ export type MarketBid_Aggregate_Fields = {
   max?: Maybe<MarketBid_Max_Fields>;
   min?: Maybe<MarketBid_Min_Fields>;
 };
+
 
 /** aggregate fields of "bid" */
 export type MarketBid_Aggregate_FieldsCountArgs = {
@@ -4775,7 +4830,7 @@ export enum MarketBid_Select_Column {
   /** column name */
   SellOnShare = 'sellOnShare',
   /** column name */
-  TokenId = 'tokenId',
+  TokenId = 'tokenId'
 }
 
 /** columns and relationships of "media" */
@@ -4832,6 +4887,7 @@ export type Media = {
   transferEvents_aggregate: TokenTransferEvent_Aggregate;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaAskEventsArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
@@ -4840,6 +4896,7 @@ export type MediaAskEventsArgs = {
   order_by?: Maybe<Array<MarketAskEvent_Order_By>>;
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaAskEvents_AggregateArgs = {
@@ -4850,6 +4907,7 @@ export type MediaAskEvents_AggregateArgs = {
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaAsksArgs = {
   distinct_on?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -4858,6 +4916,7 @@ export type MediaAsksArgs = {
   order_by?: Maybe<Array<MarketAsk_Order_By>>;
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaAsks_AggregateArgs = {
@@ -4868,6 +4927,7 @@ export type MediaAsks_AggregateArgs = {
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaAuctionsArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
@@ -4876,6 +4936,7 @@ export type MediaAuctionsArgs = {
   order_by?: Maybe<Array<Auction_Order_By>>;
   where?: Maybe<Auction_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaAuctions_AggregateArgs = {
@@ -4886,6 +4947,7 @@ export type MediaAuctions_AggregateArgs = {
   where?: Maybe<Auction_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaBidEventsArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
@@ -4894,6 +4956,7 @@ export type MediaBidEventsArgs = {
   order_by?: Maybe<Array<MarketBidEvent_Order_By>>;
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaBidEvents_AggregateArgs = {
@@ -4904,6 +4967,7 @@ export type MediaBidEvents_AggregateArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaBidsArgs = {
   distinct_on?: Maybe<Array<MarketBid_Select_Column>>;
@@ -4912,6 +4976,7 @@ export type MediaBidsArgs = {
   order_by?: Maybe<Array<MarketBid_Order_By>>;
   where?: Maybe<MarketBid_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaBids_AggregateArgs = {
@@ -4922,6 +4987,7 @@ export type MediaBids_AggregateArgs = {
   where?: Maybe<MarketBid_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaTokenMetadataUriUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
@@ -4930,6 +4996,7 @@ export type MediaTokenMetadataUriUpdatedEventsArgs = {
   order_by?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Order_By>>;
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaTokenMetadataUriUpdatedEvents_AggregateArgs = {
@@ -4940,6 +5007,7 @@ export type MediaTokenMetadataUriUpdatedEvents_AggregateArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaTokenUriUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
@@ -4948,6 +5016,7 @@ export type MediaTokenUriUpdatedEventsArgs = {
   order_by?: Maybe<Array<MediaTokenUriUpdatedEvent_Order_By>>;
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaTokenUriUpdatedEvents_AggregateArgs = {
@@ -4958,6 +5027,7 @@ export type MediaTokenUriUpdatedEvents_AggregateArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "media" */
 export type MediaTransferEventsArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
@@ -4966,6 +5036,7 @@ export type MediaTransferEventsArgs = {
   order_by?: Maybe<Array<TokenTransferEvent_Order_By>>;
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "media" */
 export type MediaTransferEvents_AggregateArgs = {
@@ -4990,6 +5061,7 @@ export type MediaMetadata = {
   updatedAt: Scalars['timestamp'];
   uri: Scalars['String'];
 };
+
 
 /** columns and relationships of "metadata" */
 export type MediaMetadataJsonArgs = {
@@ -5018,6 +5090,7 @@ export type MediaMetadata_Aggregate_Fields = {
   var_samp?: Maybe<MediaMetadata_Var_Samp_Fields>;
   variance?: Maybe<MediaMetadata_Variance_Fields>;
 };
+
 
 /** aggregate fields of "metadata" */
 export type MediaMetadata_Aggregate_FieldsCountArgs = {
@@ -5102,7 +5175,7 @@ export enum MediaMetadata_Select_Column {
   /** column name */
   UpdatedAt = 'updatedAt',
   /** column name */
-  Uri = 'uri',
+  Uri = 'uri'
 }
 
 /** aggregate stddev on columns */
@@ -5202,6 +5275,7 @@ export type MediaMint_Aggregate_Fields = {
   var_samp?: Maybe<MediaMint_Var_Samp_Fields>;
   variance?: Maybe<MediaMint_Variance_Fields>;
 };
+
 
 /** aggregate fields of "mint_event" */
 export type MediaMint_Aggregate_FieldsCountArgs = {
@@ -5379,7 +5453,7 @@ export enum MediaMint_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -5518,6 +5592,7 @@ export type MediaTokenMetadataUriUpdatedEvent_Aggregate_Fields = {
   var_samp?: Maybe<MediaTokenMetadataUriUpdatedEvent_Var_Samp_Fields>;
   variance?: Maybe<MediaTokenMetadataUriUpdatedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "metadata_uri_updated_event" */
 export type MediaTokenMetadataUriUpdatedEvent_Aggregate_FieldsCountArgs = {
@@ -5671,7 +5746,7 @@ export enum MediaTokenMetadataUriUpdatedEvent_Select_Column {
   /** column name */
   TransactionHash = 'transactionHash',
   /** column name */
-  Uri = 'uri',
+  Uri = 'uri'
 }
 
 /** aggregate stddev on columns */
@@ -5810,6 +5885,7 @@ export type MediaTokenUriUpdatedEvent_Aggregate_Fields = {
   var_samp?: Maybe<MediaTokenUriUpdatedEvent_Var_Samp_Fields>;
   variance?: Maybe<MediaTokenUriUpdatedEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "media_uri_updated_event" */
 export type MediaTokenUriUpdatedEvent_Aggregate_FieldsCountArgs = {
@@ -5963,7 +6039,7 @@ export enum MediaTokenUriUpdatedEvent_Select_Column {
   /** column name */
   TransactionHash = 'transactionHash',
   /** column name */
-  Uri = 'uri',
+  Uri = 'uri'
 }
 
 /** aggregate stddev on columns */
@@ -6071,6 +6147,7 @@ export type Media_Aggregate_Fields = {
   max?: Maybe<Media_Max_Fields>;
   min?: Maybe<Media_Min_Fields>;
 };
+
 
 /** aggregate fields of "media" */
 export type Media_Aggregate_FieldsCountArgs = {
@@ -6198,7 +6275,7 @@ export enum Media_Select_Column {
   /** column name */
   PrevOwnerBidShare = 'prevOwnerBidShare',
   /** column name */
-  TokenId = 'tokenId',
+  TokenId = 'tokenId'
 }
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -6242,6 +6319,9 @@ export type Token = {
   auctions: Array<Auction>;
   /** An aggregate relationship */
   auctions_aggregate: Auction_Aggregate;
+  currentAskId?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  currentAuction?: Maybe<Auction>;
   id: Scalars['String'];
   /** An object relationship */
   media?: Maybe<Media>;
@@ -6266,7 +6346,12 @@ export type Token = {
   transferEvents_aggregate: TokenTransferEvent_Aggregate;
   /** An object relationship */
   v3Ask?: Maybe<V3Ask>;
+  /** An array relationship */
+  v3Events: Array<Event>;
+  /** An aggregate relationship */
+  v3Events_aggregate: Event_Aggregate;
 };
+
 
 /** columns and relationships of "token" */
 export type TokenAuctionsArgs = {
@@ -6277,6 +6362,7 @@ export type TokenAuctionsArgs = {
   where?: Maybe<Auction_Bool_Exp>;
 };
 
+
 /** columns and relationships of "token" */
 export type TokenAuctions_AggregateArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
@@ -6285,6 +6371,7 @@ export type TokenAuctions_AggregateArgs = {
   order_by?: Maybe<Array<Auction_Order_By>>;
   where?: Maybe<Auction_Bool_Exp>;
 };
+
 
 /** columns and relationships of "token" */
 export type TokenTransferEventsArgs = {
@@ -6295,6 +6382,7 @@ export type TokenTransferEventsArgs = {
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "token" */
 export type TokenTransferEvents_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
@@ -6302,6 +6390,26 @@ export type TokenTransferEvents_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<TokenTransferEvent_Order_By>>;
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
+};
+
+
+/** columns and relationships of "token" */
+export type TokenV3EventsArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
+/** columns and relationships of "token" */
+export type TokenV3Events_AggregateArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
 };
 
 /** columns and relationships of "nft_contract" */
@@ -6337,6 +6445,7 @@ export type TokenContract_Aggregate_Fields = {
   var_samp?: Maybe<TokenContract_Var_Samp_Fields>;
   variance?: Maybe<TokenContract_Variance_Fields>;
 };
+
 
 /** aggregate fields of "nft_contract" */
 export type TokenContract_Aggregate_FieldsCountArgs = {
@@ -6404,7 +6513,7 @@ export enum TokenContract_Select_Column {
   /** column name */
   SupportsMetadata = 'supportsMetadata',
   /** column name */
-  Symbol = 'symbol',
+  Symbol = 'symbol'
 }
 
 /** aggregate stddev on columns */
@@ -6462,6 +6571,7 @@ export type TokenMetadata = {
   tokenURI: Scalars['String'];
 };
 
+
 /** columns and relationships of "nft_metadata" */
 export type TokenMetadataJsonArgs = {
   path?: Maybe<Scalars['String']>;
@@ -6481,6 +6591,7 @@ export type TokenMetadata_Aggregate_Fields = {
   max?: Maybe<TokenMetadata_Max_Fields>;
   min?: Maybe<TokenMetadata_Min_Fields>;
 };
+
 
 /** aggregate fields of "nft_metadata" */
 export type TokenMetadata_Aggregate_FieldsCountArgs = {
@@ -6546,7 +6657,7 @@ export enum TokenMetadata_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TokenUri = 'tokenURI',
+  TokenUri = 'tokenURI'
 }
 
 /** columns and relationships of "nft_transfer_event" */
@@ -6594,6 +6705,7 @@ export type TokenTransferEvent_Aggregate_Fields = {
   var_samp?: Maybe<TokenTransferEvent_Var_Samp_Fields>;
   variance?: Maybe<TokenTransferEvent_Variance_Fields>;
 };
+
 
 /** aggregate fields of "nft_transfer_event" */
 export type TokenTransferEvent_Aggregate_FieldsCountArgs = {
@@ -6747,7 +6859,7 @@ export enum TokenTransferEvent_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TransactionHash = 'transactionHash',
+  TransactionHash = 'transactionHash'
 }
 
 /** aggregate stddev on columns */
@@ -6856,6 +6968,7 @@ export type Token_Aggregate_Fields = {
   min?: Maybe<Token_Min_Fields>;
 };
 
+
 /** aggregate fields of "token" */
 export type Token_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Token_Select_Column>>;
@@ -6869,6 +6982,8 @@ export type Token_Bool_Exp = {
   _or?: Maybe<Array<Token_Bool_Exp>>;
   address?: Maybe<String_Comparison_Exp>;
   auctions?: Maybe<Auction_Bool_Exp>;
+  currentAskId?: Maybe<String_Comparison_Exp>;
+  currentAuction?: Maybe<Auction_Bool_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   media?: Maybe<Media_Bool_Exp>;
   metadata?: Maybe<TokenMetadata_Bool_Exp>;
@@ -6885,12 +7000,14 @@ export type Token_Bool_Exp = {
   tokenURI?: Maybe<String_Comparison_Exp>;
   transferEvents?: Maybe<TokenTransferEvent_Bool_Exp>;
   v3Ask?: Maybe<V3Ask_Bool_Exp>;
+  v3Events?: Maybe<Event_Bool_Exp>;
 };
 
 /** aggregate max on columns */
 export type Token_Max_Fields = {
   __typename?: 'Token_max_fields';
   address?: Maybe<Scalars['String']>;
+  currentAskId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   metadataId?: Maybe<Scalars['uuid']>;
   mintTransferEventId?: Maybe<Scalars['String']>;
@@ -6906,6 +7023,7 @@ export type Token_Max_Fields = {
 export type Token_Min_Fields = {
   __typename?: 'Token_min_fields';
   address?: Maybe<Scalars['String']>;
+  currentAskId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   metadataId?: Maybe<Scalars['uuid']>;
   mintTransferEventId?: Maybe<Scalars['String']>;
@@ -6921,6 +7039,8 @@ export type Token_Min_Fields = {
 export type Token_Order_By = {
   address?: Maybe<Order_By>;
   auctions_aggregate?: Maybe<Auction_Aggregate_Order_By>;
+  currentAskId?: Maybe<Order_By>;
+  currentAuction?: Maybe<Auction_Order_By>;
   id?: Maybe<Order_By>;
   media?: Maybe<Media_Order_By>;
   metadata?: Maybe<TokenMetadata_Order_By>;
@@ -6937,12 +7057,15 @@ export type Token_Order_By = {
   tokenURI?: Maybe<Order_By>;
   transferEvents_aggregate?: Maybe<TokenTransferEvent_Aggregate_Order_By>;
   v3Ask?: Maybe<V3Ask_Order_By>;
+  v3Events_aggregate?: Maybe<Event_Aggregate_Order_By>;
 };
 
 /** select columns of table "token" */
 export enum Token_Select_Column {
   /** column name */
   Address = 'address',
+  /** column name */
+  CurrentAskId = 'currentAskId',
   /** column name */
   Id = 'id',
   /** column name */
@@ -6962,7 +7085,7 @@ export enum Token_Select_Column {
   /** column name */
   TokenId = 'tokenId',
   /** column name */
-  TokenUri = 'tokenURI',
+  TokenUri = 'tokenURI'
 }
 
 /** columns and relationships of "transaction" */
@@ -7045,6 +7168,7 @@ export type Transaction = {
   value: Scalars['String'];
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionApprovalUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
@@ -7053,6 +7177,7 @@ export type TransactionAuctionApprovalUpdatedEventsArgs = {
   order_by?: Maybe<Array<AuctionApprovalUpdatedEvent_Order_By>>;
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionApprovalUpdatedEvents_AggregateArgs = {
@@ -7063,6 +7188,7 @@ export type TransactionAuctionApprovalUpdatedEvents_AggregateArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionBidEventsArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
@@ -7071,6 +7197,7 @@ export type TransactionAuctionBidEventsArgs = {
   order_by?: Maybe<Array<AuctionBidEvent_Order_By>>;
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionBidEvents_AggregateArgs = {
@@ -7081,6 +7208,7 @@ export type TransactionAuctionBidEvents_AggregateArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionCanceledEventsArgs = {
   distinct_on?: Maybe<Array<AuctionCanceledEvent_Select_Column>>;
@@ -7089,6 +7217,7 @@ export type TransactionAuctionCanceledEventsArgs = {
   order_by?: Maybe<Array<AuctionCanceledEvent_Order_By>>;
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionCanceledEvents_AggregateArgs = {
@@ -7099,6 +7228,7 @@ export type TransactionAuctionCanceledEvents_AggregateArgs = {
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionCreatedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionCreatedEvent_Select_Column>>;
@@ -7107,6 +7237,7 @@ export type TransactionAuctionCreatedEventsArgs = {
   order_by?: Maybe<Array<AuctionCreatedEvent_Order_By>>;
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionCreatedEvents_AggregateArgs = {
@@ -7117,6 +7248,7 @@ export type TransactionAuctionCreatedEvents_AggregateArgs = {
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionDurationExtendedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
@@ -7125,6 +7257,7 @@ export type TransactionAuctionDurationExtendedEventsArgs = {
   order_by?: Maybe<Array<AuctionDurationExtendedEvent_Order_By>>;
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionDurationExtendedEvents_AggregateArgs = {
@@ -7135,6 +7268,7 @@ export type TransactionAuctionDurationExtendedEvents_AggregateArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionEndedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionEndedEvent_Select_Column>>;
@@ -7143,6 +7277,7 @@ export type TransactionAuctionEndedEventsArgs = {
   order_by?: Maybe<Array<AuctionEndedEvent_Order_By>>;
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionEndedEvents_AggregateArgs = {
@@ -7153,6 +7288,7 @@ export type TransactionAuctionEndedEvents_AggregateArgs = {
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionAuctionReservePriceUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
@@ -7161,6 +7297,7 @@ export type TransactionAuctionReservePriceUpdatedEventsArgs = {
   order_by?: Maybe<Array<AuctionReservePriceUpdatedEvent_Order_By>>;
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionAuctionReservePriceUpdatedEvents_AggregateArgs = {
@@ -7171,6 +7308,7 @@ export type TransactionAuctionReservePriceUpdatedEvents_AggregateArgs = {
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionEventLogsArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
@@ -7179,6 +7317,7 @@ export type TransactionEventLogsArgs = {
   order_by?: Maybe<Array<EventLog_Order_By>>;
   where?: Maybe<EventLog_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionEventLogs_AggregateArgs = {
@@ -7189,6 +7328,7 @@ export type TransactionEventLogs_AggregateArgs = {
   where?: Maybe<EventLog_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMarketAskEventsArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
@@ -7197,6 +7337,7 @@ export type TransactionMarketAskEventsArgs = {
   order_by?: Maybe<Array<MarketAskEvent_Order_By>>;
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMarketAskEvents_AggregateArgs = {
@@ -7207,6 +7348,7 @@ export type TransactionMarketAskEvents_AggregateArgs = {
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMarketBidEventsArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
@@ -7215,6 +7357,7 @@ export type TransactionMarketBidEventsArgs = {
   order_by?: Maybe<Array<MarketBidEvent_Order_By>>;
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMarketBidEvents_AggregateArgs = {
@@ -7225,6 +7368,7 @@ export type TransactionMarketBidEvents_AggregateArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMarketBidShareEventsArgs = {
   distinct_on?: Maybe<Array<MarketBidShareEvent_Select_Column>>;
@@ -7233,6 +7377,7 @@ export type TransactionMarketBidShareEventsArgs = {
   order_by?: Maybe<Array<MarketBidShareEvent_Order_By>>;
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMarketBidShareEvents_AggregateArgs = {
@@ -7243,6 +7388,7 @@ export type TransactionMarketBidShareEvents_AggregateArgs = {
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMediaMintsArgs = {
   distinct_on?: Maybe<Array<MediaMint_Select_Column>>;
@@ -7251,6 +7397,7 @@ export type TransactionMediaMintsArgs = {
   order_by?: Maybe<Array<MediaMint_Order_By>>;
   where?: Maybe<MediaMint_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMediaMints_AggregateArgs = {
@@ -7261,6 +7408,7 @@ export type TransactionMediaMints_AggregateArgs = {
   where?: Maybe<MediaMint_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMediaTokenMetadataUriUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
@@ -7269,6 +7417,7 @@ export type TransactionMediaTokenMetadataUriUpdatedEventsArgs = {
   order_by?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Order_By>>;
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMediaTokenMetadataUriUpdatedEvents_AggregateArgs = {
@@ -7279,6 +7428,7 @@ export type TransactionMediaTokenMetadataUriUpdatedEvents_AggregateArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionMediaTokenUriUpdatedEventsArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
@@ -7287,6 +7437,7 @@ export type TransactionMediaTokenUriUpdatedEventsArgs = {
   order_by?: Maybe<Array<MediaTokenUriUpdatedEvent_Order_By>>;
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionMediaTokenUriUpdatedEvents_AggregateArgs = {
@@ -7297,6 +7448,7 @@ export type TransactionMediaTokenUriUpdatedEvents_AggregateArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 /** columns and relationships of "transaction" */
 export type TransactionTokenTransferEventsArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
@@ -7305,6 +7457,7 @@ export type TransactionTokenTransferEventsArgs = {
   order_by?: Maybe<Array<TokenTransferEvent_Order_By>>;
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
+
 
 /** columns and relationships of "transaction" */
 export type TransactionTokenTransferEvents_AggregateArgs = {
@@ -7337,6 +7490,7 @@ export type Transaction_Aggregate_Fields = {
   var_samp?: Maybe<Transaction_Var_Samp_Fields>;
   variance?: Maybe<Transaction_Variance_Fields>;
 };
+
 
 /** aggregate fields of "transaction" */
 export type Transaction_Aggregate_FieldsCountArgs = {
@@ -7495,7 +7649,7 @@ export enum Transaction_Select_Column {
   /** column name */
   TransactionIndex = 'transactionIndex',
   /** column name */
-  Value = 'value',
+  Value = 'value'
 }
 
 /** aggregate stddev on columns */
@@ -7584,6 +7738,7 @@ export type V3Ask = {
   tokenId: Scalars['String'];
 };
 
+
 /** columns and relationships of "v3_ask" */
 export type V3AskEventsArgs = {
   distinct_on?: Maybe<Array<Event_Select_Column>>;
@@ -7592,6 +7747,7 @@ export type V3AskEventsArgs = {
   order_by?: Maybe<Array<Event_Order_By>>;
   where?: Maybe<Event_Bool_Exp>;
 };
+
 
 /** columns and relationships of "v3_ask" */
 export type V3AskEvents_AggregateArgs = {
@@ -7624,6 +7780,7 @@ export type V3Ask_Aggregate_Fields = {
   var_samp?: Maybe<V3Ask_Var_Samp_Fields>;
   variance?: Maybe<V3Ask_Variance_Fields>;
 };
+
 
 /** aggregate fields of "v3_ask" */
 export type V3Ask_Aggregate_FieldsCountArgs = {
@@ -7733,7 +7890,7 @@ export enum V3Ask_Select_Column {
   /** column name */
   TokenContract = 'tokenContract',
   /** column name */
-  TokenId = 'tokenId',
+  TokenId = 'tokenId'
 }
 
 /** aggregate stddev on columns */
@@ -7778,6 +7935,7 @@ export type V3Ask_Variance_Fields = {
   findersFeeBps?: Maybe<Scalars['Float']>;
 };
 
+
 /** Boolean expression to compare columns of type "ask_event_status_enum". All fields are combined with logical 'AND'. */
 export type Ask_Event_Status_Enum_Comparison_Exp = {
   _eq?: Maybe<Scalars['ask_event_status_enum']>;
@@ -7790,6 +7948,7 @@ export type Ask_Event_Status_Enum_Comparison_Exp = {
   _neq?: Maybe<Scalars['ask_event_status_enum']>;
   _nin?: Maybe<Array<Scalars['ask_event_status_enum']>>;
 };
+
 
 /** Boolean expression to compare columns of type "auction_status_enum". All fields are combined with logical 'AND'. */
 export type Auction_Status_Enum_Comparison_Exp = {
@@ -7804,6 +7963,7 @@ export type Auction_Status_Enum_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['auction_status_enum']>>;
 };
 
+
 /** Boolean expression to compare columns of type "bid_event_status_enum". All fields are combined with logical 'AND'. */
 export type Bid_Event_Status_Enum_Comparison_Exp = {
   _eq?: Maybe<Scalars['bid_event_status_enum']>;
@@ -7816,6 +7976,7 @@ export type Bid_Event_Status_Enum_Comparison_Exp = {
   _neq?: Maybe<Scalars['bid_event_status_enum']>;
   _nin?: Maybe<Array<Scalars['bid_event_status_enum']>>;
 };
+
 
 /** Boolean expression to compare columns of type "event_eventtype_enum". All fields are combined with logical 'AND'. */
 export type Event_Eventtype_Enum_Comparison_Exp = {
@@ -7830,6 +7991,7 @@ export type Event_Eventtype_Enum_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['event_eventtype_enum']>>;
 };
 
+
 /** Boolean expression to compare columns of type "event_parententitytype_enum". All fields are combined with logical 'AND'. */
 export type Event_Parententitytype_Enum_Comparison_Exp = {
   _eq?: Maybe<Scalars['event_parententitytype_enum']>;
@@ -7842,6 +8004,7 @@ export type Event_Parententitytype_Enum_Comparison_Exp = {
   _neq?: Maybe<Scalars['event_parententitytype_enum']>;
   _nin?: Maybe<Array<Scalars['event_parententitytype_enum']>>;
 };
+
 
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
@@ -7865,6 +8028,7 @@ export type Jsonb_Comparison_Exp = {
   _neq?: Maybe<Scalars['jsonb']>;
   _nin?: Maybe<Array<Scalars['jsonb']>>;
 };
+
 
 /** Boolean expression to compare columns of type "nft_contract_status_enum". All fields are combined with logical 'AND'. */
 export type Nft_Contract_Status_Enum_Comparison_Exp = {
@@ -7892,7 +8056,7 @@ export enum Order_By {
   /** in descending order, nulls first */
   DescNullsFirst = 'desc_nulls_first',
   /** in descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last',
+  DescNullsLast = 'desc_nulls_last'
 }
 
 export type Query_Root = {
@@ -8063,6 +8227,7 @@ export type Query_Root = {
   V3Ask_by_pk?: Maybe<V3Ask>;
 };
 
+
 export type Query_RootAuctionArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8070,6 +8235,7 @@ export type Query_RootAuctionArgs = {
   order_by?: Maybe<Array<Auction_Order_By>>;
   where?: Maybe<Auction_Bool_Exp>;
 };
+
 
 export type Query_RootAuctionApprovalUpdatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
@@ -8079,6 +8245,7 @@ export type Query_RootAuctionApprovalUpdatedEventArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionApprovalUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8087,9 +8254,11 @@ export type Query_RootAuctionApprovalUpdatedEvent_AggregateArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionApprovalUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionBidEventArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
@@ -8099,6 +8268,7 @@ export type Query_RootAuctionBidEventArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionBidEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8107,9 +8277,11 @@ export type Query_RootAuctionBidEvent_AggregateArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionBidEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionCanceledEventArgs = {
   distinct_on?: Maybe<Array<AuctionCanceledEvent_Select_Column>>;
@@ -8119,6 +8291,7 @@ export type Query_RootAuctionCanceledEventArgs = {
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionCanceledEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionCanceledEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8127,9 +8300,11 @@ export type Query_RootAuctionCanceledEvent_AggregateArgs = {
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionCanceledEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionCreatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionCreatedEvent_Select_Column>>;
@@ -8139,6 +8314,7 @@ export type Query_RootAuctionCreatedEventArgs = {
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionCreatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionCreatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8147,9 +8323,11 @@ export type Query_RootAuctionCreatedEvent_AggregateArgs = {
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionCreatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionDurationExtendedEventArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
@@ -8159,6 +8337,7 @@ export type Query_RootAuctionDurationExtendedEventArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionDurationExtendedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8167,9 +8346,11 @@ export type Query_RootAuctionDurationExtendedEvent_AggregateArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionDurationExtendedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionEndedEventArgs = {
   distinct_on?: Maybe<Array<AuctionEndedEvent_Select_Column>>;
@@ -8179,6 +8360,7 @@ export type Query_RootAuctionEndedEventArgs = {
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionEndedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionEndedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8187,9 +8369,11 @@ export type Query_RootAuctionEndedEvent_AggregateArgs = {
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionEndedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuctionReservePriceUpdatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
@@ -8199,6 +8383,7 @@ export type Query_RootAuctionReservePriceUpdatedEventArgs = {
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionReservePriceUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8207,9 +8392,11 @@ export type Query_RootAuctionReservePriceUpdatedEvent_AggregateArgs = {
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootAuctionReservePriceUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootAuction_AggregateArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
@@ -8219,9 +8406,11 @@ export type Query_RootAuction_AggregateArgs = {
   where?: Maybe<Auction_Bool_Exp>;
 };
 
+
 export type Query_RootAuction_By_PkArgs = {
   auctionId: Scalars['String'];
 };
+
 
 export type Query_RootCurrencyArgs = {
   distinct_on?: Maybe<Array<Currency_Select_Column>>;
@@ -8231,6 +8420,7 @@ export type Query_RootCurrencyArgs = {
   where?: Maybe<Currency_Bool_Exp>;
 };
 
+
 export type Query_RootCurrency_AggregateArgs = {
   distinct_on?: Maybe<Array<Currency_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8239,9 +8429,11 @@ export type Query_RootCurrency_AggregateArgs = {
   where?: Maybe<Currency_Bool_Exp>;
 };
 
+
 export type Query_RootCurrency_By_PkArgs = {
   address: Scalars['String'];
 };
+
 
 export type Query_RootEventArgs = {
   distinct_on?: Maybe<Array<Event_Select_Column>>;
@@ -8251,6 +8443,7 @@ export type Query_RootEventArgs = {
   where?: Maybe<Event_Bool_Exp>;
 };
 
+
 export type Query_RootEventLogArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8258,6 +8451,7 @@ export type Query_RootEventLogArgs = {
   order_by?: Maybe<Array<EventLog_Order_By>>;
   where?: Maybe<EventLog_Bool_Exp>;
 };
+
 
 export type Query_RootEventLog_AggregateArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
@@ -8267,9 +8461,11 @@ export type Query_RootEventLog_AggregateArgs = {
   where?: Maybe<EventLog_Bool_Exp>;
 };
 
+
 export type Query_RootEventLog_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<Event_Select_Column>>;
@@ -8279,9 +8475,11 @@ export type Query_RootEvent_AggregateArgs = {
   where?: Maybe<Event_Bool_Exp>;
 };
 
+
 export type Query_RootEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMarketAskArgs = {
   distinct_on?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -8291,6 +8489,7 @@ export type Query_RootMarketAskArgs = {
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
 
+
 export type Query_RootMarketAskEventArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8298,6 +8497,7 @@ export type Query_RootMarketAskEventArgs = {
   order_by?: Maybe<Array<MarketAskEvent_Order_By>>;
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
+
 
 export type Query_RootMarketAskEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
@@ -8307,9 +8507,11 @@ export type Query_RootMarketAskEvent_AggregateArgs = {
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMarketAskEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMarketAsk_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -8319,6 +8521,7 @@ export type Query_RootMarketAsk_AggregateArgs = {
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBidArgs = {
   distinct_on?: Maybe<Array<MarketBid_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8326,6 +8529,7 @@ export type Query_RootMarketBidArgs = {
   order_by?: Maybe<Array<MarketBid_Order_By>>;
   where?: Maybe<MarketBid_Bool_Exp>;
 };
+
 
 export type Query_RootMarketBidEventArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
@@ -8335,6 +8539,7 @@ export type Query_RootMarketBidEventArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBidEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8343,9 +8548,11 @@ export type Query_RootMarketBidEvent_AggregateArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBidEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMarketBidShareArgs = {
   distinct_on?: Maybe<Array<MarketBidShare_Select_Column>>;
@@ -8355,6 +8562,7 @@ export type Query_RootMarketBidShareArgs = {
   where?: Maybe<MarketBidShare_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBidShareEventArgs = {
   distinct_on?: Maybe<Array<MarketBidShareEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8362,6 +8570,7 @@ export type Query_RootMarketBidShareEventArgs = {
   order_by?: Maybe<Array<MarketBidShareEvent_Order_By>>;
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
+
 
 export type Query_RootMarketBidShareEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidShareEvent_Select_Column>>;
@@ -8371,9 +8580,11 @@ export type Query_RootMarketBidShareEvent_AggregateArgs = {
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBidShareEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMarketBidShare_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidShare_Select_Column>>;
@@ -8383,6 +8594,7 @@ export type Query_RootMarketBidShare_AggregateArgs = {
   where?: Maybe<MarketBidShare_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBid_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBid_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8391,9 +8603,11 @@ export type Query_RootMarketBid_AggregateArgs = {
   where?: Maybe<MarketBid_Bool_Exp>;
 };
 
+
 export type Query_RootMarketBid_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMediaArgs = {
   distinct_on?: Maybe<Array<Media_Select_Column>>;
@@ -8403,6 +8617,7 @@ export type Query_RootMediaArgs = {
   where?: Maybe<Media_Bool_Exp>;
 };
 
+
 export type Query_RootMediaMetadataArgs = {
   distinct_on?: Maybe<Array<MediaMetadata_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8410,6 +8625,7 @@ export type Query_RootMediaMetadataArgs = {
   order_by?: Maybe<Array<MediaMetadata_Order_By>>;
   where?: Maybe<MediaMetadata_Bool_Exp>;
 };
+
 
 export type Query_RootMediaMetadata_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaMetadata_Select_Column>>;
@@ -8419,9 +8635,11 @@ export type Query_RootMediaMetadata_AggregateArgs = {
   where?: Maybe<MediaMetadata_Bool_Exp>;
 };
 
+
 export type Query_RootMediaMetadata_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMediaMintArgs = {
   distinct_on?: Maybe<Array<MediaMint_Select_Column>>;
@@ -8431,6 +8649,7 @@ export type Query_RootMediaMintArgs = {
   where?: Maybe<MediaMint_Bool_Exp>;
 };
 
+
 export type Query_RootMediaMint_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaMint_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8439,9 +8658,11 @@ export type Query_RootMediaMint_AggregateArgs = {
   where?: Maybe<MediaMint_Bool_Exp>;
 };
 
+
 export type Query_RootMediaMint_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMediaTokenMetadataUriUpdatedEventArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
@@ -8451,6 +8672,7 @@ export type Query_RootMediaTokenMetadataUriUpdatedEventArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMediaTokenMetadataUriUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8459,9 +8681,11 @@ export type Query_RootMediaTokenMetadataUriUpdatedEvent_AggregateArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMediaTokenMetadataUriUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMediaTokenUriUpdatedEventArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
@@ -8471,6 +8695,7 @@ export type Query_RootMediaTokenUriUpdatedEventArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMediaTokenUriUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8479,9 +8704,11 @@ export type Query_RootMediaTokenUriUpdatedEvent_AggregateArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Query_RootMediaTokenUriUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootMedia_AggregateArgs = {
   distinct_on?: Maybe<Array<Media_Select_Column>>;
@@ -8491,9 +8718,11 @@ export type Query_RootMedia_AggregateArgs = {
   where?: Maybe<Media_Bool_Exp>;
 };
 
+
 export type Query_RootMedia_By_PkArgs = {
   tokenId: Scalars['String'];
 };
+
 
 export type Query_RootTokenArgs = {
   distinct_on?: Maybe<Array<Token_Select_Column>>;
@@ -8503,6 +8732,7 @@ export type Query_RootTokenArgs = {
   where?: Maybe<Token_Bool_Exp>;
 };
 
+
 export type Query_RootTokenContractArgs = {
   distinct_on?: Maybe<Array<TokenContract_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8510,6 +8740,7 @@ export type Query_RootTokenContractArgs = {
   order_by?: Maybe<Array<TokenContract_Order_By>>;
   where?: Maybe<TokenContract_Bool_Exp>;
 };
+
 
 export type Query_RootTokenContract_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenContract_Select_Column>>;
@@ -8519,9 +8750,11 @@ export type Query_RootTokenContract_AggregateArgs = {
   where?: Maybe<TokenContract_Bool_Exp>;
 };
 
+
 export type Query_RootTokenContract_By_PkArgs = {
   address: Scalars['String'];
 };
+
 
 export type Query_RootTokenMetadataArgs = {
   distinct_on?: Maybe<Array<TokenMetadata_Select_Column>>;
@@ -8531,6 +8764,7 @@ export type Query_RootTokenMetadataArgs = {
   where?: Maybe<TokenMetadata_Bool_Exp>;
 };
 
+
 export type Query_RootTokenMetadata_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenMetadata_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8539,9 +8773,11 @@ export type Query_RootTokenMetadata_AggregateArgs = {
   where?: Maybe<TokenMetadata_Bool_Exp>;
 };
 
+
 export type Query_RootTokenMetadata_By_PkArgs = {
   id: Scalars['uuid'];
 };
+
 
 export type Query_RootTokenTransferEventArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
@@ -8551,6 +8787,7 @@ export type Query_RootTokenTransferEventArgs = {
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
 
+
 export type Query_RootTokenTransferEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8559,9 +8796,11 @@ export type Query_RootTokenTransferEvent_AggregateArgs = {
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
 
+
 export type Query_RootTokenTransferEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootToken_AggregateArgs = {
   distinct_on?: Maybe<Array<Token_Select_Column>>;
@@ -8571,9 +8810,11 @@ export type Query_RootToken_AggregateArgs = {
   where?: Maybe<Token_Bool_Exp>;
 };
 
+
 export type Query_RootToken_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Query_RootTransactionArgs = {
   distinct_on?: Maybe<Array<Transaction_Select_Column>>;
@@ -8583,6 +8824,7 @@ export type Query_RootTransactionArgs = {
   where?: Maybe<Transaction_Bool_Exp>;
 };
 
+
 export type Query_RootTransaction_AggregateArgs = {
   distinct_on?: Maybe<Array<Transaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8591,9 +8833,11 @@ export type Query_RootTransaction_AggregateArgs = {
   where?: Maybe<Transaction_Bool_Exp>;
 };
 
+
 export type Query_RootTransaction_By_PkArgs = {
   hash: Scalars['String'];
 };
+
 
 export type Query_RootV3AskArgs = {
   distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
@@ -8603,6 +8847,7 @@ export type Query_RootV3AskArgs = {
   where?: Maybe<V3Ask_Bool_Exp>;
 };
 
+
 export type Query_RootV3Ask_AggregateArgs = {
   distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8610,6 +8855,7 @@ export type Query_RootV3Ask_AggregateArgs = {
   order_by?: Maybe<Array<V3Ask_Order_By>>;
   where?: Maybe<V3Ask_Bool_Exp>;
 };
+
 
 export type Query_RootV3Ask_By_PkArgs = {
   id: Scalars['String'];
@@ -8783,6 +9029,7 @@ export type Subscription_Root = {
   V3Ask_by_pk?: Maybe<V3Ask>;
 };
 
+
 export type Subscription_RootAuctionArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8790,6 +9037,7 @@ export type Subscription_RootAuctionArgs = {
   order_by?: Maybe<Array<Auction_Order_By>>;
   where?: Maybe<Auction_Bool_Exp>;
 };
+
 
 export type Subscription_RootAuctionApprovalUpdatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
@@ -8799,6 +9047,7 @@ export type Subscription_RootAuctionApprovalUpdatedEventArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionApprovalUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionApprovalUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8807,9 +9056,11 @@ export type Subscription_RootAuctionApprovalUpdatedEvent_AggregateArgs = {
   where?: Maybe<AuctionApprovalUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionApprovalUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionBidEventArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
@@ -8819,6 +9070,7 @@ export type Subscription_RootAuctionBidEventArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionBidEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionBidEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8827,9 +9079,11 @@ export type Subscription_RootAuctionBidEvent_AggregateArgs = {
   where?: Maybe<AuctionBidEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionBidEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionCanceledEventArgs = {
   distinct_on?: Maybe<Array<AuctionCanceledEvent_Select_Column>>;
@@ -8839,6 +9093,7 @@ export type Subscription_RootAuctionCanceledEventArgs = {
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionCanceledEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionCanceledEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8847,9 +9102,11 @@ export type Subscription_RootAuctionCanceledEvent_AggregateArgs = {
   where?: Maybe<AuctionCanceledEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionCanceledEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionCreatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionCreatedEvent_Select_Column>>;
@@ -8859,6 +9116,7 @@ export type Subscription_RootAuctionCreatedEventArgs = {
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionCreatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionCreatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8867,9 +9125,11 @@ export type Subscription_RootAuctionCreatedEvent_AggregateArgs = {
   where?: Maybe<AuctionCreatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionCreatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionDurationExtendedEventArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
@@ -8879,6 +9139,7 @@ export type Subscription_RootAuctionDurationExtendedEventArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionDurationExtendedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionDurationExtendedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8887,9 +9148,11 @@ export type Subscription_RootAuctionDurationExtendedEvent_AggregateArgs = {
   where?: Maybe<AuctionDurationExtendedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionDurationExtendedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionEndedEventArgs = {
   distinct_on?: Maybe<Array<AuctionEndedEvent_Select_Column>>;
@@ -8899,6 +9162,7 @@ export type Subscription_RootAuctionEndedEventArgs = {
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionEndedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionEndedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8907,9 +9171,11 @@ export type Subscription_RootAuctionEndedEvent_AggregateArgs = {
   where?: Maybe<AuctionEndedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionEndedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuctionReservePriceUpdatedEventArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
@@ -8919,6 +9185,7 @@ export type Subscription_RootAuctionReservePriceUpdatedEventArgs = {
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionReservePriceUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<AuctionReservePriceUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8927,9 +9194,11 @@ export type Subscription_RootAuctionReservePriceUpdatedEvent_AggregateArgs = {
   where?: Maybe<AuctionReservePriceUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuctionReservePriceUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootAuction_AggregateArgs = {
   distinct_on?: Maybe<Array<Auction_Select_Column>>;
@@ -8939,9 +9208,11 @@ export type Subscription_RootAuction_AggregateArgs = {
   where?: Maybe<Auction_Bool_Exp>;
 };
 
+
 export type Subscription_RootAuction_By_PkArgs = {
   auctionId: Scalars['String'];
 };
+
 
 export type Subscription_RootCurrencyArgs = {
   distinct_on?: Maybe<Array<Currency_Select_Column>>;
@@ -8951,6 +9222,7 @@ export type Subscription_RootCurrencyArgs = {
   where?: Maybe<Currency_Bool_Exp>;
 };
 
+
 export type Subscription_RootCurrency_AggregateArgs = {
   distinct_on?: Maybe<Array<Currency_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8959,9 +9231,11 @@ export type Subscription_RootCurrency_AggregateArgs = {
   where?: Maybe<Currency_Bool_Exp>;
 };
 
+
 export type Subscription_RootCurrency_By_PkArgs = {
   address: Scalars['String'];
 };
+
 
 export type Subscription_RootEventArgs = {
   distinct_on?: Maybe<Array<Event_Select_Column>>;
@@ -8971,6 +9245,7 @@ export type Subscription_RootEventArgs = {
   where?: Maybe<Event_Bool_Exp>;
 };
 
+
 export type Subscription_RootEventLogArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8978,6 +9253,7 @@ export type Subscription_RootEventLogArgs = {
   order_by?: Maybe<Array<EventLog_Order_By>>;
   where?: Maybe<EventLog_Bool_Exp>;
 };
+
 
 export type Subscription_RootEventLog_AggregateArgs = {
   distinct_on?: Maybe<Array<EventLog_Select_Column>>;
@@ -8987,9 +9263,11 @@ export type Subscription_RootEventLog_AggregateArgs = {
   where?: Maybe<EventLog_Bool_Exp>;
 };
 
+
 export type Subscription_RootEventLog_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<Event_Select_Column>>;
@@ -8999,9 +9277,11 @@ export type Subscription_RootEvent_AggregateArgs = {
   where?: Maybe<Event_Bool_Exp>;
 };
 
+
 export type Subscription_RootEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMarketAskArgs = {
   distinct_on?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -9011,6 +9291,7 @@ export type Subscription_RootMarketAskArgs = {
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketAskEventArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9018,6 +9299,7 @@ export type Subscription_RootMarketAskEventArgs = {
   order_by?: Maybe<Array<MarketAskEvent_Order_By>>;
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
+
 
 export type Subscription_RootMarketAskEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketAskEvent_Select_Column>>;
@@ -9027,9 +9309,11 @@ export type Subscription_RootMarketAskEvent_AggregateArgs = {
   where?: Maybe<MarketAskEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketAskEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMarketAsk_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketAsk_Select_Column>>;
@@ -9039,6 +9323,7 @@ export type Subscription_RootMarketAsk_AggregateArgs = {
   where?: Maybe<MarketAsk_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBidArgs = {
   distinct_on?: Maybe<Array<MarketBid_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9046,6 +9331,7 @@ export type Subscription_RootMarketBidArgs = {
   order_by?: Maybe<Array<MarketBid_Order_By>>;
   where?: Maybe<MarketBid_Bool_Exp>;
 };
+
 
 export type Subscription_RootMarketBidEventArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
@@ -9055,6 +9341,7 @@ export type Subscription_RootMarketBidEventArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBidEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9063,9 +9350,11 @@ export type Subscription_RootMarketBidEvent_AggregateArgs = {
   where?: Maybe<MarketBidEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBidEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMarketBidShareArgs = {
   distinct_on?: Maybe<Array<MarketBidShare_Select_Column>>;
@@ -9075,6 +9364,7 @@ export type Subscription_RootMarketBidShareArgs = {
   where?: Maybe<MarketBidShare_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBidShareEventArgs = {
   distinct_on?: Maybe<Array<MarketBidShareEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9082,6 +9372,7 @@ export type Subscription_RootMarketBidShareEventArgs = {
   order_by?: Maybe<Array<MarketBidShareEvent_Order_By>>;
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
+
 
 export type Subscription_RootMarketBidShareEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidShareEvent_Select_Column>>;
@@ -9091,9 +9382,11 @@ export type Subscription_RootMarketBidShareEvent_AggregateArgs = {
   where?: Maybe<MarketBidShareEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBidShareEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMarketBidShare_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBidShare_Select_Column>>;
@@ -9103,6 +9396,7 @@ export type Subscription_RootMarketBidShare_AggregateArgs = {
   where?: Maybe<MarketBidShare_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBid_AggregateArgs = {
   distinct_on?: Maybe<Array<MarketBid_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9111,9 +9405,11 @@ export type Subscription_RootMarketBid_AggregateArgs = {
   where?: Maybe<MarketBid_Bool_Exp>;
 };
 
+
 export type Subscription_RootMarketBid_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMediaArgs = {
   distinct_on?: Maybe<Array<Media_Select_Column>>;
@@ -9123,6 +9419,7 @@ export type Subscription_RootMediaArgs = {
   where?: Maybe<Media_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaMetadataArgs = {
   distinct_on?: Maybe<Array<MediaMetadata_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9130,6 +9427,7 @@ export type Subscription_RootMediaMetadataArgs = {
   order_by?: Maybe<Array<MediaMetadata_Order_By>>;
   where?: Maybe<MediaMetadata_Bool_Exp>;
 };
+
 
 export type Subscription_RootMediaMetadata_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaMetadata_Select_Column>>;
@@ -9139,9 +9437,11 @@ export type Subscription_RootMediaMetadata_AggregateArgs = {
   where?: Maybe<MediaMetadata_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaMetadata_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMediaMintArgs = {
   distinct_on?: Maybe<Array<MediaMint_Select_Column>>;
@@ -9151,6 +9451,7 @@ export type Subscription_RootMediaMintArgs = {
   where?: Maybe<MediaMint_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaMint_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaMint_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9159,9 +9460,11 @@ export type Subscription_RootMediaMint_AggregateArgs = {
   where?: Maybe<MediaMint_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaMint_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMediaTokenMetadataUriUpdatedEventArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
@@ -9171,6 +9474,7 @@ export type Subscription_RootMediaTokenMetadataUriUpdatedEventArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaTokenMetadataUriUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaTokenMetadataUriUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9179,9 +9483,11 @@ export type Subscription_RootMediaTokenMetadataUriUpdatedEvent_AggregateArgs = {
   where?: Maybe<MediaTokenMetadataUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaTokenMetadataUriUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMediaTokenUriUpdatedEventArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
@@ -9191,6 +9497,7 @@ export type Subscription_RootMediaTokenUriUpdatedEventArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaTokenUriUpdatedEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<MediaTokenUriUpdatedEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9199,9 +9506,11 @@ export type Subscription_RootMediaTokenUriUpdatedEvent_AggregateArgs = {
   where?: Maybe<MediaTokenUriUpdatedEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootMediaTokenUriUpdatedEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootMedia_AggregateArgs = {
   distinct_on?: Maybe<Array<Media_Select_Column>>;
@@ -9211,9 +9520,11 @@ export type Subscription_RootMedia_AggregateArgs = {
   where?: Maybe<Media_Bool_Exp>;
 };
 
+
 export type Subscription_RootMedia_By_PkArgs = {
   tokenId: Scalars['String'];
 };
+
 
 export type Subscription_RootTokenArgs = {
   distinct_on?: Maybe<Array<Token_Select_Column>>;
@@ -9223,6 +9534,7 @@ export type Subscription_RootTokenArgs = {
   where?: Maybe<Token_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenContractArgs = {
   distinct_on?: Maybe<Array<TokenContract_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9230,6 +9542,7 @@ export type Subscription_RootTokenContractArgs = {
   order_by?: Maybe<Array<TokenContract_Order_By>>;
   where?: Maybe<TokenContract_Bool_Exp>;
 };
+
 
 export type Subscription_RootTokenContract_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenContract_Select_Column>>;
@@ -9239,9 +9552,11 @@ export type Subscription_RootTokenContract_AggregateArgs = {
   where?: Maybe<TokenContract_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenContract_By_PkArgs = {
   address: Scalars['String'];
 };
+
 
 export type Subscription_RootTokenMetadataArgs = {
   distinct_on?: Maybe<Array<TokenMetadata_Select_Column>>;
@@ -9251,6 +9566,7 @@ export type Subscription_RootTokenMetadataArgs = {
   where?: Maybe<TokenMetadata_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenMetadata_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenMetadata_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9259,9 +9575,11 @@ export type Subscription_RootTokenMetadata_AggregateArgs = {
   where?: Maybe<TokenMetadata_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenMetadata_By_PkArgs = {
   id: Scalars['uuid'];
 };
+
 
 export type Subscription_RootTokenTransferEventArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
@@ -9271,6 +9589,7 @@ export type Subscription_RootTokenTransferEventArgs = {
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenTransferEvent_AggregateArgs = {
   distinct_on?: Maybe<Array<TokenTransferEvent_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9279,9 +9598,11 @@ export type Subscription_RootTokenTransferEvent_AggregateArgs = {
   where?: Maybe<TokenTransferEvent_Bool_Exp>;
 };
 
+
 export type Subscription_RootTokenTransferEvent_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootToken_AggregateArgs = {
   distinct_on?: Maybe<Array<Token_Select_Column>>;
@@ -9291,9 +9612,11 @@ export type Subscription_RootToken_AggregateArgs = {
   where?: Maybe<Token_Bool_Exp>;
 };
 
+
 export type Subscription_RootToken_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 export type Subscription_RootTransactionArgs = {
   distinct_on?: Maybe<Array<Transaction_Select_Column>>;
@@ -9303,6 +9626,7 @@ export type Subscription_RootTransactionArgs = {
   where?: Maybe<Transaction_Bool_Exp>;
 };
 
+
 export type Subscription_RootTransaction_AggregateArgs = {
   distinct_on?: Maybe<Array<Transaction_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9311,9 +9635,11 @@ export type Subscription_RootTransaction_AggregateArgs = {
   where?: Maybe<Transaction_Bool_Exp>;
 };
 
+
 export type Subscription_RootTransaction_By_PkArgs = {
   hash: Scalars['String'];
 };
+
 
 export type Subscription_RootV3AskArgs = {
   distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
@@ -9323,6 +9649,7 @@ export type Subscription_RootV3AskArgs = {
   where?: Maybe<V3Ask_Bool_Exp>;
 };
 
+
 export type Subscription_RootV3Ask_AggregateArgs = {
   distinct_on?: Maybe<Array<V3Ask_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9331,9 +9658,11 @@ export type Subscription_RootV3Ask_AggregateArgs = {
   where?: Maybe<V3Ask_Bool_Exp>;
 };
 
+
 export type Subscription_RootV3Ask_By_PkArgs = {
   id: Scalars['String'];
 };
+
 
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
@@ -9348,6 +9677,7 @@ export type Timestamp_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamp']>>;
 };
 
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
@@ -9360,6 +9690,7 @@ export type Timestamptz_Comparison_Exp = {
   _neq?: Maybe<Scalars['timestamptz']>;
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
+
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -9374,6 +9705,7 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+
 /** Boolean expression to compare columns of type "v3_ask_status_enum". All fields are combined with logical 'AND'. */
 export type V3_Ask_Status_Enum_Comparison_Exp = {
   _eq?: Maybe<Scalars['v3_ask_status_enum']>;
@@ -9387,105 +9719,87 @@ export type V3_Ask_Status_Enum_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['v3_ask_status_enum']>>;
 };
 
-export type V3AskPartFragment = { __typename?: 'V3Ask' } & Pick<
-  V3Ask,
-  'askPrice' | 'askCurrency' | 'status'
-> & {
-    events: Array<
-      { __typename?: 'Event' } & Pick<
-        Event,
-        'eventType' | 'address' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'
-      >
-    >;
-  };
+export type V3AskPartFragment = (
+  { __typename?: 'V3Ask' }
+  & Pick<V3Ask, 'askPrice' | 'askCurrency' | 'status'>
+  & { events: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'eventType' | 'address' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+  )> }
+);
 
-export type IndexerTokenPartFragment = { __typename?: 'Token' } & Pick<
-  Token,
-  'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'
-> & {
-    tokenContract?: Maybe<
-      { __typename?: 'TokenContract' } & Pick<
-        TokenContract,
-        'name' | 'symbol' | 'address' | 'supportsMetadata'
-      >
-    >;
-    metadata?: Maybe<{ __typename?: 'TokenMetadata' } & Pick<TokenMetadata, 'json'>>;
-    mintTransferEvent?: Maybe<
-      { __typename?: 'TokenTransferEvent' } & Pick<
-        TokenTransferEvent,
-        'transactionHash' | 'blockTimestamp' | 'blockNumber'
-      >
-    >;
-    media?: Maybe<
-      { __typename?: 'Media' } & Pick<
-        Media,
-        | 'contentURI'
-        | 'contentHash'
-        | 'metadataHash'
-        | 'metadataURI'
-        | 'ownerBidShare'
-        | 'creatorBidShare'
-      >
-    >;
-    v3Ask?: Maybe<{ __typename?: 'V3Ask' } & V3AskPartFragment>;
-  };
+export type V3EventPartFragment = (
+  { __typename?: 'Event' }
+  & Pick<Event, 'eventType' | 'address' | 'blockNumber' | 'blockTimestamp' | 'transactionHash' | 'details'>
+);
 
-export type AuctionBidEventPartFragment = { __typename?: 'AuctionBidEvent' } & Pick<
-  AuctionBidEvent,
-  'id' | 'value' | 'sender' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'
->;
+export type IndexerTokenPartFragment = (
+  { __typename?: 'Token' }
+  & Pick<Token, 'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'>
+  & { tokenContract?: Maybe<(
+    { __typename?: 'TokenContract' }
+    & Pick<TokenContract, 'name' | 'symbol' | 'address' | 'supportsMetadata'>
+  )>, metadata?: Maybe<(
+    { __typename?: 'TokenMetadata' }
+    & Pick<TokenMetadata, 'json'>
+  )>, mintTransferEvent?: Maybe<(
+    { __typename?: 'TokenTransferEvent' }
+    & Pick<TokenTransferEvent, 'transactionHash' | 'blockTimestamp' | 'blockNumber'>
+  )>, media?: Maybe<(
+    { __typename?: 'Media' }
+    & Pick<Media, 'contentURI' | 'contentHash' | 'metadataHash' | 'metadataURI' | 'ownerBidShare' | 'creatorBidShare'>
+  )>, v3Ask?: Maybe<(
+    { __typename?: 'V3Ask' }
+    & V3AskPartFragment
+  )>, v3Events: Array<(
+    { __typename?: 'Event' }
+    & V3EventPartFragment
+  )> }
+);
 
-export type IndexerAuctionPartFragment = { __typename?: 'Auction' } & Pick<
-  Auction,
-  | 'winner'
-  | 'lastBidAmount'
-  | 'duration'
-  | 'tokenId'
-  | 'auctionId'
-  | 'approved'
-  | 'tokenContract'
-  | 'reservePrice'
-  | 'firstBidTime'
-  | 'expiresAt'
-  | 'tokenOwner'
-  | 'curator'
-  | 'curatorFee'
-  | 'curatorFeePercentage'
-> & {
-    createdEvent?: Maybe<
-      { __typename?: 'AuctionCreatedEvent' } & Pick<
-        AuctionCreatedEvent,
-        'blockNumber' | 'blockTimestamp' | 'transactionHash'
-      >
-    >;
-    currency?: Maybe<
-      { __typename?: 'Currency' } & Pick<
-        Currency,
-        'name' | 'symbol' | 'decimals' | 'address'
-      >
-    >;
-    canceledEvent?: Maybe<
-      { __typename?: 'AuctionCanceledEvent' } & Pick<
-        AuctionCanceledEvent,
-        'transactionHash' | 'blockNumber' | 'blockTimestamp'
-      >
-    >;
-    endedEvent?: Maybe<
-      { __typename?: 'AuctionEndedEvent' } & Pick<
-        AuctionEndedEvent,
-        'transactionHash' | 'blockNumber' | 'blockTimestamp'
-      >
-    >;
-    bidEvents: Array<{ __typename?: 'AuctionBidEvent' } & AuctionBidEventPartFragment>;
-  };
+export type AuctionBidEventPartFragment = (
+  { __typename?: 'AuctionBidEvent' }
+  & Pick<AuctionBidEvent, 'id' | 'value' | 'sender' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+);
 
-export type IndexerAuctionWithTokenFragment = { __typename?: 'Auction' } & {
-  token?: Maybe<{ __typename?: 'Token' } & IndexerTokenPartFragment>;
-} & IndexerAuctionPartFragment;
+export type IndexerAuctionPartFragment = (
+  { __typename?: 'Auction' }
+  & Pick<Auction, 'winner' | 'lastBidAmount' | 'duration' | 'tokenId' | 'auctionId' | 'approved' | 'tokenContract' | 'reservePrice' | 'firstBidTime' | 'expiresAt' | 'tokenOwner' | 'curator' | 'curatorFee' | 'curatorFeePercentage'>
+  & { createdEvent?: Maybe<(
+    { __typename?: 'AuctionCreatedEvent' }
+    & Pick<AuctionCreatedEvent, 'blockNumber' | 'blockTimestamp' | 'transactionHash'>
+  )>, currency?: Maybe<(
+    { __typename?: 'Currency' }
+    & Pick<Currency, 'name' | 'symbol' | 'decimals' | 'address'>
+  )>, canceledEvent?: Maybe<(
+    { __typename?: 'AuctionCanceledEvent' }
+    & Pick<AuctionCanceledEvent, 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+  )>, endedEvent?: Maybe<(
+    { __typename?: 'AuctionEndedEvent' }
+    & Pick<AuctionEndedEvent, 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
+  )>, bidEvents: Array<(
+    { __typename?: 'AuctionBidEvent' }
+    & AuctionBidEventPartFragment
+  )> }
+);
 
-export type IndexerTokenWithAuctionFragment = { __typename?: 'Token' } & {
-  auctions: Array<{ __typename?: 'Auction' } & IndexerAuctionPartFragment>;
-} & IndexerTokenPartFragment;
+export type IndexerAuctionWithTokenFragment = (
+  { __typename?: 'Auction' }
+  & { token?: Maybe<(
+    { __typename?: 'Token' }
+    & IndexerTokenPartFragment
+  )> }
+  & IndexerAuctionPartFragment
+);
+
+export type IndexerTokenWithAuctionFragment = (
+  { __typename?: 'Token' }
+  & { auctions: Array<(
+    { __typename?: 'Auction' }
+    & IndexerAuctionPartFragment
+  )> }
+  & IndexerTokenPartFragment
+);
 
 export type ByOwnerQueryVariables = Exact<{
   addressQueryPart: String_Comparison_Exp;
@@ -9494,17 +9808,27 @@ export type ByOwnerQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
 }>;
 
-export type ByOwnerQuery = { __typename?: 'query_root' } & {
-  Token: Array<{ __typename?: 'Token' } & IndexerTokenWithAuctionFragment>;
-};
+
+export type ByOwnerQuery = (
+  { __typename?: 'query_root' }
+  & { Token: Array<(
+    { __typename?: 'Token' }
+    & IndexerTokenWithAuctionFragment
+  )> }
+);
 
 export type ByIdsQueryVariables = Exact<{
   ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
-export type ByIdsQuery = { __typename?: 'query_root' } & {
-  Token: Array<{ __typename?: 'Token' } & IndexerTokenWithAuctionFragment>;
-};
+
+export type ByIdsQuery = (
+  { __typename?: 'query_root' }
+  & { Token: Array<(
+    { __typename?: 'Token' }
+    & IndexerTokenWithAuctionFragment
+  )> }
+);
 
 export type ActiveAuctionsQueryQueryVariables = Exact<{
   andQuery?: Maybe<Array<Token_Bool_Exp> | Token_Bool_Exp>;
@@ -9512,9 +9836,14 @@ export type ActiveAuctionsQueryQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
 
-export type ActiveAuctionsQueryQuery = { __typename?: 'query_root' } & {
-  Token: Array<{ __typename?: 'Token' } & IndexerTokenWithAuctionFragment>;
-};
+
+export type ActiveAuctionsQueryQuery = (
+  { __typename?: 'query_root' }
+  & { Token: Array<(
+    { __typename?: 'Token' }
+    & IndexerTokenWithAuctionFragment
+  )> }
+);
 
 export type TokensWithoutAuctionsQueryVariables = Exact<{
   addresses?: Maybe<Array<Scalars['String']> | Scalars['String']>;
@@ -9522,6 +9851,11 @@ export type TokensWithoutAuctionsQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
 
-export type TokensWithoutAuctionsQuery = { __typename?: 'query_root' } & {
-  Token: Array<{ __typename?: 'Token' } & IndexerTokenPartFragment>;
-};
+
+export type TokensWithoutAuctionsQuery = (
+  { __typename?: 'query_root' }
+  & { Token: Array<(
+    { __typename?: 'Token' }
+    & IndexerTokenPartFragment
+  )> }
+);

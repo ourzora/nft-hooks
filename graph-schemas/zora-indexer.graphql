@@ -115,6 +115,7 @@ type Auction {
 
   """An object relationship"""
   createdEvent: AuctionCreatedEvent
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -168,6 +169,8 @@ type Auction {
 
   """An object relationship"""
   media: Media
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
 
   """An array relationship"""
@@ -284,6 +287,7 @@ input Auction_bool_exp {
   bidEvents: AuctionBidEvent_bool_exp
   canceledEvent: AuctionCanceledEvent_bool_exp
   createdEvent: AuctionCreatedEvent_bool_exp
+  creatorBidShareBeforeAuctionCreated: String_comparison_exp
   curator: String_comparison_exp
   curatorFee: String_comparison_exp
   curatorFeePercentage: Int_comparison_exp
@@ -296,6 +300,8 @@ input Auction_bool_exp {
   lastBidAmount: String_comparison_exp
   lastBidder: String_comparison_exp
   media: Media_bool_exp
+  ownerBidShareBeforeAuctionCreated: String_comparison_exp
+  prevOwnerBidShareBeforeAuctionCreated: String_comparison_exp
   reservePrice: String_comparison_exp
   reservePriceUpdatedEvents: AuctionReservePriceUpdatedEvent_bool_exp
   status: auction_status_enum_comparison_exp
@@ -311,6 +317,7 @@ type Auction_max_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
   auctionId: String
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -319,6 +326,8 @@ type Auction_max_fields {
   firstBidTime: String
   lastBidAmount: String
   lastBidder: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
   tokenContract: String
   tokenId: String
@@ -333,6 +342,7 @@ input Auction_max_order_by {
   amountTokenOwnerReceived: order_by
   auctionCurrency: order_by
   auctionId: order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -341,6 +351,8 @@ input Auction_max_order_by {
   firstBidTime: order_by
   lastBidAmount: order_by
   lastBidder: order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   tokenContract: order_by
   tokenId: order_by
@@ -353,6 +365,7 @@ type Auction_min_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
   auctionId: String
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -361,6 +374,8 @@ type Auction_min_fields {
   firstBidTime: String
   lastBidAmount: String
   lastBidder: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
   tokenContract: String
   tokenId: String
@@ -375,6 +390,7 @@ input Auction_min_order_by {
   amountTokenOwnerReceived: order_by
   auctionCurrency: order_by
   auctionId: order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -383,6 +399,8 @@ input Auction_min_order_by {
   firstBidTime: order_by
   lastBidAmount: order_by
   lastBidder: order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   tokenContract: order_by
   tokenId: order_by
@@ -400,6 +418,7 @@ input Auction_order_by {
   bidEvents_aggregate: AuctionBidEvent_aggregate_order_by
   canceledEvent: AuctionCanceledEvent_order_by
   createdEvent: AuctionCreatedEvent_order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -412,6 +431,8 @@ input Auction_order_by {
   lastBidAmount: order_by
   lastBidder: order_by
   media: Media_order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   reservePriceUpdatedEvents_aggregate: AuctionReservePriceUpdatedEvent_aggregate_order_by
   status: order_by
@@ -439,6 +460,9 @@ enum Auction_select_column {
   auctionId
 
   """column name"""
+  creatorBidShareBeforeAuctionCreated
+
+  """column name"""
   curator
 
   """column name"""
@@ -461,6 +485,12 @@ enum Auction_select_column {
 
   """column name"""
   lastBidder
+
+  """column name"""
+  ownerBidShareBeforeAuctionCreated
+
+  """column name"""
+  prevOwnerBidShareBeforeAuctionCreated
 
   """column name"""
   reservePrice
@@ -9593,6 +9623,10 @@ type Token {
     """filter the rows returned"""
     where: Auction_bool_exp
   ): Auction_aggregate!
+  currentAskId: String
+
+  """An object relationship"""
+  currentAuction: Auction
   id: String!
 
   """An object relationship"""
@@ -9654,6 +9688,42 @@ type Token {
 
   """An object relationship"""
   v3Ask: V3Ask
+
+  """An array relationship"""
+  v3Events(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """An aggregate relationship"""
+  v3Events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
 }
 
 """
@@ -9682,6 +9752,8 @@ input Token_bool_exp {
   _or: [Token_bool_exp!]
   address: String_comparison_exp
   auctions: Auction_bool_exp
+  currentAskId: String_comparison_exp
+  currentAuction: Auction_bool_exp
   id: String_comparison_exp
   media: Media_bool_exp
   metadata: TokenMetadata_bool_exp
@@ -9698,11 +9770,13 @@ input Token_bool_exp {
   tokenURI: String_comparison_exp
   transferEvents: TokenTransferEvent_bool_exp
   v3Ask: V3Ask_bool_exp
+  v3Events: Event_bool_exp
 }
 
 """aggregate max on columns"""
 type Token_max_fields {
   address: String
+  currentAskId: String
   id: String
   metadataId: uuid
   mintTransferEventId: String
@@ -9717,6 +9791,7 @@ type Token_max_fields {
 """aggregate min on columns"""
 type Token_min_fields {
   address: String
+  currentAskId: String
   id: String
   metadataId: uuid
   mintTransferEventId: String
@@ -9732,6 +9807,8 @@ type Token_min_fields {
 input Token_order_by {
   address: order_by
   auctions_aggregate: Auction_aggregate_order_by
+  currentAskId: order_by
+  currentAuction: Auction_order_by
   id: order_by
   media: Media_order_by
   metadata: TokenMetadata_order_by
@@ -9748,6 +9825,7 @@ input Token_order_by {
   tokenURI: order_by
   transferEvents_aggregate: TokenTransferEvent_aggregate_order_by
   v3Ask: V3Ask_order_by
+  v3Events_aggregate: Event_aggregate_order_by
 }
 
 """
@@ -9756,6 +9834,9 @@ select columns of table "token"
 enum Token_select_column {
   """column name"""
   address
+
+  """column name"""
+  currentAskId
 
   """column name"""
   id

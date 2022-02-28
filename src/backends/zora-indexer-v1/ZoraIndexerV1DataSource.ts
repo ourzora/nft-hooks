@@ -3,7 +3,7 @@ import { GraphQLClient } from 'graphql-request';
 import { getAddress } from '@ethersproject/address';
 import Big from 'big.js';
 
-import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../../constants/addresses';
+import { ZERO_ADDRESS, ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../../constants/addresses';
 import { NetworkIDs } from '../../constants/networks';
 import { ZORA_INDEXER_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
@@ -14,7 +14,7 @@ import {
   IndexerTokenWithAuctionFragment,
   String_Comparison_Exp,
   Token_Bool_Exp,
-  V3AskPartFragment,
+  V3EventPartFragment,
 } from './zora-indexer-types';
 import {
   AuctionBidEvent,
@@ -72,64 +72,61 @@ function timeIsPast(time: string) {
   return new Date(time).getTime() < new Date().getTime();
 }
 
-function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
+function extractAsk(askEvent: V3EventPartFragment): FixedPriceLike {
   const getStatus = () => {
-    if (ask.status === 'FILLED') {
+    if (askEvent.eventType === 'Ask_v1_AskCreated') {
+      return 'active';
+    }
+    if (askEvent.eventType === 'Ask_v1_AskFilled') {
       return 'complete';
     }
-    if (ask.status === 'PENDING') {
-      return 'active';
-    }
-    if (ask.status === 'CANCELLED') {
-      return 'active';
+    if (askEvent.eventType === 'Ask_v1_AskCancelled') {
+      return 'cancelled';
     }
     return 'unknown';
   };
   // if the asker is not the current owner, then we remove the ask?
 
-  const createdEvent = ask.events.find(
-    (event) => event.eventType === 'Ask_v1_AskCreated'
-  )!;
-  const filledEvent = ask.events.find((event) => event.eventType === 'Ask_v1_AskFilled');
-  const cancelledEvent = ask.events.find(
-    (event) => event.eventType === 'Ask_v1_Cancelled'
-  );
+  const status = getStatus();
 
   return {
-    status: getStatus(),
+    status,
     amount: {
-      amount: ask.askPrice,
-      prettyAmount: priceToPretty(ask.askPrice, null),
-      currency: ask.askCurrency,
-      name: 'UNKN',
-      symbol: 'UNKN',
+      amount: askEvent.details?.askPrice,
+      prettyAmount: priceToPretty(askEvent.details?.askPrice, null),
+      currency: askEvent.details?.askCurrency,
+      name: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
+      symbol: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
       decimals: undefined,
       // other info not provided
       // currency.decimals / currency.name / currency.symbol
     },
     side: 'ask',
     type: 'FixedPrice',
-    cancelledAt: cancelledEvent
-      ? {
-          timestamp: dateToUnix(cancelledEvent.blockTimestamp)!,
-          blockNumber: cancelledEvent.blockNumber,
-          transactionHash: cancelledEvent.transactionHash,
-        }
-      : undefined,
+    cancelledAt:
+      status === 'cancelled'
+        ? {
+            timestamp: dateToUnix(askEvent.blockTimestamp)!,
+            blockNumber: askEvent.blockNumber,
+            transactionHash: askEvent.transactionHash,
+          }
+        : undefined,
     createdAt: {
-      timestamp: dateToUnix(createdEvent.blockTimestamp)!,
-      blockNumber: createdEvent.blockNumber,
-      transactionHash: createdEvent.transactionHash,
+      timestamp: dateToUnix(askEvent.blockTimestamp)!,
+      blockNumber: askEvent.blockNumber,
+      transactionHash: askEvent.transactionHash,
     },
-    finishedAt: filledEvent
-      ? {
-          timestamp: dateToUnix(filledEvent.blockTimestamp)!,
-          blockNumber: filledEvent.blockNumber,
-          transactionHash: filledEvent.transactionHash,
-        }
-      : undefined,
-    source: 'ZoraAskV1',
-    raw: ask,
+    createdBy: status !== 'complete' ? askEvent.details?.seller : askEvent.details?.buyer,
+    finishedAt:
+      status === 'complete'
+        ? {
+            timestamp: dateToUnix(askEvent.blockTimestamp)!,
+            blockNumber: askEvent.blockNumber,
+            transactionHash: askEvent.transactionHash,
+          }
+        : undefined,
+    source: 'ZoraAskV1Event',
+    raw: askEvent,
   };
 }
 
@@ -233,7 +230,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
 function extractMarketData(response: IndexerTokenWithAuctionFragment, _: NFTObject) {
   return [
     ...response.auctions.map((auction) => extractAuction(auction)),
-    ...(response.v3Ask ? [extractAsk(response.v3Ask)] : []),
+    ...(response.v3Events ? response.v3Events.map(extractAsk) : []),
   ];
 }
 
@@ -373,7 +370,6 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     );
   };
 
-
   /**
    * Un-batched fetch function to fetch a group of NFT data from the zora indexer
    *
@@ -410,7 +406,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       limit,
     });
     const tokens = response.Token as IndexerTokenWithAuctionFragment[];
-    return tokens.map((token) => this.transformNFT(token, {rawData: {}}));
+    return tokens.map((token) => this.transformNFT(token, { rawData: {} }));
   }
 
   /**

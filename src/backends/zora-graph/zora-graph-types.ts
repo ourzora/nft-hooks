@@ -1,9 +1,7 @@
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -15,6 +13,9 @@ export type Scalars = {
   BigInt: any;
   Bytes: any;
 };
+
+
+
 
 export type Ask = {
   __typename?: 'Ask';
@@ -135,7 +136,7 @@ export enum Ask_OrderBy {
   Amount = 'amount',
   Owner = 'owner',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
 export type Bid = {
@@ -285,14 +286,26 @@ export enum Bid_OrderBy {
   Bidder = 'bidder',
   Recipient = 'recipient',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
+
+
+/** The block at which the query should be executed. */
 export type Block_Height = {
+  /** Value containing a block hash */
   hash?: Maybe<Scalars['Bytes']>;
+  /** Value containing a block number */
   number?: Maybe<Scalars['Int']>;
+  /**
+   * Value containing the minimum block number.
+   * In the case of `number_gte`, the query will be executed on the latest block only if
+   * the subgraph has progressed to or past the minimum block number.
+   * Defaults to the latest block when omitted.
+   */
   number_gte?: Maybe<Scalars['Int']>;
 };
+
 
 export type Currency = {
   __typename?: 'Currency';
@@ -316,6 +329,7 @@ export type Currency = {
   inactiveAsks?: Maybe<Array<InactiveAsk>>;
 };
 
+
 export type CurrencyActiveBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -323,6 +337,7 @@ export type CurrencyActiveBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Bid_Filter>;
 };
+
 
 export type CurrencyActiveAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -332,6 +347,7 @@ export type CurrencyActiveAsksArgs = {
   where?: Maybe<Ask_Filter>;
 };
 
+
 export type CurrencyInactiveBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -339,6 +355,7 @@ export type CurrencyInactiveBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<InactiveBid_Filter>;
 };
+
 
 export type CurrencyInactiveAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -412,7 +429,7 @@ export enum Currency_OrderBy {
   ActiveBids = 'activeBids',
   ActiveAsks = 'activeAsks',
   InactiveBids = 'inactiveBids',
-  InactiveAsks = 'inactiveAsks',
+  InactiveAsks = 'inactiveAsks'
 }
 
 export type InactiveAsk = {
@@ -563,7 +580,7 @@ export enum InactiveAsk_OrderBy {
   CreatedAtTimestamp = 'createdAtTimestamp',
   CreatedAtBlockNumber = 'createdAtBlockNumber',
   InactivatedAtTimestamp = 'inactivatedAtTimestamp',
-  InactivatedAtBlockNumber = 'inactivatedAtBlockNumber',
+  InactivatedAtBlockNumber = 'inactivatedAtBlockNumber'
 }
 
 export type InactiveBid = {
@@ -742,7 +759,7 @@ export enum InactiveBid_OrderBy {
   CreatedAtTimestamp = 'createdAtTimestamp',
   CreatedAtBlockNumber = 'createdAtBlockNumber',
   InactivatedAtTimestamp = 'inactivatedAtTimestamp',
-  InactivatedAtBlockNumber = 'inactivatedAtBlockNumber',
+  InactivatedAtBlockNumber = 'inactivatedAtBlockNumber'
 }
 
 export type InactiveReserveAuctionBid = {
@@ -876,13 +893,13 @@ export enum InactiveReserveAuctionBid_OrderBy {
   BidInactivatedAtTimestamp = 'bidInactivatedAtTimestamp',
   BidInactivatedAtBlockNumber = 'bidInactivatedAtBlockNumber',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
 /** The Types for MarketEvents (Asks, Bids) */
 export enum MarketEventType {
   Finalized = 'Finalized',
-  Removed = 'Removed',
+  Removed = 'Removed'
 }
 
 export type Media = {
@@ -935,6 +952,7 @@ export type Media = {
   reserveAuctions?: Maybe<Array<ReserveAuction>>;
 };
 
+
 export type MediaCurrentBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -942,6 +960,7 @@ export type MediaCurrentBidsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Bid_Filter>;
 };
+
 
 export type MediaInactiveAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -951,6 +970,7 @@ export type MediaInactiveAsksArgs = {
   where?: Maybe<InactiveAsk_Filter>;
 };
 
+
 export type MediaInactiveBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -959,6 +979,7 @@ export type MediaInactiveBidsArgs = {
   where?: Maybe<InactiveBid_Filter>;
 };
 
+
 export type MediaTransfersArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -966,6 +987,7 @@ export type MediaTransfersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Transfer_Filter>;
 };
+
 
 export type MediaReserveAuctionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1175,12 +1197,13 @@ export enum Media_OrderBy {
   InactiveAsks = 'inactiveAsks',
   InactiveBids = 'inactiveBids',
   Transfers = 'transfers',
-  ReserveAuctions = 'reserveAuctions',
+  ReserveAuctions = 'reserveAuctions'
 }
 
+/** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc',
+  Desc = 'desc'
 }
 
 export type Query = {
@@ -1213,11 +1236,13 @@ export type Query = {
   _meta?: Maybe<_Meta_>;
 };
 
+
 export type QueryMediaArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryMediasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1229,11 +1254,13 @@ export type QueryMediasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1245,11 +1272,13 @@ export type QueryUsersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1261,11 +1290,13 @@ export type QueryAsksArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1277,11 +1308,13 @@ export type QueryBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryInactiveBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryInactiveBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1293,11 +1326,13 @@ export type QueryInactiveBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryInactiveAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryInactiveAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1309,11 +1344,13 @@ export type QueryInactiveAsksArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryCurrencyArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryCurrenciesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1325,11 +1362,13 @@ export type QueryCurrenciesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryTransferArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryTransfersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1341,11 +1380,13 @@ export type QueryTransfersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryUriupdateArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryUriupdatesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1357,11 +1398,13 @@ export type QueryUriupdatesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryReserveAuctionBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1373,11 +1416,13 @@ export type QueryReserveAuctionBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryInactiveReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryInactiveReserveAuctionBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1389,11 +1434,13 @@ export type QueryInactiveReserveAuctionBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryReserveAuctionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryReserveAuctionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1404,6 +1451,7 @@ export type QueryReserveAuctionsArgs = {
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type Query_MetaArgs = {
   block?: Maybe<Block_Height>;
@@ -1463,6 +1511,7 @@ export type ReserveAuction = {
   finalizedAtBlockNumber?: Maybe<Scalars['BigInt']>;
 };
 
+
 export type ReserveAuctionPreviousBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -1494,7 +1543,7 @@ export type ReserveAuctionBid = {
 export enum ReserveAuctionBidType {
   Active = 'Active',
   Refunded = 'Refunded',
-  Final = 'Final',
+  Final = 'Final'
 }
 
 export type ReserveAuctionBid_Filter = {
@@ -1586,14 +1635,14 @@ export enum ReserveAuctionBid_OrderBy {
   Bidder = 'bidder',
   BidType = 'bidType',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
 export enum ReserveAuctionStatus {
   Pending = 'Pending',
   Active = 'Active',
   Canceled = 'Canceled',
-  Finished = 'Finished',
+  Finished = 'Finished'
 }
 
 export type ReserveAuction_Filter = {
@@ -1847,7 +1896,7 @@ export enum ReserveAuction_OrderBy {
   CreatedAtTimestamp = 'createdAtTimestamp',
   CreatedAtBlockNumber = 'createdAtBlockNumber',
   FinalizedAtTimestamp = 'finalizedAtTimestamp',
-  FinalizedAtBlockNumber = 'finalizedAtBlockNumber',
+  FinalizedAtBlockNumber = 'finalizedAtBlockNumber'
 }
 
 export type Subscription = {
@@ -1880,11 +1929,13 @@ export type Subscription = {
   _meta?: Maybe<_Meta_>;
 };
 
+
 export type SubscriptionMediaArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionMediasArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1896,11 +1947,13 @@ export type SubscriptionMediasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionUserArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1912,11 +1965,13 @@ export type SubscriptionUsersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1928,11 +1983,13 @@ export type SubscriptionAsksArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1944,11 +2001,13 @@ export type SubscriptionBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionInactiveBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionInactiveBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1960,11 +2019,13 @@ export type SubscriptionInactiveBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionInactiveAskArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionInactiveAsksArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1976,11 +2037,13 @@ export type SubscriptionInactiveAsksArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionCurrencyArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionCurrenciesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -1992,11 +2055,13 @@ export type SubscriptionCurrenciesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionTransferArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionTransfersArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2008,11 +2073,13 @@ export type SubscriptionTransfersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionUriupdateArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionUriupdatesArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2024,11 +2091,13 @@ export type SubscriptionUriupdatesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionReserveAuctionBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2040,11 +2109,13 @@ export type SubscriptionReserveAuctionBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionInactiveReserveAuctionBidArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionInactiveReserveAuctionBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2056,11 +2127,13 @@ export type SubscriptionInactiveReserveAuctionBidsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionReserveAuctionArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionReserveAuctionsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2071,6 +2144,7 @@ export type SubscriptionReserveAuctionsArgs = {
   block?: Maybe<Block_Height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type Subscription_MetaArgs = {
   block?: Maybe<Block_Height>;
@@ -2184,7 +2258,7 @@ export enum Transfer_OrderBy {
   From = 'from',
   To = 'to',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
 export type UriUpdate = {
@@ -2214,7 +2288,7 @@ export type UriUpdate = {
 /** The Types of URI Updates */
 export enum UriUpdateType {
   Content = 'Content',
-  Metadata = 'Metadata',
+  Metadata = 'Metadata'
 }
 
 export type UriUpdate_Filter = {
@@ -2342,7 +2416,7 @@ export enum UriUpdate_OrderBy {
   Owner = 'owner',
   Updater = 'updater',
   CreatedAtTimestamp = 'createdAtTimestamp',
-  CreatedAtBlockNumber = 'createdAtBlockNumber',
+  CreatedAtBlockNumber = 'createdAtBlockNumber'
 }
 
 export type User = {
@@ -2359,6 +2433,7 @@ export type User = {
   currentBids?: Maybe<Array<Bid>>;
 };
 
+
 export type UserAuthorizedUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -2366,6 +2441,7 @@ export type UserAuthorizedUsersArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<User_Filter>;
 };
+
 
 export type UserCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2375,6 +2451,7 @@ export type UserCollectionArgs = {
   where?: Maybe<Media_Filter>;
 };
 
+
 export type UserCreationsArgs = {
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -2382,6 +2459,7 @@ export type UserCreationsArgs = {
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<Media_Filter>;
 };
+
 
 export type UserCurrentBidsArgs = {
   skip?: Maybe<Scalars['Int']>;
@@ -2411,7 +2489,7 @@ export enum User_OrderBy {
   AuthorizedUsers = 'authorizedUsers',
   Collection = 'collection',
   Creations = 'creations',
-  CurrentBids = 'currentBids',
+  CurrentBids = 'currentBids'
 }
 
 export type _Block_ = {
@@ -2442,108 +2520,124 @@ export enum _SubgraphErrorPolicy_ {
   /** Data will be returned even if the subgraph has indexing errors */
   Allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  Deny = 'deny',
+  Deny = 'deny'
 }
 
-export type AskPriceFragment = { __typename?: 'Ask' } & Pick<
-  Ask,
-  'id' | 'amount' | 'createdAtTimestamp'
-> & { currency: { __typename?: 'Currency' } & CurrencyShortFragment };
+export type AskPriceFragment = (
+  { __typename?: 'Ask' }
+  & Pick<Ask, 'id' | 'amount' | 'createdAtTimestamp'>
+  & { currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
 
-export type NftMediaFragment = { __typename?: 'Media' } & Pick<
-  Media,
-  | 'id'
-  | 'creatorBidShare'
-  | 'ownerBidShare'
-  | 'createdAtTimestamp'
-  | 'metadataURI'
-  | 'metadataHash'
-  | 'contentURI'
-  | 'contentHash'
-> & {
-    owner: { __typename?: 'User' } & Pick<User, 'id'>;
-    creator: { __typename?: 'User' } & Pick<User, 'id'>;
-    currentAsk?: Maybe<{ __typename?: 'Ask' } & AskPriceFragment>;
-  };
+export type NftMediaFragment = (
+  { __typename?: 'Media' }
+  & Pick<Media, 'id' | 'creatorBidShare' | 'ownerBidShare' | 'createdAtTimestamp' | 'metadataURI' | 'metadataHash' | 'contentURI' | 'contentHash'>
+  & { owner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), creator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currentAsk?: Maybe<(
+    { __typename?: 'Ask' }
+    & AskPriceFragment
+  )> }
+);
 
-export type CurrencyShortFragment = { __typename?: 'Currency' } & Pick<
-  Currency,
-  'id' | 'name' | 'symbol' | 'decimals'
->;
+export type CurrencyShortFragment = (
+  { __typename?: 'Currency' }
+  & Pick<Currency, 'id' | 'name' | 'symbol' | 'decimals'>
+);
 
-export type TransferPartialFragment = { __typename?: 'Transfer' } & Pick<
-  Transfer,
-  'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'
-> & {
-    from: { __typename?: 'User' } & Pick<User, 'id'>;
-    to: { __typename?: 'User' } & Pick<User, 'id'>;
-  };
+export type TransferPartialFragment = (
+  { __typename?: 'Transfer' }
+  & Pick<Transfer, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'createdAtBlockNumber'>
+  & { from: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), to: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
 
-export type PreviousReserveBidFragment = {
-  __typename?: 'InactiveReserveAuctionBid';
-} & Pick<
-  InactiveReserveAuctionBid,
-  | 'id'
-  | 'transactionHash'
-  | 'createdAtTimestamp'
-  | 'amount'
-  | 'bidType'
-  | 'bidInactivatedAtTimestamp'
-  | 'bidInactivatedAtBlockNumber'
-> & { bidder: { __typename?: 'User' } & Pick<User, 'id'> };
+export type PreviousReserveBidFragment = (
+  { __typename?: 'InactiveReserveAuctionBid' }
+  & Pick<InactiveReserveAuctionBid, 'id' | 'transactionHash' | 'createdAtTimestamp' | 'amount' | 'bidType' | 'bidInactivatedAtTimestamp' | 'bidInactivatedAtBlockNumber'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
 
-export type CurrentReserveBidFragment = { __typename?: 'ReserveAuctionBid' } & Pick<
-  ReserveAuctionBid,
-  'bidType' | 'amount' | 'transactionHash' | 'createdAtTimestamp'
-> & { bidder: { __typename?: 'User' } & Pick<User, 'id'> };
+export type CurrentReserveBidFragment = (
+  { __typename?: 'ReserveAuctionBid' }
+  & Pick<ReserveAuctionBid, 'bidType' | 'amount' | 'transactionHash' | 'createdAtTimestamp'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
 
-export type ReserveAuctionPartialFragment = { __typename?: 'ReserveAuction' } & Pick<
-  ReserveAuction,
-  | 'id'
-  | 'tokenId'
-  | 'tokenContract'
-  | 'transactionHash'
-  | 'status'
-  | 'approved'
-  | 'reservePrice'
-  | 'firstBidTime'
-  | 'token'
-  | 'createdAtBlockNumber'
-  | 'createdAtTimestamp'
-  | 'approvedTimestamp'
-  | 'curatorFeePercentage'
-  | 'duration'
-  | 'expectedEndTimestamp'
-  | 'finalizedAtTimestamp'
-> & {
-    curator: { __typename?: 'User' } & Pick<User, 'id'>;
-    tokenOwner: { __typename?: 'User' } & Pick<User, 'id'>;
-    auctionCurrency: { __typename?: 'Currency' } & CurrencyShortFragment;
-    currentBid?: Maybe<{ __typename?: 'ReserveAuctionBid' } & CurrentReserveBidFragment>;
-    previousBids?: Maybe<
-      Array<{ __typename?: 'InactiveReserveAuctionBid' } & PreviousReserveBidFragment>
-    >;
-  };
+export type ReserveAuctionPartialFragment = (
+  { __typename?: 'ReserveAuction' }
+  & Pick<ReserveAuction, 'id' | 'tokenId' | 'tokenContract' | 'transactionHash' | 'status' | 'approved' | 'reservePrice' | 'firstBidTime' | 'token' | 'createdAtBlockNumber' | 'createdAtTimestamp' | 'approvedTimestamp' | 'curatorFeePercentage' | 'duration' | 'expectedEndTimestamp' | 'finalizedAtTimestamp'>
+  & { curator: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), tokenOwner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), auctionCurrency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ), currentBid?: Maybe<(
+    { __typename?: 'ReserveAuctionBid' }
+    & CurrentReserveBidFragment
+  )>, previousBids?: Maybe<Array<(
+    { __typename?: 'InactiveReserveAuctionBid' }
+    & PreviousReserveBidFragment
+  )>> }
+);
 
-export type BidDataPartialFragment = { __typename?: 'Bid' } & Pick<
-  Bid,
-  'id' | 'createdAtTimestamp' | 'createdAtBlockNumber' | 'transactionHash' | 'amount'
-> & {
-    bidder: { __typename?: 'User' } & Pick<User, 'id'>;
-    currency: { __typename?: 'Currency' } & CurrencyShortFragment;
-  };
+export type BidDataPartialFragment = (
+  { __typename?: 'Bid' }
+  & Pick<Bid, 'id' | 'createdAtTimestamp' | 'createdAtBlockNumber' | 'transactionHash' | 'amount'>
+  & { bidder: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ), currency: (
+    { __typename?: 'Currency' }
+    & CurrencyShortFragment
+  ) }
+);
 
-export type NftMediaFullDataFragment = { __typename?: 'Media' } & {
-  currentBids?: Maybe<Array<{ __typename?: 'Bid' } & BidDataPartialFragment>>;
-  transfers?: Maybe<Array<{ __typename?: 'Transfer' } & TransferPartialFragment>>;
-  reserveAuctions?: Maybe<
-    Array<{ __typename?: 'ReserveAuction' } & ReserveAuctionPartialFragment>
-  >;
-} & NftMediaFragment;
+export type NftMediaFullDataFragment = (
+  { __typename?: 'Media' }
+  & { currentBids?: Maybe<Array<(
+    { __typename?: 'Bid' }
+    & BidDataPartialFragment
+  )>>, transfers?: Maybe<Array<(
+    { __typename?: 'Transfer' }
+    & TransferPartialFragment
+  )>>, reserveAuctions?: Maybe<Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialFragment
+  )>> }
+  & NftMediaFragment
+);
 
-export type ReserveAuctionPartialWithMediaFragment = { __typename?: 'ReserveAuction' } & {
-  media?: Maybe<{ __typename?: 'Media' } & NftMediaFragment>;
-} & ReserveAuctionPartialFragment;
+export type ReserveAuctionPartialWithMediaFragment = (
+  { __typename?: 'ReserveAuction' }
+  & { media?: Maybe<(
+    { __typename?: 'Media' }
+    & NftMediaFragment
+  )> }
+  & ReserveAuctionPartialFragment
+);
 
 export type GetAuctionsByCuratorQueryVariables = Exact<{
   curators?: Maybe<Array<Scalars['String']> | Scalars['String']>;
@@ -2552,11 +2646,14 @@ export type GetAuctionsByCuratorQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
 }>;
 
-export type GetAuctionsByCuratorQuery = { __typename?: 'Query' } & {
-  reserveAuctions: Array<
-    { __typename?: 'ReserveAuction' } & ReserveAuctionPartialWithMediaFragment
-  >;
-};
+
+export type GetAuctionsByCuratorQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & ReserveAuctionPartialWithMediaFragment
+  )> }
+);
 
 export type GetAllAuctionsQueryVariables = Exact<{
   approved?: Maybe<Array<Scalars['Boolean']> | Scalars['Boolean']>;
@@ -2564,25 +2661,35 @@ export type GetAllAuctionsQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
 }>;
 
-export type GetAllAuctionsQuery = { __typename?: 'Query' } & {
-  reserveAuctions: Array<
-    { __typename?: 'ReserveAuction' } & {
-      media?: Maybe<{ __typename?: 'Media' } & NftMediaFullDataFragment>;
-    } & ReserveAuctionPartialFragment
-  >;
-};
+
+export type GetAllAuctionsQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & { media?: Maybe<(
+      { __typename?: 'Media' }
+      & NftMediaFullDataFragment
+    )> }
+    & ReserveAuctionPartialFragment
+  )> }
+);
 
 export type GetAuctionByMediaQueryVariables = Exact<{
   tokens?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
-export type GetAuctionByMediaQuery = { __typename?: 'Query' } & {
-  reserveAuctions: Array<
-    { __typename?: 'ReserveAuction' } & {
-      media?: Maybe<{ __typename?: 'Media' } & NftMediaFullDataFragment>;
-    } & ReserveAuctionPartialFragment
-  >;
-};
+
+export type GetAuctionByMediaQuery = (
+  { __typename?: 'Query' }
+  & { reserveAuctions: Array<(
+    { __typename?: 'ReserveAuction' }
+    & { media?: Maybe<(
+      { __typename?: 'Media' }
+      & NftMediaFullDataFragment
+    )> }
+    & ReserveAuctionPartialFragment
+  )> }
+);
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{
   id_ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
@@ -2590,8 +2697,17 @@ export type GetMediaAndAuctionsQueryVariables = Exact<{
   owner_ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
-export type GetMediaAndAuctionsQuery = { __typename?: 'Query' } & {
-  id: Array<{ __typename?: 'Media' } & NftMediaFullDataFragment>;
-  creator: Array<{ __typename?: 'Media' } & NftMediaFullDataFragment>;
-  owner: Array<{ __typename?: 'Media' } & NftMediaFullDataFragment>;
-};
+
+export type GetMediaAndAuctionsQuery = (
+  { __typename?: 'Query' }
+  & { id: Array<(
+    { __typename?: 'Media' }
+    & NftMediaFullDataFragment
+  )>, creator: Array<(
+    { __typename?: 'Media' }
+    & NftMediaFullDataFragment
+  )>, owner: Array<(
+    { __typename?: 'Media' }
+    & NftMediaFullDataFragment
+  )> }
+);
