@@ -48,6 +48,14 @@ export type FixedPriceLike = {
   type: 'FixedPrice';
 } & MarketInfo;
 
+export type MarketInfoStatus =
+  | 'pending'
+  | 'active'
+  | 'complete'
+  | 'cancelled'
+  | 'unknown'
+  | 'invalid';
+
 type MarketInfo = {
   raw: any;
   amount: CurrencyValue;
@@ -55,7 +63,7 @@ type MarketInfo = {
   // active - can be filled / auction is ongoing
   // completed - auction end fill complete
   // cancelled - user cancels at some point
-  status: 'pending' | 'active' | 'complete' | 'cancelled' | 'unknown';
+  status: MarketInfoStatus;
   createdAt: TimedAction;
   createdBy?: string;
   finishedAt?: TimedAction;
@@ -63,6 +71,29 @@ type MarketInfo = {
 };
 
 export type MarketModule = AuctionLike | FixedPriceLike;
+
+export type TokenTransferEventType = 'mint' | 'burn' | 'transfer' | 'sale';
+
+export enum EventType {
+  TokenTransferEvent,
+  TokenMarketEvent,
+}
+
+export type TokenTransferEvent = {
+  from: ETHAddress;
+  to: ETHAddress;
+  at: TimedAction;
+  type: TokenTransferEventType;
+  eventType: EventType.TokenTransferEvent;
+};
+
+export type TokenMarketEvent = {
+  market: MarketModule;
+  at: TimedAction;
+  eventType: EventType.TokenMarketEvent;
+};
+
+export type TokenEvent = TokenTransferEvent | TokenMarketEvent;
 
 export type MediaObject = {
   uri: string;
@@ -103,9 +134,9 @@ export type NFTObject = {
       minter?: string;
       at?: TimedAction;
     };
-    owner: ETHAddress;
+    owner?: ETHAddress;
     metadataURI: Nullable<string>;
-    // Zora-specific extension but used for our creator contracts
+    // Zora-specific extension but exposed for parsed JSON in contracts
     contentURI: Nullable<string>;
   };
   metadata?: {
@@ -117,6 +148,7 @@ export type NFTObject = {
     raw?: any;
   };
   markets?: MarketModule[];
+  events?: TokenEvent[];
 };
 
 export interface NFTInterface<T> {

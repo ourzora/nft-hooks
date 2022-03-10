@@ -5,6 +5,9 @@ const MEDIA_FRAGMENTS = gql`
     askPrice
     askCurrency
     status
+    seller
+    findersFeeBps
+    finder
     events {
       eventType
       address
@@ -114,15 +117,37 @@ const MEDIA_FRAGMENTS = gql`
   }
 `;
 
+const TOKEN_TRANSFER_EVENTS = gql`
+  fragment TokenTransferEventInfo on TokenTransferEvent {
+    from
+    to
+    address
+    blockTimestamp
+    blockNumber
+    transactionHash
+  }
+`;
+
 const BASE_FRAGMENTS = gql`
   ${MEDIA_FRAGMENTS}
+  ${TOKEN_TRANSFER_EVENTS}
+
   fragment IndexerTokenWithAuction on Token {
     ...IndexerTokenPart
-    auctions(where: { _and: [{ _not: { canceledEvent: {} } }] }) {
+  }
+`;
+
+const DETAIL_FRAGMENTS = gql`
+  fragment IndexerTokenWithAuctionDetail on Token {
+    auctions {
       ...IndexerAuctionPart
+    }
+    transferEvents {
+      ...TokenTransferEventInfo
     }
   }
 `;
+//(where: { _and: [{ _not: { canceledEvent: {} } }] })
 
 // Get list of nfts owned by user from contracts
 export const BY_OWNER = gql`
@@ -159,9 +184,12 @@ export const BY_OWNER = gql`
 
 export const BY_IDS = gql`
   ${BASE_FRAGMENTS}
+  ${DETAIL_FRAGMENTS}
+
   query byIds($ids: [String!]) @cached {
     Token(where: { id: { _in: $ids } }) {
       ...IndexerTokenWithAuction
+      ...IndexerTokenWithAuctionDetail
     }
   }
 `;

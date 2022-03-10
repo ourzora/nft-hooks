@@ -13,15 +13,22 @@ import {
   IndexerAuctionPartFragment,
   IndexerTokenWithAuctionFragment,
   String_Comparison_Exp,
+  TokenTransferEventInfoFragment,
   Token_Bool_Exp,
+  V3AskPartFragment,
   V3EventPartFragment,
 } from './zora-indexer-types';
 import {
   AuctionBidEvent,
   AuctionLike,
+  EventType,
   FixedPriceLike,
+  MarketInfoStatus,
   MetadataAttributeType,
   NFTObject,
+  TokenMarketEvent,
+  TokenTransferEvent,
+  TokenTransferEventType,
 } from '../NFTInterface';
 import { ZoraIndexerV1Interface } from './ZoraIndexerV1Interface';
 import {
@@ -36,6 +43,13 @@ function dateToUnix(date?: string) {
     return undefined;
   }
   return Math.floor(new Date(date).getTime() / 1000);
+}
+
+function getLast<T>(items: T[]) {
+  if (items && items.length) {
+    return items[items.length - 1];
+  }
+  return undefined;
 }
 
 function priceToPretty(number: string, decimals?: number | null) {
@@ -72,68 +86,158 @@ function timeIsPast(time: string) {
   return new Date(time).getTime() < new Date().getTime();
 }
 
-function extractAsk(askEvent: V3EventPartFragment): FixedPriceLike {
-  const getStatus = () => {
-    if (askEvent.eventType === 'Ask_v1_AskCreated') {
-      return 'active';
-    }
-    if (askEvent.eventType === 'Ask_v1_AskFilled') {
-      return 'complete';
-    }
-    if (askEvent.eventType === 'Ask_v1_AskCancelled') {
-      return 'cancelled';
-    }
-    return 'unknown';
-  };
-  // if the asker is not the current owner, then we remove the ask?
+const getAskEventStatus = (askEvent: V3EventPartFragment): MarketInfoStatus => {
+  if (askEvent.eventType === 'Ask_v1_AskCreated') {
+    return 'active';
+  }
+  if (askEvent.eventType === 'Ask_v1_AskFilled') {
+    return 'complete';
+  }
+  if (askEvent.eventType === 'Ask_v1_AskCancelled') {
+    return 'cancelled';
+  }
+  if (askEvent.eventType === 'Ask_v1_AskPriceUpdated') {
+    return 'active';
+  }
+  return 'unknown';
+};
 
-  const status = getStatus();
+const getAskStatus = (status: string): MarketInfoStatus => {
+  if (status === 'ACTIVE') {
+    return 'active';
+  }
+  if (status === 'FILLED') {
+    return 'complete';
+  }
+  if (status === 'CANCELLED') {
+    return 'cancelled';
+  }
+  return 'unknown';
+};
 
+function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
+  const created = ask.events.find((e) => e.eventType === 'Ask_v1_AskCreated')!;
   return {
-    status,
+    status: getAskStatus(ask.status),
     amount: {
-      amount: askEvent.details?.askPrice,
-      prettyAmount: priceToPretty(askEvent.details?.askPrice, null),
-      currency: askEvent.details?.askCurrency,
-      name: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
-      symbol: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
+      amount: ask.askPrice,
+      prettyAmount: priceToPretty(ask.askPrice, null),
+      currency: ask.askCurrency,
+      name: ask.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
+      symbol: ask.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
       decimals: undefined,
       // other info not provided
       // currency.decimals / currency.name / currency.symbol
     },
     side: 'ask',
     type: 'FixedPrice',
-    cancelledAt:
-      status === 'cancelled'
-        ? {
-            timestamp: dateToUnix(askEvent.blockTimestamp)!,
-            blockNumber: askEvent.blockNumber,
-            transactionHash: askEvent.transactionHash,
-          }
-        : undefined,
+    cancelledAt: undefined,
     createdAt: {
-      timestamp: dateToUnix(askEvent.blockTimestamp)!,
-      blockNumber: askEvent.blockNumber,
-      transactionHash: askEvent.transactionHash,
+      timestamp: dateToUnix(created.blockTimestamp)!,
+      blockNumber: created.blockNumber,
+      transactionHash: created.transactionHash,
     },
-    createdBy: status !== 'complete' ? askEvent.details?.seller : askEvent.details?.buyer,
-    finishedAt:
-      status === 'complete'
-        ? {
-            timestamp: dateToUnix(askEvent.blockTimestamp)!,
-            blockNumber: askEvent.blockNumber,
-            transactionHash: askEvent.transactionHash,
-          }
-        : undefined,
-    source: 'ZoraAskV1Event',
-    raw: askEvent,
+    createdBy: ask.seller,
+    finishedAt: undefined,
+    // finishedAt: completeEvent
+    //   ? {
+    //       timestamp: dateToUnix(completeEvent.blockTimestamp)!,
+    //       blockNumber: completeEvent.blockNumber,
+    //       transactionHash: completeEvent.transactionHash,
+    //     }
+    //   : undefined,
+    source: 'ZoraAskV1',
+    raw: ask,
   };
+}
+
+function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] {
+  return askEvents.map((askEvent) => {
+    let status = getAskEventStatus(askEvent);
+
+    // if (indx !== latestAskEvent?.indx) {
+    //   // get next event to see if cancelled or filled
+    //   for (let i = indx; i < askEvents.length; i++) {
+    //     if (askEvents[i].eventType === 'Ask_v1_AskCreated') {
+    //       status = 'cancelled';
+    //       break;
+    //     }
+    //     if (askEvents[i].eventType === 'Ask_v1_AskPriceUpdated') {
+    //       // invalidate updated price and treat as new ask
+    //       status = 'invalid';
+    //       break;
+    //     }
+    //     if (askEvents[i].eventType === 'Ask_v1_AskCancelled') {
+    //       canceledEvent = askEvents[i];
+    //       status = 'cancelled';
+    //       break;
+    //     }
+    //     if (askEvents[i].eventType === 'Ask_v1_AskFilled') {
+    //       completeEvent = askEvents[i];
+    //       status = 'complete';
+    //       break;
+    //     }
+    //   }
+    // }
+
+    return {
+      eventType: EventType.TokenMarketEvent,
+      at: {
+        blockNumber: askEvent.blockNumber,
+        timestamp: askEvent.blockTimestamp,
+        transactionHash: askEvent.transactionHash,
+      },
+      market: {
+        status,
+        amount: {
+          amount: askEvent.details?.askPrice,
+          prettyAmount: priceToPretty(askEvent.details?.askPrice, null),
+          currency: askEvent.details?.askCurrency,
+          name: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
+          symbol: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
+          decimals: undefined,
+          // other info not provided
+          // currency.decimals / currency.name / currency.symbol
+        },
+        side: 'ask',
+        type: 'FixedPrice',
+        cancelledAt:
+          status === 'cancelled'
+            ? {
+                timestamp: dateToUnix(askEvent.blockTimestamp)!,
+                blockNumber: askEvent.blockNumber,
+                transactionHash: askEvent.transactionHash,
+              }
+            : undefined,
+        createdAt: {
+          timestamp: dateToUnix(askEvent.blockTimestamp)!,
+          blockNumber: askEvent.blockNumber,
+          transactionHash: askEvent.transactionHash,
+        },
+        createdBy:
+          status !== 'complete' ? askEvent.details?.seller : askEvent.details?.buyer,
+        finishedAt:
+          status === 'complete'
+            ? {
+                timestamp: dateToUnix(askEvent.blockTimestamp)!,
+                blockNumber: askEvent.blockNumber,
+                transactionHash: askEvent.transactionHash,
+              }
+            : undefined,
+        source: 'ZoraAskV1Event',
+        raw: askEvent,
+      },
+    };
+  });
 }
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
     if (!auction.approved) {
       return 'pending';
+    }
+    if (auction.canceledEvent) {
+      return 'cancelled';
     }
     if (auction.endedEvent) {
       return 'complete';
@@ -176,9 +280,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     },
   });
 
-  const getHighestBid = () => {
-    return auction.bidEvents[auction.bidEvents.length - 1];
-  };
+  const highestBid = getLast(auction.bidEvents);
 
   const resultAuction: AuctionLike = {
     status: getStatus(),
@@ -189,6 +291,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       blockNumber: auction.createdEvent!.blockNumber,
       transactionHash: auction.createdEvent!.transactionHash,
     },
+    createdBy: auction.tokenOwner || undefined,
     type: 'Auction',
     finishedAt: auction.endedEvent
       ? {
@@ -207,10 +310,8 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     cancelledAt: auction.canceledEvent
       ? {
           timestamp: dateToUnix(auction.canceledEvent.blockTimestamp)!,
-          // TODO(iain): add in missing info
-          blockNumber: null,
-          // TODO(iain): add in missing info
-          transactionHash: null,
+          blockNumber: auction.canceledEvent.blockNumber,
+          transactionHash: auction.canceledEvent.transactionHash,
         }
       : undefined,
     endsAt: {
@@ -218,19 +319,43 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       blockNumber: auction.endedEvent?.blockNumber ?? null,
       transactionHash: auction.endedEvent?.transactionHash ?? null,
     },
-    winner: getHighestBid().sender,
+    winner: highestBid?.sender,
     duration: dateToUnix(auction.duration!)!,
-    currentBid: formatBid(getHighestBid()),
+    currentBid: highestBid ? formatBid(highestBid) : undefined,
     source: 'ZoraReserveV0',
     bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
   };
   return resultAuction;
 }
 
+function getTransferType(transferEvent: TokenTransferEventInfoFragment): TokenTransferEventType {
+  if (transferEvent.from === ZERO_ADDRESS) {
+    return 'mint';
+  }
+  if (transferEvent.to === ZERO_ADDRESS) {
+    return 'burn';
+  }
+  return 'transfer';
+}
+
+function extractTransferEvents(transferEvents: TokenTransferEventInfoFragment[]): TokenTransferEvent[] {
+  return transferEvents.map((transferEvent) => ({
+    eventType: EventType.TokenTransferEvent,
+    from: transferEvent.from,
+    to: transferEvent.to,
+    at: {
+      timestamp: dateToUnix(transferEvent.blockTimestamp)!,
+      blockNumber: transferEvent.blockNumber,
+      transactionHash: transferEvent.transactionHash,
+    },
+    type: getTransferType(transferEvent)
+  }));
+}
+
 function extractMarketData(response: IndexerTokenWithAuctionFragment, _: NFTObject) {
   return [
     ...response.auctions.map((auction) => extractAuction(auction)),
-    ...(response.v3Events ? response.v3Events.map(extractAsk) : []),
+    ...(response.v3Ask ? [extractAsk(response.v3Ask)] : []),
   ];
 }
 
@@ -295,6 +420,8 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       object.rawData = {};
     }
     object.markets = extractMarketData(asset, object);
+    // extract auction events?
+    object.events = [...extractAskEvents(asset.v3Events), ...extractTransferEvents(asset.transferEvents)];
     if (!object.rawData) {
       object.rawData = {};
     }

@@ -9721,7 +9721,7 @@ export type V3_Ask_Status_Enum_Comparison_Exp = {
 
 export type V3AskPartFragment = (
   { __typename?: 'V3Ask' }
-  & Pick<V3Ask, 'askPrice' | 'askCurrency' | 'status'>
+  & Pick<V3Ask, 'askPrice' | 'askCurrency' | 'status' | 'seller' | 'findersFeeBps' | 'finder'>
   & { events: Array<(
     { __typename?: 'Event' }
     & Pick<Event, 'eventType' | 'address' | 'transactionHash' | 'blockNumber' | 'blockTimestamp'>
@@ -9792,13 +9792,25 @@ export type IndexerAuctionWithTokenFragment = (
   & IndexerAuctionPartFragment
 );
 
+export type TokenTransferEventInfoFragment = (
+  { __typename?: 'TokenTransferEvent' }
+  & Pick<TokenTransferEvent, 'from' | 'to' | 'address' | 'blockTimestamp' | 'blockNumber' | 'transactionHash'>
+);
+
 export type IndexerTokenWithAuctionFragment = (
+  { __typename?: 'Token' }
+  & IndexerTokenPartFragment
+);
+
+export type IndexerTokenWithAuctionDetailFragment = (
   { __typename?: 'Token' }
   & { auctions: Array<(
     { __typename?: 'Auction' }
     & IndexerAuctionPartFragment
+  )>, transferEvents: Array<(
+    { __typename?: 'TokenTransferEvent' }
+    & TokenTransferEventInfoFragment
   )> }
-  & IndexerTokenPartFragment
 );
 
 export type ByOwnerQueryVariables = Exact<{
@@ -9827,6 +9839,7 @@ export type ByIdsQuery = (
   & { Token: Array<(
     { __typename?: 'Token' }
     & IndexerTokenWithAuctionFragment
+    & IndexerTokenWithAuctionDetailFragment
   )> }
 );
 
