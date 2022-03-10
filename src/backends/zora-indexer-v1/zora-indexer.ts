@@ -16,14 +16,7 @@ const MEDIA_FRAGMENTS = gql`
       blockTimestamp
     }
   }
-  fragment V3EventPart on Event {
-    eventType
-    address
-    blockNumber
-    blockTimestamp
-    transactionHash
-    details
-  }
+
   fragment IndexerTokenPart on Token {
     id
     tokenId
@@ -55,10 +48,6 @@ const MEDIA_FRAGMENTS = gql`
     }
     v3Ask {
       ...V3AskPart
-    }
-    # Ask events
-    v3Events {
-      ...V3EventPart
     }
   }
   fragment AuctionBidEventPart on AuctionBidEvent {
@@ -134,20 +123,32 @@ const BASE_FRAGMENTS = gql`
 
   fragment IndexerTokenWithAuction on Token {
     ...IndexerTokenPart
+    auctions {
+      ...IndexerAuctionPart
+    }
   }
 `;
 
 const DETAIL_FRAGMENTS = gql`
+  fragment V3EventPart on Event {
+    eventType
+    address
+    blockNumber
+    blockTimestamp
+    transactionHash
+    details
+  }
+
   fragment IndexerTokenWithAuctionDetail on Token {
-    auctions {
-      ...IndexerAuctionPart
-    }
     transferEvents {
       ...TokenTransferEventInfo
     }
+    # Ask events
+    v3Events {
+      ...V3EventPart
+    }
   }
 `;
-//(where: { _and: [{ _not: { canceledEvent: {} } }] })
 
 // Get list of nfts owned by user from contracts
 export const BY_OWNER = gql`

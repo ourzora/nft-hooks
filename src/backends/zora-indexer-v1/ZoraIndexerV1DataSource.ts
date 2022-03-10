@@ -15,6 +15,7 @@ import {
   String_Comparison_Exp,
   TokenTransferEventInfoFragment,
   Token_Bool_Exp,
+  IndexerTokenWithAuctionDetailFragment,
   V3AskPartFragment,
   V3EventPartFragment,
 } from './zora-indexer-types';
@@ -420,8 +421,12 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       object.rawData = {};
     }
     object.markets = extractMarketData(asset, object);
+    object.events = []
     // extract auction events?
-    object.events = [...extractAskEvents(asset.v3Events), ...extractTransferEvents(asset.transferEvents)];
+    if ('v3Events' in asset) {
+      const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
+      object.events = [...extractAskEvents(assetFull.v3Events), ...extractTransferEvents(assetFull.transferEvents)];
+    }
     if (!object.rawData) {
       object.rawData = {};
     }

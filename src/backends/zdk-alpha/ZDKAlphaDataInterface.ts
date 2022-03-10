@@ -1,5 +1,13 @@
+import {
+  MarketDetailsFragment,
+  MarketInfoFragment,
+  TokenDetailsFragment,
+  TokenInfoFragment,
+} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTInterface } from '../NFTInterface';
-import type { TokenFullFragment } from "@zoralabs/zdk-alpha/dist/src/queries/fragments";
 
-export interface ZDKAlphaDataInterface
-  extends NFTInterface<TokenFullFragment> {}
+export type FullTokenMarketResponse = {
+  markets: MarketInfoFragment & MarketDetailsFragment;
+  token: TokenInfoFragment & TokenDetailsFragment;
+};
+export interface ZDKAlphaDataInterface extends NFTInterface<FullTokenMarketResponse> {}

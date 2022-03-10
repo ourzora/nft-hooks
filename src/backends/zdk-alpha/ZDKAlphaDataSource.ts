@@ -1,11 +1,7 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { FullTokenMarketResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
-import {
-  Chain,
-  Network,
-  TokenFullFragmentFragment,
-} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import { Chain, Network } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 
 function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
@@ -19,7 +15,6 @@ function getChainFromNetwork(network: NetworkIDs) {
       return Chain.Mainnet;
   }
 }
-
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
@@ -31,11 +26,13 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return true;
   }
 
-  transformNFT(token: TokenFullFragmentFragment, object: NFTObject) {
+  transformNFT(tokenMarket: FullTokenMarketResponse, object: NFTObject) {
+    // TODO(iain): Integrate markets
+    const { token } = tokenMarket;
     object.nft = {
       tokenId: token.tokenId,
       contract: {
-        address: token.tokenAddress,
+        address: token.collectionAddress,
         name: token.tokenContract.name,
         description: null,
         symbol: token.tokenContract.symbol,
@@ -43,9 +40,9 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       minted: {
         minter: token.minter || undefined,
         at: {
-          timestamp: new Date(token.mintInfo.blockTimestamp).getTime() / 1000,
-          blockNumber: token.mintInfo.blockNumber,
-          transactionHash: token.mintInfo.transactionHash,
+          timestamp: new Date(token.mintInfo!.blockTimestamp).getTime() / 1000,
+          blockNumber: token.mintInfo!.blockNumber,
+          transactionHash: token.mintInfo!.transactionHash,
         },
       },
       owner: token.owner,
@@ -80,14 +77,21 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   loadNFT = async (
     tokenContract: string,
     tokenId: string
-  ): Promise<TokenFullFragmentFragment | Error> => {
-    const response = await this.zdk.token(tokenContract, tokenId);
-    return response.token || new Error('No token');
+  ): Promise<FullTokenMarketResponse | Error> => {
+    const response = await this.zdk.tokenMarkets({
+      isFull: true,
+      query: {
+        tokenInputs: [{ tokenId, address: tokenContract }],
+      },
+    });
+    return response.tokenMarkets.nodes.length > 0
+      ? (response.tokenMarkets.nodes[0] as any)
+      : new Error('No token');
   };
 
   loadNFTs(
     tokenContractAndIds: readonly string[]
-  ): Promise<(TokenFullFragmentFragment | Error)[]> {
+  ): Promise<(FullTokenMarketResponse | Error)[]> {
     return Promise.all(
       tokenContractAndIds.map((tokenContractAndId) => {
         const [tokenContract, tokenId] = tokenContractAndId.split(':');

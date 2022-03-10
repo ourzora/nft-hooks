@@ -9728,11 +9728,6 @@ export type V3AskPartFragment = (
   )> }
 );
 
-export type V3EventPartFragment = (
-  { __typename?: 'Event' }
-  & Pick<Event, 'eventType' | 'address' | 'blockNumber' | 'blockTimestamp' | 'transactionHash' | 'details'>
-);
-
 export type IndexerTokenPartFragment = (
   { __typename?: 'Token' }
   & Pick<Token, 'id' | 'tokenId' | 'owner' | 'address' | 'tokenURI' | 'minter'>
@@ -9751,9 +9746,6 @@ export type IndexerTokenPartFragment = (
   )>, v3Ask?: Maybe<(
     { __typename?: 'V3Ask' }
     & V3AskPartFragment
-  )>, v3Events: Array<(
-    { __typename?: 'Event' }
-    & V3EventPartFragment
   )> }
 );
 
@@ -9799,17 +9791,26 @@ export type TokenTransferEventInfoFragment = (
 
 export type IndexerTokenWithAuctionFragment = (
   { __typename?: 'Token' }
+  & { auctions: Array<(
+    { __typename?: 'Auction' }
+    & IndexerAuctionPartFragment
+  )> }
   & IndexerTokenPartFragment
+);
+
+export type V3EventPartFragment = (
+  { __typename?: 'Event' }
+  & Pick<Event, 'eventType' | 'address' | 'blockNumber' | 'blockTimestamp' | 'transactionHash' | 'details'>
 );
 
 export type IndexerTokenWithAuctionDetailFragment = (
   { __typename?: 'Token' }
-  & { auctions: Array<(
-    { __typename?: 'Auction' }
-    & IndexerAuctionPartFragment
-  )>, transferEvents: Array<(
+  & { transferEvents: Array<(
     { __typename?: 'TokenTransferEvent' }
     & TokenTransferEventInfoFragment
+  )>, v3Events: Array<(
+    { __typename?: 'Event' }
+    & V3EventPartFragment
   )> }
 );
 
