@@ -29,6 +29,12 @@ export type AuctionBidEvent = {
   created: TimedAction;
 };
 
+export type EditionPurchaseEvent = {
+  buyer: string;
+  price?: CurrencyValue;
+  purchasedAt: TimedAction;
+};
+
 export type AuctionLike = {
   winner?: string;
   endsAt?: TimedAction;
@@ -46,6 +52,14 @@ export type FixedPriceLike = {
   expires?: number;
   source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'ZoraAskV1Event' | 'OpenseaFixed';
   type: 'FixedPrice';
+} & MarketInfo;
+
+export type EditionLike = {
+  totalSupply: number;
+  editionSize: number;
+  purcahses: EditionPurchaseEvent[];
+  source: 'Custom' | 'ZoraEditions';
+  type: 'Edition';
 } & MarketInfo;
 
 export type MarketInfoStatus =
@@ -70,7 +84,7 @@ type MarketInfo = {
   cancelledAt?: TimedAction;
 };
 
-export type MarketModule = AuctionLike | FixedPriceLike;
+export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
 export type TokenTransferEventType = 'mint' | 'burn' | 'transfer' | 'sale';
 
