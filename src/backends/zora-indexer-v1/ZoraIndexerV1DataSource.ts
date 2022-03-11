@@ -25,6 +25,7 @@ import {
   EventType,
   FixedPriceLike,
   MarketInfoStatus,
+  MARKET_TYPES,
   MetadataAttributeType,
   NFTObject,
   TokenMarketEvent,
@@ -131,7 +132,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
       // currency.decimals / currency.name / currency.symbol
     },
     side: 'ask',
-    type: 'FixedPrice',
+    type: MARKET_TYPES.FIXED_PRICE,
     cancelledAt: undefined,
     createdAt: {
       timestamp: dateToUnix(created.blockTimestamp)!,
@@ -201,7 +202,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
           // currency.decimals / currency.name / currency.symbol
         },
         side: 'ask',
-        type: 'FixedPrice',
+        type: MARKET_TYPES.FIXED_PRICE,
         cancelledAt:
           status === 'cancelled'
             ? {
@@ -293,7 +294,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       transactionHash: auction.createdEvent!.transactionHash,
     },
     createdBy: auction.tokenOwner || undefined,
-    type: 'Auction',
+    type: MARKET_TYPES.AUCTION,
     finishedAt: auction.endedEvent
       ? {
           timestamp: dateToUnix(auction.endedEvent.blockTimestamp)!,
