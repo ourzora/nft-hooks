@@ -2,6 +2,12 @@ export enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 }
 
+export enum MARKET_TYPES {
+  AUCTION = 'Auction',
+  FIXED_PRICE = 'FixedPrice',
+  EDITION = 'Edition',
+}
+
 type Nullable<T> = T | null;
 
 export type ETHAddress = string;
@@ -29,6 +35,12 @@ export type AuctionBidEvent = {
   created: TimedAction;
 };
 
+export type EditionPurchaseEvent = {
+  buyer: string;
+  price?: CurrencyValue;
+  purchasedAt: TimedAction;
+};
+
 export type AuctionLike = {
   winner?: string;
   endsAt?: TimedAction;
@@ -38,14 +50,22 @@ export type AuctionLike = {
   // current bid is duplicated within bids
   bids: AuctionBidEvent[];
   source: 'ZoraReserveV0' | 'OpenseaEnglish';
-  type: 'Auction';
+  type: MARKET_TYPES.AUCTION;
 } & MarketInfo;
 
 export type FixedPriceLike = {
   side: 'ask' | 'offer';
   expires?: number;
   source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'ZoraAskV1Event' | 'OpenseaFixed';
-  type: 'FixedPrice';
+  type: MARKET_TYPES.FIXED_PRICE;
+} & MarketInfo;
+
+export type EditionLike = {
+  totalSupply: number;
+  editionSize: number;
+  purchases: EditionPurchaseEvent[];
+  source: 'Custom' | 'ZoraEditions';
+  type: MARKET_TYPES.EDITION;
 } & MarketInfo;
 
 export type MarketInfoStatus =
@@ -70,7 +90,7 @@ type MarketInfo = {
   cancelledAt?: TimedAction;
 };
 
-export type MarketModule = AuctionLike | FixedPriceLike;
+export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
 export type TokenTransferEventType = 'mint' | 'burn' | 'transfer' | 'sale';
 
