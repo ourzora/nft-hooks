@@ -197,17 +197,19 @@ export const GET_MEDIAS_QUERY = gql`
   ${AUCTION_PARTIALS}
 
   query getMediaAndAuctions(
-    $id_ids: [ID!]
-    $creator_ids: [String!]
-    $owner_ids: [String!]
+    $query: Media_filter!
+    $orderBy: Media_orderBy
+    $orderDirection: OrderDirection
+    $limit: Int
+    $offset: Int
   ) {
-    id: medias(where: { id_in: $id_ids }, first: 500) {
-      ...NFTMediaFullData
-    }
-    creator: medias(where: { creator_in: $creator_ids }, first: 500) {
-      ...NFTMediaFullData
-    }
-    owner: medias(where: { owner_in: $owner_ids }, first: 500) {
+    medias(
+      where: $query
+      first: $limit
+      skip: $offset
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
       ...NFTMediaFullData
     }
   }

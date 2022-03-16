@@ -197,15 +197,15 @@ export const BY_IDS = gql`
 
 export const ACTIVE_AUCTIONS_QUERY = gql`
   ${BASE_FRAGMENTS}
-  query activeAuctionsQuery($andQuery: [Token_bool_exp!], $limit: Int, $offset: Int)
-  @cached {
+  query activeAuctionsQuery(
+    $andQuery: [Token_bool_exp!]
+    $orderBy: [Token_order_by!]
+    $limit: Int
+    $offset: Int
+  ) @cached {
     Token(
       where: { _and: $andQuery }
-      order_by: [
-        { auctions_aggregate: { max: { lastBidAmount: asc_nulls_last } } }
-        { auctions_aggregate: { count: desc } }
-        { mintTransferEvent: { blockNumber: desc } }
-      ]
+      order_by: $orderBy
       limit: $limit
       offset: $offset
     ) {

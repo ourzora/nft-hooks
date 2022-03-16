@@ -9846,6 +9846,7 @@ export type ByIdsQuery = (
 
 export type ActiveAuctionsQueryQueryVariables = Exact<{
   andQuery?: Maybe<Array<Token_Bool_Exp> | Token_Bool_Exp>;
+  orderBy?: Maybe<Array<Token_Order_By> | Token_Order_By>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 }>;

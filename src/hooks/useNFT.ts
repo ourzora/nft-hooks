@@ -4,7 +4,7 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
 import { merge } from 'merge-anything';
 import useSWR from 'swr';
 import { NFTStrategy } from '../strategies/NFTStrategy';
-import { NFTObject } from '../backends/NFTInterface';
+import { NFTObject } from '../types/NFTInterface';
 
 export type useNFTType = {
   currencyLoaded: boolean;
@@ -47,7 +47,7 @@ export function useNFT(
 
   // Fetch market data (if needed)
   const { data: nftMarketData, error: nftMarketError } = useSWR(
-    strategy.shouldFetchMarket() && contractAddress && tokenId
+    contractAddress && tokenId
       ? ['fetchNFTMarket', contractAddress, tokenId]
       : null,
     (_, address: string, tokenId: string) => strategy.fetchMarket(address, tokenId),

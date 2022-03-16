@@ -2692,21 +2692,17 @@ export type GetAuctionByMediaQuery = (
 );
 
 export type GetMediaAndAuctionsQueryVariables = Exact<{
-  id_ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
-  creator_ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  owner_ids?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  query: Media_Filter;
+  orderBy?: Maybe<Media_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 
 export type GetMediaAndAuctionsQuery = (
   { __typename?: 'Query' }
-  & { id: Array<(
-    { __typename?: 'Media' }
-    & NftMediaFullDataFragment
-  )>, creator: Array<(
-    { __typename?: 'Media' }
-    & NftMediaFullDataFragment
-  )>, owner: Array<(
+  & { medias: Array<(
     { __typename?: 'Media' }
     & NftMediaFullDataFragment
   )> }

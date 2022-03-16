@@ -8,4 +8,4 @@ export { GraphAuctionInterface } from './backends';
 export { ZoraGraphDataInterface } from './backends';
 export { ZoraIndexerV1Interface } from './backends';
 export { ZoraUserInterface } from './backends';
-export * from './backends/NFTInterface';
+export * from './types/NFTInterface';

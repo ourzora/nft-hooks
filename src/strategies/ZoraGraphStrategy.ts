@@ -1,5 +1,7 @@
 import { ZoraGraphDataSource, ZoraGraphDataInterface } from '../backends';
 import { NetworkIDs } from '../constants/networks';
+import { NFTQuery } from '../types/NFTQuery';
+import { NFTObject } from '../types/NFTInterface';
 import { NFTStrategy } from './NFTStrategy';
 
 export class ZoraGraphStrategy extends NFTStrategy {
@@ -27,5 +29,15 @@ export class ZoraGraphStrategy extends NFTStrategy {
 
   fetchMarket = async (_: string, __: string) => {
     return { rawData: {} };
+  };
+
+  queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {
+    const response = await this.graphDataSource.queryNFTs(query);
+    if (response instanceof Error) {
+      throw response;
+    }
+    return response.map((object) =>
+      this.graphDataSource.transformNFT(object, { rawData: {} })
+    );
   };
 }

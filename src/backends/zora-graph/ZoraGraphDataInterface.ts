@@ -1,5 +1,5 @@
 import { NftMediaFullDataFragment } from './zora-graph-types';
-import { NFTInterface } from '../NFTInterface';
+import { NFTInterface } from '../../types/NFTInterface';
 
 export type ZoraGraphDataResponse = {
   metadata: any;

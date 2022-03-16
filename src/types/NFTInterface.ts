@@ -1,3 +1,5 @@
+import { NFTQuery } from 'src/types/NFTQuery';
+
 export enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 }
@@ -154,6 +156,7 @@ export type NFTObject = {
 export interface NFTInterface<T> {
   loadNFT(tokenContract: string, tokenId: string): Promise<T | Error>;
   loadNFTs(tokenContractAndIds: readonly string[]): Promise<(T | Error)[]>;
+  queryNFTs(query: NFTQuery): Promise<T[] | Error>;
   canLoadNFT(tokenContract: string, tokenId: string): boolean;
   transformNFT(response: T, currentObject: NFTObject): NFTObject;
 }

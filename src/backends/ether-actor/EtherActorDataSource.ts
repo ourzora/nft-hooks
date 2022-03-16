@@ -5,7 +5,7 @@ import {
   EtherActorDataInterface,
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
-import { NFTObject } from '../NFTInterface';
+import { NFTObject } from '../../types/NFTInterface';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',

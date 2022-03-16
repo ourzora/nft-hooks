@@ -5,16 +5,23 @@ import { NetworkIDs } from '../../constants/networks';
 import { THEGRAPH_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
 import { GET_MEDIAS_QUERY } from './zora-graph';
-import { GetMediaAndAuctionsQuery, NftMediaFullDataFragment } from './zora-graph-types';
+import {
+  GetMediaAndAuctionsQuery,
+  Media_Filter,
+  Media_OrderBy,
+  NftMediaFullDataFragment,
+  OrderDirection,
+} from './zora-graph-types';
 import {
   FetchGroupTypes,
   ZoraGraphDataInterface,
   ZoraGraphDataResponse,
 } from './ZoraGraphDataInterface';
-import { KNOWN_CONTRACTS, NFTObject } from '../NFTInterface';
+import { KNOWN_CONTRACTS, NFTObject } from '../../types/NFTInterface';
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
+import { NFTQuery, SortDirection, SortField } from 'src/types/NFTQuery';
 
 export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
@@ -107,17 +114,15 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
 
   fetchNFTs = async (mediaIds: readonly string[]) => {
     const response = (await this.getClient().request(GET_MEDIAS_QUERY, {
-      id_ids: mediaIds,
-      creator_ids: [],
-      owner_ids: [],
+      query: { ids_in: mediaIds },
     })) as GetMediaAndAuctionsQuery;
     const metadatas = await Promise.all(
-      response.id
+      response.medias
         .map((media) => media.metadataURI)
         .map(this.genericMetadataFetcher.fetchMetadata)
     );
-    const mediaData = response.id.map((_, indx) => ({
-      asset: response.id[indx],
+    const mediaData = response.medias.map((_, indx) => ({
+      asset: response.medias[indx],
       metadata: metadatas[indx],
     }));
     return mediaIds.map(
@@ -125,6 +130,76 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
         mediaData.find((response) => response.asset.id === key) ||
         new Error('Missing record')
     );
+  };
+
+  queryNFTs = async ({ query, sort, pagination, additional }: NFTQuery) => {
+    const userQuery: Media_Filter = {};
+    if (query.minters) {
+      userQuery.creator_in = query.minters;
+    }
+    if (query.owners) {
+      userQuery.owner_in = query.owners;
+    }
+    if (sort?.length && sort.length > 1) {
+      throw new Error('Sort for multiple keys not implemented currently');
+    }
+    let sortKey;
+    if (sort?.length === 1) {
+      const sortItem = sort[0];
+
+      if (sortItem.field === SortField.ACTIVE) {
+        sortKey = Media_OrderBy.Transfers;
+      }
+      if (sortItem.field === SortField.MINTED) {
+        sortKey = Media_OrderBy.CreatedAtBlockNumber;
+      }
+      if (sortItem.field === SortField.PRICE) {
+        sortKey = Media_OrderBy.CurrentBids;
+      }
+      if (sortItem.field === SortField.TOKEN_ID) {
+        sortKey = Media_OrderBy.Id;
+      }
+    }
+
+    let sortDirection;
+    if (sortKey && sort?.length === 1) {
+      sortDirection =
+        sort[0].direction === SortDirection.DESC
+          ? OrderDirection.Desc
+          : OrderDirection.Asc;
+    }
+
+    let offset = 0;
+    let limit = 100;
+    if (pagination?.offset) {
+      offset = pagination?.offset;
+    }
+    if (pagination?.limit) {
+      limit = pagination?.limit;
+    }
+
+    const response = (await this.getClient().request(GET_MEDIAS_QUERY, {
+      query: userQuery,
+      orderBy: sortKey,
+      orderDirection: sortDirection,
+      limit,
+      offset,
+    })) as GetMediaAndAuctionsQuery;
+
+    const { medias } = response;
+
+    const metadatas = !additional?.skipMetadata
+      ? await Promise.all(
+          medias
+            .map((item) => item.metadataURI)
+            .map(this.genericMetadataFetcher.fetchMetadata)
+        )
+      : medias.map(() => {});
+
+    return medias.map((_, indx) => ({
+      asset: response.medias[indx],
+      metadata: metadatas[indx],
+    }));
   };
 
   /**
@@ -164,19 +239,20 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       GET_MEDIAS_QUERY,
       getQuery()
     )) as GetMediaAndAuctionsQuery;
-    const medias = [...response.creator, ...response.owner, ...response.id];
+
+    const { medias } = response;
 
     const metadatas = fetchMetadata
       ? await Promise.all(
           medias
-            .map((media) => media.metadataURI)
+            .map((item) => item.metadataURI)
             .map(this.genericMetadataFetcher.fetchMetadata)
         )
       : medias.map(() => {});
 
-    return response.id
+    return medias
       .map((_, indx) => ({
-        asset: response.id[indx],
+        asset: response.medias[indx],
         metadata: metadatas[indx],
       }))
       .map((media) => this.transformNFT(media, { rawData: {} }));

@@ -1,4 +1,4 @@
-import { NFTInterface } from "../NFTInterface";
+import { NFTInterface } from "../../types/NFTInterface";
 
 type NullableString = string | null;
 

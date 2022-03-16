@@ -2,7 +2,7 @@ import DataLoader from 'dataloader';
 import { NetworkIDs } from '../../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
-import { NFTObject } from '../NFTInterface';
+import { NFTObject } from '../../types/NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
 
 type OpenseaDataResponse = {

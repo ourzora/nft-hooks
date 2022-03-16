@@ -7,7 +7,7 @@ import { NFTFetchConfiguration } from './context/NFTFetchContext';
 import { MediaFetchAgent } from './fetcher/MediaFetchAgent';
 import { useZoraUsername } from './hooks/useZoraUsername';
 import { RequestError } from './fetcher/RequestError';
-import { CurrencyValue, NFTObject } from './backends/NFTInterface';
+import { CurrencyValue, NFTObject } from './types/NFTInterface';
 import * as Strategies from './strategies';
 import { useFetchQuery } from './hooks/useFetchQuery';
 

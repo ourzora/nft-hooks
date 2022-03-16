@@ -1,5 +1,7 @@
+import { NFTObject } from 'src/types/NFTInterface';
 import { ZoraIndexerV1DataSource, ZoraIndexerV1Interface } from '../backends';
 import { NetworkIDs } from '../constants/networks';
+import { NFTQuery } from '../types/NFTQuery';
 import { NFTStrategy } from './NFTStrategy';
 
 export class ZoraV2IndexerStrategy extends NFTStrategy {
@@ -13,10 +15,6 @@ export class ZoraV2IndexerStrategy extends NFTStrategy {
     );
   }
 
-  shouldFetchMarket() {
-    return false;
-  }
-
   fetchNFT = async (contract: string, id: string): Promise<any> => {
     const response = await this.zoraIndexerDataSource.loadNFT(contract, id);
     if (response instanceof Error) {
@@ -27,5 +25,15 @@ export class ZoraV2IndexerStrategy extends NFTStrategy {
 
   fetchMarket = async (_: string, __: string) => {
     return { rawData: {} };
+  };
+
+  queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {
+    const response = await this.zoraIndexerDataSource.queryNFTs(query);
+    if (response instanceof Error) {
+      throw response;
+    }
+    return response.map((object) =>
+      this.zoraIndexerDataSource.transformNFT(object, { rawData: {} })
+    );
   };
 }

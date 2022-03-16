@@ -18,6 +18,8 @@ import {
   IndexerTokenWithAuctionDetailFragment,
   V3AskPartFragment,
   V3EventPartFragment,
+  Token_Order_By,
+  Order_By,
 } from './zora-indexer-types';
 import {
   AuctionBidEvent,
@@ -30,7 +32,7 @@ import {
   TokenMarketEvent,
   TokenTransferEvent,
   TokenTransferEventType,
-} from '../NFTInterface';
+} from '../../types/NFTInterface';
 import { ZoraIndexerV1Interface } from './ZoraIndexerV1Interface';
 import {
   ACTIVE_AUCTIONS_QUERY,
@@ -38,6 +40,7 @@ import {
   BY_OWNER,
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
+import { MarketType, NFTQuery, SortDirection, SortField } from 'src/types/NFTQuery';
 
 function dateToUnix(date?: string) {
   if (!date) {
@@ -329,7 +332,9 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
   return resultAuction;
 }
 
-function getTransferType(transferEvent: TokenTransferEventInfoFragment): TokenTransferEventType {
+function getTransferType(
+  transferEvent: TokenTransferEventInfoFragment
+): TokenTransferEventType {
   if (transferEvent.from === ZERO_ADDRESS) {
     return 'mint';
   }
@@ -339,7 +344,9 @@ function getTransferType(transferEvent: TokenTransferEventInfoFragment): TokenTr
   return 'transfer';
 }
 
-function extractTransferEvents(transferEvents: TokenTransferEventInfoFragment[]): TokenTransferEvent[] {
+function extractTransferEvents(
+  transferEvents: TokenTransferEventInfoFragment[]
+): TokenTransferEvent[] {
   return transferEvents.map((transferEvent) => ({
     eventType: EventType.TokenTransferEvent,
     from: transferEvent.from,
@@ -349,7 +356,7 @@ function extractTransferEvents(transferEvents: TokenTransferEventInfoFragment[])
       blockNumber: transferEvent.blockNumber,
       transactionHash: transferEvent.transactionHash,
     },
-    type: getTransferType(transferEvent)
+    type: getTransferType(transferEvent),
   }));
 }
 
@@ -421,11 +428,14 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       object.rawData = {};
     }
     object.markets = extractMarketData(asset, object);
-    object.events = []
+    object.events = [];
     // extract auction events?
     if ('v3Events' in asset) {
       const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
-      object.events = [...extractAskEvents(assetFull.v3Events), ...extractTransferEvents(assetFull.transferEvents)];
+      object.events = [
+        ...extractAskEvents(assetFull.v3Events),
+        ...extractTransferEvents(assetFull.transferEvents),
+      ];
     }
     if (!object.rawData) {
       object.rawData = {};
@@ -451,55 +461,93 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     );
   };
 
-  fetchNFTSForQuery = async (
-    collectionAddresses: string[],
-    curatorAddress: string,
-    approved = null,
-    onlyAuctions = false,
-    limit = 200,
-    offset = 0
-  ) => {
-    if (!collectionAddresses?.length && !curatorAddress) {
-      throw new ArgumentsError('Needs to have at least one curator or collector');
+  queryNFTs = async ({ query, sort, pagination, additional }: NFTQuery) => {
+    // sanity check
+    if (!query.collections && !query.minters && !query.owners) {
+      throw new ArgumentsError('One of Collection / Minter / Owner is required');
     }
-    if (!onlyAuctions && approved !== null) {
-      throw new ArgumentsError(
-        'approved=true or approved=false and onlyAuctions=false cannot be set at the same time for fetchZoraIndexerGroupData'
-      );
-    }
+    // query filter
     let queryStatement: Token_Bool_Exp[] = [];
-    if (collectionAddresses) {
-      const addresses = collectionAddresses.map((address) => getAddress(address));
-      queryStatement.push({ address: { _in: addresses } });
+    if (query.collections) {
+      queryStatement.push({ address: { _in: query.collections.map(getAddress) } });
     }
-    let approvedStatement = undefined;
-    if (approved !== null) {
-      approvedStatement = { approved: { _eq: approved } };
+    if (query.minters) {
+      queryStatement.push({ minter: { _in: query.minters } });
     }
-    if (curatorAddress) {
-      queryStatement.push({
-        auctions: { curator: { _eq: curatorAddress }, ...approvedStatement },
-      });
-    } else if (approvedStatement || onlyAuctions) {
-      let auctionsQueryStmt = {};
-      if (onlyAuctions) {
-        auctionsQueryStmt = { _not: {} };
-      }
-      queryStatement.push({ auctions: { ...auctionsQueryStmt, ...approvedStatement } });
+    if (query.owners) {
+      queryStatement.push({ owner: { _in: query.owners } });
     }
 
-    const nfts = (
-      await this.getClient().request(ACTIVE_AUCTIONS_QUERY, {
-        andQuery: queryStatement,
-        offset,
-        limit,
-      })
-    ).Token as IndexerTokenWithAuctionFragment[];
-    return nfts.map((result) =>
-      this.transformNFT(result, {
-        rawData: {},
-      })
-    );
+    // markets filter
+    if (query.activeMarkets) {
+      const marketHas = (market: MarketType) => query.activeMarkets!.includes(market);
+
+      if (marketHas(MarketType.AUCTION) || marketHas(MarketType.ANY_MARKET)) {
+        if (additional?.isApproved) {
+          queryStatement.push({
+            currentAuction: { approved: { _eq: additional.isApproved } },
+          });
+        } else {
+          queryStatement.push({ _not: { currentAuction: {} } });
+        }
+      }
+      if (marketHas(MarketType.FIXED_PRICE) || marketHas(MarketType.ANY_MARKET)) {
+        queryStatement.push({ _not: { v3Ask: {} } });
+      }
+    }
+
+    // sorting
+    let orderByStatement: Token_Order_By[] = [
+      // set default
+      {
+        mintTransferEvent: { blockNumber: Order_By.Desc },
+      },
+    ];
+
+    if (sort) {
+      const nestedSorts = sort.map((sortItem) => {
+        const orderBy =
+          sortItem.direction === SortDirection.ASC ? Order_By.Asc : Order_By.Desc;
+        if (sortItem.field === SortField.ACTIVE) {
+          return [{}];
+        }
+        if (sortItem.field === SortField.MINTED) {
+          return [{ mintTransferEvent: { blockNumber: orderBy } }];
+        }
+        if (sortItem.field === SortField.PRICE) {
+          return [
+            { currentAuction: { reservePrice: orderBy } },
+            { v3Ask: { askPrice: orderBy } },
+          ];
+        }
+        if (sortItem.field === SortField.TOKEN_ID) {
+          return [{ tokenId: orderBy }];
+        }
+        return [];
+      });
+      orderByStatement = nestedSorts.reduce(
+        (lastSort, value) => [...lastSort, ...value],
+        []
+      );
+    }
+
+    let offset = 0;
+    let limit = 100;
+    if (pagination?.offset) {
+      offset = pagination.offset;
+    }
+    if (pagination?.limit) {
+      limit = pagination.limit;
+    }
+
+    const result = await this.getClient().request(ACTIVE_AUCTIONS_QUERY, {
+      andQuery: queryStatement,
+      orderBy: orderByStatement,
+      offset,
+      limit,
+    });
+    const tokens = result.Token as IndexerTokenWithAuctionFragment[];
+    return tokens;
   };
 
   /**

@@ -1,4 +1,4 @@
-import { NFTObject } from '../NFTInterface';
+import { NFTObject } from '../../types/NFTInterface';
 
 export interface GraphAuctionInterface {
   loadAuctionInfo(contractAddress: string, tokenId: string): Promise<NFTObject>;
