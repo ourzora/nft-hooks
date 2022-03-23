@@ -30,7 +30,6 @@ function priceToPretty(number: string, decimals?: number | null) {
     .toString();
 }
 
-
 export class GraphAuctionDataSource implements GraphAuctionInterface {
   // auctionInfoLoader fetches auction info for non-zora NFTs
   auctionInfoLoader: DataLoader<string, NFTObject>;
@@ -67,7 +66,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
     const currentObject: NFTObject = { rawData: {}, markets: [] };
 
     const getStatus = () => {
-      if (!response.approved) {
+      if (!response.approved || (response.approved && response.firstBidTime === '0')) {
         return 'pending';
       }
       if (
@@ -82,7 +81,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       }
       if (
         response.expectedEndTimestamp &&
-        response.expectedEndTimestamp >= unixTimeNow()
+        response.expectedEndTimestamp <= unixTimeNow()
       ) {
         return 'complete';
       }
