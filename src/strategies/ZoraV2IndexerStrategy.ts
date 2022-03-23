@@ -1,4 +1,4 @@
-import { NFTObject } from 'src/types/NFTInterface';
+import { NFTObject } from '../types/NFTInterface';
 import { ZoraIndexerV1DataSource, ZoraIndexerV1Interface } from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTQuery } from '../types/NFTQuery';

@@ -40,7 +40,7 @@ import {
   BY_OWNER,
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
-import { MarketType, NFTQuery, SortDirection, SortField } from 'src/types/NFTQuery';
+import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
 function dateToUnix(date?: string) {
   if (!date) {
@@ -391,7 +391,10 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     return true;
   }
 
-  transformNFT(asset: IndexerTokenWithAuctionFragment, object: NFTObject) {
+  transformNFT(asset: IndexerTokenWithAuctionFragment, object?: NFTObject) {
+    if (!object) {
+      object = { rawData: {} };
+    }
     object.nft = {
       tokenId: asset.tokenId,
       contract: {

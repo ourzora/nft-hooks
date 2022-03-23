@@ -202,6 +202,7 @@ export const ACTIVE_AUCTIONS_QUERY = gql`
     $orderBy: [Token_order_by!]
     $limit: Int
     $offset: Int
+    $hasFullHistory: Bool!
   ) @cached {
     Token(
       where: { _and: $andQuery }

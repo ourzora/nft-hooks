@@ -1,20 +1,47 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { FullTokenMarketResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { TokenMarketResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
-import { Chain, Network } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import {
+  Chain,
+  MarketType as ZDKMarketType,
+  Network,
+  TokenMarketsFilterInput,
+  TokenMarketSortKeySortInput,
+  TokenMarketsQueryInput,
+  SortDirection as ZDKSortDirection,
+  TokenMarketSortKey,
+} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
 function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
     case '1':
       return Chain.Mainnet;
-    case '3':
-      return Chain.Ropsten;
-    case '4':
-      return Chain.Rinkeby;
+    // case '3':
+    //   return Chain.Ropsten;
+    // case '4':
+    //   return Chain.Rinkeby;
     default:
-      return Chain.Mainnet;
+      throw new Error('Chain not supported');
   }
 }
+
+const resolveSortKey = (sortField: SortField) => {
+  if (sortField === SortField.MINTED) {
+    return TokenMarketSortKey.Minted;
+  }
+  if (sortField === SortField.ACTIVE) {
+    return TokenMarketSortKey.Transferred;
+  }
+  if (sortField === SortField.PRICE) {
+    throw new Error('not supported');
+  }
+  if (sortField === SortField.TOKEN_ID) {
+    return TokenMarketSortKey.TokenId;
+  }
+  throw new Error('not supported');
+};
+
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
@@ -26,26 +53,32 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return true;
   }
 
-  transformNFT(tokenMarket: FullTokenMarketResponse, object: NFTObject) {
+  transformNFT(tokenMarket: TokenMarketResponseItem, object?: NFTObject) {
+    if (!object) {
+      object = { rawData: {} };
+    }
     // TODO(iain): Integrate markets
     const { token } = tokenMarket;
     object.nft = {
       tokenId: token.tokenId,
       contract: {
         address: token.collectionAddress,
-        name: token.tokenContract.name,
+        name: token.tokenContract?.name || null,
         description: null,
-        symbol: token.tokenContract.symbol,
+        symbol: token.tokenContract?.symbol || null,
       },
       minted: {
-        minter: token.minter || undefined,
-        at: {
-          timestamp: new Date(token.mintInfo!.blockTimestamp).getTime() / 1000,
-          blockNumber: token.mintInfo!.blockNumber,
-          transactionHash: token.mintInfo!.transactionHash,
-        },
+        minter: token.mintInfo?.originatorAddress || undefined,
+        at: token.mintInfo
+          ? {
+              timestamp:
+                new Date(token.mintInfo.mintContext.blockTimestamp).getTime() / 1000,
+              blockNumber: token.mintInfo.mintContext.blockNumber,
+              transactionHash: token.mintInfo!.mintContext.transactionHash || null,
+            }
+          : undefined,
       },
-      owner: token.owner,
+      owner: token.owner || undefined,
       metadataURI: token.tokenUrl,
       contentURI: token.content?.url || null,
     };
@@ -70,28 +103,28 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     if (!object.rawData) {
       object.rawData = {};
     }
-    object.rawData['indexer'] = token;
+    object.rawData['apiindexer'] = token;
     return object;
   }
 
   loadNFT = async (
     tokenContract: string,
     tokenId: string
-  ): Promise<FullTokenMarketResponse | Error> => {
+  ): Promise<TokenMarketResponseItem | Error> => {
     const response = await this.zdk.tokenMarkets({
-      isFull: true,
+      includeFullDetails: true,
       query: {
-        tokenInputs: [{ tokenId, address: tokenContract }],
+        tokens: [{ tokenId, address: tokenContract }],
       },
     });
     return response.tokenMarkets.nodes.length > 0
-      ? (response.tokenMarkets.nodes[0] as any)
+      ? response.tokenMarkets.nodes[0]
       : new Error('No token');
   };
 
   loadNFTs(
     tokenContractAndIds: readonly string[]
-  ): Promise<(FullTokenMarketResponse | Error)[]> {
+  ): Promise<(TokenMarketResponseItem | Error)[]> {
     return Promise.all(
       tokenContractAndIds.map((tokenContractAndId) => {
         const [tokenContract, tokenId] = tokenContractAndId.split(':');
@@ -99,4 +132,65 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       })
     );
   }
+
+  queryNFTs = async (query: NFTQuery) => {
+    const marketsQuery: TokenMarketsQueryInput = {};
+    const marketsFilter: TokenMarketsFilterInput = {};
+    let marketsSort: TokenMarketSortKeySortInput | undefined = undefined;
+
+    marketsQuery.ownerAddresses = query.query.owners;
+    marketsQuery.collectionAddresses = query.query.collections;
+
+    if (query.query.activeMarkets) {
+      const marketsList: ZDKMarketType[] = [];
+      query.query.activeMarkets.forEach((market) => {
+        if (market === MarketType.AUCTION) {
+          marketsList.push(ZDKMarketType.V2Auction);
+        }
+        if (market === MarketType.FIXED_PRICE) {
+          marketsList.push(ZDKMarketType.V3Ask);
+          marketsList.push(ZDKMarketType.V1Ask);
+          marketsList.push(ZDKMarketType.V1BidShare);
+        }
+        if (market === MarketType.ANY_MARKET) {
+          marketsList.push(ZDKMarketType.V1Ask);
+          marketsList.push(ZDKMarketType.V3Ask);
+          marketsList.push(ZDKMarketType.V1BidShare);
+          marketsList.push(ZDKMarketType.V2Auction);
+          marketsList.push(ZDKMarketType.V1Offer);
+        }
+      });
+      marketsFilter.marketFilters = marketsList.map((marketType) => ({ marketType }));
+    }
+
+    if (query.query.minters) {
+      throw new Error('Minters filter not supported');
+    }
+
+    if (query.sort) {
+      if (query.sort.length > 1) {
+        throw new Error('Can only sort on one column');
+      }
+      query.sort.forEach((sortItem) => {
+        marketsSort = {
+          sortDirection:
+            sortItem.direction === SortDirection.DESC
+              ? ZDKSortDirection.Desc
+              : ZDKSortDirection.Asc,
+          sortKey: resolveSortKey(sortItem.field),
+        };
+      });
+    }
+
+    const results = await this.zdk.tokenMarkets({
+      query: marketsQuery,
+      filter: marketsFilter,
+      sort: marketsSort,
+      includeFullDetails: true,
+    });
+    if (results.tokenMarkets.nodes) {
+      return results.tokenMarkets.nodes;
+    }
+    return [];
+  };
 }

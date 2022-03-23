@@ -21,7 +21,7 @@ import { KNOWN_CONTRACTS, NFTObject } from '../../types/NFTInterface';
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
-import { NFTQuery, SortDirection, SortField } from 'src/types/NFTQuery';
+import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
 export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
@@ -52,8 +52,11 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
 
   transformNFT(
     { asset, metadata }: { asset: NftMediaFullDataFragment; metadata: any },
-    object: NFTObject
+    object?: NFTObject
   ) {
+    if (!object) {
+      object = {rawData: {}};
+    }
     object.markets = asset.reserveAuctions
       ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
       .filter((el) => !!el && el.length)
@@ -87,9 +90,6 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       source: 'zora',
     };
     object.metadata = metadata;
-    if (!object.rawData) {
-      object.rawData = {};
-    }
     object.rawData['zora-graph'] = asset;
     return object;
   }

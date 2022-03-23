@@ -21,6 +21,8 @@ export class ZoraGraphEtherActorStrategy extends NFTStrategy {
     return this.etherActorSource.transformNFT(loadedNft, { rawData: {} });
   };
 
+  hasSecondaryData = () => true;
+
   fetchMarket = async (contract: string, id: string) => {
     return await this.graphAuctionData.loadAuctionInfo(contract, id);
   };

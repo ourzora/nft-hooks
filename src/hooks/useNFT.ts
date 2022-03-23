@@ -50,11 +50,10 @@ export function useNFT(
     contractAddress && tokenId
       ? ['fetchNFTMarket', contractAddress, tokenId]
       : null,
-    (_, address: string, tokenId: string) => strategy.fetchMarket(address, tokenId),
+    (_, address: string, tokenId: string) => strategy.fetchSeconaryData(address, tokenId),
     marketOptions
   );
 
-  // ...
   return {
     data:
       nftData || nftMarketData ? merge(nftData || {}, nftMarketData || {}) : undefined,

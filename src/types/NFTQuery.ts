@@ -22,6 +22,11 @@ export type QuerySort = {
   field: SortField;
 };
 
+export enum ViewType {
+  SUMMARY,
+  FULL,
+};
+
 export type NFTQuery = {
   query: {
     owners?: string[];
@@ -29,6 +34,7 @@ export type NFTQuery = {
     minters?: string[];
     activeMarkets?: MarketType[];
   };
+  view: ViewType,
   sort?: QuerySort[];
   pagination?: {
     limit: number;

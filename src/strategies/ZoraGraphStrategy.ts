@@ -15,20 +15,12 @@ export class ZoraGraphStrategy extends NFTStrategy {
     );
   }
 
-  shouldFetchMarket() {
-    return false;
-  }
-
   fetchNFT = async (contract: string, id: string) => {
     const response = await this.graphDataSource.loadNFT(contract, id);
     if (response instanceof Error) {
       throw response;
     }
     return this.graphDataSource.transformNFT(response, {} as any);
-  };
-
-  fetchMarket = async (_: string, __: string) => {
-    return { rawData: {} };
   };
 
   queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {

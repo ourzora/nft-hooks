@@ -1,4 +1,5 @@
 import DataLoader from 'dataloader';
+import { NFTQuery } from '../../types/NFTQuery';
 import { NetworkIDs } from '../../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
@@ -34,7 +35,10 @@ export class OpenseaDataSource implements OpenseaInterface {
   canLoadNFT() {
     return true;
   }
-  transformNFT(asset: OpenseaAsset, object: NFTObject) {
+  transformNFT(asset: OpenseaAsset, object?: NFTObject) {
+    if (!object) {
+      object = { rawData: {} };
+    }
     object.nft = {
       tokenId: asset.id.toString(),
       contract: {
@@ -80,9 +84,6 @@ export class OpenseaDataSource implements OpenseaInterface {
         : null,
       source: 'opensea',
     };
-    if (!object.rawData) {
-      object.rawData = {};
-    }
     object.rawData['opensea'] = asset;
     return object;
   }
@@ -114,4 +115,8 @@ export class OpenseaDataSource implements OpenseaInterface {
         ) || new Error('No asset')
     );
   };
+
+  queryNFTs(_: NFTQuery): Promise<Error | OpenseaAsset[]> {
+    throw new Error('not implemented');
+  }
 }

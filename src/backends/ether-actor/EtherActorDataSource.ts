@@ -6,6 +6,7 @@ import {
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
 import { NFTObject } from '../../types/NFTInterface';
+import { NFTQuery } from '../../types/NFTQuery';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',
@@ -39,7 +40,10 @@ export class EtherActorDataSource implements EtherActorDataInterface {
   canLoadNFT() {
     return true;
   }
-  transformNFT(asset: EtherActorServerResponse, object: NFTObject) {
+  transformNFT(asset: EtherActorServerResponse, object?: NFTObject) {
+    if (!object) {
+      object = { rawData: {} };
+    }
     object.nft = {
       tokenId: asset.tokenId,
       contract: {
@@ -91,11 +95,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
       source: 'derived',
     };
 
-    if (!object.rawData) {
-      object.rawData = {};
-    }
-
-    object.rawData['alchemy'] = asset;
+    object.rawData['etheractor'] = asset;
 
     return object;
   }
@@ -117,4 +117,8 @@ export class EtherActorDataSource implements EtherActorDataInterface {
 
     return [responseJson];
   };
+
+  queryNFTs(_: NFTQuery): Promise<Error | EtherActorServerResponse[]> {
+    throw new Error('not impld');
+  }
 }
