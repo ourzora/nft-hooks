@@ -235,7 +235,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved) {
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
       return 'pending';
     }
     if (auction.canceledEvent) {
@@ -322,7 +322,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       transactionHash: auction.endedEvent?.transactionHash ?? null,
     },
     winner: highestBid?.sender,
-    duration: dateToUnix(auction.duration!)!,
+    duration: auction.duration ? parseInt(auction.duration) : 0,
     currentBid: highestBid ? formatBid(highestBid) : undefined,
     source: 'ZoraReserveV0',
     bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
@@ -350,7 +350,7 @@ function extractTransferEvents(transferEvents: TokenTransferEventInfoFragment[])
       blockNumber: transferEvent.blockNumber,
       transactionHash: transferEvent.transactionHash,
     },
-    type: getTransferType(transferEvent)
+    type: getTransferType(transferEvent),
   }));
 }
 
@@ -422,7 +422,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       object.rawData = {};
     }
     object.markets = extractMarketData(asset, object);
-    object.events = []
+    object.events = [];
     // extract auction events?
     if ('v3Events' in asset) {
       const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
