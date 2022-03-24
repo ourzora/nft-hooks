@@ -66,15 +66,20 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
     const currentObject: NFTObject = { rawData: {}, markets: [] };
 
     const getStatus = () => {
-      if (!response.approved || (response.approved && response.firstBidTime === '0')) {
-        return 'pending';
-      }
       if (
         response.finalizedAtTimestamp &&
         (!response.previousBids || response.previousBids?.length === 0) &&
         !response.currentBid
       ) {
         return 'cancelled';
+      }
+      if (
+        !response.approved ||
+        (response.approved &&
+          (!response.previousBids || response.previousBids?.length === 0) &&
+          !response.currentBid)
+      ) {
+        return 'pending';
       }
       if (response.finalizedAtTimestamp) {
         return 'complete';

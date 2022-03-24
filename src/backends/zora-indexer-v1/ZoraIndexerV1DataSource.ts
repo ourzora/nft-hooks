@@ -235,11 +235,11 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
-      return 'pending';
-    }
     if (auction.canceledEvent) {
       return 'cancelled';
+    }
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
+      return 'pending';
     }
     if (auction.endedEvent) {
       return 'complete';
@@ -330,7 +330,9 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
   return resultAuction;
 }
 
-function getTransferType(transferEvent: TokenTransferEventInfoFragment): TokenTransferEventType {
+function getTransferType(
+  transferEvent: TokenTransferEventInfoFragment
+): TokenTransferEventType {
   if (transferEvent.from === ZERO_ADDRESS) {
     return 'mint';
   }
@@ -340,7 +342,9 @@ function getTransferType(transferEvent: TokenTransferEventInfoFragment): TokenTr
   return 'transfer';
 }
 
-function extractTransferEvents(transferEvents: TokenTransferEventInfoFragment[]): TokenTransferEvent[] {
+function extractTransferEvents(
+  transferEvents: TokenTransferEventInfoFragment[]
+): TokenTransferEvent[] {
   return transferEvents.map((transferEvent) => ({
     eventType: EventType.TokenTransferEvent,
     from: transferEvent.from,
@@ -426,7 +430,10 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     // extract auction events?
     if ('v3Events' in asset) {
       const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
-      object.events = [...extractAskEvents(assetFull.v3Events), ...extractTransferEvents(assetFull.transferEvents)];
+      object.events = [
+        ...extractAskEvents(assetFull.v3Events),
+        ...extractTransferEvents(assetFull.transferEvents),
+      ];
     }
     if (!object.rawData) {
       object.rawData = {};
