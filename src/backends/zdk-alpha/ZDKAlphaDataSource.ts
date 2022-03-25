@@ -42,6 +42,23 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
+// function getMarkets(markets: TokenMarketResponseItem['markets']) {
+//   markets.map((market) => {
+//     const commonInfo: MarketInfoFragment = {
+//       raw: market,
+//       amount: market.price ? {
+//         usdValue: market.price.usdcPrice?.decimal,
+//         ethValue: market.price.ethPrice?.decimal,
+//         symbol: market.price.
+//
+//       } : undefined,
+//     }
+//     if (market.properties.__typename === 'V2Auction') {
+//     }
+//     if (market.properties.__typename === 'V3Ask') {
+//     }
+//   }) 
+// }
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
@@ -57,7 +74,6 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     if (!object) {
       object = { rawData: {} };
     }
-    // TODO(iain): Integrate markets
     const { token } = tokenMarket;
     object.nft = {
       tokenId: token.tokenId,
@@ -181,12 +197,13 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
         };
       });
     }
-
+    
     const results = await this.zdk.tokenMarkets({
       query: marketsQuery,
       filter: marketsFilter,
       sort: marketsSort,
       includeFullDetails: true,
+      includeSalesHistory: !!query.additional.includeSaleHistory,
     });
     if (results.tokenMarkets.nodes) {
       return results.tokenMarkets.nodes;

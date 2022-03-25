@@ -4,7 +4,7 @@ import { RequestError } from '../..';
 import { NetworkIDs } from '../../constants/networks';
 import { THEGRAPH_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
-import { AuctionBidEvent, AuctionLike, MARKET_TYPES, NFTObject } from '../NFTInterface';
+import { AuctionBidEvent, AuctionLike, MARKET_TYPES, NFTObject } from '../../types/NFTInterface';
 import {
   GetAllAuctionsQuery,
   GetAuctionByMediaQuery,
