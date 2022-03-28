@@ -10,8 +10,24 @@ import {
   TokenMarketsQueryInput,
   SortDirection as ZDKSortDirection,
   TokenMarketSortKey,
+  V1Ask,
+  V1MarketEntityStatus,
+  V1Offer,
+  V3AskStatus,
+  V2AuctionStatus,
+  V3AskPropertiesFragment,
+  V2AuctionMarketPropertiesFragment,
+  PriceSummaryFragment,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import {
+  AUCTION_SOURCE_TYPES,
+  FIXED_PRICE_MARKET_SOURCES,
+  FIXED_SIDE_TYPES,
+  MarketModule,
+  MARKET_INFO_STATUSES,
+  MARKET_TYPES,
+} from 'src/types';
 
 function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
@@ -42,28 +58,153 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
-// function getMarkets(markets: TokenMarketResponseItem['markets']) {
-//   markets.map((market) => {
-//     const commonInfo: MarketInfoFragment = {
-//       raw: market,
-//       amount: market.price ? {
-//         usdValue: market.price.usdcPrice?.decimal,
-//         ethValue: market.price.ethPrice?.decimal,
-//         symbol: market.price.
-//
-//       } : undefined,
-//     }
-//     if (market.properties.__typename === 'V2Auction') {
-//     }
-//     if (market.properties.__typename === 'V3Ask') {
-//     }
-//   }) 
-// }
+function getMarkets(markets: TokenMarketResponseItem['markets']) {
+  const getReserveAuctionStatus = (status: V2AuctionStatus) => {
+    if (status === V2AuctionStatus.Active) {
+      return MARKET_INFO_STATUSES.ACTIVE;
+    }
+    if (status === V2AuctionStatus.Canceled) {
+      return MARKET_INFO_STATUSES.CANCELLED;
+    }
+    if (status === V2AuctionStatus.Completed) {
+      return MARKET_INFO_STATUSES.COMPLETE;
+    }
+    return MARKET_INFO_STATUSES.UNKNOWN;
+  };
+  const getV1MarketFixedPriceStatus = (status: V1MarketEntityStatus) => {
+    if (status === V1MarketEntityStatus.Active) {
+      return MARKET_INFO_STATUSES.ACTIVE;
+    }
+    if (status === V1MarketEntityStatus.Canceled) {
+      return MARKET_INFO_STATUSES.CANCELLED;
+    }
+    if (status === V1MarketEntityStatus.Completed) {
+      return MARKET_INFO_STATUSES.COMPLETE;
+    }
+    return MARKET_INFO_STATUSES.UNKNOWN;
+  };
+  const getV3AskStatus = (status: V3AskStatus) => {
+    if (status === V3AskStatus.Active) {
+      return MARKET_INFO_STATUSES.ACTIVE;
+    }
+    if (status === V3AskStatus.Canceled) {
+      return MARKET_INFO_STATUSES.CANCELLED;
+    }
+    if (status === V3AskStatus.Completed) {
+      return MARKET_INFO_STATUSES.COMPLETE;
+    }
+    return MARKET_INFO_STATUSES.UNKNOWN;
+  };
+
+  const marketResponse: MarketModule[] = [];
+  markets.forEach((market) => {
+    const getStandardMarketData = (
+      market: TokenMarketResponseItem['markets'][0],
+      amount: PriceSummaryFragment
+    ) => ({
+      createdAt: {
+        timestamp: market.transactionInfo.blockTimestamp,
+        blockNumber: market.transactionInfo.blockNumber,
+        transactionHash: market.transactionInfo.transactionHash || null,
+      },
+      amount: {
+        usdValue: amount!.usdcPrice?.decimal,
+        ethValue: amount!.ethPrice?.raw,
+        symbol: amount!.nativePrice.currency.name,
+        decimals: amount!.nativePrice.currency.decimals,
+        currency: amount!.nativePrice.currency.address,
+        amount: amount!.nativePrice.raw,
+        // TODO Accept number here?
+        prettyAmount: amount!.nativePrice.decimal.toString(),
+      },
+      raw: market,
+    });
+    if (market.properties.__typename === 'V1Ask') {
+      const properties = market.properties as V1Ask;
+      marketResponse.push({
+        type: MARKET_TYPES.FIXED_PRICE,
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
+        side: FIXED_SIDE_TYPES.ASK,
+        status: getV1MarketFixedPriceStatus(properties.status),
+        ...getStandardMarketData(market, properties.amount),
+      });
+    }
+    if (market.properties.__typename === 'V1Offer') {
+      const properties = market.properties as V1Offer;
+      marketResponse.push({
+        type: MARKET_TYPES.FIXED_PRICE,
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
+        side: FIXED_SIDE_TYPES.OFFER,
+        status: getV1MarketFixedPriceStatus(properties.status),
+        ...getStandardMarketData(market, properties.amount),
+      });
+    }
+    if (market.properties.__typename === 'V2Auction') {
+      // @ts-ignore
+      const properties = market.properties as V2AuctionMarketPropertiesFragment;
+      marketResponse.push({
+        type: MARKET_TYPES.AUCTION,
+        source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
+        status: getReserveAuctionStatus(properties.status),
+        // Duration shouldn't be able to overflow
+        duration: parseInt(properties.duration, 10),
+        startedAt: properties.firstBidTime
+          ? {
+              timestamp: properties.firstBidTime,
+              blockNumber: null,
+              transactionHash: null,
+            }
+          : undefined,
+        bids: [],
+        currentBid:
+          properties.highestBidder && properties.highestBidPrice
+            ? {
+                creator: properties.highestBidder,
+                created: {
+                  // TODO: get real timestamp here?
+                  timestamp: 0,
+                  blockNumber: null,
+                  transactionHash: null,
+                },
+                amount: {
+                  usdValue: properties.highestBidPrice.usdcPrice?.decimal,
+                  ethValue: properties.highestBidPrice.ethPrice?.raw,
+                  symbol: properties.highestBidPrice.nativePrice.currency.name,
+                  decimals: properties.highestBidPrice.nativePrice.currency.decimals,
+                  currency: properties.highestBidPrice.nativePrice.currency.address,
+                  amount: properties.highestBidPrice.nativePrice.raw,
+                  // TODO Accept number here?
+                  prettyAmount: properties.highestBidPrice.nativePrice.decimal.toString(),
+                },
+              }
+            : undefined,
+        ...getStandardMarketData(
+          market,
+          properties.reservePrice || properties.highestBidPrice
+        ),
+      });
+    }
+    if (market.properties.__typename === 'V3Ask') {
+      // @ts-ignore
+      const properties = market.properties as V3AskPropertiesFragment;
+      marketResponse.push({
+        type: MARKET_TYPES.FIXED_PRICE,
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
+        side: FIXED_SIDE_TYPES.ASK,
+        status: getV3AskStatus(properties.askStatus),
+        ...getStandardMarketData(market, properties.askPrice),
+      });
+    }
+  });
+  return marketResponse;
+}
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
   constructor(chainId: NetworkIDs, endpoint: string) {
-    this.zdk = new ZDK(endpoint, Network.Ethereum, getChainFromNetwork(chainId));
+    this.zdk = new ZDK(endpoint, [
+      { network: Network.Ethereum, chain: getChainFromNetwork(chainId) },
+    ]);
   }
 
   canLoadNFT(_: string, __: string) {
@@ -98,6 +239,9 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       metadataURI: token.tokenUrl,
       contentURI: token.content?.url || null,
     };
+    object.markets = getMarkets(tokenMarket.markets);
+    // sales?
+
     object.metadata = token.metadata as any;
     object.media = {
       image: token.image?.url
@@ -129,7 +273,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   ): Promise<TokenMarketResponseItem | Error> => {
     const response = await this.zdk.tokenMarkets({
       includeFullDetails: true,
-      query: {
+      where: {
         tokens: [{ tokenId, address: tokenContract }],
       },
     });
@@ -197,9 +341,9 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
         };
       });
     }
-    
+
     const results = await this.zdk.tokenMarkets({
-      query: marketsQuery,
+      where: marketsQuery,
       filter: marketsFilter,
       sort: marketsSort,
       includeFullDetails: true,

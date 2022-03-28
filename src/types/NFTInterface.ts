@@ -10,12 +10,56 @@ export enum MARKET_TYPES {
   EDITION = 'Edition',
 }
 
+export enum EDITION_SOURCES {
+  CUSTOM = 'Custom',
+  ZORA_EDITIONS = 'ZoraEditions',
+}
+
+export enum MARKET_INFO_STATUSES {
+  PENDING = 'pending',
+  ACTIVE = 'active',
+  COMPLETE = 'complete',
+  CANCELLED = 'cancelled',
+  UNKNOWN = 'unknown',
+  INVALID = 'invalid',
+}
+
+export enum TOKEN_TRANSFER_EVENT_TYPES {
+  MINT = 'mint',
+  BURN = 'burn',
+  TRANSFER = 'transfer',
+  SALE = 'sale',
+}
+
+export enum FIXED_PRICE_MARKET_SOURCES {
+  ZNFT_PERPETUAL = 'ZNFTPerpetual',
+  ZORA_ASK_V1 = 'ZoraAskV1',
+  ZORA_ASK_V1_EVENT = 'ZoraAskV1Event',
+  ZORA_ASK_V3 = 'ZoraAskV3',
+  OPENSEA_FIXED = 'OpenseaFixed',
+}
+
+export enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
+  TOKEN_TRANSFER_EVENT = 'TokenTransferEvent',
+  TOKEN_MARKET_EVENT = 'TokenMarketEvent',
+}
+
+export enum AUCTION_SOURCE_TYPES {
+  ZORA_RESERVE_V2 = 'ZoraReserveV2',
+  OPENSEA_ENGLISH = 'OpenseaEnglish',
+}
+
+export enum FIXED_SIDE_TYPES {
+  ASK = 'ask',
+  OFFER = 'offer',
+}
+
 type Nullable<T> = T | null;
 
 export type ETHAddress = string;
 
 export type CurrencyValue = {
-  usdValue?: string;
+  usdValue?: number;
   ethValue?: string;
   symbol: string;
   name?: string;
@@ -49,16 +93,17 @@ export type AuctionLike = {
   duration: number;
   startedAt?: TimedAction;
   currentBid?: AuctionBidEvent;
+  reservePrice?: CurrencyValue;
   // current bid is duplicated within bids
   bids: AuctionBidEvent[];
-  source: 'ZoraReserveV0' | 'OpenseaEnglish';
+  source: AUCTION_SOURCE_TYPES;
   type: MARKET_TYPES.AUCTION;
 } & MarketInfo;
 
 export type FixedPriceLike = {
-  side: 'ask' | 'offer';
+  side: FIXED_SIDE_TYPES;
   expires?: number;
-  source: 'ZNFTPerpetual' | 'ZoraAskV1' | 'ZoraAskV1Event' | 'OpenseaFixed';
+  source: FIXED_PRICE_MARKET_SOURCES;
   type: MARKET_TYPES.FIXED_PRICE;
 } & MarketInfo;
 
@@ -66,26 +111,18 @@ export type EditionLike = {
   totalSupply: number;
   editionSize: number;
   purchases: EditionPurchaseEvent[];
-  source: 'Custom' | 'ZoraEditions';
+  source: EDITION_SOURCES;
   type: MARKET_TYPES.EDITION;
 } & MarketInfo;
 
-export type MarketInfoStatus =
-  | 'pending'
-  | 'active'
-  | 'complete'
-  | 'cancelled'
-  | 'unknown'
-  | 'invalid';
-
-type MarketInfo = {
+export type MarketInfo = {
   raw: any;
   amount: CurrencyValue;
   // pending - inactive pending some event
   // active - can be filled / auction is ongoing
   // completed - auction end fill complete
   // cancelled - user cancels at some point
-  status: MarketInfoStatus;
+  status: MARKET_INFO_STATUSES;
   createdAt: TimedAction;
   createdBy?: string;
   finishedAt?: TimedAction;
@@ -94,25 +131,18 @@ type MarketInfo = {
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
-export type TokenTransferEventType = 'mint' | 'burn' | 'transfer' | 'sale';
-
-export enum EventType {
-  TokenTransferEvent,
-  TokenMarketEvent,
-}
-
 export type TokenTransferEvent = {
   from: ETHAddress;
   to: ETHAddress;
   at: TimedAction;
-  type: TokenTransferEventType;
-  eventType: EventType.TokenTransferEvent;
+  type: TOKEN_TRANSFER_EVENT_TYPES;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
 };
 
 export type TokenMarketEvent = {
   market: MarketModule;
   at: TimedAction;
-  eventType: EventType.TokenMarketEvent;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
 };
 
 export type TokenEvent = TokenTransferEvent | TokenMarketEvent;

@@ -24,15 +24,18 @@ import {
 import {
   AuctionBidEvent,
   AuctionLike,
-  EventType,
+  AUCTION_SOURCE_TYPES,
   FixedPriceLike,
-  MarketInfoStatus,
+  FIXED_PRICE_MARKET_SOURCES,
+  FIXED_SIDE_TYPES,
+  MARKET_INFO_STATUSES,
   MARKET_TYPES,
   MetadataAttributeType,
   NFTObject,
   TokenMarketEvent,
   TokenTransferEvent,
-  TokenTransferEventType,
+  TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
+  TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types/NFTInterface';
 import { ZoraIndexerV1Interface } from './ZoraIndexerV1Interface';
 import {
@@ -91,33 +94,33 @@ function timeIsPast(time: string) {
   return new Date(time).getTime() < new Date().getTime();
 }
 
-const getAskEventStatus = (askEvent: V3EventPartFragment): MarketInfoStatus => {
+const getAskEventStatus = (askEvent: V3EventPartFragment): MARKET_INFO_STATUSES => {
   if (askEvent.eventType === 'Ask_v1_AskCreated') {
-    return 'active';
+    return MARKET_INFO_STATUSES.ACTIVE;
   }
   if (askEvent.eventType === 'Ask_v1_AskFilled') {
-    return 'complete';
+    return MARKET_INFO_STATUSES.COMPLETE;
   }
   if (askEvent.eventType === 'Ask_v1_AskCancelled') {
-    return 'cancelled';
+    return MARKET_INFO_STATUSES.CANCELLED;
   }
   if (askEvent.eventType === 'Ask_v1_AskPriceUpdated') {
-    return 'active';
+    return MARKET_INFO_STATUSES.ACTIVE;
   }
-  return 'unknown';
+  return MARKET_INFO_STATUSES.UNKNOWN;
 };
 
-const getAskStatus = (status: string): MarketInfoStatus => {
+const getAskStatus = (status: string): MARKET_INFO_STATUSES => {
   if (status === 'ACTIVE') {
-    return 'active';
+    return MARKET_INFO_STATUSES.ACTIVE;
   }
   if (status === 'FILLED') {
-    return 'complete';
+    return MARKET_INFO_STATUSES.COMPLETE;
   }
   if (status === 'CANCELLED') {
-    return 'cancelled';
+    return MARKET_INFO_STATUSES.CANCELLED;
   }
-  return 'unknown';
+  return MARKET_INFO_STATUSES.UNKNOWN;
 };
 
 function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
@@ -134,7 +137,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
       // other info not provided
       // currency.decimals / currency.name / currency.symbol
     },
-    side: 'ask',
+    side: FIXED_SIDE_TYPES.ASK,
     type: MARKET_TYPES.FIXED_PRICE,
     cancelledAt: undefined,
     createdAt: {
@@ -151,7 +154,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
     //       transactionHash: completeEvent.transactionHash,
     //     }
     //   : undefined,
-    source: 'ZoraAskV1',
+    source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
     raw: ask,
   };
 }
@@ -186,7 +189,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
     // }
 
     return {
-      eventType: EventType.TokenMarketEvent,
+      eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
       at: {
         blockNumber: askEvent.blockNumber,
         timestamp: askEvent.blockTimestamp,
@@ -204,7 +207,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
           // other info not provided
           // currency.decimals / currency.name / currency.symbol
         },
-        side: 'ask',
+        side: FIXED_SIDE_TYPES.ASK,
         type: MARKET_TYPES.FIXED_PRICE,
         cancelledAt:
           status === 'cancelled'
@@ -229,7 +232,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
                 transactionHash: askEvent.transactionHash,
               }
             : undefined,
-        source: 'ZoraAskV1Event',
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1_EVENT,
         raw: askEvent,
       },
     };
@@ -239,21 +242,21 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
     if (!auction.approved) {
-      return 'pending';
+      return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.canceledEvent) {
-      return 'cancelled';
+      return MARKET_INFO_STATUSES.CANCELLED;
     }
     if (auction.endedEvent) {
-      return 'complete';
+      return MARKET_INFO_STATUSES.COMPLETE;
     }
     if (auction.expiresAt && timeIsPast(auction.expiresAt)) {
-      return 'complete';
+      return MARKET_INFO_STATUSES.COMPLETE;
     }
     if (auction.firstBidTime) {
-      return 'active';
+      return MARKET_INFO_STATUSES.ACTIVE;
     }
-    return 'unknown';
+    return MARKET_INFO_STATUSES.UNKNOWN;
   };
 
   const addCurrencyInfo = (amount: string) => {
@@ -327,7 +330,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     winner: highestBid?.sender,
     duration: dateToUnix(auction.duration!)!,
     currentBid: highestBid ? formatBid(highestBid) : undefined,
-    source: 'ZoraReserveV0',
+    source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
     bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
   };
   return resultAuction;
@@ -335,21 +338,21 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
 
 function getTransferType(
   transferEvent: TokenTransferEventInfoFragment
-): TokenTransferEventType {
+): TOKEN_TRANSFER_EVENT_TYPES {
   if (transferEvent.from === ZERO_ADDRESS) {
-    return 'mint';
+    return TOKEN_TRANSFER_EVENT_TYPES.MINT;
   }
   if (transferEvent.to === ZERO_ADDRESS) {
-    return 'burn';
+    return TOKEN_TRANSFER_EVENT_TYPES.BURN;
   }
-  return 'transfer';
+  return TOKEN_TRANSFER_EVENT_TYPES.TRANSFER;
 }
 
 function extractTransferEvents(
   transferEvents: TokenTransferEventInfoFragment[]
 ): TokenTransferEvent[] {
   return transferEvents.map((transferEvent) => ({
-    eventType: EventType.TokenTransferEvent,
+    eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
     from: transferEvent.from,
     to: transferEvent.to,
     at: {

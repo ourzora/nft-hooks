@@ -4,7 +4,14 @@ import { RequestError } from '../..';
 import { NetworkIDs } from '../../constants/networks';
 import { THEGRAPH_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
-import { AuctionBidEvent, AuctionLike, MARKET_TYPES, NFTObject } from '../../types/NFTInterface';
+import {
+  AuctionBidEvent,
+  AuctionLike,
+  AUCTION_SOURCE_TYPES,
+  MARKET_INFO_STATUSES,
+  MARKET_TYPES,
+  NFTObject,
+} from '../../types/NFTInterface';
 import {
   GetAllAuctionsQuery,
   GetAuctionByMediaQuery,
@@ -29,7 +36,6 @@ function priceToPretty(number: string, decimals?: number | null) {
     .toFixed(2)
     .toString();
 }
-
 
 export class GraphAuctionDataSource implements GraphAuctionInterface {
   // auctionInfoLoader fetches auction info for non-zora NFTs
@@ -68,28 +74,28 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
 
     const getStatus = () => {
       if (!response.approved) {
-        return 'pending';
+        return MARKET_INFO_STATUSES.PENDING;
       }
       if (
         response.finalizedAtTimestamp &&
         (!response.previousBids || response.previousBids?.length === 0) &&
         !response.currentBid
       ) {
-        return 'cancelled';
+        return MARKET_INFO_STATUSES.CANCELLED;
       }
       if (response.finalizedAtTimestamp) {
-        return 'complete';
+        return MARKET_INFO_STATUSES.COMPLETE;
       }
       if (
         response.expectedEndTimestamp &&
         response.expectedEndTimestamp >= unixTimeNow()
       ) {
-        return 'complete';
+        return MARKET_INFO_STATUSES.COMPLETE;
       }
       if (response.firstBidTime) {
-        return 'active';
+        return MARKET_INFO_STATUSES.ACTIVE;
       }
-      return 'unknown';
+      return MARKET_INFO_STATUSES.UNKNOWN;
     };
 
     function addCurrencyInfo(amount: string) {
@@ -174,7 +180,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       },
       duration: response.duration,
       currentBid: getHighestBid(),
-      source: 'ZoraReserveV0',
+      source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
       bids: [...(response.previousBids?.map(formatBid) || [])],
     };
     currentObject.markets = [auction];
