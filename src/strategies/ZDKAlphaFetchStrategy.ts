@@ -5,7 +5,7 @@ import { NFTQuery } from '../types/NFTQuery';
 
 export class ZDKAlphaFetchStrategy extends NFTStrategy {
   source: ZDKAlphaDataSource;
-  constructor(networkId: NetworkIDs, endpoint: string) {
+  constructor(networkId: NetworkIDs, endpoint?: string) {
     super(networkId);
     this.source = new ZDKAlphaDataSource(networkId, endpoint);
   }

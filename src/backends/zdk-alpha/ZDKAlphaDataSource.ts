@@ -27,7 +27,7 @@ import {
   MarketModule,
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
-} from 'src/types';
+} from '../../types';
 
 function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
@@ -142,6 +142,10 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
     if (market.properties.__typename === 'V2Auction') {
       // @ts-ignore
       const properties = market.properties as V2AuctionMarketPropertiesFragment;
+      const endTime =
+        parseInt(properties.duration, 10) + parseInt(properties.firstBidTime, 10);
+      // const expiresAt = properties.estimatedExpirationTime;
+
       marketResponse.push({
         type: MARKET_TYPES.AUCTION,
         source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
@@ -156,6 +160,13 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
             }
           : undefined,
         bids: [],
+        endsAt: properties.firstBidTime
+          ? {
+              timestamp: endTime,
+              blockNumber: null,
+              transactionHash: null,
+            }
+          : undefined,
         currentBid:
           properties.highestBidder && properties.highestBidPrice
             ? {
@@ -201,7 +212,7 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
-  constructor(chainId: NetworkIDs, endpoint: string) {
+  constructor(chainId: NetworkIDs, endpoint?: string) {
     this.zdk = new ZDK(endpoint, [
       { network: Network.Ethereum, chain: getChainFromNetwork(chainId) },
     ]);

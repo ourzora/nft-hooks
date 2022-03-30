@@ -46,6 +46,7 @@ import {
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
+
 function dateToUnix(date?: string) {
   if (!date) {
     return undefined;
