@@ -406,9 +406,8 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       tokenId: asset.tokenId,
       contract: {
         address: asset.tokenContract?.address!,
-        name: asset.tokenContract?.name!,
-        symbol: asset.tokenContract?.symbol!,
-        description: null,
+        name: asset.tokenContract?.name || undefined,
+        symbol: asset.tokenContract?.symbol || undefined,
       },
       minted: {
         at: {
@@ -431,8 +430,8 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     object.metadata = {
       name: metadata_json.name,
       description: metadata_json.description,
-      content_uri: metadata_json.animation_url,
-      image_uri: metadata_json.image,
+      contentUri: metadata_json.animation_url,
+      imageUri: metadata_json.image,
       attributes: getAttributes(metadata_json),
       raw: asset.metadata?.json,
     };
@@ -452,7 +451,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     if (!object.rawData) {
       object.rawData = {};
     }
-    object.rawData['zora-indexer'] = asset;
+    object.rawData['ZoraIndexer'] = asset;
     return object;
   }
 

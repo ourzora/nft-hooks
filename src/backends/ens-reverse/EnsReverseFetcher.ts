@@ -78,6 +78,7 @@ export async function reverseResolveEnsAddresses(
   if (resultAddresses.length !== mappingKeys.length) {
     throw new Error('Wrong address return length');
   }
+  console.log({resultAddresses})
   return mappingKeys.reduce((last, at, index) => {
     last[at] = resultAddresses[index];
     return last;

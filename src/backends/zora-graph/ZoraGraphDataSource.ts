@@ -66,7 +66,6 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       contract: {
         address: this.mediaContractAddress,
         name: 'Zora',
-        description: null,
         symbol: 'ZORA',
         knownContract: KNOWN_CONTRACTS.ZORA,
       },
@@ -90,7 +89,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       source: MEDIA_SOURCES.DERIVED,
     };
     object.metadata = metadata;
-    object.rawData['zora-graph'] = asset;
+    object.rawData['ZoraGraph'] = asset;
     return object;
   }
 

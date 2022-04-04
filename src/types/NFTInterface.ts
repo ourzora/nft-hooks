@@ -188,9 +188,10 @@ export type NFTObject = {
     tokenId: string;
     contract: {
       address: string;
-      name: Nullable<string>;
-      description: Nullable<string>;
-      symbol: Nullable<string>;
+      name?: string;
+      description?: string;
+      symbol?: string;
+      imageUri?: string;
       knownContract?: KNOWN_CONTRACTS;
     };
     minted: {
@@ -207,8 +208,8 @@ export type NFTObject = {
   metadata?: {
     name?: string;
     description?: string;
-    content_uri?: string;
-    image_uri?: string;
+    contentUri?: string;
+    imageUri?: string;
     attributes?: MetadataAttributeType[];
     // Raw uri or metadata retrieved from the server without normalisation
     raw?: any;
