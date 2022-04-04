@@ -80,12 +80,20 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       ) {
         return MARKET_INFO_STATUSES.CANCELED;
       }
+      if (
+        !response.approved ||
+        (response.approved &&
+          (!response.previousBids || response.previousBids?.length === 0) &&
+          !response.currentBid)
+      ) {
+        return MARKET_INFO_STATUSES.PENDING;
+      }
       if (response.finalizedAtTimestamp) {
         return MARKET_INFO_STATUSES.COMPLETE;
       }
       if (
         response.expectedEndTimestamp &&
-        response.expectedEndTimestamp >= unixTimeNow()
+        response.expectedEndTimestamp <= unixTimeNow()
       ) {
         return MARKET_INFO_STATUSES.COMPLETE;
       }
@@ -131,6 +139,12 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         return addCurrencyInfo(response.currentBid.amount);
       }
 
+      // final bid
+      if (response.previousBids && response.previousBids.length) {
+        const finalBid = response.previousBids.find((bid) => bid.bidType === 'Final');
+        return formatBid(finalBid).amount;
+      }
+
       return addCurrencyInfo(response.reservePrice);
     };
 
@@ -151,7 +165,9 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         return formatBid(response.currentBid);
       }
       if (response.previousBids && response.previousBids.length) {
-        const topBid = response.previousBids[response.previousBids.length - 1];
+        const topBid = [...response.previousBids].sort(
+          (a, b) => parseInt(b.amount) - parseInt(a.amount)
+        )[0];
         return formatBid(topBid);
       }
       return undefined;

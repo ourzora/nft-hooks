@@ -244,7 +244,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved) {
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
       return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.canceledEvent) {
@@ -331,7 +331,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       transactionHash: auction.endedEvent?.transactionHash,
     },
     winner: highestBid?.sender,
-    duration: dateToUnix(auction.duration!)!,
+    duration: auction.duration ? parseInt(auction.duration) : 0,
     currentBid: highestBid ? formatBid(highestBid) : undefined,
     source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
     bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
