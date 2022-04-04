@@ -43,9 +43,10 @@ export class OpenseaDataSource implements OpenseaInterface {
       tokenId: asset.token_id.toString(),
       contract: {
         address: asset.asset_contract.address,
-        name: asset.asset_contract.name,
-        symbol: asset.asset_contract.symbol,
-        description: asset.asset_contract.description,
+        name: asset.asset_contract.name || undefined,
+        symbol: asset.asset_contract.symbol || undefined,
+        description: asset.asset_contract.description || undefined,
+        imageUri: asset.asset_contract.image_url || undefined,
       },
       owner: {
         address: asset.owner.address,
@@ -59,8 +60,8 @@ export class OpenseaDataSource implements OpenseaInterface {
     object.metadata = {
       name: asset.name || undefined,
       description: asset.description || undefined,
-      content_uri: asset.animation_url || undefined,
-      image_uri: asset.image_url || undefined,
+      contentUri: asset.animation_url || undefined,
+      imageUri: asset.image_url || undefined,
       attributes: asset.traits.map((trait) => ({
         name: trait.trait_type,
         value: trait.value,
@@ -86,7 +87,7 @@ export class OpenseaDataSource implements OpenseaInterface {
         : null,
       source: MEDIA_SOURCES.OPENSEA,
     };
-    object.rawData['opensea'] = asset;
+    object.rawData['OpenSea'] = asset;
     return object;
   }
 

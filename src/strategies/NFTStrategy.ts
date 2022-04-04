@@ -21,7 +21,7 @@ export abstract class NFTStrategy {
     return {
       rawData: {},
       nft: {
-        contract: { address: contract, name: null, description: null, symbol: null },
+        contract: { address: contract },
         tokenId: id,
         minted: {},
         metadataURI: null,

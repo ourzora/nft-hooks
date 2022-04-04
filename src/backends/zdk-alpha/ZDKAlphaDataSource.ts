@@ -254,9 +254,8 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       tokenId: token.tokenId,
       contract: {
         address: token.collectionAddress,
-        name: token.tokenContract?.name || null,
-        description: null,
-        symbol: token.tokenContract?.symbol || null,
+        name: token.tokenContract?.name || undefined,
+        symbol: token.tokenContract?.symbol || undefined,
       },
       minted: {
         address: token.mintInfo?.originatorAddress || undefined,
@@ -301,7 +300,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     if (!object.rawData) {
       object.rawData = {};
     }
-    object.rawData['apiindexer'] = token;
+    object.rawData['APIIndexer'] = token;
     return object;
   }
 

@@ -48,9 +48,8 @@ export class EtherActorDataSource implements EtherActorDataInterface {
       tokenId: asset.tokenId,
       contract: {
         address: asset.contract.address,
-        name: asset.contract.name || null,
-        symbol: asset.contract.symbol || null,
-        description: null,
+        name: asset.contract.name || undefined,
+        symbol: asset.contract.symbol || undefined,
       },
       owner: {
         address: asset.owner,
@@ -97,7 +96,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
       source: MEDIA_SOURCES.DERIVED,
     };
 
-    object.rawData['etheractor'] = asset;
+    object.rawData['EtherActor'] = asset;
 
     return object;
   }
