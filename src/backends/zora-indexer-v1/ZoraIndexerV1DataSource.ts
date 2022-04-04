@@ -61,10 +61,7 @@ function getLast<T>(items: T[]) {
 }
 
 function priceToPretty(number: string, decimals?: number | null) {
-  return new Big(number)
-    .div(new Big(10).pow(decimals || 18))
-    .toFixed(2)
-    .toString();
+  return new Big(number).div(new Big(10).pow(decimals || 18)).toNumber();
 }
 
 function getAttributes(json: any) {
@@ -102,7 +99,7 @@ const getAskEventStatus = (askEvent: V3EventPartFragment): MARKET_INFO_STATUSES 
     return MARKET_INFO_STATUSES.COMPLETE;
   }
   if (askEvent.eventType === 'Ask_v1_AskCancelled') {
-    return MARKET_INFO_STATUSES.CANCELLED;
+    return MARKET_INFO_STATUSES.CANCELED;
   }
   if (askEvent.eventType === 'Ask_v1_AskPriceUpdated') {
     return MARKET_INFO_STATUSES.ACTIVE;
@@ -118,7 +115,7 @@ const getAskStatus = (status: string): MARKET_INFO_STATUSES => {
     return MARKET_INFO_STATUSES.COMPLETE;
   }
   if (status === 'CANCELLED') {
-    return MARKET_INFO_STATUSES.CANCELLED;
+    return MARKET_INFO_STATUSES.CANCELED;
   }
   return MARKET_INFO_STATUSES.UNKNOWN;
 };
@@ -128,18 +125,20 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
   return {
     status: getAskStatus(ask.status),
     amount: {
-      amount: ask.askPrice,
-      prettyAmount: priceToPretty(ask.askPrice, null),
-      currency: ask.askCurrency,
+      amount: {
+        raw: ask.askPrice,
+        value: priceToPretty(ask.askPrice),
+        decimals: undefined,
+      },
+      address: ask.askCurrency,
       name: ask.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
       symbol: ask.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
-      decimals: undefined,
       // other info not provided
       // currency.decimals / currency.name / currency.symbol
     },
     side: FIXED_SIDE_TYPES.ASK,
     type: MARKET_TYPES.FIXED_PRICE,
-    cancelledAt: undefined,
+    canceledAt: undefined,
     createdAt: {
       timestamp: dateToUnix(created.blockTimestamp)!,
       blockNumber: created.blockNumber,
@@ -198,9 +197,11 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
       market: {
         status,
         amount: {
-          amount: askEvent.details?.askPrice,
-          prettyAmount: priceToPretty(askEvent.details?.askPrice, null),
-          currency: askEvent.details?.askCurrency,
+          amount: {
+            raw: askEvent.details?.askPrice,
+            value: priceToPretty(askEvent.details.askPrice, null),
+          },
+          address: askEvent.details?.askCurrency,
           name: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
           symbol: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
           decimals: undefined,
@@ -210,7 +211,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
         side: FIXED_SIDE_TYPES.ASK,
         type: MARKET_TYPES.FIXED_PRICE,
         cancelledAt:
-          status === 'cancelled'
+          status === MARKET_INFO_STATUSES.CANCELED
             ? {
                 timestamp: dateToUnix(askEvent.blockTimestamp)!,
                 blockNumber: askEvent.blockNumber,
@@ -223,9 +224,11 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
           transactionHash: askEvent.transactionHash,
         },
         createdBy:
-          status !== 'complete' ? askEvent.details?.seller : askEvent.details?.buyer,
+          status !== MARKET_INFO_STATUSES.COMPLETE
+            ? askEvent.details?.seller
+            : askEvent.details?.buyer,
         finishedAt:
-          status === 'complete'
+          status === MARKET_INFO_STATUSES.COMPLETE
             ? {
                 timestamp: dateToUnix(askEvent.blockTimestamp)!,
                 blockNumber: askEvent.blockNumber,
@@ -245,7 +248,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.canceledEvent) {
-      return MARKET_INFO_STATUSES.CANCELLED;
+      return MARKET_INFO_STATUSES.CANCELED;
     }
     if (auction.endedEvent) {
       return MARKET_INFO_STATUSES.COMPLETE;
@@ -262,12 +265,14 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
   const addCurrencyInfo = (amount: string) => {
     const currency = auction.currency!;
     return {
-      currency: currency.address,
+      address: currency.address,
       name: currency.name,
       symbol: currency.symbol,
       decimals: currency.decimals,
-      amount,
-      prettyAmount: priceToPretty(amount, currency.decimals || 18),
+      amount: {
+        raw: amount,
+        value: priceToPretty(amount, currency.decimals || 18),
+      },
     };
   };
 
@@ -311,11 +316,9 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     startedAt: auction.firstBidTime
       ? {
           timestamp: dateToUnix(auction.firstBidTime)!,
-          blockNumber: null,
-          transactionHash: null,
         }
       : undefined,
-    cancelledAt: auction.canceledEvent
+    canceledAt: auction.canceledEvent
       ? {
           timestamp: dateToUnix(auction.canceledEvent.blockTimestamp)!,
           blockNumber: auction.canceledEvent.blockNumber,
@@ -324,8 +327,8 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       : undefined,
     endsAt: {
       timestamp: dateToUnix(auction.expiresAt)!,
-      blockNumber: auction.endedEvent?.blockNumber ?? null,
-      transactionHash: auction.endedEvent?.transactionHash ?? null,
+      blockNumber: auction.endedEvent?.blockNumber,
+      transactionHash: auction.endedEvent?.transactionHash,
     },
     winner: highestBid?.sender,
     duration: auction.duration ? parseInt(auction.duration) : 0,
@@ -338,11 +341,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
 
 function getTransferType(
   transferEvent: TokenTransferEventInfoFragment
-<<<<<<< HEAD
 ): TOKEN_TRANSFER_EVENT_TYPES {
-=======
-): TokenTransferEventType {
->>>>>>> d526b0242c4d80462a6777d22d11a354a08e5811
   if (transferEvent.from === ZERO_ADDRESS) {
     return TOKEN_TRANSFER_EVENT_TYPES.MINT;
   }
@@ -413,16 +412,18 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       },
       minted: {
         at: {
-          blockNumber: asset.mintTransferEvent?.blockNumber || null,
+          blockNumber: asset.mintTransferEvent?.blockNumber,
           // TODO(iain): fix normalization to handle missing date information
           timestamp: asset.mintTransferEvent
             ? dateToUnix(asset.mintTransferEvent?.blockTimestamp)!
             : 0,
-          transactionHash: asset.mintTransferEvent?.transactionHash || null,
+          transactionHash: asset.mintTransferEvent?.transactionHash,
         },
-        minter: asset.minter || undefined,
+        address: asset.minter || undefined,
       },
-      owner: asset.owner,
+      owner: {
+        address: asset.owner,
+      },
       metadataURI: asset.media ? asset.media.metadataURI! : asset.tokenURI!,
       contentURI: asset.media?.contentURI!,
     };
@@ -430,8 +431,8 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     object.metadata = {
       name: metadata_json.name,
       description: metadata_json.description,
-      animation_url: metadata_json.animation_url,
-      image: metadata_json.image,
+      content_uri: metadata_json.animation_url,
+      image_uri: metadata_json.image,
       attributes: getAttributes(metadata_json),
       raw: asset.metadata?.json,
     };

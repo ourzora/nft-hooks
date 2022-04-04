@@ -19,9 +19,16 @@ export enum MARKET_INFO_STATUSES {
   PENDING = 'pending',
   ACTIVE = 'active',
   COMPLETE = 'complete',
-  CANCELLED = 'cancelled',
+  CANCELED = 'canceled',
   UNKNOWN = 'unknown',
   INVALID = 'invalid',
+}
+
+export enum MEDIA_SOURCES {
+  OPENSEA = 'opensea',
+  ZORA = 'zora',
+  DERIVED = 'derived',
+  RAW = 'raw',
 }
 
 export enum TOKEN_TRANSFER_EVENT_TYPES {
@@ -58,21 +65,25 @@ type Nullable<T> = T | null;
 
 export type ETHAddress = string;
 
+export type CurrencyAmount = {
+  raw: string,
+  value: number,
+  decimals?: number,
+};
+
 export type CurrencyValue = {
-  usdValue?: number;
-  ethValue?: string;
+  eth?: CurrencyAmount,
+  usd?: CurrencyAmount,
+  amount: CurrencyAmount;
   symbol: string;
   name?: string;
-  currency: string;
-  decimals?: number;
-  amount: string;
-  prettyAmount: string;
+  address: string;
 };
 
 export type TimedAction = {
   timestamp: number;
-  blockNumber: Nullable<number>;
-  transactionHash: Nullable<string>;
+  blockNumber?: number;
+  transactionHash?: string;
 };
 
 export type AuctionBidEvent = {
@@ -121,12 +132,12 @@ export type MarketInfo = {
   // pending - inactive pending some event
   // active - can be filled / auction is ongoing
   // completed - auction end fill complete
-  // cancelled - user cancels at some point
+  // canceled - user cancels at some point
   status: MARKET_INFO_STATUSES;
   createdAt: TimedAction;
   createdBy?: string;
   finishedAt?: TimedAction;
-  cancelledAt?: TimedAction;
+  canceledAt?: TimedAction;
 };
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
@@ -171,7 +182,7 @@ export type NFTObject = {
     thumbnail: Nullable<MediaObject>;
     image: Nullable<MediaObject>;
     content: Nullable<MediaObject>;
-    source: 'opensea' | 'zora' | 'derived';
+    source: MEDIA_SOURCES;
   };
   nft?: {
     tokenId: string;
@@ -183,21 +194,26 @@ export type NFTObject = {
       knownContract?: KNOWN_CONTRACTS;
     };
     minted: {
-      minter?: string;
+      address?: ETHAddress;
       at?: TimedAction;
     };
-    owner?: ETHAddress;
+    owner?: {
+      address: ETHAddress;
+    },
     metadataURI: Nullable<string>;
     // Zora-specific extension but exposed for parsed JSON in contracts
     contentURI: Nullable<string>;
   };
   metadata?: {
-    name?: Nullable<string>;
-    image?: Nullable<string>;
-    description?: Nullable<string>;
-    animation_url?: Nullable<string>;
+    name?: string;
+    description?: string;
+    content_uri?: string;
+    image_uri?: string;
     attributes?: MetadataAttributeType[];
+    // Raw uri or metadata retrieved from the server without normalisation
     raw?: any;
+    // This is context parsing
+    context?: any;
   };
   markets?: MarketModule[];
   events?: TokenEvent[];
