@@ -46,7 +46,6 @@ import {
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
-
 function dateToUnix(date?: string) {
   if (!date) {
     return undefined;
@@ -453,7 +452,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   }
 
   loadNFT = async (tokenContract: string, tokenId: string) => {
-    return await this.nftGraphDataLoader.load(`${tokenContract}-${tokenId}`);
+    return await this.nftGraphDataLoader.load(`${getAddress(tokenContract)}-${tokenId}`);
   };
   loadNFTs = async (tokenContractAndId: readonly string[]) => {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
