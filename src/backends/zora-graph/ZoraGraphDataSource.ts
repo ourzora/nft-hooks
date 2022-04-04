@@ -17,7 +17,7 @@ import {
   ZoraGraphDataInterface,
   ZoraGraphDataResponse,
 } from './ZoraGraphDataInterface';
-import { KNOWN_CONTRACTS, NFTObject } from '../../types/NFTInterface';
+import { KNOWN_CONTRACTS, MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
@@ -70,13 +70,13 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
         symbol: 'ZORA',
         knownContract: KNOWN_CONTRACTS.ZORA,
       },
-      owner: asset.owner.id,
+      owner: {
+        address: asset.owner.id,
+      },
       minted: {
-        minter: asset.creator.id,
+        address: asset.creator.id,
         at: {
           timestamp: asset.createdAtTimestamp,
-          blockNumber: null,
-          transactionHash: null,
         },
       },
       metadataURI: asset.metadataURI,
@@ -87,7 +87,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       content: { uri: asset.contentURI, mime: metadata.mimeType },
       thumbnail: null,
       image: null,
-      source: 'zora',
+      source: MEDIA_SOURCES.DERIVED,
     };
     object.metadata = metadata;
     object.rawData['zora-graph'] = asset;

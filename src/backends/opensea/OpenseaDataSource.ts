@@ -3,7 +3,7 @@ import { NFTQuery } from '../../types/NFTQuery';
 import { NetworkIDs } from '../../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
-import { NFTObject } from '../../types/NFTInterface';
+import { MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
 
 type OpenseaDataResponse = {
@@ -47,18 +47,20 @@ export class OpenseaDataSource implements OpenseaInterface {
         symbol: asset.asset_contract.symbol,
         description: asset.asset_contract.description,
       },
-      owner: asset.owner.address,
+      owner: {
+        address: asset.owner.address,
+      },
       metadataURI: asset.token_metadata,
       contentURI: asset.animation_original_url || asset.image_original_url,
       minted: {
-        minter: asset.creator.address,
+        address: asset.creator.address,
       },
     };
     object.metadata = {
-      name: asset.name,
-      description: asset.description,
-      animation_url: asset.animation_url,
-      image: asset.image_url,
+      name: asset.name || undefined,
+      description: asset.description || undefined,
+      content_uri: asset.animation_url || undefined,
+      image_uri: asset.image_url || undefined,
       attributes: asset.traits.map((trait) => ({
         name: trait.trait_type,
         value: trait.value,
@@ -82,7 +84,7 @@ export class OpenseaDataSource implements OpenseaInterface {
             uri: asset.animation_url || asset.image_original_url!,
           }
         : null,
-      source: 'opensea',
+      source: MEDIA_SOURCES.OPENSEA,
     };
     object.rawData['opensea'] = asset;
     return object;

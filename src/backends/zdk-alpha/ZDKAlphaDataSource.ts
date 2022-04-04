@@ -27,6 +27,7 @@ import {
   MarketModule,
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
+  MEDIA_SOURCES,
 } from '../../types';
 
 function getChainFromNetwork(network: NetworkIDs) {
@@ -64,7 +65,7 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
     if (status === V2AuctionStatus.Canceled) {
-      return MARKET_INFO_STATUSES.CANCELLED;
+      return MARKET_INFO_STATUSES.CANCELED;
     }
     if (status === V2AuctionStatus.Completed) {
       return MARKET_INFO_STATUSES.COMPLETE;
@@ -76,7 +77,7 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
     if (status === V1MarketEntityStatus.Canceled) {
-      return MARKET_INFO_STATUSES.CANCELLED;
+      return MARKET_INFO_STATUSES.CANCELED;
     }
     if (status === V1MarketEntityStatus.Completed) {
       return MARKET_INFO_STATUSES.COMPLETE;
@@ -88,7 +89,7 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
     if (status === V3AskStatus.Canceled) {
-      return MARKET_INFO_STATUSES.CANCELLED;
+      return MARKET_INFO_STATUSES.CANCELED;
     }
     if (status === V3AskStatus.Completed) {
       return MARKET_INFO_STATUSES.COMPLETE;
@@ -104,18 +105,29 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
     ) => ({
       createdAt: {
         timestamp: market.transactionInfo.blockTimestamp,
-        blockNumber: market.transactionInfo.blockNumber,
-        transactionHash: market.transactionInfo.transactionHash || null,
+        blockNumber: market.transactionInfo.blockNumber || undefined,
+        transactionHash: market.transactionInfo.transactionHash || undefined,
       },
       amount: {
-        usdValue: amount!.usdcPrice?.decimal,
-        ethValue: amount!.ethPrice?.raw,
+        usd: amount!.usdcPrice
+          ? {
+              value: amount!.usdcPrice?.decimal,
+              raw: amount!.usdcPrice?.raw,
+            }
+          : undefined,
+        eth: amount!.ethPrice
+          ? {
+              value: amount!.ethPrice?.decimal,
+              raw: amount!.ethPrice?.raw,
+            }
+          : undefined,
         symbol: amount!.nativePrice.currency.name,
         decimals: amount!.nativePrice.currency.decimals,
-        currency: amount!.nativePrice.currency.address,
-        amount: amount!.nativePrice.raw,
-        // TODO Accept number here?
-        prettyAmount: amount!.nativePrice.decimal.toString(),
+        address: amount!.nativePrice.currency.address,
+        amount: {
+          raw: amount!.nativePrice.raw,
+          value: amount!.nativePrice.decimal,
+        },
       },
       raw: market,
     });
@@ -155,16 +167,12 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
         startedAt: properties.firstBidTime
           ? {
               timestamp: properties.firstBidTime,
-              blockNumber: null,
-              transactionHash: null,
             }
           : undefined,
         bids: [],
         endsAt: properties.firstBidTime
           ? {
               timestamp: endTime,
-              blockNumber: null,
-              transactionHash: null,
             }
           : undefined,
         currentBid:
@@ -174,18 +182,33 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
                 created: {
                   // TODO: get real timestamp here?
                   timestamp: 0,
-                  blockNumber: null,
-                  transactionHash: null,
                 },
                 amount: {
-                  usdValue: properties.highestBidPrice.usdcPrice?.decimal,
-                  ethValue: properties.highestBidPrice.ethPrice?.raw,
+                  usd: properties.highestBidPrice.usdcPrice
+                    ? {
+                        value: properties.highestBidPrice.usdcPrice?.decimal,
+                        raw: properties.highestBidPrice.usdcPrice?.raw,
+                        decimals: 18,
+                      }
+                    : undefined,
+                  eth: properties.highestBidPrice.ethPrice
+                    ? {
+                        value: properties.highestBidPrice.ethPrice.decimal,
+                        raw: properties.highestBidPrice.ethPrice.raw,
+                        decimals: 18,
+                      }
+                    : undefined,
+                  amount: {
+                    raw: properties.highestBidPrice.nativePrice.raw,
+                    value: properties.highestBidPrice.nativePrice.decimal,
+                    decimals:
+                      properties.highestBidPrice.nativePrice.currency.decimals ||
+                      undefined,
+                  },
+                  // TODO: integrate symbol
                   symbol: properties.highestBidPrice.nativePrice.currency.name,
-                  decimals: properties.highestBidPrice.nativePrice.currency.decimals,
-                  currency: properties.highestBidPrice.nativePrice.currency.address,
-                  amount: properties.highestBidPrice.nativePrice.raw,
-                  // TODO Accept number here?
-                  prettyAmount: properties.highestBidPrice.nativePrice.decimal.toString(),
+                  name: properties.highestBidPrice.nativePrice.currency.name,
+                  address: properties.highestBidPrice.nativePrice.currency.address,
                 },
               }
             : undefined,
@@ -236,17 +259,21 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
         symbol: token.tokenContract?.symbol || null,
       },
       minted: {
-        minter: token.mintInfo?.originatorAddress || undefined,
+        address: token.mintInfo?.originatorAddress || undefined,
         at: token.mintInfo
           ? {
               timestamp:
                 new Date(token.mintInfo.mintContext.blockTimestamp).getTime() / 1000,
               blockNumber: token.mintInfo.mintContext.blockNumber,
-              transactionHash: token.mintInfo!.mintContext.transactionHash || null,
+              transactionHash: token.mintInfo!.mintContext.transactionHash || undefined,
             }
           : undefined,
       },
-      owner: token.owner || undefined,
+      owner: token.owner
+        ? {
+            address: token.owner,
+          }
+        : undefined,
       metadataURI: token.tokenUrl || null,
       contentURI: token.content?.url || null,
     };
@@ -268,7 +295,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
           }
         : null,
       thumbnail: null,
-      source: 'zora',
+      source: MEDIA_SOURCES.ZORA,
     };
 
     if (!object.rawData) {
