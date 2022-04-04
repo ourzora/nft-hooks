@@ -5,7 +5,7 @@ import {
   EtherActorDataInterface,
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
-import { NFTObject } from '../../types/NFTInterface';
+import { MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
 import { NFTQuery } from '../../types/NFTQuery';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
@@ -52,7 +52,9 @@ export class EtherActorDataSource implements EtherActorDataInterface {
         symbol: asset.contract.symbol || null,
         description: null,
       },
-      owner: asset.owner,
+      owner: {
+        address: asset.owner,
+      },
       metadataURI: asset.tokenURL,
       contentURI: asset.contentURL || null,
       minted: {},
@@ -74,7 +76,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
           }
         : null,
       thumbnail: null,
-      source: 'derived',
+      source: MEDIA_SOURCES.DERIVED,
     };
 
     object.media = {
@@ -92,7 +94,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
           }
         : null,
       thumbnail: null,
-      source: 'derived',
+      source: MEDIA_SOURCES.DERIVED,
     };
 
     object.rawData['etheractor'] = asset;

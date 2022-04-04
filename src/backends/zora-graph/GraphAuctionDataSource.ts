@@ -31,10 +31,7 @@ function unixTimeNow() {
 }
 
 function priceToPretty(number: string, decimals?: number | null) {
-  return new Big(number)
-    .div(new Big(10).pow(decimals || 18))
-    .toFixed(2)
-    .toString();
+  return new Big(number).div(new Big(10).pow(decimals || 18)).toNumber();
 }
 
 export class GraphAuctionDataSource implements GraphAuctionInterface {
@@ -81,14 +78,22 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         (!response.previousBids || response.previousBids?.length === 0) &&
         !response.currentBid
       ) {
-        return MARKET_INFO_STATUSES.CANCELLED;
+        return MARKET_INFO_STATUSES.CANCELED;
+      }
+      if (
+        !response.approved ||
+        (response.approved &&
+          (!response.previousBids || response.previousBids?.length === 0) &&
+          !response.currentBid)
+      ) {
+        return MARKET_INFO_STATUSES.PENDING;
       }
       if (response.finalizedAtTimestamp) {
         return MARKET_INFO_STATUSES.COMPLETE;
       }
       if (
         response.expectedEndTimestamp &&
-        response.expectedEndTimestamp >= unixTimeNow()
+        response.expectedEndTimestamp <= unixTimeNow()
       ) {
         return MARKET_INFO_STATUSES.COMPLETE;
       }
@@ -104,18 +109,27 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
           currency: response.auctionCurrency.id,
           name: 'Ethereum',
           symbol: 'ETH',
-          decimals: 18,
-          amount,
-          prettyAmount: priceToPretty(amount, 18),
+          address: '0x0000000000000000000000000000000000000000',
+          eth: {
+            value: priceToPretty(amount, 18),
+            raw: amount,
+          },
+          amount: {
+            decimals: 18,
+            value: priceToPretty(amount, 18),
+            raw: amount,
+          },
         };
       }
       return {
-        currency: response.auctionCurrency.id,
+        address: response.auctionCurrency.id,
         name: response.auctionCurrency.name,
         symbol: response.auctionCurrency.symbol,
-        decimals: response.auctionCurrency.decimals || undefined,
-        amount,
-        prettyAmount: priceToPretty(amount, response.auctionCurrency.decimals || 18),
+        amount: {
+          value: priceToPretty(amount, response.auctionCurrency.decimals || 18),
+          raw: amount,
+          decimals: response.auctionCurrency.decimals || undefined,
+        },
       };
     }
 
@@ -123,6 +137,12 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       // current bid
       if (response.currentBid?.amount) {
         return addCurrencyInfo(response.currentBid.amount);
+      }
+
+      // final bid
+      if (response.previousBids && response.previousBids.length) {
+        const finalBid = response.previousBids.find((bid) => bid.bidType === 'Final');
+        return formatBid(finalBid).amount;
       }
 
       return addCurrencyInfo(response.reservePrice);
@@ -145,7 +165,9 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         return formatBid(response.currentBid);
       }
       if (response.previousBids && response.previousBids.length) {
-        const topBid = response.previousBids[response.previousBids.length - 1];
+        const topBid = [...response.previousBids].sort(
+          (a, b) => parseInt(b.amount) - parseInt(a.amount)
+        )[0];
         return formatBid(topBid);
       }
       return undefined;
@@ -165,18 +187,14 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       finishedAt: response.finalizedAtTimestamp
         ? {
             timestamp: response.finalizedAtTimestamp,
-            blockNumber: null,
-            transactionHash: null,
           }
         : undefined,
       startedAt: response.firstBidTime,
       // if cancelled record is deleted
-      cancelledAt: undefined,
+      canceledAt: undefined,
       winner: response.currentBid?.bidder.id,
       endsAt: {
         timestamp: response.expectedEndTimestamp,
-        blockNumber: null,
-        transactionHash: null,
       },
       duration: response.duration,
       currentBid: getHighestBid(),
