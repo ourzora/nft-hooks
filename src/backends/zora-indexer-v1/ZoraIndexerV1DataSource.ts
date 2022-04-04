@@ -46,7 +46,6 @@ import {
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 
-
 function dateToUnix(date?: string) {
   if (!date) {
     return undefined;
@@ -242,7 +241,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved) {
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
       return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.canceledEvent) {
@@ -329,7 +328,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       transactionHash: auction.endedEvent?.transactionHash ?? null,
     },
     winner: highestBid?.sender,
-    duration: dateToUnix(auction.duration!)!,
+    duration: auction.duration ? parseInt(auction.duration) : 0,
     currentBid: highestBid ? formatBid(highestBid) : undefined,
     source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
     bids: [...auction.bidEvents.map((bid) => formatBid(bid))],
@@ -339,7 +338,11 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
 
 function getTransferType(
   transferEvent: TokenTransferEventInfoFragment
+<<<<<<< HEAD
 ): TOKEN_TRANSFER_EVENT_TYPES {
+=======
+): TokenTransferEventType {
+>>>>>>> d526b0242c4d80462a6777d22d11a354a08e5811
   if (transferEvent.from === ZERO_ADDRESS) {
     return TOKEN_TRANSFER_EVENT_TYPES.MINT;
   }
@@ -453,7 +456,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   }
 
   loadNFT = async (tokenContract: string, tokenId: string) => {
-    return await this.nftGraphDataLoader.load(`${tokenContract}-${tokenId}`);
+    return await this.nftGraphDataLoader.load(`${getAddress(tokenContract)}-${tokenId}`);
   };
   loadNFTs = async (tokenContractAndId: readonly string[]) => {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);

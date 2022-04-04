@@ -247,7 +247,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
           : undefined,
       },
       owner: token.owner || undefined,
-      metadataURI: token.tokenUrl,
+      metadataURI: token.tokenUrl || null,
       contentURI: token.content?.url || null,
     };
     object.markets = getMarkets(tokenMarket.markets);

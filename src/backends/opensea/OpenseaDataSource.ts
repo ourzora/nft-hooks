@@ -40,7 +40,7 @@ export class OpenseaDataSource implements OpenseaInterface {
       object = { rawData: {} };
     }
     object.nft = {
-      tokenId: asset.id.toString(),
+      tokenId: asset.token_id.toString(),
       contract: {
         address: asset.asset_contract.address,
         name: asset.asset_contract.name,
@@ -51,7 +51,7 @@ export class OpenseaDataSource implements OpenseaInterface {
       metadataURI: asset.token_metadata,
       contentURI: asset.animation_original_url || asset.image_original_url,
       minted: {
-        minter: asset.creator.address,
+        minter: asset.creator?.address,
       },
     };
     object.metadata = {
