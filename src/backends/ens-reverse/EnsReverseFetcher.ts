@@ -11,11 +11,12 @@ function parseHexNumber(hex: string) {
 function processReturnData(result: string) {
   let pieces = [];
   for (let i = 2; i < result.length; i += 64) {
-    pieces.push(result.substring(i, 64));
+    pieces.push(result.substring(i, i + 64));
   }
   const numberEntries = parseHexNumber(pieces[1]);
   const addresses: string[] = [];
   const offsets = [];
+
   for (let i = 0; i < numberEntries; i++) {
     offsets.push(parseHexNumber(pieces[i + 2]));
   }
@@ -23,9 +24,11 @@ function processReturnData(result: string) {
   for (let i = 0; i < numberEntries; i++) {
     let pieceId = offsets[i] / 32 + 2;
     let strLen = parseHexNumber(pieces[pieceId]);
-    const strHex = result.substring((pieceId + 1) * 64 + 2, strLen * 2);
+    const base = (pieceId + 1) * 64 + 2;
+    const strHex = result.substring(base, base + strLen * 2);
     addresses.push(Buffer.from(strHex, 'hex').toString());
   }
+
   return addresses;
 }
 
@@ -74,11 +77,13 @@ export async function reverseResolveEnsAddresses(
   const fetcher = new FetchWithTimeout(timeout, 'application/json');
   const result = await fetcher.fetch(endpoint, requestOptions);
   const json = await result.json();
+  console.log('json', {json})
   const resultAddresses = processReturnData(json.result);
+  console.log('results', {resultAddresses})
   if (resultAddresses.length !== mappingKeys.length) {
     throw new Error('Wrong address return length');
   }
-  console.log({resultAddresses})
+
   return mappingKeys.reduce((last, at, index) => {
     last[at] = resultAddresses[index];
     return last;
