@@ -458,6 +458,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   loadNFT = async (tokenContract: string, tokenId: string) => {
     return await this.nftGraphDataLoader.load(`${getAddress(tokenContract)}-${tokenId}`);
   };
+
   loadNFTs = async (tokenContractAndId: readonly string[]) => {
     return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
   };
