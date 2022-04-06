@@ -518,14 +518,22 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     if (sort) {
       const nestedSorts = sort.map((sortItem) => {
         const orderBy =
-          sortItem.direction === SortDirection.ASC ? Order_By.Asc : Order_By.Desc;
+          sortItem.direction === SortDirection.ASC
+            ? Order_By.AscNullsLast
+            : Order_By.DescNullsLast;
         if (sortItem.field === SortField.ACTIVE) {
           return [{}];
         }
         if (sortItem.field === SortField.MINTED) {
           return [{ mintTransferEvent: { blockNumber: orderBy } }];
         }
-        if (sortItem.field === SortField.PRICE) {
+        if (sortItem.field === SortField.FIXED_PRICE) {
+          return [{ v3Ask: { askPrice: orderBy } }];
+        }
+        if (sortItem.field === SortField.AUCTION_PRICE) {
+          return [{ currentAuction: { reservePrice: orderBy } }];
+        }
+        if (sortItem.field === SortField.ANY_PRICE) {
           return [
             { currentAuction: { reservePrice: orderBy } },
             { v3Ask: { askPrice: orderBy } },
