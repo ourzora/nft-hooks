@@ -50,7 +50,11 @@ const resolveSortKey = (sortField: SortField) => {
   if (sortField === SortField.ACTIVE) {
     return TokenMarketSortKey.Transferred;
   }
-  if (sortField === SortField.PRICE) {
+  if (
+    [SortField.ANY_PRICE, SortField.AUCTION_PRICE, SortField.FIXED_PRICE].includes(
+      sortField
+    )
+  ) {
     throw new Error('not supported');
   }
   if (sortField === SortField.TOKEN_ID) {
