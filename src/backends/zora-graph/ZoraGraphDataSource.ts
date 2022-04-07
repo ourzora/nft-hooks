@@ -89,7 +89,11 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       source: MEDIA_SOURCES.DERIVED,
     };
     object.metadata = metadata;
+    if (!object.rawData) {
+      object.rawData = {};
+    }
     object.rawData['ZoraGraph'] = asset;
+    console.log('object', object);
     return object;
   }
 
@@ -113,7 +117,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
 
   fetchNFTs = async (mediaIds: readonly string[]) => {
     const response = (await this.getClient().request(GET_MEDIAS_QUERY, {
-      query: { ids_in: mediaIds },
+      query: { id_in: mediaIds },
     })) as GetMediaAndAuctionsQuery;
     const metadatas = await Promise.all(
       response.medias

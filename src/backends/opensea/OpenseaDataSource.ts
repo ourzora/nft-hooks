@@ -87,6 +87,9 @@ export class OpenseaDataSource implements OpenseaInterface {
         : null,
       source: MEDIA_SOURCES.OPENSEA,
     };
+    if (!object.rawData) {
+      object.rawData = {};
+    }
     object.rawData['OpenSea'] = asset;
     return object;
   }
