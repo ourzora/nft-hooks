@@ -55,7 +55,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
     object?: NFTObject
   ) {
     if (!object) {
-      object = {rawData: {}};
+      object = { rawData: {} };
     }
     object.markets = asset.reserveAuctions
       ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
@@ -152,8 +152,11 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       if (sortItem.field === SortField.MINTED) {
         sortKey = Media_OrderBy.CreatedAtBlockNumber;
       }
-      if (sortItem.field === SortField.PRICE) {
+      if (sortItem.field === SortField.FIXED_PRICE) {
         sortKey = Media_OrderBy.CurrentBids;
+      }
+      if ([SortField.AUCTION_PRICE, SortField.ANY_PRICE].includes(sortItem.field)) {
+        throw new Error('Fixed price not supported');
       }
       if (sortItem.field === SortField.TOKEN_ID) {
         sortKey = Media_OrderBy.Id;
