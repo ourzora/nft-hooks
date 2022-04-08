@@ -93,7 +93,6 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       object.rawData = {};
     }
     object.rawData['ZoraGraph'] = asset;
-    console.log('object', object);
     return object;
   }
 
