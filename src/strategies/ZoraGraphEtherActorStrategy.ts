@@ -14,7 +14,7 @@ export class ZoraGraphEtherActorStrategy extends NFTStrategy {
   }
 
   fetchNFT = async (contract: string, id: string) => {
-    const loadedNft = await this.etherActorSource.loadNFT(contract, id);
+    const loadedNft = await this.etherActorSource.loadNFT({ contract, id });
     if (loadedNft instanceof Error) {
       throw loadedNft;
     }

@@ -31,6 +31,7 @@ import {
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
   MetadataAttributeType,
+  NFTIdentifier,
   NFTObject,
   TokenMarketEvent,
   TokenTransferEvent,
@@ -455,12 +456,14 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     return object;
   }
 
-  loadNFT = async (tokenContract: string, tokenId: string) => {
-    return await this.nftGraphDataLoader.load(`${getAddress(tokenContract)}-${tokenId}`);
+  loadNFT = async ({ contract, id }: NFTIdentifier) => {
+    return await this.nftGraphDataLoader.load(`${getAddress(contract)}-${id}`);
   };
 
-  loadNFTs = async (tokenContractAndId: readonly string[]) => {
-    return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
+  loadNFTs = async (nfts: readonly NFTIdentifier[]) => {
+    return await this.nftGraphDataLoader.loadMany(
+      nfts.map((nft) => `${getAddress(nft.contract)}-${nft.id}`)
+    );
   };
 
   fetchNFTs = async (mediaIds: readonly string[]) => {
@@ -526,7 +529,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
         if (sortItem.field === SortField.MINTED) {
           return [{ mintTransferEvent: { blockNumber: orderBy } }];
         }
-        if (sortItem.field === SortField.PRICE) {
+        if (sortItem.field === SortField.ANY_PRICE) {
           return [
             { currentAuction: { reservePrice: orderBy } },
             { v3Ask: { askPrice: orderBy } },

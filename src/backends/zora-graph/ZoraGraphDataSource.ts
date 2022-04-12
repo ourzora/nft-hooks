@@ -17,11 +17,17 @@ import {
   ZoraGraphDataInterface,
   ZoraGraphDataResponse,
 } from './ZoraGraphDataInterface';
-import { KNOWN_CONTRACTS, MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
+import {
+  KNOWN_CONTRACTS,
+  MEDIA_SOURCES,
+  NFTIdentifier,
+  NFTObject,
+} from '../../types/NFTInterface';
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
 import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import { getAddress } from '@ethersproject/address';
 
 export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
@@ -55,7 +61,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
     object?: NFTObject
   ) {
     if (!object) {
-      object = {rawData: {}};
+      object = { rawData: {} };
     }
     object.markets = asset.reserveAuctions
       ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
@@ -93,15 +99,17 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
     return object;
   }
 
-  loadNFT = async (tokenContract: string, tokenId: string) => {
-    if (tokenContract.toLowerCase() != this.mediaContractAddress.toLowerCase()) {
+  loadNFT = async ({ contract, id }: { contract: string; id: string }) => {
+    if (contract.toLowerCase() != this.mediaContractAddress.toLowerCase()) {
       throw new Error('Not zora media contract');
     }
-    return await this.nftGraphDataLoader.load(tokenId);
+    return await this.nftGraphDataLoader.load(id);
   };
 
-  async loadNFTs(tokenContractAndId: readonly string[]) {
-    return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
+  async loadNFTs(nfts: readonly NFTIdentifier[]) {
+    return await this.nftGraphDataLoader.loadMany(
+      nfts.map(({ contract, id }) => getAddress(`${contract}:${id}`))
+    );
   }
 
   getClient() {
@@ -152,8 +160,11 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
       if (sortItem.field === SortField.MINTED) {
         sortKey = Media_OrderBy.CreatedAtBlockNumber;
       }
-      if (sortItem.field === SortField.PRICE) {
+      if (sortItem.field === SortField.AUCTION_PRICE) {
         sortKey = Media_OrderBy.CurrentBids;
+      }
+      if (sortItem.field === SortField.FIXED_PRICE) {
+        sortKey = Media_OrderBy.CurrentAsk;
       }
       if (sortItem.field === SortField.TOKEN_ID) {
         sortKey = Media_OrderBy.Id;

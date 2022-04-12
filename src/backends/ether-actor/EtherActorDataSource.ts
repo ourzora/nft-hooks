@@ -5,8 +5,9 @@ import {
   EtherActorDataInterface,
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
-import { MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
+import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { NFTQuery } from '../../types/NFTQuery';
+import { getAddress } from '@ethersproject/address';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',
@@ -26,16 +27,18 @@ export class EtherActorDataSource implements EtherActorDataInterface {
     this.endpoint = `https://${ENDPOINT_PARTS_BY_NETWORK[networkId]}.ether.actor/nft/`;
     this.timeout = timeout;
   }
-  loadNFT = async (
-    tokenContract: string,
-    tokenId: string
-  ): Promise<EtherActorServerResponse | Error> => {
-    return await this.nftsLoader.load(`${tokenContract}:${tokenId}`);
+  loadNFT = async ({
+    contract,
+    id,
+  }: NFTIdentifier): Promise<EtherActorServerResponse | Error> => {
+    return await this.nftsLoader.load(`${contract}:${id}`);
   };
   loadNFTs = async (
-    tokenContractAndIds: string[]
+    nfts: NFTIdentifier[]
   ): Promise<(EtherActorServerResponse | Error)[]> => {
-    return await this.nftsLoader.loadMany(tokenContractAndIds);
+    return await this.nftsLoader.loadMany(
+      nfts.map((nft) => `${getAddress(nft.contract)}-${nft.id}`)
+    );
   };
   canLoadNFT() {
     return true;
