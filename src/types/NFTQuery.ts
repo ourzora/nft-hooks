@@ -11,7 +11,6 @@ export enum SortDirection {
 }
 
 export enum SortField {
-  MINTED,
   ACTIVE,
   AUCTION_PRICE,
   FIXED_PRICE,
