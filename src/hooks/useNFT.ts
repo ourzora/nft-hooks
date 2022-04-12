@@ -47,7 +47,9 @@ export function useNFT(
 
   // Fetch market data (if needed)
   const { data: nftMarketData, error: nftMarketError } = useSWR(
-    contractAddress && tokenId
+    contractAddress &&
+      tokenId &&
+      strategy.hasSecondaryData({ contract: contractAddress, id: tokenId })
       ? ['fetchNFTMarket', contractAddress, tokenId]
       : null,
     (_, address: string, tokenId: string) => strategy.fetchSeconaryData(address, tokenId),
