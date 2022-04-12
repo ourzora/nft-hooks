@@ -17,8 +17,6 @@ import {
   TokenSortKey,
   TokensQueryInput,
   TokensQueryFilter,
-  MarketInfoFragment,
-  MarketDetailsFragment,
   TokenSortInput,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
@@ -103,7 +101,7 @@ function getMarkets(markets: TokenResponseItem['markets']) {
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
     const getStandardMarketData = (
-      market: MarketInfoFragment & MarketDetailsFragment,
+      market: TokenResponseItem['markets'][0],
       amount: PriceSummaryFragment
     ) => ({
       createdAt: {

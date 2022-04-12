@@ -46,6 +46,7 @@ import {
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
 
 function dateToUnix(date?: string) {
   if (!date) {
@@ -457,12 +458,14 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   }
 
   loadNFT = async ({ contract, id }: NFTIdentifier) => {
-    return await this.nftGraphDataLoader.load(`${getAddress(contract)}-${id}`);
+    return await this.nftGraphDataLoader.load(
+      `${getAddress(contract)}${NFT_ID_SEPERATOR}${id}`
+    );
   };
 
   loadNFTs = async (nfts: readonly NFTIdentifier[]) => {
     return await this.nftGraphDataLoader.loadMany(
-      nfts.map((nft) => `${getAddress(nft.contract)}-${nft.id}`)
+      nfts.map((nft) => `${getAddress(nft.contract)}${NFT_ID_SEPERATOR}${nft.id}`)
     );
   };
 

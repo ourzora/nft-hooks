@@ -8,6 +8,7 @@ import {
 import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { NFTQuery } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',
@@ -31,13 +32,13 @@ export class EtherActorDataSource implements EtherActorDataInterface {
     contract,
     id,
   }: NFTIdentifier): Promise<EtherActorServerResponse | Error> => {
-    return await this.nftsLoader.load(`${contract}:${id}`);
+    return await this.nftsLoader.load(getAddress(`${contract}${NFT_ID_SEPERATOR}${id}`));
   };
   loadNFTs = async (
     nfts: NFTIdentifier[]
   ): Promise<(EtherActorServerResponse | Error)[]> => {
     return await this.nftsLoader.loadMany(
-      nfts.map((nft) => `${getAddress(nft.contract)}-${nft.id}`)
+      nfts.map((nft) => `${getAddress(nft.contract)}${NFT_ID_SEPERATOR}${nft.id}`)
     );
   };
   canLoadNFT() {

@@ -28,6 +28,7 @@ import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
 import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
 
 export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
@@ -108,7 +109,7 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
 
   async loadNFTs(nfts: readonly NFTIdentifier[]) {
     return await this.nftGraphDataLoader.loadMany(
-      nfts.map(({ contract, id }) => getAddress(`${contract}:${id}`))
+      nfts.map(({ contract, id }) => getAddress(`${contract}${NFT_ID_SEPERATOR}${id}`))
     );
   }
 

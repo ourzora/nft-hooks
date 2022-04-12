@@ -16,6 +16,7 @@ export enum SortField {
   FIXED_PRICE,
   ANY_PRICE,
   TOKEN_ID,
+  MINTED,
 }
 
 export type QuerySort = {
