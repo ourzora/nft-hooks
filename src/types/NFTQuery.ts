@@ -12,11 +12,11 @@ export enum SortDirection {
 
 export enum SortField {
   ACTIVE,
-  ANY_PRICE,
   AUCTION_PRICE,
   FIXED_PRICE,
-  MINTED,
+  ANY_PRICE,
   TOKEN_ID,
+  MINTED,
 }
 
 export type QuerySort = {
@@ -27,7 +27,7 @@ export type QuerySort = {
 export enum ViewType {
   SUMMARY,
   FULL,
-};
+}
 
 export type NFTQuery = {
   query: {
@@ -36,11 +36,11 @@ export type NFTQuery = {
     minters?: string[];
     activeMarkets?: MarketType[];
   };
-  view: ViewType,
+  view: ViewType;
   sort?: QuerySort[];
   pagination?: {
     limit: number;
     offset: number;
   };
-  additional?: any,
+  additional?: any;
 };

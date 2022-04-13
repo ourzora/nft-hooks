@@ -25,6 +25,8 @@ import {
   GET_AUCTION_BY_CURATOR,
   GET_AUCTION_BY_MEDIA,
 } from './zora-graph';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { getAddress } from '@ethersproject/address';
 
 function unixTimeNow() {
   return Math.floor(new Date().getTime() / 1000);
@@ -63,7 +65,9 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
   }
 
   loadAuctionInfo(contractAddress: string, tokenId: string): Promise<NFTObject> {
-    return this.auctionInfoLoader.load(`${contractAddress.toLowerCase()}-${tokenId}`);
+    return this.auctionInfoLoader.load(
+      getAddress(`${contractAddress.toLowerCase()}${NFT_ID_SEPERATOR}${tokenId}`)
+    );
   }
 
   static transformNFT(response: ReserveAuctionPartialFragment) {

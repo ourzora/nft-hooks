@@ -66,18 +66,18 @@ type Nullable<T> = T | null;
 export type ETHAddress = string;
 
 export type CurrencyAmount = {
-  raw: string,
-  value: number,
-  decimals?: number,
+  raw: string;
+  value: number;
+  decimals?: number;
 };
 
 export type CurrencyValue = {
-  eth?: CurrencyAmount,
-  usd?: CurrencyAmount,
+  eth?: CurrencyAmount;
+  usd?: CurrencyAmount;
   amount: CurrencyAmount;
   symbol: string;
   name?: string;
-  address: string;
+  address: ETHAddress;
 };
 
 export type TimedAction = {
@@ -106,7 +106,7 @@ export type AuctionLike = {
   currentBid?: AuctionBidEvent;
   reservePrice?: CurrencyValue;
   // current bid is duplicated within bids
-  bids: AuctionBidEvent[];
+  bids: readonly AuctionBidEvent[];
   source: AUCTION_SOURCE_TYPES;
   type: MARKET_TYPES.AUCTION;
 } & MarketInfo;
@@ -121,7 +121,7 @@ export type FixedPriceLike = {
 export type EditionLike = {
   totalSupply: number;
   editionSize: number;
-  purchases: EditionPurchaseEvent[];
+  purchases: readonly EditionPurchaseEvent[];
   source: EDITION_SOURCES;
   type: MARKET_TYPES.EDITION;
 } & MarketInfo;
@@ -187,7 +187,7 @@ export type NFTObject = {
   nft?: {
     tokenId: string;
     contract: {
-      address: string;
+      address: ETHAddress;
       name?: string;
       description?: string;
       symbol?: string;
@@ -200,7 +200,7 @@ export type NFTObject = {
     };
     owner?: {
       address: ETHAddress;
-    },
+    };
     metadataURI: Nullable<string>;
     // Zora-specific extension but exposed for parsed JSON in contracts
     contentURI: Nullable<string>;
@@ -210,20 +210,25 @@ export type NFTObject = {
     description?: string;
     contentUri?: string;
     imageUri?: string;
-    attributes?: MetadataAttributeType[];
+    attributes?: readonly MetadataAttributeType[];
     // Raw uri or metadata retrieved from the server without normalisation
     raw?: any;
     // This is context parsing
     context?: any;
   };
-  markets?: MarketModule[];
-  events?: TokenEvent[];
+  markets?: readonly MarketModule[];
+  events?: readonly TokenEvent[];
+};
+
+export type NFTIdentifier = {
+  contract: string;
+  id: string;
 };
 
 export interface NFTInterface<T> {
-  loadNFT(tokenContract: string, tokenId: string): Promise<T | Error>;
-  loadNFTs(tokenContractAndIds: readonly string[]): Promise<(T | Error)[]>;
+  loadNFT(nft: NFTIdentifier): Promise<T | Error>;
+  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(T | Error)[]>;
   queryNFTs(query: NFTQuery): Promise<T[] | Error>;
-  canLoadNFT(tokenContract: string, tokenId: string): boolean;
+  canLoadNFT(nft: NFTIdentifier): boolean;
   transformNFT(response: T, currentObject?: NFTObject): NFTObject;
 }

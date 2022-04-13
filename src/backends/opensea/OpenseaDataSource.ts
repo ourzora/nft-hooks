@@ -3,8 +3,10 @@ import { NFTQuery } from '../../types/NFTQuery';
 import { NetworkIDs } from '../../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
-import { MEDIA_SOURCES, NFTObject } from '../../types/NFTInterface';
+import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { getAddress } from '@ethersproject/address';
 
 type OpenseaDataResponse = {
   assets: OpenseaAsset[];
@@ -23,14 +25,15 @@ export class OpenseaDataSource implements OpenseaInterface {
     this.endpoint = OPENSEA_API_URL_BY_NETWORK[networkId];
     this.timeout = timeout;
   }
-  loadNFT = async (
-    tokenContract: string,
-    tokenId: string
-  ): Promise<OpenseaAsset | Error> => {
-    return await this.nftsLoader.load(`${tokenContract}:${tokenId}`);
+  loadNFT = async ({ contract, id }: NFTIdentifier): Promise<OpenseaAsset | Error> => {
+    return await this.nftsLoader.load(getAddress(`${contract}${NFT_ID_SEPERATOR}${id}`));
   };
-  loadNFTs = async (tokenContractAndId: string[]): Promise<(OpenseaAsset | Error)[]> => {
-    return await this.nftsLoader.loadMany(tokenContractAndId);
+  loadNFTs = async (
+    nfts: readonly NFTIdentifier[]
+  ): Promise<(OpenseaAsset | Error)[]> => {
+    return await this.nftsLoader.loadMany(
+      nfts.map((nft) => getAddress(`${nft.contract}${NFT_ID_SEPERATOR}${nft.id}`))
+    );
   };
   canLoadNFT() {
     return true;

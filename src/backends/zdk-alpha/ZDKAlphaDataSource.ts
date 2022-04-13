@@ -1,15 +1,11 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { TokenMarketResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { TokenResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
   MarketType as ZDKMarketType,
   Network,
-  TokenMarketsFilterInput,
-  TokenMarketSortKeySortInput,
-  TokenMarketsQueryInput,
   SortDirection as ZDKSortDirection,
-  TokenMarketSortKey,
   V1Ask,
   V1MarketEntityStatus,
   V1Offer,
@@ -18,6 +14,10 @@ import {
   V3AskPropertiesFragment,
   V2AuctionMarketPropertiesFragment,
   PriceSummaryFragment,
+  TokenSortKey,
+  TokensQueryInput,
+  TokensQueryFilter,
+  TokenSortInput,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import {
@@ -28,6 +28,7 @@ import {
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
   MEDIA_SOURCES,
+  NFTIdentifier,
 } from '../../types';
 
 function getChainFromNetwork(network: NetworkIDs) {
@@ -45,25 +46,21 @@ function getChainFromNetwork(network: NetworkIDs) {
 
 const resolveSortKey = (sortField: SortField) => {
   if (sortField === SortField.MINTED) {
-    return TokenMarketSortKey.Minted;
+    return TokenSortKey.Minted;
   }
   if (sortField === SortField.ACTIVE) {
-    return TokenMarketSortKey.Transferred;
+    return TokenSortKey.Transferred;
   }
-  if (
-    [SortField.ANY_PRICE, SortField.AUCTION_PRICE, SortField.FIXED_PRICE].includes(
-      sortField
-    )
-  ) {
+  if (sortField === SortField.ANY_PRICE) {
     throw new Error('not supported');
   }
   if (sortField === SortField.TOKEN_ID) {
-    return TokenMarketSortKey.TokenId;
+    return TokenSortKey.TokenId;
   }
   throw new Error('not supported');
 };
 
-function getMarkets(markets: TokenMarketResponseItem['markets']) {
+function getMarkets(markets: TokenResponseItem['markets']) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
@@ -104,7 +101,7 @@ function getMarkets(markets: TokenMarketResponseItem['markets']) {
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
     const getStandardMarketData = (
-      market: TokenMarketResponseItem['markets'][0],
+      market: TokenResponseItem['markets'][0],
       amount: PriceSummaryFragment
     ) => ({
       createdAt: {
@@ -245,11 +242,11 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     ]);
   }
 
-  canLoadNFT(_: string, __: string) {
+  canLoadNFT(_: NFTIdentifier) {
     return true;
   }
 
-  transformNFT(tokenMarket: TokenMarketResponseItem, object?: NFTObject) {
+  transformNFT(tokenMarket: TokenResponseItem, object?: NFTObject) {
     if (!object) {
       object = { rawData: {} };
     }
@@ -308,36 +305,34 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return object;
   }
 
-  loadNFT = async (
-    tokenContract: string,
-    tokenId: string
-  ): Promise<TokenMarketResponseItem | Error> => {
-    const response = await this.zdk.tokenMarkets({
+  loadNFT = async ({
+    contract,
+    id,
+  }: NFTIdentifier): Promise<TokenResponseItem | Error> => {
+    const response = await this.zdk.tokens({
       includeFullDetails: true,
       where: {
-        tokens: [{ tokenId, address: tokenContract }],
+        tokens: [{ tokenId: id, address: contract }],
       },
     });
-    return response.tokenMarkets.nodes.length > 0
-      ? response.tokenMarkets.nodes[0]
+
+    return response.tokens.nodes.length > 0
+      ? response.tokens.nodes[0]
       : new Error('No token');
   };
 
-  loadNFTs(
-    tokenContractAndIds: readonly string[]
-  ): Promise<(TokenMarketResponseItem | Error)[]> {
+  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(TokenResponseItem | Error)[]> {
     return Promise.all(
-      tokenContractAndIds.map((tokenContractAndId) => {
-        const [tokenContract, tokenId] = tokenContractAndId.split(':');
-        return this.loadNFT(tokenContract, tokenId);
+      nfts.map(({ contract, id }) => {
+        return this.loadNFT({ contract, id });
       })
     );
   }
 
   queryNFTs = async (query: NFTQuery) => {
-    const marketsQuery: TokenMarketsQueryInput = {};
-    const marketsFilter: TokenMarketsFilterInput = {};
-    let marketsSort: TokenMarketSortKeySortInput | undefined = undefined;
+    const marketsQuery: TokensQueryInput = {};
+    const marketsFilter: TokensQueryFilter = {};
+    let marketsSort: TokenSortInput | undefined = undefined;
 
     marketsQuery.ownerAddresses = query.query.owners;
     marketsQuery.collectionAddresses = query.query.collections;
@@ -383,15 +378,15 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       });
     }
 
-    const results = await this.zdk.tokenMarkets({
+    const results = await this.zdk.tokens({
       where: marketsQuery,
       filter: marketsFilter,
       sort: marketsSort,
       includeFullDetails: true,
       includeSalesHistory: !!query.additional.includeSaleHistory,
     });
-    if (results.tokenMarkets.nodes) {
-      return results.tokenMarkets.nodes;
+    if (results.tokens.nodes) {
+      return results.tokens.nodes;
     }
     return [];
   };

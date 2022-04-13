@@ -1648,10 +1648,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@zoralabs/zdk-alpha@0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@zoralabs/zdk-alpha/-/zdk-alpha-0.0.12.tgz#4fe501c37e49c88b76442d8b8d92e862828f3500"
-  integrity sha512-BzOUXp6oNNZVfoPnJzW5FMhhs+EFZrin4a+hmGBQ2AvYXl5TPPy3cYajGI9dMbi8QDoebqbg8MpsWXl75mlfQw==
+"@zoralabs/zdk-alpha@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@zoralabs/zdk-alpha/-/zdk-alpha-0.0.14.tgz#391e0b88e9fbd890e64441f767e4bc6ed9a503b6"
+  integrity sha512-+oWRcqgz3aBMI/MIj9b19ITudN1lJxjiweNu0YILtsGzLsSN4TR2nACUxiBDlOTvIwv5EJIcBeGCC4B3wpbrvA==
   dependencies:
     big.js "^6.1.0"
     graphql "16.3.0"
@@ -5552,7 +5552,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-merge-anything@5.0.2:
+merge-anything@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/merge-anything/-/merge-anything-5.0.2.tgz#b023af9b8f48e2fc71eb859d4ad834ba667f4150"
   integrity sha512-POPQBWkBC0vxdgzRJ2Mkj4+2NTKbvkHo93ih+jGDhNMLzIw+rYKjO7949hOQM2X7DxMHH1uoUkwWFLIzImw7gA==

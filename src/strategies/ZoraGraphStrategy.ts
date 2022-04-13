@@ -16,7 +16,7 @@ export class ZoraGraphStrategy extends NFTStrategy {
   }
 
   fetchNFT = async (contract: string, id: string) => {
-    const response = await this.graphDataSource.loadNFT(contract, id);
+    const response = await this.graphDataSource.loadNFT({ contract, id });
     if (response instanceof Error) {
       throw response;
     }
