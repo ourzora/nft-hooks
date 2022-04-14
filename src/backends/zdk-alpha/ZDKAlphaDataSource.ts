@@ -60,7 +60,7 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
-function getMarkets(markets: TokenResponseItem['markets']) {
+function getMarkets(markets: TokenResponseItem['marketsSummary']) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
@@ -101,7 +101,7 @@ function getMarkets(markets: TokenResponseItem['markets']) {
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
     const getStandardMarketData = (
-      market: TokenResponseItem['markets'][0],
+      market: TokenResponseItem['marketsSummary'][0],
       amount: PriceSummaryFragment
     ) => ({
       createdAt: {
@@ -277,7 +277,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       metadataURI: token.tokenUrl || null,
       contentURI: token.content?.url || null,
     };
-    object.markets = getMarkets(tokenMarket.markets);
+    object.markets = getMarkets(tokenMarket.marketsSummary);
     // sales?
 
     object.metadata = token.metadata as any;
