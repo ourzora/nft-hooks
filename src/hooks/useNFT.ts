@@ -21,7 +21,7 @@ type OptionsType = {
 };
 
 /**
- * Fetches on-chain NFT data and pricing for the given zNFT id
+ * Fetches on-chain NFT data and pricing for the given nft contract address and id
  *
  * @param contractAddress address of the contract, if null and tokenID is passed in, a ZNFT is assumed
  * @param tokenId id of NFT to fetch blockchain information for
@@ -50,9 +50,9 @@ export function useNFT(
     contractAddress &&
       tokenId &&
       strategy.hasSecondaryData({ contract: contractAddress, id: tokenId })
-      ? ['fetchNFTMarket', contractAddress, tokenId]
+      ? ['fetchSecondaryData', contractAddress, tokenId]
       : null,
-    (_, address: string, tokenId: string) => strategy.fetchSeconaryData(address, tokenId),
+    (_, address: string, tokenId: string) => strategy.fetchSecondaryData(address, tokenId),
     marketOptions
   );
 

@@ -17,7 +17,7 @@ export abstract class NFTStrategy {
   // By default don't query secondary data endpoint.
   hasSecondaryData = (_: FetchInfo) => false;
 
-  async fetchSeconaryData(contract: string, id: string): Promise<NFTObject> {
+  async fetchSecondaryData(contract: string, id: string): Promise<NFTObject> {
     return {
       rawData: {},
       nft: {

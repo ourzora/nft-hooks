@@ -23,10 +23,6 @@ export class ZoraV2IndexerStrategy extends NFTStrategy {
     return this.zoraIndexerDataSource.transformNFT(response, {} as any);
   };
 
-  fetchMarket = async (_: string, __: string) => {
-    return { rawData: {} };
-  };
-
   queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {
     const response = await this.zoraIndexerDataSource.queryNFTs(query);
     if (response instanceof Error) {
