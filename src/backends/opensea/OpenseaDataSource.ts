@@ -5,7 +5,7 @@ import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
 import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 import { getAddress } from '@ethersproject/address';
 
 type OpenseaDataResponse = {

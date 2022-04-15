@@ -25,7 +25,7 @@ import {
   GET_AUCTION_BY_CURATOR,
   GET_AUCTION_BY_MEDIA,
 } from './zora-graph';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 import { getAddress } from '@ethersproject/address';
 
 function unixTimeNow() {
