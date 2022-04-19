@@ -9,12 +9,6 @@ export class ZDKAlphaFetchStrategy extends NFTStrategy {
     super(networkId);
     this.source = new ZDKAlphaDataSource(networkId, endpoint);
   }
-  fetchMarket = async (_: string, __: string): Promise<NFTObject> => {
-    return { rawData: {} };
-  };
-  shouldFetchMarket(): boolean {
-    return false;
-  }
   fetchNFT = async (contract: string, id: string): Promise<NFTObject> => {
     const result = await this.source.loadNFT({ contract, id });
     if (result instanceof Error) {

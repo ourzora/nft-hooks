@@ -13,7 +13,10 @@ export const defaultFetchAgent: { strategy: any; fetcher: any } = {
   fetcher,
 };
 
-export const NFTFetchContext = React.createContext(defaultFetchAgent);
+export const NFTFetchContext = React.createContext<{
+  strategy: NFTStrategy | ZoraV2IndexerStrategy;
+  fetcher: MediaFetchAgent;
+}>(defaultFetchAgent);
 
 type NFTFetchConfigurationProps = {
   strategy?: NFTStrategy;
