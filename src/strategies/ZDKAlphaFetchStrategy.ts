@@ -16,7 +16,7 @@ export class ZDKAlphaFetchStrategy extends NFTStrategy {
     return false;
   }
   fetchNFT = async (contract: string, id: string): Promise<NFTObject> => {
-    const result = await this.source.loadNFT(contract, id);
+    const result = await this.source.loadNFT({ contract, id });
     if (result instanceof Error) {
       throw result;
     }

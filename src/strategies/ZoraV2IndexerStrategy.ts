@@ -16,7 +16,7 @@ export class ZoraV2IndexerStrategy extends NFTStrategy {
   }
 
   fetchNFT = async (contract: string, id: string): Promise<any> => {
-    const response = await this.zoraIndexerDataSource.loadNFT(contract, id);
+    const response = await this.zoraIndexerDataSource.loadNFT({ contract, id });
     if (response instanceof Error) {
       throw response;
     }

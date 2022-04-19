@@ -31,6 +31,7 @@ import {
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
   MetadataAttributeType,
+  NFTIdentifier,
   NFTObject,
   TokenMarketEvent,
   TokenTransferEvent,
@@ -45,6 +46,7 @@ import {
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import { NFT_ID_SEPERATOR } from 'src/constants/shared';
 
 function dateToUnix(date?: string) {
   if (!date) {
@@ -455,11 +457,16 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     return object;
   }
 
-  loadNFT = async (tokenContract: string, tokenId: string) => {
-    return await this.nftGraphDataLoader.load(`${getAddress(tokenContract)}-${tokenId}`);
+  loadNFT = async ({ contract, id }: NFTIdentifier) => {
+    return await this.nftGraphDataLoader.load(
+      `${getAddress(contract)}${NFT_ID_SEPERATOR}${id}`
+    );
   };
-  loadNFTs = async (tokenContractAndId: readonly string[]) => {
-    return await this.nftGraphDataLoader.loadMany(tokenContractAndId);
+
+  loadNFTs = async (nfts: readonly NFTIdentifier[]) => {
+    return await this.nftGraphDataLoader.loadMany(
+      nfts.map((nft) => `${getAddress(nft.contract)}${NFT_ID_SEPERATOR}${nft.id}`)
+    );
   };
 
   fetchNFTs = async (mediaIds: readonly string[]) => {
