@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { ENSInfo } from 'src/backends/ens-reverse/ENSInterface';
 import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
@@ -11,7 +12,7 @@ import { NFTFetchContext } from '../context/NFTFetchContext';
  */
 export function useENSAddress(address?: string, options?: SWRConfiguration<any>) {
   const { fetcher } = useContext(NFTFetchContext);
-  return useSWR<string>(
+  return useSWR<ENSInfo>(
     address ? ['loadENS', address.toLowerCase()] : null,
     async (_, address: string) => fetcher.loadEnsName(address),
     options

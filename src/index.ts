@@ -9,14 +9,12 @@ import { useZoraUsername } from './hooks/useZoraUsername';
 import { RequestError } from './fetcher/RequestError';
 import { CurrencyValue, NFTObject } from './types/NFTInterface';
 import * as Strategies from './strategies';
-import { useFetchQuery } from './hooks/useFetchQuery';
 
 export {
   // Hooks
   useNFT,
   useNFTContent,
   useNFTMetadata,
-  useFetchQuery,
   // Wrapped by useNFT, can use the underlying hooks here
   useZoraUsername,
   useENSAddress,
