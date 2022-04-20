@@ -46,7 +46,7 @@ import {
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
 function dateToUnix(date?: string) {
   if (!date) {
