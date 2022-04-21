@@ -8,7 +8,7 @@ import {
 import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { NFTQuery } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
 const ENDPOINT_PARTS_BY_NETWORK = {
   [Networks.MAINNET]: 'mainnet',

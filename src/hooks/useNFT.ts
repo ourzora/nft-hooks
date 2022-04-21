@@ -52,7 +52,8 @@ export function useNFT(
       strategy.hasSecondaryData({ contract: contractAddress, id: tokenId })
       ? ['fetchNFTMarket', contractAddress, tokenId]
       : null,
-    (_, address: string, tokenId: string) => strategy.fetchSeconaryData(address, tokenId),
+    (_, address: string, tokenId: string) =>
+      strategy.fetchSeconaryData(address, tokenId, nftData),
     marketOptions
   );
 
