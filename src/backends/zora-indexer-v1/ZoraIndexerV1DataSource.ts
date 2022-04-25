@@ -246,11 +246,11 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
-      return MARKET_INFO_STATUSES.PENDING;
-    }
     if (auction.canceledEvent) {
       return MARKET_INFO_STATUSES.CANCELED;
+    }
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
+      return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.endedEvent) {
       return MARKET_INFO_STATUSES.COMPLETE;
