@@ -53,7 +53,7 @@ export function useNFT(
       ? ['fetchSecondaryData', contractAddress, tokenId]
       : null,
     (_, address: string, tokenId: string) =>
-      strategy.fetchSecondaryData(address, tokenId),
+      strategy.fetchSecondaryData(address, tokenId, nftData),
     marketOptions
   );
 
