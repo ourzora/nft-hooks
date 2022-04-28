@@ -46,7 +46,7 @@ import {
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
 function dateToUnix(date?: string) {
   if (!date) {
@@ -246,11 +246,11 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] 
 
 function extractAuction(auction: IndexerAuctionPartFragment) {
   const getStatus = () => {
-    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
-      return MARKET_INFO_STATUSES.PENDING;
-    }
     if (auction.canceledEvent) {
       return MARKET_INFO_STATUSES.CANCELED;
+    }
+    if (!auction.approved || (auction.approved && !auction.firstBidTime)) {
+      return MARKET_INFO_STATUSES.PENDING;
     }
     if (auction.endedEvent) {
       return MARKET_INFO_STATUSES.COMPLETE;

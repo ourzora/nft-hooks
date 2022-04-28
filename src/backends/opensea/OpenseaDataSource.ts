@@ -5,7 +5,7 @@ import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
 import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
 import { OpenseaAsset, OpenseaInterface } from './OpenseaInterface';
-import { NFT_ID_SEPERATOR } from 'src/constants/shared';
+import { NFT_ID_SEPERATOR } from '../../constants/shared';
 import { getAddress } from '@ethersproject/address';
 
 type OpenseaDataResponse = {
@@ -26,13 +26,13 @@ export class OpenseaDataSource implements OpenseaInterface {
     this.timeout = timeout;
   }
   loadNFT = async ({ contract, id }: NFTIdentifier): Promise<OpenseaAsset | Error> => {
-    return await this.nftsLoader.load(getAddress(`${contract}${NFT_ID_SEPERATOR}${id}`));
+    return await this.nftsLoader.load(`${getAddress(contract)}${NFT_ID_SEPERATOR}${id}`);
   };
   loadNFTs = async (
     nfts: readonly NFTIdentifier[]
   ): Promise<(OpenseaAsset | Error)[]> => {
     return await this.nftsLoader.loadMany(
-      nfts.map((nft) => getAddress(`${nft.contract}${NFT_ID_SEPERATOR}${nft.id}`))
+      nfts.map((nft) => `${getAddress(nft.contract)}${NFT_ID_SEPERATOR}${nft.id}`)
     );
   };
   canLoadNFT() {
@@ -45,19 +45,19 @@ export class OpenseaDataSource implements OpenseaInterface {
     object.nft = {
       tokenId: asset.token_id.toString(),
       contract: {
-        address: asset.asset_contract.address,
+        address: asset.asset_contract?.address,
         name: asset.asset_contract.name || undefined,
         symbol: asset.asset_contract.symbol || undefined,
         description: asset.asset_contract.description || undefined,
         imageUri: asset.asset_contract.image_url || undefined,
       },
       owner: {
-        address: asset.owner.address,
+        address: asset.owner?.address,
       },
       metadataURI: asset.token_metadata,
       contentURI: asset.animation_original_url || asset.image_original_url,
       minted: {
-        address: asset.creator.address,
+        address: asset.creator?.address,
       },
     };
     object.metadata = {
@@ -102,7 +102,7 @@ export class OpenseaDataSource implements OpenseaInterface {
   ): Promise<(Error | OpenseaAsset)[]> => {
     const urlParams: string[] = [];
     const nftTuples = nftAddressesAndTokens.map((address) =>
-      address.toLowerCase().split(':')
+      address.toLowerCase().split(NFT_ID_SEPERATOR)
     );
     nftTuples.forEach(([address, tokenId]) => {
       urlParams.push(`token_ids=${tokenId}&asset_contract_addresses=${address}`);
