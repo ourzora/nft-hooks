@@ -233,6 +233,65 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
   });
   return marketResponse;
 }
+
+export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NFTObject) {
+  if (!object) {
+    object = { rawData: {} };
+  }
+  const { token } = tokenMarket;
+  object.nft = {
+    tokenId: token.tokenId,
+    contract: {
+      address: token.collectionAddress,
+      name: token.tokenContract?.name || undefined,
+      symbol: token.tokenContract?.symbol || undefined,
+    },
+    minted: {
+      address: token.mintInfo?.originatorAddress || undefined,
+      at: token.mintInfo
+        ? {
+            timestamp:
+              new Date(token.mintInfo.mintContext.blockTimestamp).getTime() / 1000,
+            blockNumber: token.mintInfo.mintContext.blockNumber,
+            transactionHash: token.mintInfo!.mintContext.transactionHash || undefined,
+          }
+        : undefined,
+    },
+    owner: token.owner
+      ? {
+          address: token.owner,
+        }
+      : undefined,
+    metadataURI: token.tokenUrl || null,
+    contentURI: token.content?.url || null,
+  };
+  object.markets = getMarkets(tokenMarket.marketsSummary);
+  // sales?
+
+  object.metadata = token.metadata as any;
+  object.media = {
+    image: token.image?.url
+      ? {
+          mime: token.image.mimeType || undefined,
+          uri: token.image.url,
+        }
+      : null,
+    content: token.content?.url
+      ? {
+          mime: token.content.mimeType || undefined,
+          uri: token.content.url,
+        }
+      : null,
+    thumbnail: null,
+    source: MEDIA_SOURCES.ZORA,
+  };
+
+  if (!object.rawData) {
+    object.rawData = {};
+  }
+  object.rawData['APIIndexer'] = token;
+  return object;
+}
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
@@ -247,62 +306,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   }
 
   transformNFT(tokenMarket: TokenResponseItem, object?: NFTObject) {
-    if (!object) {
-      object = { rawData: {} };
-    }
-    const { token } = tokenMarket;
-    object.nft = {
-      tokenId: token.tokenId,
-      contract: {
-        address: token.collectionAddress,
-        name: token.tokenContract?.name || undefined,
-        symbol: token.tokenContract?.symbol || undefined,
-      },
-      minted: {
-        address: token.mintInfo?.originatorAddress || undefined,
-        at: token.mintInfo
-          ? {
-              timestamp:
-                new Date(token.mintInfo.mintContext.blockTimestamp).getTime() / 1000,
-              blockNumber: token.mintInfo.mintContext.blockNumber,
-              transactionHash: token.mintInfo!.mintContext.transactionHash || undefined,
-            }
-          : undefined,
-      },
-      owner: token.owner
-        ? {
-            address: token.owner,
-          }
-        : undefined,
-      metadataURI: token.tokenUrl || null,
-      contentURI: token.content?.url || null,
-    };
-    object.markets = getMarkets(tokenMarket.marketsSummary);
-    // sales?
-
-    object.metadata = token.metadata as any;
-    object.media = {
-      image: token.image?.url
-        ? {
-            mime: token.image.mimeType || undefined,
-            uri: token.image.url,
-          }
-        : null,
-      content: token.content?.url
-        ? {
-            mime: token.content.mimeType || undefined,
-            uri: token.content.url,
-          }
-        : null,
-      thumbnail: null,
-      source: MEDIA_SOURCES.ZORA,
-    };
-
-    if (!object.rawData) {
-      object.rawData = {};
-    }
-    object.rawData['APIIndexer'] = token;
-    return object;
+    return transformNFTZDKAlpha(tokenMarket, object);
   }
 
   loadNFT = async ({

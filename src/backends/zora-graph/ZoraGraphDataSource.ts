@@ -30,6 +30,52 @@ import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
+export function transformNFTZoraGraph(
+  mediaContractAddress: string,
+  { asset, metadata }: { asset: NftMediaFullDataFragment; metadata: any },
+  object?: NFTObject
+) {
+  if (!object) {
+    object = { rawData: {} };
+  }
+  object.markets = asset.reserveAuctions
+    ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
+    .filter((el) => !!el && el.length)
+    .map((item) => (item as any)[0]);
+  object.nft = {
+    tokenId: asset.id,
+    contract: {
+      address: mediaContractAddress,
+      name: 'Zora',
+      symbol: 'ZORA',
+      knownContract: KNOWN_CONTRACTS.ZORA,
+    },
+    owner: {
+      address: asset.owner.id,
+    },
+    minted: {
+      address: asset.creator.id,
+      at: {
+        timestamp: asset.createdAtTimestamp,
+      },
+    },
+    metadataURI: asset.metadataURI,
+    contentURI: asset.contentURI,
+  };
+  // TODO: load from CDN
+  object.media = {
+    content: { uri: asset.contentURI, mime: metadata.mimeType },
+    thumbnail: null,
+    image: null,
+    source: MEDIA_SOURCES.DERIVED,
+  };
+  object.metadata = metadata;
+  if (!object.rawData) {
+    object.rawData = {};
+  }
+  object.rawData['ZoraGraph'] = asset;
+  return object;
+}
 export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   nftGraphDataLoader: DataLoader<string, ZoraGraphDataResponse>;
   networkId: NetworkIDs;
@@ -58,49 +104,10 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
   }
 
   transformNFT(
-    { asset, metadata }: { asset: NftMediaFullDataFragment; metadata: any },
+    data: { asset: NftMediaFullDataFragment; metadata: any },
     object?: NFTObject
   ) {
-    if (!object) {
-      object = { rawData: {} };
-    }
-    object.markets = asset.reserveAuctions
-      ?.map((auction) => GraphAuctionDataSource.transformNFT(auction).markets)
-      .filter((el) => !!el && el.length)
-      .map((item) => (item as any)[0]);
-    object.nft = {
-      tokenId: asset.id,
-      contract: {
-        address: this.mediaContractAddress,
-        name: 'Zora',
-        symbol: 'ZORA',
-        knownContract: KNOWN_CONTRACTS.ZORA,
-      },
-      owner: {
-        address: asset.owner.id,
-      },
-      minted: {
-        address: asset.creator.id,
-        at: {
-          timestamp: asset.createdAtTimestamp,
-        },
-      },
-      metadataURI: asset.metadataURI,
-      contentURI: asset.contentURI,
-    };
-    // TODO: load from CDN
-    object.media = {
-      content: { uri: asset.contentURI, mime: metadata.mimeType },
-      thumbnail: null,
-      image: null,
-      source: MEDIA_SOURCES.DERIVED,
-    };
-    object.metadata = metadata;
-    if (!object.rawData) {
-      object.rawData = {};
-    }
-    object.rawData['ZoraGraph'] = asset;
-    return object;
+    return transformNFTZoraGraph(this.mediaContractAddress, data, object);
   }
 
   loadNFT = async ({ contract, id }: { contract: string; id: string }) => {
