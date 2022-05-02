@@ -6,11 +6,11 @@ import { ZoraV2IndexerStrategy } from '../strategies';
 
 export type FetchContext = { strategy: typeof NFTStrategy };
 
-const fetcher = new MediaFetchAgent(Networks.MAINNET);
+const defaultNetwork = Networks.MAINNET;
 
 export const defaultFetchAgent: { strategy: any; fetcher: any } = {
-  strategy: null,
-  fetcher,
+  strategy: new ZoraV2IndexerStrategy(defaultNetwork),
+  fetcher: new MediaFetchAgent(defaultNetwork),
 };
 
 export const NFTFetchContext = React.createContext<{
@@ -21,7 +21,6 @@ export const NFTFetchContext = React.createContext<{
 type NFTFetchConfigurationProps = {
   strategy?: NFTStrategy;
   networkId: NetworkIDs;
-  // TODO(iain): fix children type
   children: React.ReactNode;
 };
 
@@ -36,9 +35,11 @@ export const NFTFetchConfiguration = ({
     }
     return new ZoraV2IndexerStrategy(networkId);
   }, [userStrategy]);
+
   const fetcher = useMemo(() => {
     return new MediaFetchAgent(networkId);
   }, [networkId]);
+
   return (
     <NFTFetchContext.Provider value={{ strategy, fetcher }}>
       {children}
