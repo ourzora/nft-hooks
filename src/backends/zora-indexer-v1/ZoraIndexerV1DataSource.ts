@@ -30,6 +30,7 @@ import {
   FIXED_SIDE_TYPES,
   MARKET_INFO_STATUSES,
   MARKET_TYPES,
+  MEDIA_SOURCES,
   MetadataAttributeType,
   NFTIdentifier,
   NFTObject,
@@ -436,6 +437,16 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       imageUri: metadata_json.image,
       attributes: getAttributes(metadata_json),
       raw: asset.metadata?.json,
+    };
+    object.media = {
+      content: asset.media?.contentURI
+        ? {
+            uri: asset.media?.contentURI,
+          }
+        : null,
+      thumbnail: null,
+      image: null,
+      source: MEDIA_SOURCES.ZORA,
     };
     if (!object.rawData) {
       object.rawData = {};
