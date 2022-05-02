@@ -14,14 +14,20 @@ export { OpenseaDataSource } from './opensea/OpenseaDataSource';
 export { OpenseaInterface } from './opensea/OpenseaInterface';
 
 export { ZDKAlphaDataInterface } from './zdk-alpha/ZDKAlphaDataInterface';
-export { ZDKAlphaDataSource } from './zdk-alpha/ZDKAlphaDataSource';
+export { ZDKAlphaDataSource, transformNFTZDKAlpha } from './zdk-alpha/ZDKAlphaDataSource';
 
 export { GraphAuctionDataSource } from './zora-graph/GraphAuctionDataSource';
 export { GraphAuctionInterface } from './zora-graph/GraphAuctionInterface';
 export { ZoraGraphDataInterface } from './zora-graph/ZoraGraphDataInterface';
-export { ZoraGraphDataSource } from './zora-graph/ZoraGraphDataSource';
+export {
+  ZoraGraphDataSource,
+  transformNFTZoraGraph,
+} from './zora-graph/ZoraGraphDataSource';
 
-export { ZoraIndexerV1DataSource } from './zora-indexer-v1/ZoraIndexerV1DataSource';
+export {
+  ZoraIndexerV1DataSource,
+  transformNFTZoraIndexerV1DataSource,
+} from './zora-indexer-v1/ZoraIndexerV1DataSource';
 export { ZoraIndexerV1Interface } from './zora-indexer-v1/ZoraIndexerV1Interface';
 
 export { ZoraUserDataSource } from './zora-user/ZoraUserDataSource';

@@ -376,6 +376,66 @@ function extractMarketData(response: IndexerTokenWithAuctionFragment, _: NFTObje
   ];
 }
 
+export function transformNFTZoraIndexerV1DataSource(
+  asset: IndexerTokenWithAuctionFragment,
+  object?: NFTObject
+) {
+  if (!object) {
+    object = { rawData: {} };
+  }
+  object.nft = {
+    tokenId: asset.tokenId,
+    contract: {
+      address: asset.tokenContract?.address!,
+      name: asset.tokenContract?.name || undefined,
+      symbol: asset.tokenContract?.symbol || undefined,
+    },
+    minted: {
+      at: {
+        blockNumber: asset.mintTransferEvent?.blockNumber,
+        // TODO(iain): fix normalization to handle missing date information
+        timestamp: asset.mintTransferEvent
+          ? dateToUnix(asset.mintTransferEvent?.blockTimestamp)!
+          : 0,
+        transactionHash: asset.mintTransferEvent?.transactionHash,
+      },
+      address: asset.minter || undefined,
+    },
+    owner: {
+      address: asset.owner,
+    },
+    metadataURI: asset.media ? asset.media.metadataURI! : asset.tokenURI!,
+    contentURI: asset.media?.contentURI!,
+  };
+  const metadata_json = asset.metadata?.json || {};
+  object.metadata = {
+    name: metadata_json.name,
+    description: metadata_json.description,
+    contentUri: metadata_json.animation_url,
+    imageUri: metadata_json.image,
+    attributes: getAttributes(metadata_json),
+    raw: asset.metadata?.json,
+  };
+  if (!object.rawData) {
+    object.rawData = {};
+  }
+  object.markets = extractMarketData(asset, object);
+  object.events = [];
+  // extract auction events?
+  if ('v3Events' in asset) {
+    const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
+    object.events = [
+      ...extractAskEvents(assetFull.v3Events),
+      ...extractTransferEvents(assetFull.transferEvents),
+    ];
+  }
+  if (!object.rawData) {
+    object.rawData = {};
+  }
+  object.rawData['ZoraIndexer'] = asset;
+  return object;
+}
+
 export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   nftGraphDataLoader: DataLoader<string, IndexerTokenWithAuctionFragment>;
   networkId: NetworkIDs;
@@ -401,60 +461,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   }
 
   transformNFT(asset: IndexerTokenWithAuctionFragment, object?: NFTObject) {
-    if (!object) {
-      object = { rawData: {} };
-    }
-    object.nft = {
-      tokenId: asset.tokenId,
-      contract: {
-        address: asset.tokenContract?.address!,
-        name: asset.tokenContract?.name || undefined,
-        symbol: asset.tokenContract?.symbol || undefined,
-      },
-      minted: {
-        at: {
-          blockNumber: asset.mintTransferEvent?.blockNumber,
-          // TODO(iain): fix normalization to handle missing date information
-          timestamp: asset.mintTransferEvent
-            ? dateToUnix(asset.mintTransferEvent?.blockTimestamp)!
-            : 0,
-          transactionHash: asset.mintTransferEvent?.transactionHash,
-        },
-        address: asset.minter || undefined,
-      },
-      owner: {
-        address: asset.owner,
-      },
-      metadataURI: asset.media ? asset.media.metadataURI! : asset.tokenURI!,
-      contentURI: asset.media?.contentURI!,
-    };
-    const metadata_json = asset.metadata?.json || {};
-    object.metadata = {
-      name: metadata_json.name,
-      description: metadata_json.description,
-      contentUri: metadata_json.animation_url,
-      imageUri: metadata_json.image,
-      attributes: getAttributes(metadata_json),
-      raw: asset.metadata?.json,
-    };
-    if (!object.rawData) {
-      object.rawData = {};
-    }
-    object.markets = extractMarketData(asset, object);
-    object.events = [];
-    // extract auction events?
-    if ('v3Events' in asset) {
-      const assetFull: IndexerTokenWithAuctionDetailFragment = asset;
-      object.events = [
-        ...extractAskEvents(assetFull.v3Events),
-        ...extractTransferEvents(assetFull.transferEvents),
-      ];
-    }
-    if (!object.rawData) {
-      object.rawData = {};
-    }
-    object.rawData['ZoraIndexer'] = asset;
-    return object;
+    return transformNFTZoraIndexerV1DataSource(asset, object);
   }
 
   loadNFT = async ({ contract, id }: NFTIdentifier) => {
