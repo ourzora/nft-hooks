@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { NetworkIDs, Networks } from '../constants/networks';
