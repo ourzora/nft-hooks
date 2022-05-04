@@ -52,22 +52,14 @@ scalar BigDecimal
 
 scalar BigInt
 
-"""The block at which the query should be executed."""
 input Block_height {
-  """Value containing a block hash"""
   hash: Bytes
-
-  """Value containing a block number"""
   number: Int
-
-  """
-  Value containing the minimum block number. 
-  In the case of `number_gte`, the query will be executed on the latest block only if
-  the subgraph has progressed to or past the minimum block number.
-  Defaults to the latest block when omitted.
-  
-  """
   number_gte: Int
+}
+
+input BlockChangedFilter {
+  number_gte: Int!
 }
 
 type Bundle {
@@ -92,6 +84,9 @@ input Bundle_filter {
   ethPrice_lte: BigDecimal
   ethPrice_in: [BigDecimal!]
   ethPrice_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Bundle_orderBy {
@@ -134,11 +129,17 @@ input Burn_filter {
   transaction_in: [String!]
   transaction_not_in: [String!]
   transaction_contains: String
+  transaction_contains_nocase: String
   transaction_not_contains: String
+  transaction_not_contains_nocase: String
   transaction_starts_with: String
+  transaction_starts_with_nocase: String
   transaction_not_starts_with: String
+  transaction_not_starts_with_nocase: String
   transaction_ends_with: String
+  transaction_ends_with_nocase: String
   transaction_not_ends_with: String
+  transaction_not_ends_with_nocase: String
   timestamp: BigInt
   timestamp_not: BigInt
   timestamp_gt: BigInt
@@ -156,11 +157,17 @@ input Burn_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   liquidity: BigDecimal
   liquidity_not: BigDecimal
   liquidity_gt: BigDecimal
@@ -231,6 +238,9 @@ input Burn_filter {
   feeLiquidity_lte: BigDecimal
   feeLiquidity_in: [BigDecimal!]
   feeLiquidity_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Burn_orderBy {
@@ -277,11 +287,17 @@ input LiquidityPosition_filter {
   user_in: [String!]
   user_not_in: [String!]
   user_contains: String
+  user_contains_nocase: String
   user_not_contains: String
+  user_not_contains_nocase: String
   user_starts_with: String
+  user_starts_with_nocase: String
   user_not_starts_with: String
+  user_not_starts_with_nocase: String
   user_ends_with: String
+  user_ends_with_nocase: String
   user_not_ends_with: String
+  user_not_ends_with_nocase: String
   pair: String
   pair_not: String
   pair_gt: String
@@ -291,11 +307,17 @@ input LiquidityPosition_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   liquidityTokenBalance: BigDecimal
   liquidityTokenBalance_not: BigDecimal
   liquidityTokenBalance_gt: BigDecimal
@@ -304,6 +326,9 @@ input LiquidityPosition_filter {
   liquidityTokenBalance_lte: BigDecimal
   liquidityTokenBalance_in: [BigDecimal!]
   liquidityTokenBalance_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum LiquidityPosition_orderBy {
@@ -347,11 +372,17 @@ input LiquidityPositionSnapshot_filter {
   liquidityPosition_in: [String!]
   liquidityPosition_not_in: [String!]
   liquidityPosition_contains: String
+  liquidityPosition_contains_nocase: String
   liquidityPosition_not_contains: String
+  liquidityPosition_not_contains_nocase: String
   liquidityPosition_starts_with: String
+  liquidityPosition_starts_with_nocase: String
   liquidityPosition_not_starts_with: String
+  liquidityPosition_not_starts_with_nocase: String
   liquidityPosition_ends_with: String
+  liquidityPosition_ends_with_nocase: String
   liquidityPosition_not_ends_with: String
+  liquidityPosition_not_ends_with_nocase: String
   timestamp: Int
   timestamp_not: Int
   timestamp_gt: Int
@@ -377,11 +408,17 @@ input LiquidityPositionSnapshot_filter {
   user_in: [String!]
   user_not_in: [String!]
   user_contains: String
+  user_contains_nocase: String
   user_not_contains: String
+  user_not_contains_nocase: String
   user_starts_with: String
+  user_starts_with_nocase: String
   user_not_starts_with: String
+  user_not_starts_with_nocase: String
   user_ends_with: String
+  user_ends_with_nocase: String
   user_not_ends_with: String
+  user_not_ends_with_nocase: String
   pair: String
   pair_not: String
   pair_gt: String
@@ -391,11 +428,17 @@ input LiquidityPositionSnapshot_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   token0PriceUSD: BigDecimal
   token0PriceUSD_not: BigDecimal
   token0PriceUSD_gt: BigDecimal
@@ -452,6 +495,9 @@ input LiquidityPositionSnapshot_filter {
   liquidityTokenBalance_lte: BigDecimal
   liquidityTokenBalance_in: [BigDecimal!]
   liquidityTokenBalance_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum LiquidityPositionSnapshot_orderBy {
@@ -504,11 +550,17 @@ input Mint_filter {
   transaction_in: [String!]
   transaction_not_in: [String!]
   transaction_contains: String
+  transaction_contains_nocase: String
   transaction_not_contains: String
+  transaction_not_contains_nocase: String
   transaction_starts_with: String
+  transaction_starts_with_nocase: String
   transaction_not_starts_with: String
+  transaction_not_starts_with_nocase: String
   transaction_ends_with: String
+  transaction_ends_with_nocase: String
   transaction_not_ends_with: String
+  transaction_not_ends_with_nocase: String
   timestamp: BigInt
   timestamp_not: BigInt
   timestamp_gt: BigInt
@@ -526,11 +578,17 @@ input Mint_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   to: Bytes
   to_not: Bytes
   to_in: [Bytes!]
@@ -597,6 +655,9 @@ input Mint_filter {
   feeLiquidity_lte: BigDecimal
   feeLiquidity_in: [BigDecimal!]
   feeLiquidity_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Mint_orderBy {
@@ -661,11 +722,17 @@ input Pair_filter {
   token0_in: [String!]
   token0_not_in: [String!]
   token0_contains: String
+  token0_contains_nocase: String
   token0_not_contains: String
+  token0_not_contains_nocase: String
   token0_starts_with: String
+  token0_starts_with_nocase: String
   token0_not_starts_with: String
+  token0_not_starts_with_nocase: String
   token0_ends_with: String
+  token0_ends_with_nocase: String
   token0_not_ends_with: String
+  token0_not_ends_with_nocase: String
   token1: String
   token1_not: String
   token1_gt: String
@@ -675,11 +742,17 @@ input Pair_filter {
   token1_in: [String!]
   token1_not_in: [String!]
   token1_contains: String
+  token1_contains_nocase: String
   token1_not_contains: String
+  token1_not_contains_nocase: String
   token1_starts_with: String
+  token1_starts_with_nocase: String
   token1_not_starts_with: String
+  token1_not_starts_with_nocase: String
   token1_ends_with: String
+  token1_ends_with_nocase: String
   token1_not_ends_with: String
+  token1_not_ends_with_nocase: String
   reserve0: BigDecimal
   reserve0_not: BigDecimal
   reserve0_gt: BigDecimal
@@ -808,6 +881,9 @@ input Pair_filter {
   liquidityProviderCount_lte: BigInt
   liquidityProviderCount_in: [BigInt!]
   liquidityProviderCount_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Pair_orderBy {
@@ -880,11 +956,17 @@ input PairDayData_filter {
   token0_in: [String!]
   token0_not_in: [String!]
   token0_contains: String
+  token0_contains_nocase: String
   token0_not_contains: String
+  token0_not_contains_nocase: String
   token0_starts_with: String
+  token0_starts_with_nocase: String
   token0_not_starts_with: String
+  token0_not_starts_with_nocase: String
   token0_ends_with: String
+  token0_ends_with_nocase: String
   token0_not_ends_with: String
+  token0_not_ends_with_nocase: String
   token1: String
   token1_not: String
   token1_gt: String
@@ -894,11 +976,17 @@ input PairDayData_filter {
   token1_in: [String!]
   token1_not_in: [String!]
   token1_contains: String
+  token1_contains_nocase: String
   token1_not_contains: String
+  token1_not_contains_nocase: String
   token1_starts_with: String
+  token1_starts_with_nocase: String
   token1_not_starts_with: String
+  token1_not_starts_with_nocase: String
   token1_ends_with: String
+  token1_ends_with_nocase: String
   token1_not_ends_with: String
+  token1_not_ends_with_nocase: String
   reserve0: BigDecimal
   reserve0_not: BigDecimal
   reserve0_gt: BigDecimal
@@ -963,6 +1051,9 @@ input PairDayData_filter {
   dailyTxns_lte: BigInt
   dailyTxns_in: [BigInt!]
   dailyTxns_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum PairDayData_orderBy {
@@ -1020,11 +1111,17 @@ input PairHourData_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   reserve0: BigDecimal
   reserve0_not: BigDecimal
   reserve0_gt: BigDecimal
@@ -1081,6 +1178,9 @@ input PairHourData_filter {
   hourlyTxns_lte: BigInt
   hourlyTxns_in: [BigInt!]
   hourlyTxns_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum PairHourData_orderBy {
@@ -2341,11 +2441,17 @@ input Swap_filter {
   transaction_in: [String!]
   transaction_not_in: [String!]
   transaction_contains: String
+  transaction_contains_nocase: String
   transaction_not_contains: String
+  transaction_not_contains_nocase: String
   transaction_starts_with: String
+  transaction_starts_with_nocase: String
   transaction_not_starts_with: String
+  transaction_not_starts_with_nocase: String
   transaction_ends_with: String
+  transaction_ends_with_nocase: String
   transaction_not_ends_with: String
+  transaction_not_ends_with_nocase: String
   timestamp: BigInt
   timestamp_not: BigInt
   timestamp_gt: BigInt
@@ -2363,11 +2469,17 @@ input Swap_filter {
   pair_in: [String!]
   pair_not_in: [String!]
   pair_contains: String
+  pair_contains_nocase: String
   pair_not_contains: String
+  pair_not_contains_nocase: String
   pair_starts_with: String
+  pair_starts_with_nocase: String
   pair_not_starts_with: String
+  pair_not_starts_with_nocase: String
   pair_ends_with: String
+  pair_ends_with_nocase: String
   pair_not_ends_with: String
+  pair_not_ends_with_nocase: String
   sender: Bytes
   sender_not: Bytes
   sender_in: [Bytes!]
@@ -2428,6 +2540,9 @@ input Swap_filter {
   amountUSD_lte: BigDecimal
   amountUSD_in: [BigDecimal!]
   amountUSD_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Swap_orderBy {
@@ -2478,11 +2593,17 @@ input Token_filter {
   symbol_in: [String!]
   symbol_not_in: [String!]
   symbol_contains: String
+  symbol_contains_nocase: String
   symbol_not_contains: String
+  symbol_not_contains_nocase: String
   symbol_starts_with: String
+  symbol_starts_with_nocase: String
   symbol_not_starts_with: String
+  symbol_not_starts_with_nocase: String
   symbol_ends_with: String
+  symbol_ends_with_nocase: String
   symbol_not_ends_with: String
+  symbol_not_ends_with_nocase: String
   name: String
   name_not: String
   name_gt: String
@@ -2492,11 +2613,17 @@ input Token_filter {
   name_in: [String!]
   name_not_in: [String!]
   name_contains: String
+  name_contains_nocase: String
   name_not_contains: String
+  name_not_contains_nocase: String
   name_starts_with: String
+  name_starts_with_nocase: String
   name_not_starts_with: String
+  name_not_starts_with_nocase: String
   name_ends_with: String
+  name_ends_with_nocase: String
   name_not_ends_with: String
+  name_not_ends_with_nocase: String
   decimals: BigInt
   decimals_not: BigInt
   decimals_gt: BigInt
@@ -2564,7 +2691,12 @@ input Token_filter {
   mostLiquidPairs: [String!]
   mostLiquidPairs_not: [String!]
   mostLiquidPairs_contains: [String!]
+  mostLiquidPairs_contains_nocase: [String!]
   mostLiquidPairs_not_contains: [String!]
+  mostLiquidPairs_not_contains_nocase: [String!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Token_orderBy {
@@ -2624,11 +2756,17 @@ input TokenDayData_filter {
   token_in: [String!]
   token_not_in: [String!]
   token_contains: String
+  token_contains_nocase: String
   token_not_contains: String
+  token_not_contains_nocase: String
   token_starts_with: String
+  token_starts_with_nocase: String
   token_not_starts_with: String
+  token_not_starts_with_nocase: String
   token_ends_with: String
+  token_ends_with_nocase: String
   token_not_ends_with: String
+  token_not_ends_with_nocase: String
   dailyVolumeToken: BigDecimal
   dailyVolumeToken_not: BigDecimal
   dailyVolumeToken_gt: BigDecimal
@@ -2704,7 +2842,12 @@ input TokenDayData_filter {
   mostLiquidPairs: [String!]
   mostLiquidPairs_not: [String!]
   mostLiquidPairs_contains: [String!]
+  mostLiquidPairs_contains_nocase: [String!]
   mostLiquidPairs_not_contains: [String!]
+  mostLiquidPairs_not_contains_nocase: [String!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum TokenDayData_orderBy {
@@ -2760,15 +2903,24 @@ input Transaction_filter {
   mints: [String!]
   mints_not: [String!]
   mints_contains: [String!]
+  mints_contains_nocase: [String!]
   mints_not_contains: [String!]
+  mints_not_contains_nocase: [String!]
   burns: [String!]
   burns_not: [String!]
   burns_contains: [String!]
+  burns_contains_nocase: [String!]
   burns_not_contains: [String!]
+  burns_not_contains_nocase: [String!]
   swaps: [String!]
   swaps_not: [String!]
   swaps_contains: [String!]
+  swaps_contains_nocase: [String!]
   swaps_not_contains: [String!]
+  swaps_not_contains_nocase: [String!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Transaction_orderBy {
@@ -2879,7 +3031,9 @@ input UniswapDayData_filter {
   mostLiquidTokens: [String!]
   mostLiquidTokens_not: [String!]
   mostLiquidTokens_contains: [String!]
+  mostLiquidTokens_contains_nocase: [String!]
   mostLiquidTokens_not_contains: [String!]
+  mostLiquidTokens_not_contains_nocase: [String!]
   txCount: BigInt
   txCount_not: BigInt
   txCount_gt: BigInt
@@ -2888,6 +3042,9 @@ input UniswapDayData_filter {
   txCount_lte: BigInt
   txCount_in: [BigInt!]
   txCount_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum UniswapDayData_orderBy {
@@ -2985,7 +3142,12 @@ input UniswapFactory_filter {
   mostLiquidTokens: [String!]
   mostLiquidTokens_not: [String!]
   mostLiquidTokens_contains: [String!]
+  mostLiquidTokens_contains_nocase: [String!]
   mostLiquidTokens_not_contains: [String!]
+  mostLiquidTokens_not_contains_nocase: [String!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum UniswapFactory_orderBy {
@@ -3023,6 +3185,9 @@ input User_filter {
   usdSwapped_lte: BigDecimal
   usdSwapped_in: [BigDecimal!]
   usdSwapped_not_in: [BigDecimal!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum User_orderBy {

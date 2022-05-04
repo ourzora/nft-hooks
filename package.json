@@ -38,7 +38,7 @@
   "scripts": {
     "publish": "npm publish",
     "publish-prerelease": "npm publish --access public --tag=strategies-pre-release",
-    "gen-graphql-types": "graphql-code-generator",
+    "typegen": "graphql-code-generator",
     "test": "jest",
     "clean": "rm -rf ./dist",
     "load-schemas": "./graph-schemas/get-schemas.sh",
@@ -61,7 +61,7 @@
   "dependencies": {
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/bytes": "^5.5.0",
-    "@zoralabs/zdk-alpha": "0.0.17",
+    "@zoralabs/zdk-alpha": "0.0.22",
     "big.js": "^6.1.0",
     "cross-fetch": "^3.1.4",
     "dataloader": "^2.0.0",

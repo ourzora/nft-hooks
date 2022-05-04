@@ -92,11 +92,17 @@ input Ask_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   transactionHash: String
   transactionHash_not: String
   transactionHash_gt: String
@@ -106,11 +112,17 @@ input Ask_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   currency: String
   currency_not: String
   currency_gt: String
@@ -120,11 +132,17 @@ input Ask_filter {
   currency_in: [String!]
   currency_not_in: [String!]
   currency_contains: String
+  currency_contains_nocase: String
   currency_not_contains: String
+  currency_not_contains_nocase: String
   currency_starts_with: String
+  currency_starts_with_nocase: String
   currency_not_starts_with: String
+  currency_not_starts_with_nocase: String
   currency_ends_with: String
+  currency_ends_with_nocase: String
   currency_not_ends_with: String
+  currency_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -142,11 +160,17 @@ input Ask_filter {
   owner_in: [String!]
   owner_not_in: [String!]
   owner_contains: String
+  owner_contains_nocase: String
   owner_not_contains: String
+  owner_not_contains_nocase: String
   owner_starts_with: String
+  owner_starts_with_nocase: String
   owner_not_starts_with: String
+  owner_not_starts_with_nocase: String
   owner_ends_with: String
+  owner_ends_with_nocase: String
   owner_not_ends_with: String
+  owner_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -163,6 +187,9 @@ input Ask_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Ask_orderBy {
@@ -226,11 +253,17 @@ input Bid_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -240,11 +273,17 @@ input Bid_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   currency: String
   currency_not: String
   currency_gt: String
@@ -254,11 +293,17 @@ input Bid_filter {
   currency_in: [String!]
   currency_not_in: [String!]
   currency_contains: String
+  currency_contains_nocase: String
   currency_not_contains: String
+  currency_not_contains_nocase: String
   currency_starts_with: String
+  currency_starts_with_nocase: String
   currency_not_starts_with: String
+  currency_not_starts_with_nocase: String
   currency_ends_with: String
+  currency_ends_with_nocase: String
   currency_not_ends_with: String
+  currency_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -284,11 +329,17 @@ input Bid_filter {
   bidder_in: [String!]
   bidder_not_in: [String!]
   bidder_contains: String
+  bidder_contains_nocase: String
   bidder_not_contains: String
+  bidder_not_contains_nocase: String
   bidder_starts_with: String
+  bidder_starts_with_nocase: String
   bidder_not_starts_with: String
+  bidder_not_starts_with_nocase: String
   bidder_ends_with: String
+  bidder_ends_with_nocase: String
   bidder_not_ends_with: String
+  bidder_not_ends_with_nocase: String
   recipient: String
   recipient_not: String
   recipient_gt: String
@@ -298,11 +349,17 @@ input Bid_filter {
   recipient_in: [String!]
   recipient_not_in: [String!]
   recipient_contains: String
+  recipient_contains_nocase: String
   recipient_not_contains: String
+  recipient_not_contains_nocase: String
   recipient_starts_with: String
+  recipient_starts_with_nocase: String
   recipient_not_starts_with: String
+  recipient_not_starts_with_nocase: String
   recipient_ends_with: String
+  recipient_ends_with_nocase: String
   recipient_not_ends_with: String
+  recipient_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -319,6 +376,9 @@ input Bid_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Bid_orderBy {
@@ -338,22 +398,14 @@ scalar BigDecimal
 
 scalar BigInt
 
-"""The block at which the query should be executed."""
 input Block_height {
-  """Value containing a block hash"""
   hash: Bytes
-
-  """Value containing a block number"""
   number: Int
-
-  """
-  Value containing the minimum block number. 
-  In the case of `number_gte`, the query will be executed on the latest block only if
-  the subgraph has progressed to or past the minimum block number.
-  Defaults to the latest block when omitted.
-  
-  """
   number_gte: Int
+}
+
+input BlockChangedFilter {
+  number_gte: Int!
 }
 
 scalar Bytes
@@ -405,11 +457,17 @@ input Currency_filter {
   name_in: [String!]
   name_not_in: [String!]
   name_contains: String
+  name_contains_nocase: String
   name_not_contains: String
+  name_not_contains_nocase: String
   name_starts_with: String
+  name_starts_with_nocase: String
   name_not_starts_with: String
+  name_not_starts_with_nocase: String
   name_ends_with: String
+  name_ends_with_nocase: String
   name_not_ends_with: String
+  name_not_ends_with_nocase: String
   symbol: String
   symbol_not: String
   symbol_gt: String
@@ -419,11 +477,17 @@ input Currency_filter {
   symbol_in: [String!]
   symbol_not_in: [String!]
   symbol_contains: String
+  symbol_contains_nocase: String
   symbol_not_contains: String
+  symbol_not_contains_nocase: String
   symbol_starts_with: String
+  symbol_starts_with_nocase: String
   symbol_not_starts_with: String
+  symbol_not_starts_with_nocase: String
   symbol_ends_with: String
+  symbol_ends_with_nocase: String
   symbol_not_ends_with: String
+  symbol_not_ends_with_nocase: String
   decimals: Int
   decimals_not: Int
   decimals_gt: Int
@@ -440,6 +504,9 @@ input Currency_filter {
   liquidity_lte: BigInt
   liquidity_in: [BigInt!]
   liquidity_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Currency_orderBy {
@@ -507,11 +574,17 @@ input InactiveAsk_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -521,11 +594,17 @@ input InactiveAsk_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   type: MarketEventType
   type_not: MarketEventType
   type_in: [MarketEventType!]
@@ -539,11 +618,17 @@ input InactiveAsk_filter {
   currency_in: [String!]
   currency_not_in: [String!]
   currency_contains: String
+  currency_contains_nocase: String
   currency_not_contains: String
+  currency_not_contains_nocase: String
   currency_starts_with: String
+  currency_starts_with_nocase: String
   currency_not_starts_with: String
+  currency_not_starts_with_nocase: String
   currency_ends_with: String
+  currency_ends_with_nocase: String
   currency_not_ends_with: String
+  currency_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -561,11 +646,17 @@ input InactiveAsk_filter {
   owner_in: [String!]
   owner_not_in: [String!]
   owner_contains: String
+  owner_contains_nocase: String
   owner_not_contains: String
+  owner_not_contains_nocase: String
   owner_starts_with: String
+  owner_starts_with_nocase: String
   owner_not_starts_with: String
+  owner_not_starts_with_nocase: String
   owner_ends_with: String
+  owner_ends_with_nocase: String
   owner_not_ends_with: String
+  owner_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -598,6 +689,9 @@ input InactiveAsk_filter {
   inactivatedAtBlockNumber_lte: BigInt
   inactivatedAtBlockNumber_in: [BigInt!]
   inactivatedAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum InactiveAsk_orderBy {
@@ -673,11 +767,17 @@ input InactiveBid_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -687,11 +787,17 @@ input InactiveBid_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   type: MarketEventType
   type_not: MarketEventType
   type_in: [MarketEventType!]
@@ -705,11 +811,17 @@ input InactiveBid_filter {
   currency_in: [String!]
   currency_not_in: [String!]
   currency_contains: String
+  currency_contains_nocase: String
   currency_not_contains: String
+  currency_not_contains_nocase: String
   currency_starts_with: String
+  currency_starts_with_nocase: String
   currency_not_starts_with: String
+  currency_not_starts_with_nocase: String
   currency_ends_with: String
+  currency_ends_with_nocase: String
   currency_not_ends_with: String
+  currency_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -735,11 +847,17 @@ input InactiveBid_filter {
   bidder_in: [String!]
   bidder_not_in: [String!]
   bidder_contains: String
+  bidder_contains_nocase: String
   bidder_not_contains: String
+  bidder_not_contains_nocase: String
   bidder_starts_with: String
+  bidder_starts_with_nocase: String
   bidder_not_starts_with: String
+  bidder_not_starts_with_nocase: String
   bidder_ends_with: String
+  bidder_ends_with_nocase: String
   bidder_not_ends_with: String
+  bidder_not_ends_with_nocase: String
   recipient: String
   recipient_not: String
   recipient_gt: String
@@ -749,11 +867,17 @@ input InactiveBid_filter {
   recipient_in: [String!]
   recipient_not_in: [String!]
   recipient_contains: String
+  recipient_contains_nocase: String
   recipient_not_contains: String
+  recipient_not_contains_nocase: String
   recipient_starts_with: String
+  recipient_starts_with_nocase: String
   recipient_not_starts_with: String
+  recipient_not_starts_with_nocase: String
   recipient_ends_with: String
+  recipient_ends_with_nocase: String
   recipient_not_ends_with: String
+  recipient_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -786,6 +910,9 @@ input InactiveBid_filter {
   inactivatedAtBlockNumber_lte: BigInt
   inactivatedAtBlockNumber_in: [BigInt!]
   inactivatedAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum InactiveBid_orderBy {
@@ -858,11 +985,17 @@ input InactiveReserveAuctionBid_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   reserveAuction: String
   reserveAuction_not: String
   reserveAuction_gt: String
@@ -872,11 +1005,17 @@ input InactiveReserveAuctionBid_filter {
   reserveAuction_in: [String!]
   reserveAuction_not_in: [String!]
   reserveAuction_contains: String
+  reserveAuction_contains_nocase: String
   reserveAuction_not_contains: String
+  reserveAuction_not_contains_nocase: String
   reserveAuction_starts_with: String
+  reserveAuction_starts_with_nocase: String
   reserveAuction_not_starts_with: String
+  reserveAuction_not_starts_with_nocase: String
   reserveAuction_ends_with: String
+  reserveAuction_ends_with_nocase: String
   reserveAuction_not_ends_with: String
+  reserveAuction_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -894,11 +1033,17 @@ input InactiveReserveAuctionBid_filter {
   bidder_in: [String!]
   bidder_not_in: [String!]
   bidder_contains: String
+  bidder_contains_nocase: String
   bidder_not_contains: String
+  bidder_not_contains_nocase: String
   bidder_starts_with: String
+  bidder_starts_with_nocase: String
   bidder_not_starts_with: String
+  bidder_not_starts_with_nocase: String
   bidder_ends_with: String
+  bidder_ends_with_nocase: String
   bidder_not_ends_with: String
+  bidder_not_ends_with_nocase: String
   bidType: ReserveAuctionBidType
   bidType_not: ReserveAuctionBidType
   bidType_in: [ReserveAuctionBidType!]
@@ -935,6 +1080,9 @@ input InactiveReserveAuctionBid_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum InactiveReserveAuctionBid_orderBy {
@@ -1045,11 +1193,17 @@ input Media_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   owner: String
   owner_not: String
   owner_gt: String
@@ -1059,11 +1213,17 @@ input Media_filter {
   owner_in: [String!]
   owner_not_in: [String!]
   owner_contains: String
+  owner_contains_nocase: String
   owner_not_contains: String
+  owner_not_contains_nocase: String
   owner_starts_with: String
+  owner_starts_with_nocase: String
   owner_not_starts_with: String
+  owner_not_starts_with_nocase: String
   owner_ends_with: String
+  owner_ends_with_nocase: String
   owner_not_ends_with: String
+  owner_not_ends_with_nocase: String
   creator: String
   creator_not: String
   creator_gt: String
@@ -1073,11 +1233,17 @@ input Media_filter {
   creator_in: [String!]
   creator_not_in: [String!]
   creator_contains: String
+  creator_contains_nocase: String
   creator_not_contains: String
+  creator_not_contains_nocase: String
   creator_starts_with: String
+  creator_starts_with_nocase: String
   creator_not_starts_with: String
+  creator_not_starts_with_nocase: String
   creator_ends_with: String
+  creator_ends_with_nocase: String
   creator_not_ends_with: String
+  creator_not_ends_with_nocase: String
   prevOwner: String
   prevOwner_not: String
   prevOwner_gt: String
@@ -1087,11 +1253,17 @@ input Media_filter {
   prevOwner_in: [String!]
   prevOwner_not_in: [String!]
   prevOwner_contains: String
+  prevOwner_contains_nocase: String
   prevOwner_not_contains: String
+  prevOwner_not_contains_nocase: String
   prevOwner_starts_with: String
+  prevOwner_starts_with_nocase: String
   prevOwner_not_starts_with: String
+  prevOwner_not_starts_with_nocase: String
   prevOwner_ends_with: String
+  prevOwner_ends_with_nocase: String
   prevOwner_not_ends_with: String
+  prevOwner_not_ends_with_nocase: String
   approved: String
   approved_not: String
   approved_gt: String
@@ -1101,11 +1273,17 @@ input Media_filter {
   approved_in: [String!]
   approved_not_in: [String!]
   approved_contains: String
+  approved_contains_nocase: String
   approved_not_contains: String
+  approved_not_contains_nocase: String
   approved_starts_with: String
+  approved_starts_with_nocase: String
   approved_not_starts_with: String
+  approved_not_starts_with_nocase: String
   approved_ends_with: String
+  approved_ends_with_nocase: String
   approved_not_ends_with: String
+  approved_not_ends_with_nocase: String
   contentHash: Bytes
   contentHash_not: Bytes
   contentHash_in: [Bytes!]
@@ -1127,11 +1305,17 @@ input Media_filter {
   contentURI_in: [String!]
   contentURI_not_in: [String!]
   contentURI_contains: String
+  contentURI_contains_nocase: String
   contentURI_not_contains: String
+  contentURI_not_contains_nocase: String
   contentURI_starts_with: String
+  contentURI_starts_with_nocase: String
   contentURI_not_starts_with: String
+  contentURI_not_starts_with_nocase: String
   contentURI_ends_with: String
+  contentURI_ends_with_nocase: String
   contentURI_not_ends_with: String
+  contentURI_not_ends_with_nocase: String
   metadataURI: String
   metadataURI_not: String
   metadataURI_gt: String
@@ -1141,11 +1325,17 @@ input Media_filter {
   metadataURI_in: [String!]
   metadataURI_not_in: [String!]
   metadataURI_contains: String
+  metadataURI_contains_nocase: String
   metadataURI_not_contains: String
+  metadataURI_not_contains_nocase: String
   metadataURI_starts_with: String
+  metadataURI_starts_with_nocase: String
   metadataURI_not_starts_with: String
+  metadataURI_not_starts_with_nocase: String
   metadataURI_ends_with: String
+  metadataURI_ends_with_nocase: String
   metadataURI_not_ends_with: String
+  metadataURI_not_ends_with_nocase: String
   ownerBidShare: BigInt
   ownerBidShare_not: BigInt
   ownerBidShare_gt: BigInt
@@ -1202,6 +1392,9 @@ input Media_filter {
   burnedAtBlockNumber_lte: BigInt
   burnedAtBlockNumber_in: [BigInt!]
   burnedAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Media_orderBy {
@@ -1819,11 +2012,17 @@ input ReserveAuction_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   tokenContract: String
   tokenContract_not: String
   tokenContract_gt: String
@@ -1833,11 +2032,17 @@ input ReserveAuction_filter {
   tokenContract_in: [String!]
   tokenContract_not_in: [String!]
   tokenContract_contains: String
+  tokenContract_contains_nocase: String
   tokenContract_not_contains: String
+  tokenContract_not_contains_nocase: String
   tokenContract_starts_with: String
+  tokenContract_starts_with_nocase: String
   tokenContract_not_starts_with: String
+  tokenContract_not_starts_with_nocase: String
   tokenContract_ends_with: String
+  tokenContract_ends_with_nocase: String
   tokenContract_not_ends_with: String
+  tokenContract_not_ends_with_nocase: String
   tokenId: BigInt
   tokenId_not: BigInt
   tokenId_gt: BigInt
@@ -1855,11 +2060,17 @@ input ReserveAuction_filter {
   token_in: [String!]
   token_not_in: [String!]
   token_contains: String
+  token_contains_nocase: String
   token_not_contains: String
+  token_not_contains_nocase: String
   token_starts_with: String
+  token_starts_with_nocase: String
   token_not_starts_with: String
+  token_not_starts_with_nocase: String
   token_ends_with: String
+  token_ends_with_nocase: String
   token_not_ends_with: String
+  token_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -1869,11 +2080,17 @@ input ReserveAuction_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   approved: Boolean
   approved_not: Boolean
   approved_in: [Boolean!]
@@ -1927,11 +2144,17 @@ input ReserveAuction_filter {
   tokenOwner_in: [String!]
   tokenOwner_not_in: [String!]
   tokenOwner_contains: String
+  tokenOwner_contains_nocase: String
   tokenOwner_not_contains: String
+  tokenOwner_not_contains_nocase: String
   tokenOwner_starts_with: String
+  tokenOwner_starts_with_nocase: String
   tokenOwner_not_starts_with: String
+  tokenOwner_not_starts_with_nocase: String
   tokenOwner_ends_with: String
+  tokenOwner_ends_with_nocase: String
   tokenOwner_not_ends_with: String
+  tokenOwner_not_ends_with_nocase: String
   curator: String
   curator_not: String
   curator_gt: String
@@ -1941,11 +2164,17 @@ input ReserveAuction_filter {
   curator_in: [String!]
   curator_not_in: [String!]
   curator_contains: String
+  curator_contains_nocase: String
   curator_not_contains: String
+  curator_not_contains_nocase: String
   curator_starts_with: String
+  curator_starts_with_nocase: String
   curator_not_starts_with: String
+  curator_not_starts_with_nocase: String
   curator_ends_with: String
+  curator_ends_with_nocase: String
   curator_not_ends_with: String
+  curator_not_ends_with_nocase: String
   auctionCurrency: String
   auctionCurrency_not: String
   auctionCurrency_gt: String
@@ -1955,11 +2184,17 @@ input ReserveAuction_filter {
   auctionCurrency_in: [String!]
   auctionCurrency_not_in: [String!]
   auctionCurrency_contains: String
+  auctionCurrency_contains_nocase: String
   auctionCurrency_not_contains: String
+  auctionCurrency_not_contains_nocase: String
   auctionCurrency_starts_with: String
+  auctionCurrency_starts_with_nocase: String
   auctionCurrency_not_starts_with: String
+  auctionCurrency_not_starts_with_nocase: String
   auctionCurrency_ends_with: String
+  auctionCurrency_ends_with_nocase: String
   auctionCurrency_not_ends_with: String
+  auctionCurrency_not_ends_with_nocase: String
   status: ReserveAuctionStatus
   status_not: ReserveAuctionStatus
   status_in: [ReserveAuctionStatus!]
@@ -1973,11 +2208,17 @@ input ReserveAuction_filter {
   currentBid_in: [String!]
   currentBid_not_in: [String!]
   currentBid_contains: String
+  currentBid_contains_nocase: String
   currentBid_not_contains: String
+  currentBid_not_contains_nocase: String
   currentBid_starts_with: String
+  currentBid_starts_with_nocase: String
   currentBid_not_starts_with: String
+  currentBid_not_starts_with_nocase: String
   currentBid_ends_with: String
+  currentBid_ends_with_nocase: String
   currentBid_not_ends_with: String
+  currentBid_not_ends_with_nocase: String
   approvedTimestamp: BigInt
   approvedTimestamp_not: BigInt
   approvedTimestamp_gt: BigInt
@@ -2026,6 +2267,9 @@ input ReserveAuction_filter {
   finalizedAtBlockNumber_lte: BigInt
   finalizedAtBlockNumber_in: [BigInt!]
   finalizedAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum ReserveAuction_orderBy {
@@ -2099,11 +2343,17 @@ input ReserveAuctionBid_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   reserveAuction: String
   reserveAuction_not: String
   reserveAuction_gt: String
@@ -2113,11 +2363,17 @@ input ReserveAuctionBid_filter {
   reserveAuction_in: [String!]
   reserveAuction_not_in: [String!]
   reserveAuction_contains: String
+  reserveAuction_contains_nocase: String
   reserveAuction_not_contains: String
+  reserveAuction_not_contains_nocase: String
   reserveAuction_starts_with: String
+  reserveAuction_starts_with_nocase: String
   reserveAuction_not_starts_with: String
+  reserveAuction_not_starts_with_nocase: String
   reserveAuction_ends_with: String
+  reserveAuction_ends_with_nocase: String
   reserveAuction_not_ends_with: String
+  reserveAuction_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -2135,11 +2391,17 @@ input ReserveAuctionBid_filter {
   bidder_in: [String!]
   bidder_not_in: [String!]
   bidder_contains: String
+  bidder_contains_nocase: String
   bidder_not_contains: String
+  bidder_not_contains_nocase: String
   bidder_starts_with: String
+  bidder_starts_with_nocase: String
   bidder_not_starts_with: String
+  bidder_not_starts_with_nocase: String
   bidder_ends_with: String
+  bidder_ends_with_nocase: String
   bidder_not_ends_with: String
+  bidder_not_ends_with_nocase: String
   bidType: ReserveAuctionBidType
   bidType_not: ReserveAuctionBidType
   bidType_in: [ReserveAuctionBidType!]
@@ -2160,6 +2422,9 @@ input ReserveAuctionBid_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum ReserveAuctionBid_orderBy {
@@ -2713,11 +2978,17 @@ input Transfer_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -2727,11 +2998,17 @@ input Transfer_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   from: String
   from_not: String
   from_gt: String
@@ -2741,11 +3018,17 @@ input Transfer_filter {
   from_in: [String!]
   from_not_in: [String!]
   from_contains: String
+  from_contains_nocase: String
   from_not_contains: String
+  from_not_contains_nocase: String
   from_starts_with: String
+  from_starts_with_nocase: String
   from_not_starts_with: String
+  from_not_starts_with_nocase: String
   from_ends_with: String
+  from_ends_with_nocase: String
   from_not_ends_with: String
+  from_not_ends_with_nocase: String
   to: String
   to_not: String
   to_gt: String
@@ -2755,11 +3038,17 @@ input Transfer_filter {
   to_in: [String!]
   to_not_in: [String!]
   to_contains: String
+  to_contains_nocase: String
   to_not_contains: String
+  to_not_contains_nocase: String
   to_starts_with: String
+  to_starts_with_nocase: String
   to_not_starts_with: String
+  to_not_starts_with_nocase: String
   to_ends_with: String
+  to_ends_with_nocase: String
   to_not_ends_with: String
+  to_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -2776,6 +3065,9 @@ input Transfer_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum Transfer_orderBy {
@@ -2838,11 +3130,17 @@ input URIUpdate_filter {
   transactionHash_in: [String!]
   transactionHash_not_in: [String!]
   transactionHash_contains: String
+  transactionHash_contains_nocase: String
   transactionHash_not_contains: String
+  transactionHash_not_contains_nocase: String
   transactionHash_starts_with: String
+  transactionHash_starts_with_nocase: String
   transactionHash_not_starts_with: String
+  transactionHash_not_starts_with_nocase: String
   transactionHash_ends_with: String
+  transactionHash_ends_with_nocase: String
   transactionHash_not_ends_with: String
+  transactionHash_not_ends_with_nocase: String
   type: URIUpdateType
   type_not: URIUpdateType
   type_in: [URIUpdateType!]
@@ -2856,11 +3154,17 @@ input URIUpdate_filter {
   from_in: [String!]
   from_not_in: [String!]
   from_contains: String
+  from_contains_nocase: String
   from_not_contains: String
+  from_not_contains_nocase: String
   from_starts_with: String
+  from_starts_with_nocase: String
   from_not_starts_with: String
+  from_not_starts_with_nocase: String
   from_ends_with: String
+  from_ends_with_nocase: String
   from_not_ends_with: String
+  from_not_ends_with_nocase: String
   to: String
   to_not: String
   to_gt: String
@@ -2870,11 +3174,17 @@ input URIUpdate_filter {
   to_in: [String!]
   to_not_in: [String!]
   to_contains: String
+  to_contains_nocase: String
   to_not_contains: String
+  to_not_contains_nocase: String
   to_starts_with: String
+  to_starts_with_nocase: String
   to_not_starts_with: String
+  to_not_starts_with_nocase: String
   to_ends_with: String
+  to_ends_with_nocase: String
   to_not_ends_with: String
+  to_not_ends_with_nocase: String
   media: String
   media_not: String
   media_gt: String
@@ -2884,11 +3194,17 @@ input URIUpdate_filter {
   media_in: [String!]
   media_not_in: [String!]
   media_contains: String
+  media_contains_nocase: String
   media_not_contains: String
+  media_not_contains_nocase: String
   media_starts_with: String
+  media_starts_with_nocase: String
   media_not_starts_with: String
+  media_not_starts_with_nocase: String
   media_ends_with: String
+  media_ends_with_nocase: String
   media_not_ends_with: String
+  media_not_ends_with_nocase: String
   owner: String
   owner_not: String
   owner_gt: String
@@ -2898,11 +3214,17 @@ input URIUpdate_filter {
   owner_in: [String!]
   owner_not_in: [String!]
   owner_contains: String
+  owner_contains_nocase: String
   owner_not_contains: String
+  owner_not_contains_nocase: String
   owner_starts_with: String
+  owner_starts_with_nocase: String
   owner_not_starts_with: String
+  owner_not_starts_with_nocase: String
   owner_ends_with: String
+  owner_ends_with_nocase: String
   owner_not_ends_with: String
+  owner_not_ends_with_nocase: String
   updater: String
   updater_not: String
   updater_gt: String
@@ -2912,11 +3234,17 @@ input URIUpdate_filter {
   updater_in: [String!]
   updater_not_in: [String!]
   updater_contains: String
+  updater_contains_nocase: String
   updater_not_contains: String
+  updater_not_contains_nocase: String
   updater_starts_with: String
+  updater_starts_with_nocase: String
   updater_not_starts_with: String
+  updater_not_starts_with_nocase: String
   updater_ends_with: String
+  updater_ends_with_nocase: String
   updater_not_ends_with: String
+  updater_not_ends_with_nocase: String
   createdAtTimestamp: BigInt
   createdAtTimestamp_not: BigInt
   createdAtTimestamp_gt: BigInt
@@ -2933,6 +3261,9 @@ input URIUpdate_filter {
   createdAtBlockNumber_lte: BigInt
   createdAtBlockNumber_in: [BigInt!]
   createdAtBlockNumber_not_in: [BigInt!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum URIUpdate_orderBy {
@@ -2985,7 +3316,12 @@ input User_filter {
   authorizedUsers: [String!]
   authorizedUsers_not: [String!]
   authorizedUsers_contains: [String!]
+  authorizedUsers_contains_nocase: [String!]
   authorizedUsers_not_contains: [String!]
+  authorizedUsers_not_contains_nocase: [String!]
+
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
 }
 
 enum User_orderBy {

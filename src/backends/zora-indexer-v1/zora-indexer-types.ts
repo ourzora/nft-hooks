@@ -4862,7 +4862,9 @@ export type Media = {
   creator?: Maybe<Scalars['String']>;
   creatorBidShare?: Maybe<Scalars['String']>;
   /** An object relationship */
-  metadata?: Maybe<MediaMetadata>;
+  currentMarketAsk?: Maybe<MarketAsk>;
+  /** An object relationship */
+  metadata?: Maybe<TokenMetadata>;
   metadataHash?: Maybe<Scalars['String']>;
   metadataURI?: Maybe<Scalars['String']>;
   mintTransferEventId?: Maybe<Scalars['String']>;
@@ -6170,7 +6172,8 @@ export type Media_Bool_Exp = {
   contentURI?: Maybe<String_Comparison_Exp>;
   creator?: Maybe<String_Comparison_Exp>;
   creatorBidShare?: Maybe<String_Comparison_Exp>;
-  metadata?: Maybe<MediaMetadata_Bool_Exp>;
+  currentMarketAsk?: Maybe<MarketAsk_Bool_Exp>;
+  metadata?: Maybe<TokenMetadata_Bool_Exp>;
   metadataHash?: Maybe<String_Comparison_Exp>;
   metadataURI?: Maybe<String_Comparison_Exp>;
   mintTransferEventId?: Maybe<String_Comparison_Exp>;
@@ -6233,7 +6236,8 @@ export type Media_Order_By = {
   contentURI?: Maybe<Order_By>;
   creator?: Maybe<Order_By>;
   creatorBidShare?: Maybe<Order_By>;
-  metadata?: Maybe<MediaMetadata_Order_By>;
+  currentMarketAsk?: Maybe<MarketAsk_Order_By>;
+  metadata?: Maybe<TokenMetadata_Order_By>;
   metadataHash?: Maybe<Order_By>;
   metadataURI?: Maybe<Order_By>;
   mintTransferEventId?: Maybe<Order_By>;
@@ -6319,7 +6323,6 @@ export type Token = {
   auctions: Array<Auction>;
   /** An aggregate relationship */
   auctions_aggregate: Auction_Aggregate;
-  currentAskId?: Maybe<Scalars['String']>;
   /** An object relationship */
   currentAuction?: Maybe<Auction>;
   id: Scalars['String'];
@@ -6350,6 +6353,8 @@ export type Token = {
   v3Events: Array<Event>;
   /** An aggregate relationship */
   v3Events_aggregate: Event_Aggregate;
+  /** An object relationship */
+  v3ReserveAuction?: Maybe<V3ReserveAuction>;
 };
 
 
@@ -6982,7 +6987,6 @@ export type Token_Bool_Exp = {
   _or?: Maybe<Array<Token_Bool_Exp>>;
   address?: Maybe<String_Comparison_Exp>;
   auctions?: Maybe<Auction_Bool_Exp>;
-  currentAskId?: Maybe<String_Comparison_Exp>;
   currentAuction?: Maybe<Auction_Bool_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   media?: Maybe<Media_Bool_Exp>;
@@ -7001,13 +7005,13 @@ export type Token_Bool_Exp = {
   transferEvents?: Maybe<TokenTransferEvent_Bool_Exp>;
   v3Ask?: Maybe<V3Ask_Bool_Exp>;
   v3Events?: Maybe<Event_Bool_Exp>;
+  v3ReserveAuction?: Maybe<V3ReserveAuction_Bool_Exp>;
 };
 
 /** aggregate max on columns */
 export type Token_Max_Fields = {
   __typename?: 'Token_max_fields';
   address?: Maybe<Scalars['String']>;
-  currentAskId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   metadataId?: Maybe<Scalars['uuid']>;
   mintTransferEventId?: Maybe<Scalars['String']>;
@@ -7023,7 +7027,6 @@ export type Token_Max_Fields = {
 export type Token_Min_Fields = {
   __typename?: 'Token_min_fields';
   address?: Maybe<Scalars['String']>;
-  currentAskId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   metadataId?: Maybe<Scalars['uuid']>;
   mintTransferEventId?: Maybe<Scalars['String']>;
@@ -7039,7 +7042,6 @@ export type Token_Min_Fields = {
 export type Token_Order_By = {
   address?: Maybe<Order_By>;
   auctions_aggregate?: Maybe<Auction_Aggregate_Order_By>;
-  currentAskId?: Maybe<Order_By>;
   currentAuction?: Maybe<Auction_Order_By>;
   id?: Maybe<Order_By>;
   media?: Maybe<Media_Order_By>;
@@ -7058,14 +7060,13 @@ export type Token_Order_By = {
   transferEvents_aggregate?: Maybe<TokenTransferEvent_Aggregate_Order_By>;
   v3Ask?: Maybe<V3Ask_Order_By>;
   v3Events_aggregate?: Maybe<Event_Aggregate_Order_By>;
+  v3ReserveAuction?: Maybe<V3ReserveAuction_Order_By>;
 };
 
 /** select columns of table "token" */
 export enum Token_Select_Column {
   /** column name */
   Address = 'address',
-  /** column name */
-  CurrentAskId = 'currentAskId',
   /** column name */
   Id = 'id',
   /** column name */
@@ -7935,6 +7936,309 @@ export type V3Ask_Variance_Fields = {
   findersFeeBps?: Maybe<Scalars['Float']>;
 };
 
+/** columns and relationships of "v3_reserve_auction" */
+export type V3ReserveAuction = {
+  __typename?: 'V3ReserveAuction';
+  address: Scalars['String'];
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  currency: Scalars['String'];
+  duration: Scalars['String'];
+  /** An array relationship */
+  events: Array<Event>;
+  /** An aggregate relationship */
+  events_aggregate: Event_Aggregate;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  firstBidTime?: Maybe<Scalars['String']>;
+  highestBid?: Maybe<Scalars['String']>;
+  highestBidder?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  listingFeeBps?: Maybe<Scalars['Int']>;
+  listingFeeRecipient?: Maybe<Scalars['String']>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  reservePrice: Scalars['String'];
+  seller: Scalars['String'];
+  sellerFundsRecipient: Scalars['String'];
+  startTime: Scalars['String'];
+  status: Scalars['String'];
+  tokenContract: Scalars['String'];
+  tokenId: Scalars['String'];
+  winner?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "v3_reserve_auction" */
+export type V3ReserveAuctionEventsArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+
+/** columns and relationships of "v3_reserve_auction" */
+export type V3ReserveAuctionEvents_AggregateArgs = {
+  distinct_on?: Maybe<Array<Event_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Event_Order_By>>;
+  where?: Maybe<Event_Bool_Exp>;
+};
+
+/** aggregated selection of "v3_reserve_auction" */
+export type V3ReserveAuction_Aggregate = {
+  __typename?: 'V3ReserveAuction_aggregate';
+  aggregate?: Maybe<V3ReserveAuction_Aggregate_Fields>;
+  nodes: Array<V3ReserveAuction>;
+};
+
+/** aggregate fields of "v3_reserve_auction" */
+export type V3ReserveAuction_Aggregate_Fields = {
+  __typename?: 'V3ReserveAuction_aggregate_fields';
+  avg?: Maybe<V3ReserveAuction_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<V3ReserveAuction_Max_Fields>;
+  min?: Maybe<V3ReserveAuction_Min_Fields>;
+  stddev?: Maybe<V3ReserveAuction_Stddev_Fields>;
+  stddev_pop?: Maybe<V3ReserveAuction_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<V3ReserveAuction_Stddev_Samp_Fields>;
+  sum?: Maybe<V3ReserveAuction_Sum_Fields>;
+  var_pop?: Maybe<V3ReserveAuction_Var_Pop_Fields>;
+  var_samp?: Maybe<V3ReserveAuction_Var_Samp_Fields>;
+  variance?: Maybe<V3ReserveAuction_Variance_Fields>;
+};
+
+
+/** aggregate fields of "v3_reserve_auction" */
+export type V3ReserveAuction_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<V3ReserveAuction_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type V3ReserveAuction_Avg_Fields = {
+  __typename?: 'V3ReserveAuction_avg_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "v3_reserve_auction". All fields are combined with a logical 'AND'. */
+export type V3ReserveAuction_Bool_Exp = {
+  _and?: Maybe<Array<V3ReserveAuction_Bool_Exp>>;
+  _not?: Maybe<V3ReserveAuction_Bool_Exp>;
+  _or?: Maybe<Array<V3ReserveAuction_Bool_Exp>>;
+  address?: Maybe<String_Comparison_Exp>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
+  currency?: Maybe<String_Comparison_Exp>;
+  duration?: Maybe<String_Comparison_Exp>;
+  events?: Maybe<Event_Bool_Exp>;
+  expiresAt?: Maybe<Timestamptz_Comparison_Exp>;
+  finder?: Maybe<String_Comparison_Exp>;
+  findersFeeBps?: Maybe<Int_Comparison_Exp>;
+  firstBidTime?: Maybe<String_Comparison_Exp>;
+  highestBid?: Maybe<String_Comparison_Exp>;
+  highestBidder?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  listingFeeBps?: Maybe<Int_Comparison_Exp>;
+  listingFeeRecipient?: Maybe<String_Comparison_Exp>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<String_Comparison_Exp>;
+  reservePrice?: Maybe<String_Comparison_Exp>;
+  seller?: Maybe<String_Comparison_Exp>;
+  sellerFundsRecipient?: Maybe<String_Comparison_Exp>;
+  startTime?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<String_Comparison_Exp>;
+  tokenContract?: Maybe<String_Comparison_Exp>;
+  tokenId?: Maybe<String_Comparison_Exp>;
+  winner?: Maybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type V3ReserveAuction_Max_Fields = {
+  __typename?: 'V3ReserveAuction_max_fields';
+  address?: Maybe<Scalars['String']>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  currency?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['String']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  firstBidTime?: Maybe<Scalars['String']>;
+  highestBid?: Maybe<Scalars['String']>;
+  highestBidder?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  listingFeeBps?: Maybe<Scalars['Int']>;
+  listingFeeRecipient?: Maybe<Scalars['String']>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['String']>;
+  seller?: Maybe<Scalars['String']>;
+  sellerFundsRecipient?: Maybe<Scalars['String']>;
+  startTime?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+  winner?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type V3ReserveAuction_Min_Fields = {
+  __typename?: 'V3ReserveAuction_min_fields';
+  address?: Maybe<Scalars['String']>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  currency?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['String']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  finder?: Maybe<Scalars['String']>;
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  firstBidTime?: Maybe<Scalars['String']>;
+  highestBid?: Maybe<Scalars['String']>;
+  highestBidder?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  listingFeeBps?: Maybe<Scalars['Int']>;
+  listingFeeRecipient?: Maybe<Scalars['String']>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['String']>;
+  seller?: Maybe<Scalars['String']>;
+  sellerFundsRecipient?: Maybe<Scalars['String']>;
+  startTime?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  tokenContract?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['String']>;
+  winner?: Maybe<Scalars['String']>;
+};
+
+/** Ordering options when selecting data from "v3_reserve_auction". */
+export type V3ReserveAuction_Order_By = {
+  address?: Maybe<Order_By>;
+  creatorBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
+  duration?: Maybe<Order_By>;
+  events_aggregate?: Maybe<Event_Aggregate_Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  finder?: Maybe<Order_By>;
+  findersFeeBps?: Maybe<Order_By>;
+  firstBidTime?: Maybe<Order_By>;
+  highestBid?: Maybe<Order_By>;
+  highestBidder?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  listingFeeBps?: Maybe<Order_By>;
+  listingFeeRecipient?: Maybe<Order_By>;
+  ownerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  prevOwnerBidShareBeforeAuctionCreated?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+  seller?: Maybe<Order_By>;
+  sellerFundsRecipient?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  tokenContract?: Maybe<Order_By>;
+  tokenId?: Maybe<Order_By>;
+  winner?: Maybe<Order_By>;
+};
+
+/** select columns of table "v3_reserve_auction" */
+export enum V3ReserveAuction_Select_Column {
+  /** column name */
+  Address = 'address',
+  /** column name */
+  CreatorBidShareBeforeAuctionCreated = 'creatorBidShareBeforeAuctionCreated',
+  /** column name */
+  Currency = 'currency',
+  /** column name */
+  Duration = 'duration',
+  /** column name */
+  ExpiresAt = 'expiresAt',
+  /** column name */
+  Finder = 'finder',
+  /** column name */
+  FindersFeeBps = 'findersFeeBps',
+  /** column name */
+  FirstBidTime = 'firstBidTime',
+  /** column name */
+  HighestBid = 'highestBid',
+  /** column name */
+  HighestBidder = 'highestBidder',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ListingFeeBps = 'listingFeeBps',
+  /** column name */
+  ListingFeeRecipient = 'listingFeeRecipient',
+  /** column name */
+  OwnerBidShareBeforeAuctionCreated = 'ownerBidShareBeforeAuctionCreated',
+  /** column name */
+  PrevOwnerBidShareBeforeAuctionCreated = 'prevOwnerBidShareBeforeAuctionCreated',
+  /** column name */
+  ReservePrice = 'reservePrice',
+  /** column name */
+  Seller = 'seller',
+  /** column name */
+  SellerFundsRecipient = 'sellerFundsRecipient',
+  /** column name */
+  StartTime = 'startTime',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  TokenContract = 'tokenContract',
+  /** column name */
+  TokenId = 'tokenId',
+  /** column name */
+  Winner = 'winner'
+}
+
+/** aggregate stddev on columns */
+export type V3ReserveAuction_Stddev_Fields = {
+  __typename?: 'V3ReserveAuction_stddev_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type V3ReserveAuction_Stddev_Pop_Fields = {
+  __typename?: 'V3ReserveAuction_stddev_pop_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type V3ReserveAuction_Stddev_Samp_Fields = {
+  __typename?: 'V3ReserveAuction_stddev_samp_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type V3ReserveAuction_Sum_Fields = {
+  __typename?: 'V3ReserveAuction_sum_fields';
+  findersFeeBps?: Maybe<Scalars['Int']>;
+  listingFeeBps?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate var_pop on columns */
+export type V3ReserveAuction_Var_Pop_Fields = {
+  __typename?: 'V3ReserveAuction_var_pop_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type V3ReserveAuction_Var_Samp_Fields = {
+  __typename?: 'V3ReserveAuction_var_samp_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type V3ReserveAuction_Variance_Fields = {
+  __typename?: 'V3ReserveAuction_variance_fields';
+  findersFeeBps?: Maybe<Scalars['Float']>;
+  listingFeeBps?: Maybe<Scalars['Float']>;
+};
+
 
 /** Boolean expression to compare columns of type "ask_event_status_enum". All fields are combined with logical 'AND'. */
 export type Ask_Event_Status_Enum_Comparison_Exp = {
@@ -8006,8 +8310,13 @@ export type Event_Parententitytype_Enum_Comparison_Exp = {
 };
 
 
+export type Jsonb_Cast_Exp = {
+  String?: Maybe<String_Comparison_Exp>;
+};
+
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
+  _cast?: Maybe<Jsonb_Cast_Exp>;
   /** is the column contained in the given json value */
   _contained_in?: Maybe<Scalars['jsonb']>;
   /** does the column contain the given json value at the top level */
@@ -8225,6 +8534,12 @@ export type Query_Root = {
   V3Ask_aggregate: V3Ask_Aggregate;
   /** fetch data from the table: "v3_ask" using primary key columns */
   V3Ask_by_pk?: Maybe<V3Ask>;
+  /** fetch data from the table: "v3_reserve_auction" */
+  V3ReserveAuction: Array<V3ReserveAuction>;
+  /** fetch aggregated fields from the table: "v3_reserve_auction" */
+  V3ReserveAuction_aggregate: V3ReserveAuction_Aggregate;
+  /** fetch data from the table: "v3_reserve_auction" using primary key columns */
+  V3ReserveAuction_by_pk?: Maybe<V3ReserveAuction>;
 };
 
 
@@ -8861,6 +9176,29 @@ export type Query_RootV3Ask_By_PkArgs = {
   id: Scalars['String'];
 };
 
+
+export type Query_RootV3ReserveAuctionArgs = {
+  distinct_on?: Maybe<Array<V3ReserveAuction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3ReserveAuction_Order_By>>;
+  where?: Maybe<V3ReserveAuction_Bool_Exp>;
+};
+
+
+export type Query_RootV3ReserveAuction_AggregateArgs = {
+  distinct_on?: Maybe<Array<V3ReserveAuction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3ReserveAuction_Order_By>>;
+  where?: Maybe<V3ReserveAuction_Bool_Exp>;
+};
+
+
+export type Query_RootV3ReserveAuction_By_PkArgs = {
+  id: Scalars['String'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "auction" */
@@ -9027,6 +9365,12 @@ export type Subscription_Root = {
   V3Ask_aggregate: V3Ask_Aggregate;
   /** fetch data from the table: "v3_ask" using primary key columns */
   V3Ask_by_pk?: Maybe<V3Ask>;
+  /** fetch data from the table: "v3_reserve_auction" */
+  V3ReserveAuction: Array<V3ReserveAuction>;
+  /** fetch aggregated fields from the table: "v3_reserve_auction" */
+  V3ReserveAuction_aggregate: V3ReserveAuction_Aggregate;
+  /** fetch data from the table: "v3_reserve_auction" using primary key columns */
+  V3ReserveAuction_by_pk?: Maybe<V3ReserveAuction>;
 };
 
 
@@ -9660,6 +10004,29 @@ export type Subscription_RootV3Ask_AggregateArgs = {
 
 
 export type Subscription_RootV3Ask_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootV3ReserveAuctionArgs = {
+  distinct_on?: Maybe<Array<V3ReserveAuction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3ReserveAuction_Order_By>>;
+  where?: Maybe<V3ReserveAuction_Bool_Exp>;
+};
+
+
+export type Subscription_RootV3ReserveAuction_AggregateArgs = {
+  distinct_on?: Maybe<Array<V3ReserveAuction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<V3ReserveAuction_Order_By>>;
+  where?: Maybe<V3ReserveAuction_Bool_Exp>;
+};
+
+
+export type Subscription_RootV3ReserveAuction_By_PkArgs = {
   id: Scalars['String'];
 };
 
