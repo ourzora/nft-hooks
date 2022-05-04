@@ -83,7 +83,7 @@ export class MediaFetchAgent {
   }
 
   async loadEnsName(address: string) {
-    return (await this.ensFetcher.loadEnsFromAddresses([address]))[0];
+    return (await this.ensFetcher.loadEnsFromAddresses([address]))[address];
   }
 
   /**
