@@ -490,7 +490,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
   fetchNFTs = async (mediaIds: readonly string[]) => {
     const response = (await this.getClient().request(INDEXER_BY_IDS_QUERY, {
       ids: mediaIds,
-    })) as ByIdsQuery;
+  })) as ByIdsQuery;
     return mediaIds.map(
       (key) =>
         response.Token.find((media) => media.id === key) || new Error('Missing record')

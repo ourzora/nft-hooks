@@ -1,6 +1,9 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { TokenResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
-import { EventType, TokenQuery } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import {
+  SharedTokenResponse,
+  TokenResponseItem,
+  ZDKAlphaDataInterface,
+} from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
@@ -19,6 +22,10 @@ import {
   TokensQueryInput,
   TokensQueryFilter,
   TokenSortInput,
+  MarketDetailsFragment,
+  MarketInfoFragment,
+  EventType,
+  EventInfoFragment,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import {
@@ -36,9 +43,7 @@ import {
   TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types';
 import { ZERO_ADDRESS } from 'src/constants/addresses';
-
-type SingleTokenResponse = NonNullable<TokenQuery['token']>;
-type SingleTokenEvents = SingleTokenResponse['events'];
+import { NotFoundError } from 'src/fetcher/ErrorUtils';
 
 function dateToUnix(date: string) {
   return Math.floor(new Date(date).getTime() / 1000);
@@ -73,7 +78,124 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
-function getMarkets(markets: TokenResponseItem['marketsSummary']) {
+function getEvents(events: EventInfoFragment[]): TokenEvent[] {
+  return events
+    .map((tokenEvent) => {
+      const common = {
+        at: {
+          timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+          blockNumber: tokenEvent.transactionInfo.blockNumber,
+          transactionHash: tokenEvent.transactionInfo.transactionHash || undefined,
+        },
+      };
+
+      if (
+        tokenEvent.eventType === EventType.MintEvent &&
+        tokenEvent.properties.__typename === 'MintEvent'
+      ) {
+        const mint: TokenTransferEvent = {
+          ...common,
+          from: ZERO_ADDRESS,
+          to: tokenEvent.properties.toAddress,
+          type: TOKEN_TRANSFER_EVENT_TYPES.MINT,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+        };
+        return mint;
+      }
+      if (
+        tokenEvent.eventType === EventType.TransferEvent &&
+        tokenEvent.properties.__typename === 'TransferEvent'
+      ) {
+        const transfer: TokenTransferEvent = {
+          ...common,
+          from: tokenEvent.properties.fromAddress,
+          to: tokenEvent.properties.toAddress,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+          type:
+            tokenEvent.properties.toAddress === ZERO_ADDRESS
+              ? TOKEN_TRANSFER_EVENT_TYPES.BURN
+              : TOKEN_TRANSFER_EVENT_TYPES.TRANSFER,
+        };
+        return transfer;
+      }
+
+      if (
+        tokenEvent.eventType === EventType.V1MarketEvent &&
+        tokenEvent.properties.__typename === 'V1MarketEvent'
+      ) {
+        /**
+           * 
+           * export type FixedPriceLike = {
+side: FIXED_SIDE_TYPES;
+expires?: number;
+source: FIXED_PRICE_MARKET_SOURCES;
+type: MARKET_TYPES.FIXED_PRICE;
+} & MarketInfo;
+           */
+        // return {
+        //   ...common,
+        //   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+        //   market: {
+        //     side: FIXED_SIDE_TYPES.ASK,
+        //     source: FIXED_PRICE_MARKET_SOURCES,
+        //     type: MARKET_TYPES.FIXED_PRICE,
+        //   },
+        // };
+      }
+
+      if (tokenEvent.eventType === EventType.V2AuctionEvent) {
+      }
+
+      if (tokenEvent.eventType === EventType.V3AskEvent) {
+      }
+
+      // ...handleSingleEvent(tokenEvent),
+      // from: tokenEvent;
+      // to: ETHAddress;
+      // type: TOKEN_TRANSFER_EVENT_TYPES;
+      // eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
+      return {} as TokenTransferEvent;
+    })
+    .filter((item) => item !== undefined);
+}
+
+const getStandardMarketData = (
+  market: MarketResponseFragmentItem,
+  amount: PriceSummaryFragment
+) => ({
+  createdAt: {
+    timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
+    blockNumber: market.transactionInfo.blockNumber || undefined,
+    transactionHash: market.transactionInfo.transactionHash || undefined,
+  },
+  amount: {
+    usd: amount!.usdcPrice
+      ? {
+          value: amount!.usdcPrice?.decimal,
+          raw: amount!.usdcPrice?.raw,
+        }
+      : undefined,
+    eth: amount!.ethPrice
+      ? {
+          value: amount!.ethPrice?.decimal,
+          raw: amount!.ethPrice?.raw,
+        }
+      : undefined,
+    symbol: amount!.nativePrice.currency.name,
+    decimals: amount!.nativePrice.currency.decimals,
+    address: amount!.nativePrice.currency.address,
+    amount: {
+      raw: amount!.nativePrice.raw,
+      value: amount!.nativePrice.decimal,
+    },
+  },
+  raw: market,
+});
+
+// This shows the return type for a market item with both details and info
+type MarketResponseFragmentItem = MarketDetailsFragment & MarketInfoFragment;
+
+function getMarkets(markets: MarketResponseFragmentItem[]) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
@@ -111,119 +233,8 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
     return MARKET_INFO_STATUSES.UNKNOWN;
   };
 
-  function handleZDKEvents(events: SingleTokenEvents): TokenEvent[] {
-    return events
-      .map((tokenEvent) => {
-        const common = {
-          at: {
-            timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
-            blockNumber: tokenEvent.transactionInfo.blockNumber,
-            transactionHash: tokenEvent.transactionInfo.transactionHash || undefined,
-          },
-        };
-
-        if (
-          tokenEvent.eventType === EventType.MintEvent &&
-          tokenEvent.properties.__typename === 'MintEvent'
-        ) {
-          const mint: TokenTransferEvent = {
-            ...common,
-            from: ZERO_ADDRESS,
-            to: tokenEvent.properties.toAddress,
-            type: TOKEN_TRANSFER_EVENT_TYPES.MINT,
-            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
-          };
-          return mint;
-        }
-        if (
-          tokenEvent.eventType === EventType.TransferEvent &&
-          tokenEvent.properties.__typename === 'TransferEvent'
-        ) {
-          const transfer: TokenTransferEvent = {
-            ...common,
-            from: tokenEvent.properties.fromAddress,
-            to: tokenEvent.properties.toAddress,
-            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
-            type:
-              tokenEvent.properties.toAddress === ZERO_ADDRESS
-                ? TOKEN_TRANSFER_EVENT_TYPES.BURN
-                : TOKEN_TRANSFER_EVENT_TYPES.TRANSFER,
-          };
-          return transfer;
-        }
-
-        if (tokenEvent.eventType === EventType.V1MarketEvent &&
-          tokenEvent.properties.__typename === 'V1MarketEvent') {
-            /**
-             * 
-             * export type FixedPriceLike = {
-  side: FIXED_SIDE_TYPES;
-  expires?: number;
-  source: FIXED_PRICE_MARKET_SOURCES;
-  type: MARKET_TYPES.FIXED_PRICE;
-} & MarketInfo;
-             */
-            return {
-              ...common,
-              eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
-              market: {
-                side: FIXED_SIDE_TYPES.ASK,
-                source: FIXED_PRICE_MARKET_SOURCES,
-                type: MARKET_TYPES.FIXED_PRICE,
-              },
-            };
-        }
-
-        if (tokenEvent.eventType === EventType.V2AuctionEvent) {
-        }
-
-        if (tokenEvent.eventType === EventType.V3AskEvent) {
-        }
-
-        // ...handleSingleEvent(tokenEvent),
-        // from: tokenEvent;
-        // to: ETHAddress;
-        // type: TOKEN_TRANSFER_EVENT_TYPES;
-        // eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
-        return {} as TokenTransferEvent;
-      })
-      .filter((item) => item !== undefined);
-  }
-
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
-    const getStandardMarketData = (
-      market: TokenResponseItem['marketsSummary'][0],
-      amount: PriceSummaryFragment
-    ) => ({
-      createdAt: {
-        timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
-        blockNumber: market.transactionInfo.blockNumber || undefined,
-        transactionHash: market.transactionInfo.transactionHash || undefined,
-      },
-      amount: {
-        usd: amount!.usdcPrice
-          ? {
-              value: amount!.usdcPrice?.decimal,
-              raw: amount!.usdcPrice?.raw,
-            }
-          : undefined,
-        eth: amount!.ethPrice
-          ? {
-              value: amount!.ethPrice?.decimal,
-              raw: amount!.ethPrice?.raw,
-            }
-          : undefined,
-        symbol: amount!.nativePrice.currency.name,
-        decimals: amount!.nativePrice.currency.decimals,
-        address: amount!.nativePrice.currency.address,
-        amount: {
-          raw: amount!.nativePrice.raw,
-          value: amount!.nativePrice.decimal,
-        },
-      },
-      raw: market,
-    });
     if (market.properties.__typename === 'V1Ask') {
       const properties = market.properties as V1Ask;
       marketResponse.push({
@@ -245,7 +256,6 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
       });
     }
     if (market.properties.__typename === 'V2Auction') {
-      // @ts-ignore
       const properties = market.properties as V2AuctionMarketPropertiesFragment;
       const endTime =
         parseInt(properties.duration, 10) + parseInt(properties.firstBidTime, 10);
@@ -312,7 +322,6 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
       });
     }
     if (market.properties.__typename === 'V3Ask') {
-      // @ts-ignore
       const properties = market.properties as V3AskPropertiesFragment;
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
@@ -326,11 +335,14 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
   return marketResponse;
 }
 
-export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NFTObject) {
+export function transformNFTZDKAlpha(
+  tokenResponse: SharedTokenResponse,
+  object?: NFTObject
+) {
   if (!object) {
     object = { rawData: {} };
   }
-  const { token } = tokenMarket;
+  const { token } = tokenResponse;
   object.nft = {
     tokenId: token.tokenId,
     contract: {
@@ -356,10 +368,17 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
     metadataURI: token.tokenUrl || null,
     contentURI: token.content?.url || null,
   };
-  object.markets = getMarkets(tokenMarket.marketsSummary);
 
-  // sales data or include externally?
-  // should sales data be incorporated in events?
+  // Response of token query
+  if (tokenResponse.__typename === 'TokenWithFullMarketHistory') {
+    object.markets = getMarkets(tokenResponse.markets);
+    object.events = getEvents(tokenResponse.events);
+  }
+
+  // Response of tokens (plural) query
+  if (tokenResponse.__typename === 'TokenWithMarketsSummary') {
+    object.markets = getMarkets(tokenResponse.marketsSummary);
+  }
 
   object.metadata = {
     name: token.name || undefined,
@@ -396,11 +415,6 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
     source: MEDIA_SOURCES.ZORA,
   };
 
-  if ((token as any).events) {
-    const events = (token as any).events as SingleTokenEvents;
-    object.events = handleZDKEvents(events);
-  }
-
   if (!object.rawData) {
     object.rawData = {};
   }
@@ -421,33 +435,44 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return true;
   }
 
-  transformNFT(tokenMarket: TokenResponseItem, object?: NFTObject) {
-    return transformNFTZDKAlpha(tokenMarket, object);
+  transformNFT(token: TokenResponseItem, object?: NFTObject) {
+    return transformNFTZDKAlpha(token, object);
   }
 
   loadNFT = async ({
     contract,
     id,
   }: NFTIdentifier): Promise<TokenResponseItem | Error> => {
-    const response = await this.zdk.tokens({
+    const response = await this.zdk.token({
+      network: { network: Network.Ethereum, chain: Chain.Mainnet },
       includeFullDetails: true,
-      where: {
-        tokens: [{ tokenId: id, address: contract }],
+      token: {
+        tokenId: id,
+        address: contract,
       },
     });
 
-    return response.tokens.nodes.length > 0
-      ? response.tokens.nodes[0]
-      : new Error('No token');
+    if (!response.token) {
+      throw new NotFoundError('Cannot find token entity');
+    }
+
+    return response.token;
   };
 
-  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(TokenResponseItem | Error)[]> {
-    return Promise.all(
-      nfts.map(({ contract, id }) => {
-        return this.loadNFT({ contract, id });
-      })
-    );
-  }
+  loadNFTs = async (
+    nfts: readonly NFTIdentifier[]
+  ): Promise<(Error | SharedTokenResponse)[]> => {
+    const tokens = await this.zdk.tokens({
+      where: {
+        tokens: nfts.map((item) => ({
+          address: item.contract,
+          tokenId: item.id,
+        })),
+      },
+    });
+
+    return tokens.tokens.nodes;
+  };
 
   queryNFTs = async (query: NFTQuery) => {
     const marketsQuery: TokensQueryInput = {};

@@ -1,17 +1,13 @@
-import {
-  MarketDetailsFragment,
-  MarketInfoFragment,
-  TokenDetailsFragment,
-  TokenInfoFragment,
-} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTInterface } from '../../types/NFTInterface';
 
-import { TokenResponseItem, TokensQuery } from '@zoralabs/zdk-alpha/dist/src/types';
+// todo move and rename to correct response type
+import { TokenResponseItem as TokensResponseItem, TokensQuery } from '@zoralabs/zdk-alpha/dist/src/types';
+import { TokenQuery } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 
-export type FullTokenMarketResponse = {
-  markets: MarketInfoFragment & MarketDetailsFragment;
-  token: TokenInfoFragment & TokenDetailsFragment;
-};
-export interface ZDKAlphaDataInterface extends NFTInterface<TokenResponseItem> {}
+export type TokenResponseItem = NonNullable<TokenQuery['token']>;
 
-export { TokenResponseItem, TokensQuery };
+export type SharedTokenResponse = TokenResponseItem | TokensResponseItem;
+
+export interface ZDKAlphaDataInterface extends NFTInterface<SharedTokenResponse> {}
+
+export { TokensResponseItem, TokensQuery };
