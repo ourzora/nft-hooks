@@ -265,8 +265,8 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
           address: token.owner,
         }
       : undefined,
-    metadataURI: token.tokenUrl || null,
-    contentURI: token.content?.url || null,
+    metadataURI: token.tokenUrl || undefined,
+    contentURI: token.content?.url || undefined,
   };
   object.markets = getMarkets(tokenMarket.marketsSummary);
 
@@ -276,21 +276,23 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
   object.metadata = token.metadata as any;
   object.media = {
     // TODO(iain): Expose poster information
-    thumbnail: token.image?.mediaEncoding ? {
-      uri: token.image.mediaEncoding.thumbnail,
-    } : null,
+    thumbnail: token.image?.mediaEncoding
+      ? {
+          uri: token.image.mediaEncoding.thumbnail,
+        }
+      : undefined,
     image: token.image?.url
       ? {
           mime: token.image.mimeType || undefined,
           uri: token.image.url,
         }
-      : null,
+      : undefined,
     content: token.content?.url
       ? {
           mime: token.content.mimeType || undefined,
           uri: token.content.url,
         }
-      : null,
+      : undefined,
     source: MEDIA_SOURCES.ZORA,
   };
 

@@ -61,7 +61,6 @@ export enum FIXED_SIDE_TYPES {
   OFFER = 'offer',
 }
 
-type Nullable<T> = T | null;
 
 export type ETHAddress = string;
 
@@ -138,6 +137,7 @@ export type MarketInfo = {
   createdBy?: string;
   finishedAt?: TimedAction;
   canceledAt?: TimedAction;
+  marketContract?: ETHAddress;
 };
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
@@ -164,9 +164,10 @@ export type MediaObject = {
 };
 
 export type MetadataAttributeType = {
-  name: Nullable<string>;
-  value: Nullable<string>;
-  display: Nullable<string>;
+  // TODO(iain): Is name optional in this context?
+  name?: string;
+  value?: string;
+  display?: string;
 };
 
 export type NFTObject = {
@@ -179,9 +180,9 @@ export type NFTObject = {
     component: string;
   };
   media?: {
-    thumbnail: Nullable<MediaObject>;
-    image: Nullable<MediaObject>;
-    content: Nullable<MediaObject>;
+    thumbnail?: MediaObject;
+    image?: MediaObject;
+    content?: MediaObject;
     source: MEDIA_SOURCES;
   };
   nft?: {
@@ -201,9 +202,9 @@ export type NFTObject = {
     owner?: {
       address: ETHAddress;
     };
-    metadataURI: Nullable<string>;
+    metadataURI?: string;
     // Zora-specific extension but exposed for parsed JSON in contracts
-    contentURI: Nullable<string>;
+    contentURI?: string;
   };
   metadata?: {
     name?: string;
