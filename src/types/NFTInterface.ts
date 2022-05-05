@@ -164,9 +164,9 @@ export type MediaObject = {
 };
 
 export type MetadataAttributeType = {
-  name: Nullable<string>;
-  value: Nullable<string>;
-  display: Nullable<string>;
+  name?: string;
+  value?: string;
+  display?: string;
 };
 
 export type NFTObject = {

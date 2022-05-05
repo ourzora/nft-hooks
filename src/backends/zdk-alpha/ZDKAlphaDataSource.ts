@@ -1,5 +1,6 @@
 import { NetworkIDs, NFTObject } from '../../';
 import { TokenResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { EventType, TokenQuery } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
@@ -29,7 +30,15 @@ import {
   MARKET_TYPES,
   MEDIA_SOURCES,
   NFTIdentifier,
+  TokenEvent,
+  TokenTransferEvent,
+  TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
+  TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types';
+import { ZERO_ADDRESS } from 'src/constants/addresses';
+
+type SingleTokenResponse = NonNullable<TokenQuery['token']>;
+type SingleTokenEvents = SingleTokenResponse['events'];
 
 function dateToUnix(date: string) {
   return Math.floor(new Date(date).getTime() / 1000);
@@ -101,6 +110,85 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
     }
     return MARKET_INFO_STATUSES.UNKNOWN;
   };
+
+  function handleZDKEvents(events: SingleTokenEvents): TokenEvent[] {
+    return events
+      .map((tokenEvent) => {
+        const common = {
+          at: {
+            timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+            blockNumber: tokenEvent.transactionInfo.blockNumber,
+            transactionHash: tokenEvent.transactionInfo.transactionHash || undefined,
+          },
+        };
+
+        if (
+          tokenEvent.eventType === EventType.MintEvent &&
+          tokenEvent.properties.__typename === 'MintEvent'
+        ) {
+          const mint: TokenTransferEvent = {
+            ...common,
+            from: ZERO_ADDRESS,
+            to: tokenEvent.properties.toAddress,
+            type: TOKEN_TRANSFER_EVENT_TYPES.MINT,
+            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+          };
+          return mint;
+        }
+        if (
+          tokenEvent.eventType === EventType.TransferEvent &&
+          tokenEvent.properties.__typename === 'TransferEvent'
+        ) {
+          const transfer: TokenTransferEvent = {
+            ...common,
+            from: tokenEvent.properties.fromAddress,
+            to: tokenEvent.properties.toAddress,
+            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+            type:
+              tokenEvent.properties.toAddress === ZERO_ADDRESS
+                ? TOKEN_TRANSFER_EVENT_TYPES.BURN
+                : TOKEN_TRANSFER_EVENT_TYPES.TRANSFER,
+          };
+          return transfer;
+        }
+
+        if (tokenEvent.eventType === EventType.V1MarketEvent &&
+          tokenEvent.properties.__typename === 'V1MarketEvent') {
+            /**
+             * 
+             * export type FixedPriceLike = {
+  side: FIXED_SIDE_TYPES;
+  expires?: number;
+  source: FIXED_PRICE_MARKET_SOURCES;
+  type: MARKET_TYPES.FIXED_PRICE;
+} & MarketInfo;
+             */
+            return {
+              ...common,
+              eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+              market: {
+                side: FIXED_SIDE_TYPES.ASK,
+                source: FIXED_PRICE_MARKET_SOURCES,
+                type: MARKET_TYPES.FIXED_PRICE,
+              },
+            };
+        }
+
+        if (tokenEvent.eventType === EventType.V2AuctionEvent) {
+        }
+
+        if (tokenEvent.eventType === EventType.V3AskEvent) {
+        }
+
+        // ...handleSingleEvent(tokenEvent),
+        // from: tokenEvent;
+        // to: ETHAddress;
+        // type: TOKEN_TRANSFER_EVENT_TYPES;
+        // eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
+        return {} as TokenTransferEvent;
+      })
+      .filter((item) => item !== undefined);
+  }
 
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
@@ -273,12 +361,26 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
   // sales data or include externally?
   // should sales data be incorporated in events?
 
-  object.metadata = token.metadata as any;
+  object.metadata = {
+    name: token.name || undefined,
+    description: token.description || undefined,
+    contentUri: token.content?.url || undefined,
+    imageUri: token.image?.url || undefined,
+    attributes: token.attributes?.map((item) => ({
+      name: item.traitType || undefined,
+      value: item.value || undefined,
+      display: item.displayType || undefined,
+    })),
+    raw: token.metadata,
+  };
+
   object.media = {
     // TODO(iain): Expose poster information
-    thumbnail: token.image?.mediaEncoding ? {
-      uri: token.image.mediaEncoding.thumbnail,
-    } : null,
+    thumbnail: token.image?.mediaEncoding
+      ? {
+          uri: token.image.mediaEncoding.thumbnail,
+        }
+      : null,
     image: token.image?.url
       ? {
           mime: token.image.mimeType || undefined,
@@ -294,12 +396,18 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
     source: MEDIA_SOURCES.ZORA,
   };
 
+  if ((token as any).events) {
+    const events = (token as any).events as SingleTokenEvents;
+    object.events = handleZDKEvents(events);
+  }
+
   if (!object.rawData) {
     object.rawData = {};
   }
   object.rawData['APIIndexer'] = token;
   return object;
 }
+
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
