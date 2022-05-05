@@ -54,8 +54,8 @@ export class OpenseaDataSource implements OpenseaInterface {
       owner: {
         address: asset.owner?.address,
       },
-      metadataURI: asset.token_metadata,
-      contentURI: asset.animation_original_url || asset.image_original_url,
+      metadataURI: asset.token_metadata || undefined,
+      contentURI: asset.animation_original_url || asset.image_original_url || undefined,
       minted: {
         address: asset.creator?.address,
       },
@@ -76,18 +76,18 @@ export class OpenseaDataSource implements OpenseaInterface {
         ? {
             uri: asset.image_thumbnail_url,
           }
-        : null,
+        : undefined,
       image:
         asset.image_url || asset.animation_url
           ? {
               uri: asset.animation_url || asset.image_url!,
             }
-          : null,
+          : undefined,
       content: asset.animation_url
         ? {
             uri: asset.animation_url || asset.image_original_url!,
           }
-        : null,
+        : undefined,
       source: MEDIA_SOURCES.OPENSEA,
     };
     if (!object.rawData) {

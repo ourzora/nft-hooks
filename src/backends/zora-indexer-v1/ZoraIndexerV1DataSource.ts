@@ -72,7 +72,7 @@ function getAttributes(json: any) {
   if (json.properties) {
     try {
       Object.keys(json.properties).forEach((name: string) => {
-        result.push({ name, value: json.properties[name] as string, display: null });
+        result.push({ name, value: json.properties[name] as string });
       });
     } catch {}
   }
@@ -422,9 +422,7 @@ export function transformNFTZoraIndexerV1DataSource(
       ? {
           uri: asset.media?.contentURI,
         }
-      : null,
-    thumbnail: null,
-    image: null,
+      : undefined,
     source: MEDIA_SOURCES.ZORA,
   };
   if (!object.rawData) {

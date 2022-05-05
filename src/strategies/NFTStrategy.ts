@@ -28,8 +28,6 @@ export abstract class NFTStrategy {
         contract: { address: contract },
         tokenId: id,
         minted: {},
-        metadataURI: null,
-        contentURI: null,
       },
     };
   }
