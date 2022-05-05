@@ -31,6 +31,10 @@ import {
   NFTIdentifier,
 } from '../../types';
 
+function dateToUnix(date: string) {
+  return Math.floor(new Date(date).getTime() / 1000);
+}
+
 function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
     case '1':
@@ -105,7 +109,7 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
       amount: PriceSummaryFragment
     ) => ({
       createdAt: {
-        timestamp: market.transactionInfo.blockTimestamp,
+        timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
         blockNumber: market.transactionInfo.blockNumber || undefined,
         transactionHash: market.transactionInfo.transactionHash || undefined,
       },
@@ -250,8 +254,7 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
       address: token.mintInfo?.originatorAddress || undefined,
       at: token.mintInfo
         ? {
-            timestamp:
-              new Date(token.mintInfo.mintContext.blockTimestamp).getTime() / 1000,
+            timestamp: dateToUnix(token.mintInfo.mintContext.blockTimestamp),
             blockNumber: token.mintInfo.mintContext.blockNumber,
             transactionHash: token.mintInfo!.mintContext.transactionHash || undefined,
           }
@@ -266,10 +269,16 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
     contentURI: token.content?.url || null,
   };
   object.markets = getMarkets(tokenMarket.marketsSummary);
-  // sales?
+
+  // sales data or include externally?
+  // should sales data be incorporated in events?
 
   object.metadata = token.metadata as any;
   object.media = {
+    // TODO(iain): Expose poster information
+    thumbnail: token.image?.mediaEncoding ? {
+      uri: token.image.mediaEncoding.thumbnail,
+    } : null,
     image: token.image?.url
       ? {
           mime: token.image.mimeType || undefined,
@@ -282,7 +291,6 @@ export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NF
           uri: token.content.url,
         }
       : null,
-    thumbnail: null,
     source: MEDIA_SOURCES.ZORA,
   };
 

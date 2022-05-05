@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ENSInfo } from 'src/backends/ens-reverse/ENSInterface';
+import { ENSInfo } from '../backends/ens-reverse/ENSInterface';
 import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
