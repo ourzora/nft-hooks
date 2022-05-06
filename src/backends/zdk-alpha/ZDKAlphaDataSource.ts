@@ -1,5 +1,5 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { TokenResponseItem, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
@@ -30,6 +30,7 @@ import {
   MEDIA_SOURCES,
   NFTIdentifier,
 } from '../../types';
+import { TokensResponseItem } from '@zoralabs/zdk-alpha/dist/src/types';
 
 function dateToUnix(date: string) {
   return Math.floor(new Date(date).getTime() / 1000);
@@ -64,7 +65,7 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
-function getMarkets(markets: TokenResponseItem['marketsSummary']) {
+function getMarkets(markets: TokensResponseItem['marketsSummary']) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
@@ -105,7 +106,7 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
     const getStandardMarketData = (
-      market: TokenResponseItem['marketsSummary'][0],
+      market: TokensResponseItem['marketsSummary'][0],
       amount: PriceSummaryFragment
     ) => ({
       createdAt: {
@@ -238,7 +239,7 @@ function getMarkets(markets: TokenResponseItem['marketsSummary']) {
   return marketResponse;
 }
 
-export function transformNFTZDKAlpha(tokenMarket: TokenResponseItem, object?: NFTObject) {
+export function transformNFTZDKAlpha(tokenMarket: TokensResponseItem, object?: NFTObject) {
   if (!object) {
     object = { rawData: {} };
   }
@@ -315,14 +316,14 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return true;
   }
 
-  transformNFT(tokenMarket: TokenResponseItem, object?: NFTObject) {
+  transformNFT(tokenMarket: TokensResponseItem, object?: NFTObject) {
     return transformNFTZDKAlpha(tokenMarket, object);
   }
 
   loadNFT = async ({
     contract,
     id,
-  }: NFTIdentifier): Promise<TokenResponseItem | Error> => {
+  }: NFTIdentifier): Promise<TokensResponseItem | Error> => {
     const response = await this.zdk.tokens({
       includeFullDetails: true,
       where: {
@@ -335,7 +336,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
       : new Error('No token');
   };
 
-  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(TokenResponseItem | Error)[]> {
+  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(TokensResponseItem | Error)[]> {
     return Promise.all(
       nfts.map(({ contract, id }) => {
         return this.loadNFT({ contract, id });
