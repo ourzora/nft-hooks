@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
-import { merge } from 'merge-anything';
+import merge from 'deepmerge';
 import useSWR from 'swr';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { NFTObject } from '../types/NFTInterface';
