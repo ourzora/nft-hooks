@@ -26,6 +26,8 @@ import {
   MarketInfoFragment,
   EventType,
   EventInfoFragment,
+  V1MarketEventType,
+  V2AuctionEventType,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import {
@@ -78,6 +80,33 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
+// works for v1
+function mapMarketEventTypeToStatus(marketEventType: V1MarketEventType) {
+  switch (marketEventType) {
+    case V1MarketEventType.V1MarketAskCreated:
+      return MARKET_INFO_STATUSES.PENDING;
+
+    case V1MarketEventType.V1MarketAskRemoved:
+      return MARKET_INFO_STATUSES.CANCELED;
+
+    case V1MarketEventType.V1MarketBidCreated:
+      return MARKET_INFO_STATUSES.ACTIVE;
+
+    case V1MarketEventType.V1MarketBidFinalized:
+      return MARKET_INFO_STATUSES.COMPLETE;
+
+    // double check below:
+    case V1MarketEventType.V1MarketBidRemoved:
+      return MARKET_INFO_STATUSES.UNKNOWN;
+
+    case V1MarketEventType.V1MarketBidShareUpdated:
+      return MARKET_INFO_STATUSES.UNKNOWN;
+
+    default:
+      return MARKET_INFO_STATUSES.INVALID;
+  }
+}
+
 function getEvents(events: EventInfoFragment[]): TokenEvent[] {
   return events
     .map((tokenEvent) => {
@@ -123,37 +152,75 @@ function getEvents(events: EventInfoFragment[]): TokenEvent[] {
         tokenEvent.eventType === EventType.V1MarketEvent &&
         tokenEvent.properties.__typename === 'V1MarketEvent'
       ) {
-        /**
-           * 
-           * export type FixedPriceLike = {
-side: FIXED_SIDE_TYPES;
-expires?: number;
-source: FIXED_PRICE_MARKET_SOURCES;
-type: MARKET_TYPES.FIXED_PRICE;
-} & MarketInfo;
-           */
+        return {
+          ...common,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT as const,
+          market: {
+            side: FIXED_SIDE_TYPES.ASK,
+            source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
+            type: MARKET_TYPES.FIXED_PRICE as const,
+            // FIXME below
+            expires: undefined,
+            // FIXME above
+            status: mapMarketEventTypeToStatus(tokenEvent.properties.marketEventType),
+            raw: tokenEvent,
+            createdAt: {
+              timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+              blockNumber: tokenEvent.transactionInfo.blockNumber,
+              transactionHash: tokenEvent.transactionInfo.transactionHash!,
+            },
+          },
+        };
+      }
+
+      if (
+        tokenEvent.eventType === EventType.V2AuctionEvent &&
+        tokenEvent.properties.__typename === 'V2AuctionEvent'
+      ) {
+        if (
+          tokenEvent.properties.auctionEventType ===
+          V2AuctionEventType.V2AuctionApprovalUpdated
+        ) {
+          return {
+            ...common,
+            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT as const,
+            market: {
+              type: MARKET_TYPES.AUCTION as const,
+              source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
+              // FIXME below
+              bids: [],
+              duration: 0,
+              status: MARKET_INFO_STATUSES.UNKNOWN,
+              // FIXME above
+              raw: tokenEvent,
+              createdAt: {
+                timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+                blockNumber: tokenEvent.transactionInfo.blockNumber,
+                transactionHash: tokenEvent.transactionInfo.transactionHash!,
+              },
+            },
+          };
+        }
+
         // return {
-        //   ...common,
-        //   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
         //   market: {
-        //     side: FIXED_SIDE_TYPES.ASK,
-        //     source: FIXED_PRICE_MARKET_SOURCES,
-        //     type: MARKET_TYPES.FIXED_PRICE,
+        //     bids:
+        //     source: AUCTION_SOURCE_TYPES;
+        //     type: MARKET_TYPES.AUCTION;
+        //     winner?: string;
+        //     endsAt?: TimedAction;
+        //     duration: number;
+        //     startedAt?: TimedAction;
+        //     currentBid?: AuctionBidEvent;
+        //     reservePrice?: CurrencyValue;
+        //     // current bid is duplicated within bids
         //   },
         // };
       }
 
-      if (tokenEvent.eventType === EventType.V2AuctionEvent) {
-      }
+      // if (tokenEvent.eventType === EventType.V3AskEvent) {
+      // }
 
-      if (tokenEvent.eventType === EventType.V3AskEvent) {
-      }
-
-      // ...handleSingleEvent(tokenEvent),
-      // from: tokenEvent;
-      // to: ETHAddress;
-      // type: TOKEN_TRANSFER_EVENT_TYPES;
-      // eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
       return {} as TokenTransferEvent;
     })
     .filter((item) => item !== undefined);

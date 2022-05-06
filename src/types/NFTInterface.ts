@@ -1,3 +1,7 @@
+import {
+  V2AuctionEvent,
+  V3AskEvent,
+} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
 export enum KNOWN_CONTRACTS {
@@ -108,7 +112,6 @@ export type AuctionLike = {
   // current bid is duplicated within bids
   bids: readonly AuctionBidEvent[];
   source: AUCTION_SOURCE_TYPES;
-  type: MARKET_TYPES.AUCTION;
 } & MarketInfo;
 
 export type FixedPriceLike = {
@@ -128,7 +131,7 @@ export type EditionLike = {
 
 export type MarketInfo = {
   raw: any;
-  amount: CurrencyValue;
+  amount?: CurrencyValue;
   // pending - inactive pending some event
   // active - can be filled / auction is ongoing
   // completed - auction end fill complete
@@ -157,6 +160,71 @@ export type TokenMarketEvent = {
 };
 
 export type TokenEvent = TokenTransferEvent | TokenMarketEvent;
+
+type SharedMarketEventData = {
+  sender: ETHAddress;
+  blockInfo: TimedAction;
+  marketAddress: ETHAddress;
+};
+
+enum AUCTION_EVENT_TYPES {
+  AUCTION_CREATED = 'AuctionCreated',
+  AUCTION_BID = 'AuctionBid',
+  AUCTION_ENDED = 'AuctionEnded',
+  AUCTION_FINALIZED = 'AuctionFinalized',
+  AUCTION_APPROVED = 'AuctionApproved',
+  AUCTION_CANCELLED = 'AuctionCancelled',
+}
+
+enum FIXED_PRICE_EVENT_TYPES {
+  FIXED_PRICE_CREATED = 'FixedPriceCreated',
+  FIXED_PRICE_FILLED = 'FixedPriceFilled',
+  FIXED_PRICE_CANCELLED = 'FixedPriceCancelled',
+}
+
+export type MarketAuctionEvent = {
+  event: AUCTION_EVENT_TYPES;
+  amount?: number;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
+  raw:
+    | {
+        source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2;
+        raw: V2AuctionEvent;
+      }
+    | {
+        source: AUCTION_SOURCE_TYPES.OPENSEA_ENGLISH;
+        // TODO: probably can be narrowed down
+        raw: any;
+      };
+} & SharedMarketEventData;
+
+type MarketFixedPriceEvent = {
+  event: FIXED_PRICE_EVENT_TYPES;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
+  side: FIXED_SIDE_TYPES;
+  raw:
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;
+        data: V3AskEvent;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1;
+        // TODO: probably can be narrowed down
+        data: any;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZNFT_PERPETUAL;
+        // TODO: probably can be narrowed down
+        data: any;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.OPENSEA_FIXED;
+        // TODO: probably can be narrowed down
+        data: any;
+      };
+} & SharedMarketEventData;
+
+type EventType = TransferEventType | MarketFixedPriceEvent | MarketAuctionEvent;
 
 export type MediaObject = {
   uri: string;
