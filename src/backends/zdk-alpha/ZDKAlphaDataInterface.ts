@@ -6,12 +6,12 @@ import {
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTInterface } from '../../types/NFTInterface';
 
-import { TokenResponseItem, TokensQuery } from '@zoralabs/zdk-alpha/dist/src/types';
+import { TokensResponseItem, TokensQuery } from '@zoralabs/zdk-alpha/dist/src/types';
 
 export type FullTokenMarketResponse = {
   markets: MarketInfoFragment & MarketDetailsFragment;
   token: TokenInfoFragment & TokenDetailsFragment;
 };
-export interface ZDKAlphaDataInterface extends NFTInterface<TokenResponseItem> {}
+export interface ZDKAlphaDataInterface extends NFTInterface<TokensResponseItem> {}
 
-export { TokenResponseItem, TokensQuery };
+export { TokensResponseItem, TokensQuery };
