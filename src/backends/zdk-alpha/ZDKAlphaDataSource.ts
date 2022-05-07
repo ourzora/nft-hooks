@@ -31,7 +31,9 @@ import {
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import {
+  AUCTION_EVENT_TYPES,
   AUCTION_SOURCE_TYPES,
+  FIXED_PRICE_EVENT_TYPES,
   FIXED_PRICE_MARKET_SOURCES,
   FIXED_SIDE_TYPES,
   MarketModule,
@@ -39,8 +41,7 @@ import {
   MARKET_TYPES,
   MEDIA_SOURCES,
   NFTIdentifier,
-  TokenEvent,
-  TokenTransferEvent,
+  NormalizedEvent,
   TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
   TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types';
@@ -107,7 +108,7 @@ function mapMarketEventTypeToStatus(marketEventType: V1MarketEventType) {
   }
 }
 
-function getEvents(events: EventInfoFragment[]): TokenEvent[] {
+function getEvents(events: EventInfoFragment[]): NormalizedEvent[] {
   return events
     .map((tokenEvent) => {
       const common = {
@@ -122,28 +123,37 @@ function getEvents(events: EventInfoFragment[]): TokenEvent[] {
         tokenEvent.eventType === EventType.MintEvent &&
         tokenEvent.properties.__typename === 'MintEvent'
       ) {
-        const mint: TokenTransferEvent = {
+        const mint = {
           ...common,
           from: ZERO_ADDRESS,
           to: tokenEvent.properties.toAddress,
           type: TOKEN_TRANSFER_EVENT_TYPES.MINT,
-          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT as const,
+          raw: {
+            source: MEDIA_SOURCES.ZORA,
+            data: tokenEvent,
+          },
         };
         return mint;
       }
+
       if (
         tokenEvent.eventType === EventType.TransferEvent &&
         tokenEvent.properties.__typename === 'TransferEvent'
       ) {
-        const transfer: TokenTransferEvent = {
+        const transfer = {
           ...common,
           from: tokenEvent.properties.fromAddress,
           to: tokenEvent.properties.toAddress,
-          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT as const,
           type:
             tokenEvent.properties.toAddress === ZERO_ADDRESS
               ? TOKEN_TRANSFER_EVENT_TYPES.BURN
               : TOKEN_TRANSFER_EVENT_TYPES.TRANSFER,
+          raw: {
+            source: MEDIA_SOURCES.ZORA,
+            data: tokenEvent,
+          },
         };
         return transfer;
       }
@@ -152,23 +162,41 @@ function getEvents(events: EventInfoFragment[]): TokenEvent[] {
         tokenEvent.eventType === EventType.V1MarketEvent &&
         tokenEvent.properties.__typename === 'V1MarketEvent'
       ) {
+        // FIXME: what to do when unable to map to FIXED_PRICE_EVENT_TYPES?
+        let event: FIXED_PRICE_EVENT_TYPES | undefined = undefined;
+
+        switch (tokenEvent.properties.marketEventType) {
+          case V1MarketEventType.V1MarketAskCreated:
+            event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CREATED;
+            break;
+
+          case V1MarketEventType.V1MarketAskRemoved:
+            event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
+            break;
+
+          case V1MarketEventType.V1MarketAskRemoved:
+            event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
+            break;
+        }
+
+        if (!event) {
+          return {} as NormalizedEvent;
+        }
         return {
           ...common,
+          // FIXME: address === sender???
+          sender: tokenEvent.properties.address,
+          marketAddress: tokenEvent.properties.collectionAddress,
+          blockInfo: {
+            timestamp: tokenEvent.transactionInfo.blockTimestamp,
+            blockNumber: tokenEvent.transactionInfo.blockNumber,
+          },
+          event,
           eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT as const,
-          market: {
-            side: FIXED_SIDE_TYPES.ASK,
-            source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
-            type: MARKET_TYPES.FIXED_PRICE as const,
-            // FIXME below
-            expires: undefined,
-            // FIXME above
-            status: mapMarketEventTypeToStatus(tokenEvent.properties.marketEventType),
-            raw: tokenEvent,
-            createdAt: {
-              timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
-              blockNumber: tokenEvent.transactionInfo.blockNumber,
-              transactionHash: tokenEvent.transactionInfo.transactionHash!,
-            },
+          side: FIXED_SIDE_TYPES.ASK,
+          raw: {
+            source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1 as const,
+            data: tokenEvent,
           },
         };
       }
@@ -177,51 +205,58 @@ function getEvents(events: EventInfoFragment[]): TokenEvent[] {
         tokenEvent.eventType === EventType.V2AuctionEvent &&
         tokenEvent.properties.__typename === 'V2AuctionEvent'
       ) {
-        if (
-          tokenEvent.properties.auctionEventType ===
-          V2AuctionEventType.V2AuctionApprovalUpdated
-        ) {
-          return {
-            ...common,
-            eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT as const,
-            market: {
-              type: MARKET_TYPES.AUCTION as const,
-              source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
-              // FIXME below
-              bids: [],
-              duration: 0,
-              status: MARKET_INFO_STATUSES.UNKNOWN,
-              // FIXME above
-              raw: tokenEvent,
-              createdAt: {
-                timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
-                blockNumber: tokenEvent.transactionInfo.blockNumber,
-                transactionHash: tokenEvent.transactionInfo.transactionHash!,
-              },
-            },
-          };
+        let event: AUCTION_EVENT_TYPES | undefined = undefined;
+
+        switch (tokenEvent.properties.auctionEventType) {
+          case V2AuctionEventType.V2AuctionCreated:
+            event = AUCTION_EVENT_TYPES.AUCTION_CREATED;
+            break;
+
+          case V2AuctionEventType.V2AuctionCanceled:
+            event = AUCTION_EVENT_TYPES.AUCTION_CANCELLED;
+            break;
+
+          case V2AuctionEventType.V2AuctionBid:
+            event = AUCTION_EVENT_TYPES.AUCTION_BID;
+            break;
+
+          // FIXME:
+          // case V2AuctionEventType.V2AuctionApprovalUpdated
+          // case V2AuctionEventType.V2AuctionDurationExtended
+          // case V2AuctionEventType.V2AuctionReservePriceUpdated
+
+          case V2AuctionEventType.V2AuctionEnded:
+            event = AUCTION_EVENT_TYPES.AUCTION_ENDED;
+            break;
         }
 
-        // return {
-        //   market: {
-        //     bids:
-        //     source: AUCTION_SOURCE_TYPES;
-        //     type: MARKET_TYPES.AUCTION;
-        //     winner?: string;
-        //     endsAt?: TimedAction;
-        //     duration: number;
-        //     startedAt?: TimedAction;
-        //     currentBid?: AuctionBidEvent;
-        //     reservePrice?: CurrencyValue;
-        //     // current bid is duplicated within bids
-        //   },
-        // };
+        if (!event) {
+          return {} as NormalizedEvent;
+        }
+
+        return {
+          ...common,
+          event: event,
+          type: MARKET_TYPES.AUCTION as const,
+          sender: tokenEvent.properties.address,
+          marketAddress: tokenEvent.properties.collectionAddress,
+          source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2 as const,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT as const,
+          blockInfo: {
+            timestamp: tokenEvent.transactionInfo.blockTimestamp,
+            blockNumber: tokenEvent.transactionInfo.blockNumber,
+          },
+          raw: {
+            source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2 as const,
+            raw: tokenEvent,
+          },
+        };
       }
 
       // if (tokenEvent.eventType === EventType.V3AskEvent) {
       // }
 
-      return {} as TokenTransferEvent;
+      return {} as NormalizedEvent;
     })
     .filter((item) => item !== undefined);
 }

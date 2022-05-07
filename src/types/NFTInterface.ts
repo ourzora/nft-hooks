@@ -1,4 +1,5 @@
 import {
+  EventInfoFragment,
   V2AuctionEvent,
   V3AskEvent,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
@@ -103,6 +104,8 @@ export type EditionPurchaseEvent = {
 };
 
 export type AuctionLike = {
+  type: MARKET_TYPES.AUCTION;
+  source: AUCTION_SOURCE_TYPES;
   winner?: string;
   endsAt?: TimedAction;
   duration: number;
@@ -111,22 +114,21 @@ export type AuctionLike = {
   reservePrice?: CurrencyValue;
   // current bid is duplicated within bids
   bids: readonly AuctionBidEvent[];
-  source: AUCTION_SOURCE_TYPES;
 } & MarketInfo;
 
 export type FixedPriceLike = {
+  type: MARKET_TYPES.FIXED_PRICE;
+  source: FIXED_PRICE_MARKET_SOURCES;
   side: FIXED_SIDE_TYPES;
   expires?: number;
-  source: FIXED_PRICE_MARKET_SOURCES;
-  type: MARKET_TYPES.FIXED_PRICE;
 } & MarketInfo;
 
 export type EditionLike = {
+  type: MARKET_TYPES.EDITION;
+  source: EDITION_SOURCES;
   totalSupply: number;
   editionSize: number;
   purchases: readonly EditionPurchaseEvent[];
-  source: EDITION_SOURCES;
-  type: MARKET_TYPES.EDITION;
 } & MarketInfo;
 
 export type MarketInfo = {
@@ -145,29 +147,7 @@ export type MarketInfo = {
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
-export type TokenTransferEvent = {
-  from: ETHAddress;
-  to: ETHAddress;
-  at: TimedAction;
-  type: TOKEN_TRANSFER_EVENT_TYPES;
-  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
-};
-
-export type TokenMarketEvent = {
-  market: MarketModule;
-  at: TimedAction;
-  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
-};
-
-export type TokenEvent = TokenTransferEvent | TokenMarketEvent;
-
-type SharedMarketEventData = {
-  sender: ETHAddress;
-  blockInfo: TimedAction;
-  marketAddress: ETHAddress;
-};
-
-enum AUCTION_EVENT_TYPES {
+export enum AUCTION_EVENT_TYPES {
   AUCTION_CREATED = 'AuctionCreated',
   AUCTION_BID = 'AuctionBid',
   AUCTION_ENDED = 'AuctionEnded',
@@ -176,29 +156,53 @@ enum AUCTION_EVENT_TYPES {
   AUCTION_CANCELLED = 'AuctionCancelled',
 }
 
-enum FIXED_PRICE_EVENT_TYPES {
+export enum FIXED_PRICE_EVENT_TYPES {
   FIXED_PRICE_CREATED = 'FixedPriceCreated',
   FIXED_PRICE_FILLED = 'FixedPriceFilled',
   FIXED_PRICE_CANCELLED = 'FixedPriceCancelled',
 }
 
-export type MarketAuctionEvent = {
+type SharedMarketEventData = {
+  sender: ETHAddress;
+  blockInfo: TimedAction;
+  marketAddress: ETHAddress;
+};
+
+export type TokenTransferEvent = {
+  from: ETHAddress;
+  to: ETHAddress;
+  at: TimedAction;
+  type: TOKEN_TRANSFER_EVENT_TYPES;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
+};
+
+type TransferEvent = TokenTransferEvent & {
+  raw: {
+    source: MEDIA_SOURCES;
+    data: any;
+  };
+};
+
+type MarketAuctionEvent = SharedMarketEventData & {
   event: AUCTION_EVENT_TYPES;
+  at: TimedAction;
   amount?: number;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
   raw:
     | {
         source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2;
-        raw: V2AuctionEvent;
+        // narrow down
+        raw: EventInfoFragment;
       }
     | {
         source: AUCTION_SOURCE_TYPES.OPENSEA_ENGLISH;
         // TODO: probably can be narrowed down
         raw: any;
       };
-} & SharedMarketEventData;
+};
 
-type MarketFixedPriceEvent = {
+type MarketFixedPriceEvent = SharedMarketEventData & {
+  at: TimedAction;
   event: FIXED_PRICE_EVENT_TYPES;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
   side: FIXED_SIDE_TYPES;
@@ -222,9 +226,9 @@ type MarketFixedPriceEvent = {
         // TODO: probably can be narrowed down
         data: any;
       };
-} & SharedMarketEventData;
+};
 
-type EventType = TransferEventType | MarketFixedPriceEvent | MarketAuctionEvent;
+export type NormalizedEvent = TransferEvent | MarketFixedPriceEvent | MarketAuctionEvent;
 
 export type MediaObject = {
   uri: string;
@@ -285,7 +289,7 @@ export type NFTObject = {
     context?: any;
   };
   markets?: readonly MarketModule[];
-  events?: readonly TokenEvent[];
+  events?: readonly NormalizedEvent[];
 };
 
 export type NFTIdentifier = {
