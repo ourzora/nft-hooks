@@ -177,7 +177,7 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): NormalizedEvent[] {
         timestamp: dateToUnix(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
-      sender: 'asdfa',
+      sender: askEvent.details.sender,
       marketAddress: askEvent.address,
       event: status,
       eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
