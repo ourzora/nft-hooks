@@ -10153,7 +10153,7 @@ export type IndexerAuctionWithTokenFragment = (
 
 export type TokenTransferEventInfoFragment = (
   { __typename?: 'TokenTransferEvent' }
-  & Pick<TokenTransferEvent, 'from' | 'to' | 'address' | 'blockTimestamp' | 'blockNumber' | 'transactionHash'>
+  & Pick<TokenTransferEvent, 'from' | 'to' | 'tokenId' | 'address' | 'blockTimestamp' | 'blockNumber' | 'transactionHash'>
 );
 
 export type IndexerTokenWithAuctionFragment = (

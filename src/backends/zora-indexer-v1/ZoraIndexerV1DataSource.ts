@@ -26,6 +26,7 @@ import {
   AuctionLike,
   AUCTION_SOURCE_TYPES,
   FixedPriceLike,
+  FIXED_PRICE_EVENT_TYPES,
   FIXED_PRICE_MARKET_SOURCES,
   FIXED_SIDE_TYPES,
   MARKET_INFO_STATUSES,
@@ -34,8 +35,7 @@ import {
   MetadataAttributeType,
   NFTIdentifier,
   NFTObject,
-  TokenMarketEvent,
-  TokenTransferEvent,
+  NormalizedEvent,
   TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
   TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types/NFTInterface';
@@ -94,20 +94,21 @@ function timeIsPast(time: string) {
   return new Date(time).getTime() < new Date().getTime();
 }
 
-const getAskEventStatus = (askEvent: V3EventPartFragment): MARKET_INFO_STATUSES => {
+const getAskEventStatus = (askEvent: V3EventPartFragment): FIXED_PRICE_EVENT_TYPES => {
   if (askEvent.eventType === 'Ask_v1_AskCreated') {
-    return MARKET_INFO_STATUSES.ACTIVE;
+    return FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CREATED;
   }
   if (askEvent.eventType === 'Ask_v1_AskFilled') {
-    return MARKET_INFO_STATUSES.COMPLETE;
+    return FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_FILLED;
   }
   if (askEvent.eventType === 'Ask_v1_AskCancelled') {
-    return MARKET_INFO_STATUSES.CANCELED;
+    return FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
   }
   if (askEvent.eventType === 'Ask_v1_AskPriceUpdated') {
-    return MARKET_INFO_STATUSES.ACTIVE;
+    return FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_UPDATED;
   }
-  return MARKET_INFO_STATUSES.UNKNOWN;
+
+  return FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_UPDATED;
 };
 
 const getAskStatus = (status: string): MARKET_INFO_STATUSES => {
@@ -161,85 +162,29 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
   };
 }
 
-function extractAskEvents(askEvents: V3EventPartFragment[]): TokenMarketEvent[] {
+function extractAskEvents(askEvents: V3EventPartFragment[]): NormalizedEvent[] {
   return askEvents.map((askEvent) => {
-    let status = getAskEventStatus(askEvent);
-
-    // if (indx !== latestAskEvent?.indx) {
-    //   // get next event to see if cancelled or filled
-    //   for (let i = indx; i < askEvents.length; i++) {
-    //     if (askEvents[i].eventType === 'Ask_v1_AskCreated') {
-    //       status = 'cancelled';
-    //       break;
-    //     }
-    //     if (askEvents[i].eventType === 'Ask_v1_AskPriceUpdated') {
-    //       // invalidate updated price and treat as new ask
-    //       status = 'invalid';
-    //       break;
-    //     }
-    //     if (askEvents[i].eventType === 'Ask_v1_AskCancelled') {
-    //       canceledEvent = askEvents[i];
-    //       status = 'cancelled';
-    //       break;
-    //     }
-    //     if (askEvents[i].eventType === 'Ask_v1_AskFilled') {
-    //       completeEvent = askEvents[i];
-    //       status = 'complete';
-    //       break;
-    //     }
-    //   }
-    // }
+    const status = getAskEventStatus(askEvent);
 
     return {
-      eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
       at: {
         blockNumber: askEvent.blockNumber,
-        timestamp: askEvent.blockTimestamp,
+        timestamp: dateToUnix(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
-      market: {
-        status,
-        amount: {
-          amount: {
-            raw: askEvent.details?.askPrice,
-            value: priceToPretty(askEvent.details.askPrice, null),
-          },
-          address: askEvent.details?.askCurrency,
-          name: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'Ether' : 'UNKN',
-          symbol: askEvent.details?.askCurrency === ZERO_ADDRESS ? 'ETH' : 'UNKN',
-          decimals: undefined,
-          // other info not provided
-          // currency.decimals / currency.name / currency.symbol
-        },
-        side: FIXED_SIDE_TYPES.ASK,
-        type: MARKET_TYPES.FIXED_PRICE,
-        cancelledAt:
-          status === MARKET_INFO_STATUSES.CANCELED
-            ? {
-                timestamp: dateToUnix(askEvent.blockTimestamp)!,
-                blockNumber: askEvent.blockNumber,
-                transactionHash: askEvent.transactionHash,
-              }
-            : undefined,
-        createdAt: {
-          timestamp: dateToUnix(askEvent.blockTimestamp)!,
-          blockNumber: askEvent.blockNumber,
-          transactionHash: askEvent.transactionHash,
-        },
-        createdBy:
-          status !== MARKET_INFO_STATUSES.COMPLETE
-            ? askEvent.details?.seller
-            : askEvent.details?.buyer,
-        finishedAt:
-          status === MARKET_INFO_STATUSES.COMPLETE
-            ? {
-                timestamp: dateToUnix(askEvent.blockTimestamp)!,
-                blockNumber: askEvent.blockNumber,
-                transactionHash: askEvent.transactionHash,
-              }
-            : undefined,
-        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1_EVENT,
-        raw: askEvent,
+      blockInfo: {
+        blockNumber: askEvent.blockNumber,
+        timestamp: dateToUnix(askEvent.blockTimestamp)!,
+        transactionHash: askEvent.transactionHash,
+      },
+      sender: askEvent.details.sender,
+      marketAddress: askEvent.address,
+      event: status,
+      eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+      side: FIXED_SIDE_TYPES.ASK,
+      raw: {
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
+        data: askEvent,
       },
     };
   });
@@ -356,15 +301,21 @@ function getTransferType(
 
 function extractTransferEvents(
   transferEvents: TokenTransferEventInfoFragment[]
-): TokenTransferEvent[] {
+): NormalizedEvent[] {
   return transferEvents.map((transferEvent) => ({
-    eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
     from: transferEvent.from,
     to: transferEvent.to,
+    collectionAddress: transferEvent.address,
+    tokenId: transferEvent.tokenId,
+    eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
     at: {
       timestamp: dateToUnix(transferEvent.blockTimestamp)!,
       blockNumber: transferEvent.blockNumber,
       transactionHash: transferEvent.transactionHash,
+    },
+    raw: {
+      source: MEDIA_SOURCES.ZORA,
+      data: transferEvent,
     },
     type: getTransferType(transferEvent),
   }));

@@ -1,21 +1,22 @@
+import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
-export enum KNOWN_CONTRACTS {
+export const enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 }
 
-export enum MARKET_TYPES {
+export const enum MARKET_TYPES {
   AUCTION = 'Auction',
   FIXED_PRICE = 'FixedPrice',
   EDITION = 'Edition',
 }
 
-export enum EDITION_SOURCES {
+export const enum EDITION_SOURCES {
   CUSTOM = 'Custom',
   ZORA_EDITIONS = 'ZoraEditions',
 }
 
-export enum MARKET_INFO_STATUSES {
+export const enum MARKET_INFO_STATUSES {
   PENDING = 'pending',
   ACTIVE = 'active',
   COMPLETE = 'complete',
@@ -24,21 +25,21 @@ export enum MARKET_INFO_STATUSES {
   INVALID = 'invalid',
 }
 
-export enum MEDIA_SOURCES {
+export const enum MEDIA_SOURCES {
   OPENSEA = 'opensea',
   ZORA = 'zora',
   DERIVED = 'derived',
   RAW = 'raw',
 }
 
-export enum TOKEN_TRANSFER_EVENT_TYPES {
+export const enum TOKEN_TRANSFER_EVENT_TYPES {
   MINT = 'mint',
   BURN = 'burn',
   TRANSFER = 'transfer',
   SALE = 'sale',
 }
 
-export enum FIXED_PRICE_MARKET_SOURCES {
+export const enum FIXED_PRICE_MARKET_SOURCES {
   ZNFT_PERPETUAL = 'ZNFTPerpetual',
   ZORA_ASK_V1 = 'ZoraAskV1',
   ZORA_ASK_V1_EVENT = 'ZoraAskV1Event',
@@ -46,17 +47,17 @@ export enum FIXED_PRICE_MARKET_SOURCES {
   OPENSEA_FIXED = 'OpenseaFixed',
 }
 
-export enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
+export const enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
   TOKEN_TRANSFER_EVENT = 'TokenTransferEvent',
   TOKEN_MARKET_EVENT = 'TokenMarketEvent',
 }
 
-export enum AUCTION_SOURCE_TYPES {
+export const enum AUCTION_SOURCE_TYPES {
   ZORA_RESERVE_V2 = 'ZoraReserveV2',
   OPENSEA_ENGLISH = 'OpenseaEnglish',
 }
 
-export enum FIXED_SIDE_TYPES {
+export const enum FIXED_SIDE_TYPES {
   ASK = 'ask',
   OFFER = 'offer',
 }
@@ -98,6 +99,8 @@ export type EditionPurchaseEvent = {
 };
 
 export type AuctionLike = {
+  type: MARKET_TYPES.AUCTION;
+  source: AUCTION_SOURCE_TYPES;
   winner?: string;
   endsAt?: TimedAction;
   duration: number;
@@ -106,28 +109,26 @@ export type AuctionLike = {
   reservePrice?: CurrencyValue;
   // current bid is duplicated within bids
   bids: readonly AuctionBidEvent[];
-  source: AUCTION_SOURCE_TYPES;
-  type: MARKET_TYPES.AUCTION;
 } & MarketInfo;
 
 export type FixedPriceLike = {
+  type: MARKET_TYPES.FIXED_PRICE;
+  source: FIXED_PRICE_MARKET_SOURCES;
   side: FIXED_SIDE_TYPES;
   expires?: number;
-  source: FIXED_PRICE_MARKET_SOURCES;
-  type: MARKET_TYPES.FIXED_PRICE;
 } & MarketInfo;
 
 export type EditionLike = {
+  type: MARKET_TYPES.EDITION;
+  source: EDITION_SOURCES;
   totalSupply: number;
   editionSize: number;
   purchases: readonly EditionPurchaseEvent[];
-  source: EDITION_SOURCES;
-  type: MARKET_TYPES.EDITION;
 } & MarketInfo;
 
 export type MarketInfo = {
   raw: any;
-  amount: CurrencyValue;
+  amount?: CurrencyValue;
   // pending - inactive pending some event
   // active - can be filled / auction is ongoing
   // completed - auction end fill complete
@@ -142,6 +143,29 @@ export type MarketInfo = {
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
+export enum AUCTION_EVENT_TYPES {
+  AUCTION_CREATED = 'AuctionCreated',
+  AUCTION_BID = 'AuctionBid',
+  AUCTION_ENDED = 'AuctionEnded',
+  AUCTION_FINALIZED = 'AuctionFinalized',
+  AUCTION_APPROVED = 'AuctionApproved',
+  AUCTION_CANCELLED = 'AuctionCancelled',
+  AUCTION_UPDATED = 'AuctionUpdated',
+}
+
+export enum FIXED_PRICE_EVENT_TYPES {
+  FIXED_PRICE_CREATED = 'FixedPriceCreated',
+  FIXED_PRICE_FILLED = 'FixedPriceFilled',
+  FIXED_PRICE_CANCELLED = 'FixedPriceCancelled',
+  FIXED_PRICE_UPDATED = 'FixedPriceUpdated',
+}
+
+type SharedMarketEventData = {
+  sender: ETHAddress;
+  blockInfo: TimedAction;
+  marketAddress: ETHAddress;
+};
+
 export type TokenTransferEvent = {
   from: ETHAddress;
   to: ETHAddress;
@@ -150,13 +174,60 @@ export type TokenTransferEvent = {
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
 };
 
-export type TokenMarketEvent = {
-  market: MarketModule;
-  at: TimedAction;
-  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
+type TransferEvent = TokenTransferEvent & {
+  raw: {
+    source: MEDIA_SOURCES;
+    data: any;
+  };
 };
 
-export type TokenEvent = TokenTransferEvent | TokenMarketEvent;
+type MarketAuctionEvent = SharedMarketEventData & {
+  event: AUCTION_EVENT_TYPES;
+  at: TimedAction;
+  amount?: number;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
+  raw:
+    | {
+        source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2;
+        // narrow down
+        raw: EventInfoFragment;
+      }
+    | {
+        source: AUCTION_SOURCE_TYPES.OPENSEA_ENGLISH;
+        // TODO: probably can be narrowed down
+        raw: any;
+      };
+};
+
+type MarketFixedPriceEvent = SharedMarketEventData & {
+  at: TimedAction;
+  event: FIXED_PRICE_EVENT_TYPES;
+  eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
+  side: FIXED_SIDE_TYPES;
+  raw:
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;
+        // TODO: probably can be narrowed down
+        data: any;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1;
+        // TODO: probably can be narrowed down
+        data: any;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.ZNFT_PERPETUAL;
+        // TODO: probably can be narrowed down
+        data: any;
+      }
+    | {
+        source: FIXED_PRICE_MARKET_SOURCES.OPENSEA_FIXED;
+        // TODO: probably can be narrowed down
+        data: any;
+      };
+};
+
+export type NormalizedEvent = TransferEvent | MarketFixedPriceEvent | MarketAuctionEvent;
 
 export type MediaObject = {
   uri: string;
@@ -218,7 +289,7 @@ export type NFTObject = {
     context?: any;
   };
   markets?: readonly MarketModule[];
-  events?: readonly TokenEvent[];
+  events?: readonly NormalizedEvent[];
 };
 
 export type NFTIdentifier = {

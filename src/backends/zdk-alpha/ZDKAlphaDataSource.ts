@@ -1,5 +1,5 @@
 import { NetworkIDs, NFTObject } from '../../';
-import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+import { SharedTokenResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
@@ -18,10 +18,19 @@ import {
   TokensQueryInput,
   TokensQueryFilter,
   TokenSortInput,
+  MarketDetailsFragment,
+  MarketInfoFragment,
+  EventType,
+  EventInfoFragment,
+  V1MarketEventType,
+  V2AuctionEventType,
+  V3AskEventType,
 } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import {
+  AUCTION_EVENT_TYPES,
   AUCTION_SOURCE_TYPES,
+  FIXED_PRICE_EVENT_TYPES,
   FIXED_PRICE_MARKET_SOURCES,
   FIXED_SIDE_TYPES,
   MarketModule,
@@ -29,8 +38,12 @@ import {
   MARKET_TYPES,
   MEDIA_SOURCES,
   NFTIdentifier,
+  NormalizedEvent,
+  TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
+  TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types';
-import { TokensResponseItem } from '@zoralabs/zdk-alpha/dist/src/types';
+import { ZERO_ADDRESS } from '../../constants/addresses';
+import { NotFoundError } from '../../fetcher/ErrorUtils';
 
 function dateToUnix(date: string) {
   return Math.floor(new Date(date).getTime() / 1000);
@@ -65,7 +78,236 @@ const resolveSortKey = (sortField: SortField) => {
   throw new Error('not supported');
 };
 
-function getMarkets(markets: TokensResponseItem['marketsSummary']) {
+function getEvents(events: EventInfoFragment[]): NormalizedEvent[] {
+  const eventsList: NormalizedEvent[] = [];
+
+  events.forEach((tokenEvent) => {
+    const common = {
+      at: {
+        timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+        blockNumber: tokenEvent.transactionInfo.blockNumber,
+        transactionHash: tokenEvent.transactionInfo.transactionHash || undefined,
+      },
+    };
+
+    if (
+      tokenEvent.eventType === EventType.MintEvent &&
+      tokenEvent.properties.__typename === 'MintEvent'
+    ) {
+      eventsList.push({
+        ...common,
+        from: ZERO_ADDRESS,
+        to: tokenEvent.properties.toAddress,
+        type: TOKEN_TRANSFER_EVENT_TYPES.MINT,
+        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+        raw: {
+          source: MEDIA_SOURCES.ZORA,
+          data: tokenEvent,
+        },
+      });
+    }
+
+    if (
+      tokenEvent.eventType === EventType.TransferEvent &&
+      tokenEvent.properties.__typename === 'TransferEvent'
+    ) {
+      eventsList.push({
+        ...common,
+        from: tokenEvent.properties.fromAddress,
+        to: tokenEvent.properties.toAddress,
+        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
+        type:
+          tokenEvent.properties.toAddress === ZERO_ADDRESS
+            ? TOKEN_TRANSFER_EVENT_TYPES.BURN
+            : TOKEN_TRANSFER_EVENT_TYPES.TRANSFER,
+        raw: {
+          source: MEDIA_SOURCES.ZORA,
+          data: tokenEvent,
+        },
+      });
+    }
+
+    if (
+      tokenEvent.eventType === EventType.V1MarketEvent &&
+      tokenEvent.properties.__typename === 'V1MarketEvent'
+    ) {
+      // FIXME: what to do when unable to map to FIXED_PRICE_EVENT_TYPES?
+      let event: FIXED_PRICE_EVENT_TYPES | undefined = undefined;
+
+      switch (tokenEvent.properties.marketEventType) {
+        case V1MarketEventType.V1MarketAskCreated:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CREATED;
+          break;
+
+        case V1MarketEventType.V1MarketAskRemoved:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
+          break;
+
+        case V1MarketEventType.V1MarketAskRemoved:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
+          break;
+      }
+
+      if (!event) {
+        return;
+      }
+
+      eventsList.push({
+        ...common,
+        // FIXME: address === sender???
+        sender: tokenEvent.properties.address,
+        marketAddress: tokenEvent.properties.collectionAddress,
+        blockInfo: {
+          timestamp: tokenEvent.transactionInfo.blockTimestamp,
+          blockNumber: tokenEvent.transactionInfo.blockNumber,
+        },
+        event,
+        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+        side: FIXED_SIDE_TYPES.ASK,
+        raw: {
+          source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
+          data: tokenEvent,
+        },
+      });
+    }
+
+    if (
+      tokenEvent.eventType === EventType.V2AuctionEvent &&
+      tokenEvent.properties.__typename === 'V2AuctionEvent'
+    ) {
+      let event: AUCTION_EVENT_TYPES | undefined = undefined;
+
+      switch (tokenEvent.properties.auctionEventType) {
+        case V2AuctionEventType.V2AuctionCreated:
+          event = AUCTION_EVENT_TYPES.AUCTION_CREATED;
+          break;
+
+        case V2AuctionEventType.V2AuctionCanceled:
+          event = AUCTION_EVENT_TYPES.AUCTION_CANCELLED;
+          break;
+
+        case V2AuctionEventType.V2AuctionBid:
+          event = AUCTION_EVENT_TYPES.AUCTION_BID;
+          break;
+
+        case V2AuctionEventType.V2AuctionApprovalUpdated:
+          event = AUCTION_EVENT_TYPES.AUCTION_APPROVED;
+          break;
+
+        // Not necessarily useful to display
+        // case V2AuctionEventType.V2AuctionDurationExtended:
+        //   event = AUCTION_EVENT_TYPES.AUCTION_UPDATED;
+        //   break;
+
+        // case V2AuctionEventType.V2AuctionReservePriceUpdated:
+        //   event = AUCTION_EVENT_TYPES.AUCTION_UPDATED;
+        //   break;
+
+        case V2AuctionEventType.V2AuctionEnded:
+          event = AUCTION_EVENT_TYPES.AUCTION_ENDED;
+          break;
+      }
+
+      if (!event) {
+        return;
+      }
+
+      eventsList.push({
+        ...common,
+        event: event,
+        sender: tokenEvent.properties.address,
+        marketAddress: tokenEvent.properties.collectionAddress,
+        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+        blockInfo: {
+          timestamp: tokenEvent.transactionInfo.blockTimestamp,
+          blockNumber: tokenEvent.transactionInfo.blockNumber,
+        },
+        raw: {
+          source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
+          raw: tokenEvent,
+        },
+      });
+    }
+
+    if (
+      tokenEvent.eventType === EventType.V3AskEvent &&
+      tokenEvent.properties.__typename === 'V3AskEvent'
+    ) {
+      let event: FIXED_PRICE_EVENT_TYPES | undefined = undefined;
+      switch (tokenEvent.properties.v3AskEventType) {
+        case V3AskEventType.V3AskCanceled:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CANCELLED;
+          break;
+        case V3AskEventType.V3AskCreated:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CREATED;
+          break;
+        case V3AskEventType.V3AskFilled:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_FILLED;
+          break;
+        case V3AskEventType.V3AskPriceUpdated:
+          event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_UPDATED;
+          break;
+      }
+
+      eventsList.push({
+        ...common,
+        sender: tokenEvent.properties.address,
+        marketAddress: tokenEvent.properties.collectionAddress,
+        blockInfo: {
+          timestamp: tokenEvent.transactionInfo.blockTimestamp,
+          blockNumber: tokenEvent.transactionInfo.blockNumber,
+        },
+        event,
+        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+        side: FIXED_SIDE_TYPES.ASK,
+        raw: {
+          source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
+          data: tokenEvent,
+        },
+      });
+    }
+  });
+
+  return eventsList;
+}
+
+const getStandardMarketData = (
+  market: MarketResponseFragmentItem,
+  amount: PriceSummaryFragment
+) => ({
+  createdAt: {
+    timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
+    blockNumber: market.transactionInfo.blockNumber || undefined,
+    transactionHash: market.transactionInfo.transactionHash || undefined,
+  },
+  amount: {
+    usd: amount!.usdcPrice
+      ? {
+          value: amount!.usdcPrice?.decimal,
+          raw: amount!.usdcPrice?.raw,
+        }
+      : undefined,
+    eth: amount!.ethPrice
+      ? {
+          value: amount!.ethPrice?.decimal,
+          raw: amount!.ethPrice?.raw,
+        }
+      : undefined,
+    symbol: amount!.nativePrice.currency.name,
+    decimals: amount!.nativePrice.currency.decimals,
+    address: amount!.nativePrice.currency.address,
+    amount: {
+      raw: amount!.nativePrice.raw,
+      value: amount!.nativePrice.decimal,
+    },
+  },
+  raw: market,
+});
+
+// This shows the return type for a market item with both details and info
+type MarketResponseFragmentItem = MarketDetailsFragment & MarketInfoFragment;
+
+function getMarkets(markets: MarketResponseFragmentItem[]) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
@@ -105,38 +347,6 @@ function getMarkets(markets: TokensResponseItem['marketsSummary']) {
 
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
-    const getStandardMarketData = (
-      market: TokensResponseItem['marketsSummary'][0],
-      amount: PriceSummaryFragment
-    ) => ({
-      createdAt: {
-        timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
-        blockNumber: market.transactionInfo.blockNumber || undefined,
-        transactionHash: market.transactionInfo.transactionHash || undefined,
-      },
-      amount: {
-        usd: amount!.usdcPrice
-          ? {
-              value: amount!.usdcPrice?.decimal,
-              raw: amount!.usdcPrice?.raw,
-            }
-          : undefined,
-        eth: amount!.ethPrice
-          ? {
-              value: amount!.ethPrice?.decimal,
-              raw: amount!.ethPrice?.raw,
-            }
-          : undefined,
-        symbol: amount!.nativePrice.currency.name,
-        decimals: amount!.nativePrice.currency.decimals,
-        address: amount!.nativePrice.currency.address,
-        amount: {
-          raw: amount!.nativePrice.raw,
-          value: amount!.nativePrice.decimal,
-        },
-      },
-      raw: market,
-    });
     if (market.properties.__typename === 'V1Ask') {
       const properties = market.properties as V1Ask;
       marketResponse.push({
@@ -158,7 +368,6 @@ function getMarkets(markets: TokensResponseItem['marketsSummary']) {
       });
     }
     if (market.properties.__typename === 'V2Auction') {
-      // @ts-ignore
       const properties = market.properties as V2AuctionMarketPropertiesFragment;
       const endTime =
         parseInt(properties.duration, 10) + parseInt(properties.firstBidTime, 10);
@@ -225,7 +434,6 @@ function getMarkets(markets: TokensResponseItem['marketsSummary']) {
       });
     }
     if (market.properties.__typename === 'V3Ask') {
-      // @ts-ignore
       const properties = market.properties as V3AskPropertiesFragment;
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
@@ -239,11 +447,14 @@ function getMarkets(markets: TokensResponseItem['marketsSummary']) {
   return marketResponse;
 }
 
-export function transformNFTZDKAlpha(tokenMarket: TokensResponseItem, object?: NFTObject) {
+export function transformNFTZDKAlpha(
+  tokenResponse: SharedTokenResponse,
+  object?: NFTObject
+) {
   if (!object) {
     object = { rawData: {} };
   }
-  const { token } = tokenMarket;
+  const { token } = tokenResponse;
   object.nft = {
     tokenId: token.tokenId,
     contract: {
@@ -269,12 +480,31 @@ export function transformNFTZDKAlpha(tokenMarket: TokensResponseItem, object?: N
     metadataURI: token.tokenUrl || undefined,
     contentURI: token.content?.url || undefined,
   };
-  object.markets = getMarkets(tokenMarket.marketsSummary);
 
-  // sales data or include externally?
-  // should sales data be incorporated in events?
+  // Response of token query
+  if (tokenResponse.__typename === 'TokenWithFullMarketHistory') {
+    object.markets = getMarkets(tokenResponse.markets);
+    object.events = getEvents(tokenResponse.events);
+  }
 
-  object.metadata = token.metadata as any;
+  // Response of tokens (plural) query
+  if (tokenResponse.__typename === 'TokenWithMarketsSummary') {
+    object.markets = getMarkets(tokenResponse.marketsSummary);
+  }
+
+  object.metadata = {
+    name: token.name || undefined,
+    description: token.description || undefined,
+    contentUri: token.content?.url || undefined,
+    imageUri: token.image?.url || undefined,
+    attributes: token.attributes?.map((item) => ({
+      name: item.traitType || undefined,
+      value: item.value || undefined,
+      display: item.displayType || undefined,
+    })),
+    raw: token.metadata,
+  };
+
   object.media = {
     // TODO(iain): Expose poster information
     thumbnail: token.image?.mediaEncoding
@@ -303,6 +533,7 @@ export function transformNFTZDKAlpha(tokenMarket: TokensResponseItem, object?: N
   object.rawData['APIIndexer'] = token;
   return object;
 }
+
 export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   zdk: ZDK;
 
@@ -316,33 +547,44 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
     return true;
   }
 
-  transformNFT(tokenMarket: TokensResponseItem, object?: NFTObject) {
-    return transformNFTZDKAlpha(tokenMarket, object);
+  transformNFT(token: SharedTokenResponse, object?: NFTObject) {
+    return transformNFTZDKAlpha(token, object);
   }
 
   loadNFT = async ({
     contract,
     id,
-  }: NFTIdentifier): Promise<TokensResponseItem | Error> => {
-    const response = await this.zdk.tokens({
+  }: NFTIdentifier): Promise<SharedTokenResponse | Error> => {
+    const response = await this.zdk.token({
+      network: { network: Network.Ethereum, chain: Chain.Mainnet },
       includeFullDetails: true,
-      where: {
-        tokens: [{ tokenId: id, address: contract }],
+      token: {
+        tokenId: id,
+        address: contract,
       },
     });
 
-    return response.tokens.nodes.length > 0
-      ? response.tokens.nodes[0]
-      : new Error('No token');
+    if (!response.token) {
+      throw new NotFoundError('Cannot find token entity');
+    }
+
+    return response.token;
   };
 
-  loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(TokensResponseItem | Error)[]> {
-    return Promise.all(
-      nfts.map(({ contract, id }) => {
-        return this.loadNFT({ contract, id });
-      })
-    );
-  }
+  loadNFTs = async (
+    nfts: readonly NFTIdentifier[]
+  ): Promise<(Error | SharedTokenResponse)[]> => {
+    const tokens = await this.zdk.tokens({
+      where: {
+        tokens: nfts.map((item) => ({
+          address: item.contract,
+          tokenId: item.id,
+        })),
+      },
+    });
+
+    return tokens.tokens.nodes;
+  };
 
   queryNFTs = async (query: NFTQuery) => {
     const marketsQuery: TokensQueryInput = {};
