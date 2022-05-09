@@ -1,5 +1,9 @@
 import { NetworkIDs, NFTObject } from '../../';
+<<<<<<< HEAD
 import { SharedTokenResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+=======
+import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
+>>>>>>> origin/devel
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
@@ -477,8 +481,8 @@ export function transformNFTZDKAlpha(
           address: token.owner,
         }
       : undefined,
-    metadataURI: token.tokenUrl || null,
-    contentURI: token.content?.url || null,
+    metadataURI: token.tokenUrl || undefined,
+    contentURI: token.content?.url || undefined,
   };
 
   // Response of token query
@@ -511,19 +515,19 @@ export function transformNFTZDKAlpha(
       ? {
           uri: token.image.mediaEncoding.thumbnail,
         }
-      : null,
+      : undefined,
     image: token.image?.url
       ? {
           mime: token.image.mimeType || undefined,
           uri: token.image.url,
         }
-      : null,
+      : undefined,
     content: token.content?.url
       ? {
           mime: token.content.mimeType || undefined,
           uri: token.content.url,
         }
-      : null,
+      : undefined,
     source: MEDIA_SOURCES.ZORA,
   };
 

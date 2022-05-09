@@ -373,9 +373,7 @@ export function transformNFTZoraIndexerV1DataSource(
       ? {
           uri: asset.media?.contentURI,
         }
-      : null,
-    thumbnail: null,
-    image: null,
+      : undefined,
     source: MEDIA_SOURCES.ZORA,
   };
   if (!object.rawData) {

@@ -65,8 +65,6 @@ export function transformNFTZoraGraph(
   // TODO: load from CDN
   object.media = {
     content: { uri: asset.contentURI, mime: metadata.mimeType },
-    thumbnail: null,
-    image: null,
     source: MEDIA_SOURCES.DERIVED,
   };
   object.metadata = metadata;

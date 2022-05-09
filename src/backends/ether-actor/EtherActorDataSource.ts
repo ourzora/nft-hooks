@@ -59,7 +59,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
         address: asset.owner,
       },
       metadataURI: asset.tokenURL,
-      contentURI: asset.contentURL || null,
+      contentURI: asset.contentURL,
       minted: {},
     };
 
@@ -71,14 +71,13 @@ export class EtherActorDataSource implements EtherActorDataInterface {
             uri: asset.contentURL,
             mime: asset.contentURLMimeType,
           }
-        : null,
+        : undefined,
       image: asset.imageURL
         ? {
             uri: asset.imageURL,
             mime: asset.imageURLMimeType,
           }
-        : null,
-      thumbnail: null,
+        : undefined,
       source: MEDIA_SOURCES.DERIVED,
     };
 
@@ -89,14 +88,13 @@ export class EtherActorDataSource implements EtherActorDataInterface {
               uri: asset.imageURL || asset.contentURL!,
               mime: asset.imageURLMimeType || asset.contentURLMimeType,
             }
-          : null,
+          : undefined,
       content: asset.contentURL
         ? {
             uri: asset.contentURL,
             mime: asset.contentURLMimeType,
           }
-        : null,
-      thumbnail: null,
+        : undefined,
       source: MEDIA_SOURCES.DERIVED,
     };
 
