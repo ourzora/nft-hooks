@@ -42,8 +42,8 @@ import {
   TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
   TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../types';
-import { ZERO_ADDRESS } from 'src/constants/addresses';
-import { NotFoundError } from 'src/fetcher/ErrorUtils';
+import { ZERO_ADDRESS } from '../../constants/addresses';
+import { NotFoundError } from '../../fetcher/ErrorUtils';
 
 function dateToUnix(date: string) {
   return Math.floor(new Date(date).getTime() / 1000);
