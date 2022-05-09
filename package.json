@@ -1,6 +1,6 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Generic react hooks for fetching zora auctions, nfts, and data on arbitary 721s. Powers nft-components.",
   "repository": "https://github.com/ourzora/nft-hooks",
   "homepage": "https://github.com/ourzora/nft-hooks#README",

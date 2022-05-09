@@ -604,7 +604,7 @@ export class MediaFetchAgent {
     try {
       return await request.json();
     } catch (e) {
-      throw new RequestError('Cannot read JSON metadata from IPFS', e);
+      throw new RequestError('Cannot read JSON metadata from IPFS', e as any);
     }
   }
 }
