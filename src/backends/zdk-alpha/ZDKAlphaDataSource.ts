@@ -1,9 +1,5 @@
 import { NetworkIDs, NFTObject } from '../../';
-<<<<<<< HEAD
 import { SharedTokenResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
-=======
-import { ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
->>>>>>> origin/devel
 import { ZDK } from '@zoralabs/zdk-alpha/dist/src/index';
 import {
   Chain,
