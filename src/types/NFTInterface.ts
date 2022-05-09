@@ -1,26 +1,22 @@
-import {
-  EventInfoFragment,
-  V2AuctionEvent,
-  V3AskEvent,
-} from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
-export enum KNOWN_CONTRACTS {
+export const enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 }
 
-export enum MARKET_TYPES {
+export const enum MARKET_TYPES {
   AUCTION = 'Auction',
   FIXED_PRICE = 'FixedPrice',
   EDITION = 'Edition',
 }
 
-export enum EDITION_SOURCES {
+export const enum EDITION_SOURCES {
   CUSTOM = 'Custom',
   ZORA_EDITIONS = 'ZoraEditions',
 }
 
-export enum MARKET_INFO_STATUSES {
+export const enum MARKET_INFO_STATUSES {
   PENDING = 'pending',
   ACTIVE = 'active',
   COMPLETE = 'complete',
@@ -29,21 +25,21 @@ export enum MARKET_INFO_STATUSES {
   INVALID = 'invalid',
 }
 
-export enum MEDIA_SOURCES {
+export const enum MEDIA_SOURCES {
   OPENSEA = 'opensea',
   ZORA = 'zora',
   DERIVED = 'derived',
   RAW = 'raw',
 }
 
-export enum TOKEN_TRANSFER_EVENT_TYPES {
+export const enum TOKEN_TRANSFER_EVENT_TYPES {
   MINT = 'mint',
   BURN = 'burn',
   TRANSFER = 'transfer',
   SALE = 'sale',
 }
 
-export enum FIXED_PRICE_MARKET_SOURCES {
+export const enum FIXED_PRICE_MARKET_SOURCES {
   ZNFT_PERPETUAL = 'ZNFTPerpetual',
   ZORA_ASK_V1 = 'ZoraAskV1',
   ZORA_ASK_V1_EVENT = 'ZoraAskV1Event',
@@ -51,17 +47,17 @@ export enum FIXED_PRICE_MARKET_SOURCES {
   OPENSEA_FIXED = 'OpenseaFixed',
 }
 
-export enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
+export const enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
   TOKEN_TRANSFER_EVENT = 'TokenTransferEvent',
   TOKEN_MARKET_EVENT = 'TokenMarketEvent',
 }
 
-export enum AUCTION_SOURCE_TYPES {
+export const enum AUCTION_SOURCE_TYPES {
   ZORA_RESERVE_V2 = 'ZoraReserveV2',
   OPENSEA_ENGLISH = 'OpenseaEnglish',
 }
 
-export enum FIXED_SIDE_TYPES {
+export const enum FIXED_SIDE_TYPES {
   ASK = 'ask',
   OFFER = 'offer',
 }
@@ -154,12 +150,14 @@ export enum AUCTION_EVENT_TYPES {
   AUCTION_FINALIZED = 'AuctionFinalized',
   AUCTION_APPROVED = 'AuctionApproved',
   AUCTION_CANCELLED = 'AuctionCancelled',
+  AUCTION_UPDATED = 'AuctionUpdated',
 }
 
 export enum FIXED_PRICE_EVENT_TYPES {
   FIXED_PRICE_CREATED = 'FixedPriceCreated',
   FIXED_PRICE_FILLED = 'FixedPriceFilled',
   FIXED_PRICE_CANCELLED = 'FixedPriceCancelled',
+  FIXED_PRICE_UPDATED = 'FixedPriceUpdated',
 }
 
 type SharedMarketEventData = {
@@ -209,7 +207,8 @@ type MarketFixedPriceEvent = SharedMarketEventData & {
   raw:
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;
-        data: V3AskEvent;
+        // TODO: probably can be narrowed down
+        data: any;
       }
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1;

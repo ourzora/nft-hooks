@@ -110,6 +110,7 @@ const TOKEN_TRANSFER_EVENTS = gql`
   fragment TokenTransferEventInfo on TokenTransferEvent {
     from
     to
+    tokenId
     address
     blockTimestamp
     blockNumber
