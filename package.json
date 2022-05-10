@@ -63,7 +63,7 @@
     "@ethersproject/address": "^5.6.0",
     "@ethersproject/bytes": "^5.6.1",
     "@types/deepmerge": "^2.2.0",
-    "@zoralabs/zdk-alpha": "0.0.26",
+    "@zoralabs/zdk-alpha": "^0.0.30",
     "big.js": "^6.1.0",
     "cross-fetch": "^3.1.4",
     "dataloader": "^2.0.0",

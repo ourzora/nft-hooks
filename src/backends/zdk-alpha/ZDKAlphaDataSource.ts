@@ -6,13 +6,9 @@ import {
   MarketType as ZDKMarketType,
   Network,
   SortDirection as ZDKSortDirection,
-  V1Ask,
   V1MarketEntityStatus,
-  V1Offer,
   V3AskStatus,
   V2AuctionStatus,
-  V3AskPropertiesFragment,
-  V2AuctionMarketPropertiesFragment,
   PriceSummaryFragment,
   TokenSortKey,
   TokensQueryInput,
@@ -347,100 +343,110 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
 
   const marketResponse: MarketModule[] = [];
   markets.forEach((market) => {
-    if (market.properties.__typename === 'V1Ask') {
-      const properties = market.properties as V1Ask;
+    if (
+      market.marketType === ZDKMarketType.V1Ask &&
+      market.properties.__typename === 'V1Ask'
+    ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
         side: FIXED_SIDE_TYPES.ASK,
-        status: getV1MarketFixedPriceStatus(properties.status),
-        ...getStandardMarketData(market, properties.amount),
+        // TODO(iain): fix naming
+        status: getV1MarketFixedPriceStatus(market.properties.offerStatus),
+        ...getStandardMarketData(market, market.properties.amount),
       });
     }
-    if (market.properties.__typename === 'V1Offer') {
-      const properties = market.properties as V1Offer;
+    if (
+      market.marketType === ZDKMarketType.V1Offer &&
+      market.properties.__typename === 'V1Offer'
+    ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
         side: FIXED_SIDE_TYPES.OFFER,
-        status: getV1MarketFixedPriceStatus(properties.status),
-        ...getStandardMarketData(market, properties.amount),
+        status: getV1MarketFixedPriceStatus(market.properties.offerStatus),
+        ...getStandardMarketData(market, market.properties.amount),
       });
     }
-    if (market.properties.__typename === 'V2Auction') {
-      const properties = market.properties as V2AuctionMarketPropertiesFragment;
+    if (
+      market.marketType === ZDKMarketType.V2Auction &&
+      market.properties.__typename === 'V2Auction'
+    ) {
       const endTime =
-        parseInt(properties.duration, 10) + parseInt(properties.firstBidTime, 10);
-      // const expiresAt = properties.estimatedExpirationTime;
+        parseInt(market.properties.duration, 10) +
+        parseInt(market.properties.firstBidTime, 10);
+
+      // const expiresAt = market.properties.estimatedExpirationTime;
 
       marketResponse.push({
         type: MARKET_TYPES.AUCTION,
         source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
-        status: getReserveAuctionStatus(properties.status),
+        status: getReserveAuctionStatus(market.properties.auctionStatus),
         // Duration shouldn't be able to overflow
-        duration: parseInt(properties.duration, 10),
-        startedAt: properties.firstBidTime
+        duration: parseInt(market.properties.duration, 10),
+        startedAt: market.properties.firstBidTime
           ? {
-              timestamp: properties.firstBidTime,
+              timestamp: market.properties.firstBidTime,
             }
           : undefined,
         bids: [],
-        endsAt: properties.firstBidTime
+        endsAt: market.properties.firstBidTime
           ? {
               timestamp: endTime,
             }
           : undefined,
         currentBid:
-          properties.highestBidder && properties.highestBidPrice
+          market.properties.highestBidder && market.properties.highestBidPrice
             ? {
-                creator: properties.highestBidder,
+                creator: market.properties.highestBidder,
                 created: {
                   // TODO: get real timestamp here?
                   timestamp: 0,
                 },
                 amount: {
-                  usd: properties.highestBidPrice.usdcPrice
+                  usd: market.properties.highestBidPrice.usdcPrice
                     ? {
-                        value: properties.highestBidPrice.usdcPrice?.decimal,
-                        raw: properties.highestBidPrice.usdcPrice?.raw,
+                        value: market.properties.highestBidPrice.usdcPrice?.decimal,
+                        raw: market.properties.highestBidPrice.usdcPrice?.raw,
                         decimals: 18,
                       }
                     : undefined,
-                  eth: properties.highestBidPrice.ethPrice
+                  eth: market.properties.highestBidPrice.ethPrice
                     ? {
-                        value: properties.highestBidPrice.ethPrice.decimal,
-                        raw: properties.highestBidPrice.ethPrice.raw,
+                        value: market.properties.highestBidPrice.ethPrice.decimal,
+                        raw: market.properties.highestBidPrice.ethPrice.raw,
                         decimals: 18,
                       }
                     : undefined,
                   amount: {
-                    raw: properties.highestBidPrice.nativePrice.raw,
-                    value: properties.highestBidPrice.nativePrice.decimal,
+                    raw: market.properties.highestBidPrice.nativePrice.raw,
+                    value: market.properties.highestBidPrice.nativePrice.decimal,
                     decimals:
-                      properties.highestBidPrice.nativePrice.currency.decimals ||
+                      market.properties.highestBidPrice.nativePrice.currency.decimals ||
                       undefined,
                   },
-                  // TODO: integrate symbol
-                  symbol: properties.highestBidPrice.nativePrice.currency.name,
-                  name: properties.highestBidPrice.nativePrice.currency.name,
-                  address: properties.highestBidPrice.nativePrice.currency.address,
+                  symbol: market.properties.highestBidPrice.nativePrice.currency.name,
+                  name: market.properties.highestBidPrice.nativePrice.currency.name,
+                  address: market.properties.highestBidPrice.nativePrice.currency.address,
                 },
               }
             : undefined,
         ...getStandardMarketData(
           market,
-          properties.reservePrice || properties.highestBidPrice
+          market.properties.reservePrice || market.properties.highestBidPrice
         ),
       });
     }
-    if (market.properties.__typename === 'V3Ask') {
-      const properties = market.properties as V3AskPropertiesFragment;
+    if (
+      market.marketType === ZDKMarketType.V3Ask &&
+      market.properties.__typename === 'V3Ask'
+    ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
         side: FIXED_SIDE_TYPES.ASK,
-        status: getV3AskStatus(properties.askStatus),
-        ...getStandardMarketData(market, properties.askPrice),
+        status: getV3AskStatus(market.properties.askStatus),
+        ...getStandardMarketData(market, market.properties.askPrice),
       });
     }
   });
