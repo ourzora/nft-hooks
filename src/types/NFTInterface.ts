@@ -62,7 +62,6 @@ export const enum FIXED_SIDE_TYPES {
   OFFER = 'offer',
 }
 
-
 export type ETHAddress = string;
 
 export type CurrencyAmount = {
