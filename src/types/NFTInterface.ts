@@ -45,6 +45,7 @@ export enum FIXED_PRICE_MARKET_SOURCES {
   ZORA_ASK_V1_EVENT = 'ZoraAskV1Event',
   ZORA_ASK_V3 = 'ZoraAskV3',
   OPENSEA_FIXED = 'OpenseaFixed',
+  FOUNDATION_FIXED = 'FoundationFixed',
 }
 
 export enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
