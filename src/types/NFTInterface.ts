@@ -1,22 +1,22 @@
-import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/src/queries/queries-sdk';
+import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
-export const enum KNOWN_CONTRACTS {
+export enum KNOWN_CONTRACTS {
   ZORA = 'zora',
 }
 
-export const enum MARKET_TYPES {
+export enum MARKET_TYPES {
   AUCTION = 'Auction',
   FIXED_PRICE = 'FixedPrice',
   EDITION = 'Edition',
 }
 
-export const enum EDITION_SOURCES {
+export enum EDITION_SOURCES {
   CUSTOM = 'Custom',
   ZORA_EDITIONS = 'ZoraEditions',
 }
 
-export const enum MARKET_INFO_STATUSES {
+export enum MARKET_INFO_STATUSES {
   PENDING = 'pending',
   ACTIVE = 'active',
   COMPLETE = 'complete',
@@ -25,21 +25,21 @@ export const enum MARKET_INFO_STATUSES {
   INVALID = 'invalid',
 }
 
-export const enum MEDIA_SOURCES {
+export enum MEDIA_SOURCES {
   OPENSEA = 'opensea',
   ZORA = 'zora',
   DERIVED = 'derived',
   RAW = 'raw',
 }
 
-export const enum TOKEN_TRANSFER_EVENT_TYPES {
+export enum TOKEN_TRANSFER_EVENT_TYPES {
   MINT = 'mint',
   BURN = 'burn',
   TRANSFER = 'transfer',
   SALE = 'sale',
 }
 
-export const enum FIXED_PRICE_MARKET_SOURCES {
+export enum FIXED_PRICE_MARKET_SOURCES {
   ZNFT_PERPETUAL = 'ZNFTPerpetual',
   ZORA_ASK_V1 = 'ZoraAskV1',
   ZORA_ASK_V1_EVENT = 'ZoraAskV1Event',
@@ -47,17 +47,17 @@ export const enum FIXED_PRICE_MARKET_SOURCES {
   OPENSEA_FIXED = 'OpenseaFixed',
 }
 
-export const enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
+export enum TOKEN_TRANSFER_EVENT_CONTEXT_TYPES {
   TOKEN_TRANSFER_EVENT = 'TokenTransferEvent',
   TOKEN_MARKET_EVENT = 'TokenMarketEvent',
 }
 
-export const enum AUCTION_SOURCE_TYPES {
+export enum AUCTION_SOURCE_TYPES {
   ZORA_RESERVE_V2 = 'ZoraReserveV2',
   OPENSEA_ENGLISH = 'OpenseaEnglish',
 }
 
-export const enum FIXED_SIDE_TYPES {
+export enum FIXED_SIDE_TYPES {
   ASK = 'ask',
   OFFER = 'offer',
 }
