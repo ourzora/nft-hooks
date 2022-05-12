@@ -41,8 +41,12 @@ import {
 import { ZERO_ADDRESS } from '../../constants/addresses';
 import { NotFoundError } from '../../fetcher/ErrorUtils';
 
-function dateToUnix(date: string) {
-  return Math.floor(new Date(date).getTime() / 1000);
+function unixToISO(unix: number) {
+  return new Date(unix * 1000).toISOString();
+}
+
+function dateToISO(date: string) {
+  return new Date(date).toISOString();
 }
 
 function getChainFromNetwork(network: NetworkIDs) {
@@ -80,7 +84,7 @@ function getEvents(events: EventInfoFragment[]): NormalizedEvent[] {
   events.forEach((tokenEvent) => {
     const common = {
       at: {
-        timestamp: dateToUnix(tokenEvent.transactionInfo.blockTimestamp),
+        timestamp: dateToISO(tokenEvent.transactionInfo.blockTimestamp),
         blockNumber: tokenEvent.transactionInfo.blockNumber,
         transactionHash: tokenEvent.transactionInfo.transactionHash || undefined,
       },
@@ -272,7 +276,7 @@ const getStandardMarketData = (
   amount: PriceSummaryFragment
 ) => ({
   createdAt: {
-    timestamp: dateToUnix(market.transactionInfo.blockTimestamp),
+    timestamp: dateToISO(market.transactionInfo.blockTimestamp),
     blockNumber: market.transactionInfo.blockNumber || undefined,
     transactionHash: market.transactionInfo.transactionHash || undefined,
   },
@@ -392,7 +396,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
         bids: [],
         endsAt: market.properties.firstBidTime
           ? {
-              timestamp: endTime,
+              timestamp: unixToISO(endTime),
             }
           : undefined,
         currentBid:
@@ -400,8 +404,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
             ? {
                 creator: market.properties.highestBidder,
                 created: {
-                  // TODO: get real timestamp here?
-                  timestamp: 0,
+                  timestamp: dateToISO(market.transactionInfo.blockTimestamp),
                 },
                 amount: {
                   usd: market.properties.highestBidPrice.usdcPrice
@@ -472,7 +475,7 @@ export function transformNFTZDKAlpha(
       address: token.mintInfo?.originatorAddress || undefined,
       at: token.mintInfo
         ? {
-            timestamp: dateToUnix(token.mintInfo.mintContext.blockTimestamp),
+            timestamp: dateToISO(token.mintInfo.mintContext.blockTimestamp),
             blockNumber: token.mintInfo.mintContext.blockNumber,
             transactionHash: token.mintInfo!.mintContext.transactionHash || undefined,
           }
