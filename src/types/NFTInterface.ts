@@ -80,7 +80,7 @@ export type CurrencyValue = {
 };
 
 export type TimedAction = {
-  timestamp: number;
+  timestamp: string;
   blockNumber?: number;
   transactionHash?: string;
 };
@@ -114,7 +114,7 @@ export type FixedPriceLike = {
   type: MARKET_TYPES.FIXED_PRICE;
   source: FIXED_PRICE_MARKET_SOURCES;
   side: FIXED_SIDE_TYPES;
-  expires?: number;
+  expires?: string;
 } & MarketInfo;
 
 export type EditionLike = {

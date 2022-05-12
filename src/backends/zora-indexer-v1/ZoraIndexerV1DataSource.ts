@@ -49,11 +49,11 @@ import { ArgumentsError } from '../../fetcher/ErrorUtils';
 import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
-function dateToUnix(date?: string) {
+function dateToISO(date?: string) {
   if (!date) {
     return undefined;
   }
-  return Math.floor(new Date(date).getTime() / 1000);
+  return new Date(date).toISOString();
 }
 
 function getLast<T>(items: T[]) {
@@ -144,7 +144,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
     type: MARKET_TYPES.FIXED_PRICE,
     canceledAt: undefined,
     createdAt: {
-      timestamp: dateToUnix(created.blockTimestamp)!,
+      timestamp: dateToISO(created.blockTimestamp)!,
       blockNumber: created.blockNumber,
       transactionHash: created.transactionHash,
     },
@@ -152,7 +152,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
     finishedAt: undefined,
     // finishedAt: completeEvent
     //   ? {
-    //       timestamp: dateToUnix(completeEvent.blockTimestamp)!,
+    //       timestamp: dateToISO(completeEvent.blockTimestamp)!,
     //       blockNumber: completeEvent.blockNumber,
     //       transactionHash: completeEvent.transactionHash,
     //     }
@@ -169,12 +169,12 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): NormalizedEvent[] {
     return {
       at: {
         blockNumber: askEvent.blockNumber,
-        timestamp: dateToUnix(askEvent.blockTimestamp)!,
+        timestamp: dateToISO(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
       blockInfo: {
         blockNumber: askEvent.blockNumber,
-        timestamp: dateToUnix(askEvent.blockTimestamp)!,
+        timestamp: dateToISO(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
       sender: askEvent.details.sender,
@@ -235,7 +235,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     creator: bid.sender,
     amount: addCurrencyInfo(bid.value),
     created: {
-      timestamp: dateToUnix(bid.blockTimestamp)!,
+      timestamp: dateToISO(bid.blockTimestamp)!,
       blockNumber: bid.blockNumber,
       transactionHash: bid.transactionHash,
     },
@@ -248,7 +248,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     amount: getAmount(),
     raw: auction,
     createdAt: {
-      timestamp: dateToUnix(auction.createdEvent!.blockTimestamp)!,
+      timestamp: dateToISO(auction.createdEvent!.blockTimestamp)!,
       blockNumber: auction.createdEvent!.blockNumber,
       transactionHash: auction.createdEvent!.transactionHash,
     },
@@ -256,25 +256,25 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     type: MARKET_TYPES.AUCTION,
     finishedAt: auction.endedEvent
       ? {
-          timestamp: dateToUnix(auction.endedEvent.blockTimestamp)!,
+          timestamp: dateToISO(auction.endedEvent.blockTimestamp)!,
           blockNumber: auction.endedEvent.blockNumber,
           transactionHash: auction.endedEvent.transactionHash,
         }
       : undefined,
     startedAt: auction.firstBidTime
       ? {
-          timestamp: dateToUnix(auction.firstBidTime)!,
+          timestamp: dateToISO(auction.firstBidTime)!,
         }
       : undefined,
     canceledAt: auction.canceledEvent
       ? {
-          timestamp: dateToUnix(auction.canceledEvent.blockTimestamp)!,
+          timestamp: dateToISO(auction.canceledEvent.blockTimestamp)!,
           blockNumber: auction.canceledEvent.blockNumber,
           transactionHash: auction.canceledEvent.transactionHash,
         }
       : undefined,
     endsAt: {
-      timestamp: dateToUnix(auction.expiresAt)!,
+      timestamp: dateToISO(auction.expiresAt)!,
       blockNumber: auction.endedEvent?.blockNumber,
       transactionHash: auction.endedEvent?.transactionHash,
     },
@@ -309,7 +309,7 @@ function extractTransferEvents(
     tokenId: transferEvent.tokenId,
     eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
     at: {
-      timestamp: dateToUnix(transferEvent.blockTimestamp)!,
+      timestamp: dateToISO(transferEvent.blockTimestamp)!,
       blockNumber: transferEvent.blockNumber,
       transactionHash: transferEvent.transactionHash,
     },
@@ -343,14 +343,12 @@ export function transformNFTZoraIndexerV1DataSource(
       symbol: asset.tokenContract?.symbol || undefined,
     },
     minted: {
-      at: {
-        blockNumber: asset.mintTransferEvent?.blockNumber,
+      at: asset.mintTransferEvent ? {
+        blockNumber: asset.mintTransferEvent.blockNumber,
         // TODO(iain): fix normalization to handle missing date information
-        timestamp: asset.mintTransferEvent
-          ? dateToUnix(asset.mintTransferEvent?.blockTimestamp)!
-          : 0,
-        transactionHash: asset.mintTransferEvent?.transactionHash,
-      },
+        timestamp: dateToISO(asset.mintTransferEvent.blockTimestamp)!,
+        transactionHash: asset.mintTransferEvent.transactionHash,
+      } : undefined,
       address: asset.minter || undefined,
     },
     owner: {
