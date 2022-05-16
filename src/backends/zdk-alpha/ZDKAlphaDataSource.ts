@@ -385,11 +385,8 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
       market.marketType === ZDKMarketType.V2Auction &&
       market.properties.__typename === 'V2Auction'
     ) {
-      const endTime =
-        parseInt(market.properties.duration, 10) +
-        parseInt(market.properties.firstBidTime, 10);
-
-      // const expiresAt = market.properties.estimatedExpirationTime;
+      // estimatedExpirationTime is a string
+      const endTime = market.properties.estimatedExpirationTime;
 
       marketResponse.push({
         type: MARKET_TYPES.AUCTION,
@@ -405,7 +402,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
         bids: [],
         endsAt: market.properties.firstBidTime
           ? {
-              timestamp: unixToISO(endTime),
+              timestamp: dateToISO(endTime),
             }
           : undefined,
         currentBid:
