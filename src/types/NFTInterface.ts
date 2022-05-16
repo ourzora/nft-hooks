@@ -252,6 +252,8 @@ export type NFTObject = {
   media?: {
     thumbnail?: MediaObject;
     image?: MediaObject;
+    large?: MediaObject;
+    poster?: MediaObject;
     content?: MediaObject;
     source: MEDIA_SOURCES;
   };

@@ -524,12 +524,28 @@ export function transformNFTZDKAlpha(
   };
 
   object.media = {
-    // TODO(iain): Expose poster information
+    source: MEDIA_SOURCES.ZORA,
     thumbnail:
       token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
       token.image.mediaEncoding.thumbnail
         ? {
             uri: token.image.mediaEncoding.thumbnail,
+          }
+        : undefined,
+    large:
+      (token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' ||
+        token.image?.mediaEncoding?.__typename === 'VideoEncodingTypes') &&
+      token.image.mediaEncoding.large
+        ? {
+            uri: token.image.mediaEncoding.large,
+          }
+        : undefined,
+    poster:
+      (token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' ||
+        token.image?.mediaEncoding?.__typename === 'VideoEncodingTypes') &&
+      token.image.mediaEncoding.poster
+        ? {
+            uri: token.image.mediaEncoding.poster,
           }
         : undefined,
     image: token.image?.url
@@ -544,7 +560,6 @@ export function transformNFTZDKAlpha(
           uri: token.content.url,
         }
       : undefined,
-    source: MEDIA_SOURCES.ZORA,
   };
 
   if (!object.rawData) {
