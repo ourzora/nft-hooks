@@ -258,8 +258,17 @@ function getEvents(events: EventInfoFragment[]): NormalizedEvent[] {
           break;
       }
 
+      const filledAskFields =
+        tokenEvent.properties?.properties?.__typename === 'V3AskFilledEventProperties'
+          ? {
+              buyer: tokenEvent.properties.properties.buyer,
+              seller: tokenEvent.properties.properties.seller,
+            }
+          : {};
+
       eventsList.push({
         ...common,
+        ...filledAskFields,
         sender: tokenEvent.properties.address,
         marketAddress: tokenEvent.properties.collectionAddress,
         blockInfo: {

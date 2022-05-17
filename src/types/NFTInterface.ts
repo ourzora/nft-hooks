@@ -204,6 +204,8 @@ type MarketFixedPriceEvent = SharedMarketEventData & {
   event: FIXED_PRICE_EVENT_TYPES;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
   side: FIXED_SIDE_TYPES;
+  buyer?: ETHAddress;
+  seller?: ETHAddress;
   raw:
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;
