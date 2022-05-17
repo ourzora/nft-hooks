@@ -247,6 +247,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     status: getStatus(),
     amount: getAmount(),
     raw: auction,
+    auctionId: auction.auctionId,
     createdAt: {
       timestamp: dateToISO(auction.createdEvent!.blockTimestamp)!,
       blockNumber: auction.createdEvent!.blockNumber,
@@ -343,12 +344,14 @@ export function transformNFTZoraIndexerV1DataSource(
       symbol: asset.tokenContract?.symbol || undefined,
     },
     minted: {
-      at: asset.mintTransferEvent ? {
-        blockNumber: asset.mintTransferEvent.blockNumber,
-        // TODO(iain): fix normalization to handle missing date information
-        timestamp: dateToISO(asset.mintTransferEvent.blockTimestamp)!,
-        transactionHash: asset.mintTransferEvent.transactionHash,
-      } : undefined,
+      at: asset.mintTransferEvent
+        ? {
+            blockNumber: asset.mintTransferEvent.blockNumber,
+            // TODO(iain): fix normalization to handle missing date information
+            timestamp: dateToISO(asset.mintTransferEvent.blockTimestamp)!,
+            transactionHash: asset.mintTransferEvent.transactionHash,
+          }
+        : undefined,
       address: asset.minter || undefined,
     },
     owner: {
