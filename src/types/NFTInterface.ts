@@ -109,6 +109,7 @@ export type AuctionLike = {
   reservePrice?: CurrencyValue;
   // current bid is duplicated within bids
   bids: readonly AuctionBidEvent[];
+  auctionId?: string;
 } & MarketInfo;
 
 export type FixedPriceLike = {

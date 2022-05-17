@@ -190,6 +190,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
     const auction: AuctionLike = {
       status: getStatus(),
       amount: getAmount(),
+      auctionId: response.id,
       raw: response,
       type: MARKET_TYPES.AUCTION,
       createdBy: response.curator.id,

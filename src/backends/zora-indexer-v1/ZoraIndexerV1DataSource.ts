@@ -253,6 +253,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     status: getStatus(),
     amount: getAmount(),
     raw: auction,
+    auctionId: auction.auctionId,
     createdAt: {
       timestamp: unixToISO(auction.createdEvent!.blockTimestamp)!,
       blockNumber: auction.createdEvent!.blockNumber,
@@ -353,7 +354,7 @@ export function transformNFTZoraIndexerV1DataSource(
         ? {
             blockNumber: asset.mintTransferEvent.blockNumber,
             // TODO(iain): fix normalization to handle missing date information
-            timestamp: unixToISO(asset.mintTransferEvent.blockTimestamp)!,
+            timestamp: dateToISO(asset.mintTransferEvent.blockTimestamp)!,
             transactionHash: asset.mintTransferEvent.transactionHash,
           }
         : undefined,

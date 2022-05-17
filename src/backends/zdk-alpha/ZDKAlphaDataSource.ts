@@ -396,6 +396,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
         type: MARKET_TYPES.AUCTION,
         source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
         status: getReserveAuctionStatus(market.properties.auctionStatus),
+        auctionId: market.properties.auctionId,
         // Duration shouldn't be able to overflow
         duration: parseInt(market.properties.duration, 10),
         startedAt: market.properties.firstBidTime
