@@ -36,6 +36,16 @@ function priceToPretty(number: string, decimals?: number | null) {
   return new Big(number).div(new Big(10).pow(decimals || 18)).toNumber();
 }
 
+function unixToISO(unix?: string | number) {
+  if (!unix) {
+    return undefined;
+  }
+
+  const unixNumber: number = typeof unix === 'string' ? parseInt(unix, 10) : unix;
+  return new Date(unixNumber * 1000).toISOString();
+}
+
+
 export class GraphAuctionDataSource implements GraphAuctionInterface {
   // auctionInfoLoader fetches auction info for non-zora NFTs
   auctionInfoLoader: DataLoader<string, NFTObject>;
@@ -159,7 +169,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
         created: {
           blockNumber: bid.createdAtBlockNumber,
           transactionHash: bid.transactionHash,
-          timestamp: bid.createdAtTimestamp,
+          timestamp: unixToISO(bid.createdAtTimestamp)!,
         },
       };
     };
@@ -190,7 +200,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       },
       finishedAt: response.finalizedAtTimestamp
         ? {
-            timestamp: response.finalizedAtTimestamp,
+            timestamp: unixToISO(response.finalizedAtTimestamp)!,
           }
         : undefined,
       startedAt: response.firstBidTime,
@@ -198,7 +208,7 @@ export class GraphAuctionDataSource implements GraphAuctionInterface {
       canceledAt: undefined,
       winner: response.currentBid?.bidder.id,
       endsAt: {
-        timestamp: response.expectedEndTimestamp,
+        timestamp: unixToISO(response.expectedEndTimestamp)!,
       },
       duration: response.duration,
       currentBid: getHighestBid(),

@@ -30,6 +30,15 @@ import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
+function unixToISO(unix?: string | number) {
+  if (!unix) {
+    return undefined;
+  }
+
+  const unixNumber: number = typeof unix === 'string' ? parseInt(unix, 10) : unix;
+  return new Date(unixNumber * 1000).toISOString();
+}
+
 export function transformNFTZoraGraph(
   mediaContractAddress: string,
   { asset, metadata }: { asset: NftMediaFullDataFragment; metadata: any },
@@ -56,7 +65,7 @@ export function transformNFTZoraGraph(
     minted: {
       address: asset.creator.id,
       at: {
-        timestamp: asset.createdAtTimestamp,
+        timestamp: unixToISO(asset.createdAtTimestamp)!,
       },
     },
     metadataURI: asset.metadataURI,
