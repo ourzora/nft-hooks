@@ -50,10 +50,6 @@ export {
   NFTQuery,
 } from '../../types/NFTQuery';
 
-function unixToISO(unix: number) {
-  return new Date(unix * 1000).toISOString();
-}
-
 function dateToISO(date: string) {
   return new Date(date).toISOString();
 }
@@ -394,11 +390,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
       market.marketType === ZDKMarketType.V2Auction &&
       market.properties.__typename === 'V2Auction'
     ) {
-      const endTime =
-        parseInt(market.properties.duration, 10) +
-        parseInt(market.properties.firstBidTime, 10);
-
-      // const expiresAt = market.properties.estimatedExpirationTime;
+      const expiresAt = market.properties.estimatedExpirationTime;
 
       marketResponse.push({
         type: MARKET_TYPES.AUCTION,
@@ -415,7 +407,7 @@ function getMarkets(markets: MarketResponseFragmentItem[]) {
         bids: [],
         endsAt: market.properties.firstBidTime
           ? {
-              timestamp: unixToISO(endTime),
+              timestamp: dateToISO(expiresAt),
             }
           : undefined,
         currentBid:
