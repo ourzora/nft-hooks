@@ -3,11 +3,11 @@ import { renderHook } from '@testing-library/react-hooks';
 import fetchMock from './setupFetchMock';
 
 import { useNFTMetadata } from '../src';
-import { defaultFetchAgent } from '../src/context/NFTFetchContext';
+
+import { NoSWRCache } from './testUtils';
 
 describe('useNFTContent', () => {
   afterEach(() => {
-    defaultFetchAgent.fetcher.clearCache();
     fetchMock.reset();
   });
 
@@ -19,8 +19,9 @@ describe('useNFTContent', () => {
       version: 'zora-20210101',
     });
 
-    const { waitFor, result } = renderHook(() =>
-      useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE2')
+    const { waitFor, result } = renderHook(
+      () => useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE2'),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => result.current.loading === false);
@@ -40,13 +41,16 @@ describe('useNFTContent', () => {
       response: { status: 404 },
     });
 
-    const { waitFor, result } = renderHook(() =>
-      useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE3')
+    const { waitFor, result } = renderHook(
+      () => useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE3'),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => result.current.loading === false);
 
-    expect(result.current.error?.toString()).toEqual('RequestError: Request Status = 404');
+    expect(result.current.error?.toString()).toEqual(
+      'RequestError: Request Status = 404'
+    );
     expect(result.current.loading).toBeFalsy();
     expect(result.current.metadata).toBeUndefined();
   });
@@ -55,8 +59,9 @@ describe('useNFTContent', () => {
       response: { headers: { 'content-type': 'application/json' } },
     });
 
-    const { waitFor, result } = renderHook(() =>
-      useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE4')
+    const { waitFor, result } = renderHook(
+      () => useNFTMetadata('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE4'),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => result.current.loading === false);

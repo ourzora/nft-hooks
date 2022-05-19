@@ -1,23 +1,24 @@
 import { renderHook } from '@testing-library/react-hooks';
 
 import fetchMock from './setupFetchMock';
+import { NoSWRCache } from './testUtils';
 
 import { useNFTContent } from '../src';
-import { cache } from 'swr';
 
 describe('useNFTContent', () => {
   beforeEach(() => {
     fetchMock.reset();
-    cache.clear();
   });
 
   it('loads text content for NFT from server', async () => {
     fetchMock.get('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'this is plain text');
 
-    const { waitFor, result } = renderHook(() =>
-      useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'text/plain', {
-        dedupingInterval: 0,
-      })
+    const { waitFor, result } = renderHook(
+      () =>
+        useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'text/plain', {
+          dedupingInterval: 0,
+        }),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => !!result.current.content);
@@ -37,8 +38,9 @@ describe('useNFTContent', () => {
       },
     });
 
-    const { waitFor, result } = renderHook(() =>
-      useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE2', 'text/plain')
+    const { waitFor, result } = renderHook(
+      () => useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE2', 'text/plain'),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => !!result.current.error);
@@ -49,8 +51,9 @@ describe('useNFTContent', () => {
     expect(result.current.content).toEqual(undefined);
   });
   it('returns reference URI to user', async () => {
-    const { waitFor, result } = renderHook(() =>
-      useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'image/gif')
+    const { waitFor, result } = renderHook(
+      () => useNFTContent('https://ipfs.io/ipfs/IPFS_SHA_EXAMPLE', 'image/gif'),
+      { wrapper: NoSWRCache }
     );
 
     await waitFor(() => !!result.current.content);

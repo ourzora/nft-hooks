@@ -51,6 +51,10 @@ export {
 } from '../../types/NFTQuery';
 
 function dateToISO(date: string) {
+  if (!date.endsWith('Z')) {
+    date += 'Z';
+  }
+
   return new Date(date).toISOString();
 }
 
