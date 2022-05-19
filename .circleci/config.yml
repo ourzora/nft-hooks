@@ -1,7 +1,7 @@
 env_defaults: &env_defaults
   working_directory: ~
   docker:
-    - image: circleci/node:16.6.1
+    - image: circleci/node:16.10.1
 
 version: 2.1
 jobs:
