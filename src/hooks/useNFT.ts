@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import merge from 'deepmerge';
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { NFTObject } from '../types/NFTInterface';
 
@@ -13,12 +13,6 @@ export type useNFTType = {
   data?: NFTObject;
 };
 
-type OptionsType = {
-  refreshInterval?: number;
-  initialData?: any;
-  loadCurrencyInfo?: boolean;
-  useBetaIndexer?: boolean;
-};
 
 /**
  * Fetches on-chain NFT data and pricing for the given nft contract address and id
@@ -31,8 +25,8 @@ type OptionsType = {
 export function useNFT(
   contractAddress?: string,
   tokenId?: string,
-  options: OptionsType = {},
-  marketOptions: OptionsType = {}
+  options: SWRConfiguration = {},
+  marketOptions: SWRConfiguration = {}
 ): useNFTType {
   const dataContext = useContext(NFTFetchContext);
 

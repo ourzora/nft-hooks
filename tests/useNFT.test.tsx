@@ -26,8 +26,6 @@ describe('useNFT', () => {
 
     await waitFor(() => !!result.current.data, { timeout: NETWORK_TIMEOUT_MS });
 
-    console.log(result.current);
-
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
   });
@@ -46,8 +44,6 @@ describe('useNFT', () => {
     );
 
     await waitFor(() => !!result.current.data, { timeout: NETWORK_TIMEOUT_MS });
-
-    console.log(result.current);
 
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
@@ -73,8 +69,6 @@ describe('useNFT', () => {
       { timeout: NETWORK_TIMEOUT_MS }
     );
 
-    console.log(result.current);
-
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
   });
@@ -97,8 +91,6 @@ describe('useNFT', () => {
         return !!result.current.data;
       },
     );
-
-    console.log(result.current);
 
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();

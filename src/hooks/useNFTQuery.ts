@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
 import { NFTStrategy } from '../strategies/NFTStrategy';
@@ -11,13 +11,6 @@ export type useNFTQueryType = {
   error: Error;
 };
 
-type OptionsType = {
-  refreshInterval?: number;
-  initialData?: any;
-  loadCurrencyInfo?: boolean;
-  useBetaIndexer?: boolean;
-};
-
 /**
  * Fetches on-chain NFT data and pricing for a given general NFT Query
  *
@@ -25,12 +18,15 @@ type OptionsType = {
  * @param options Options for SWR flags
  * @returns useNFTQueryType results including data and error for resulting NFTs
  */
-export function useNFTQuery(query: NFTQuery, options: OptionsType = {}): useNFTQueryType {
+export function useNFTQuery(
+  query: NFTQuery,
+  options: SWRConfiguration<NFTObject[]>
+): useNFTQueryType {
   const dataContext = useContext(NFTFetchContext);
 
   const strategy: NFTStrategy = dataContext.strategy;
 
-  // run query
+  // Run query
   const { data, error } = useSWR<NFTObject[]>(
     query ? ['queryNFTs', JSON.stringify(query)] : null,
     (_, queryString) => strategy.queryNFTs(JSON.parse(queryString) as NFTQuery),
