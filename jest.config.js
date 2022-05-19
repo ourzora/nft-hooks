@@ -1,4 +1,5 @@
 module.exports = {
+  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   testRegex: "/tests/.*\\.(test|spec)?\\.(ts|tsx)$",
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'gql', 'graphql'],
