@@ -25,7 +25,7 @@ describe('useENSAddress', () => {
       address: '0x9444390c01dd5b7249e53fac31290f7dff53450d',
       name: 'iain.eth',
     });
-  });
+  }, 24_000);
 
   it('loads an ens batch correctly', async () => {
     const NetworkWrapper = ({ children }: any) => (
@@ -61,5 +61,5 @@ describe('useENSAddress', () => {
       address: '0x00000000000749f3ba62f30374be55841a8c7146',
       name: undefined,
     });
-  });
+  }, 24_000);
 });
