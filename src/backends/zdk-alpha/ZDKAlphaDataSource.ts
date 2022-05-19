@@ -51,6 +51,10 @@ export {
 } from '../../types/NFTQuery';
 
 function dateToISO(date: string) {
+  if (!date.endsWith('Z')) {
+    date += 'Z';
+  }
+
   return new Date(date).toISOString();
 }
 
@@ -262,9 +266,19 @@ function getEvents(events: EventInfoFragment[]): NormalizedEvent[] {
             }
           : {};
 
+      const fixedPriceFields =
+        tokenEvent.properties?.properties?.__typename === 'V3AskCreatedEventProperties' ||
+        tokenEvent.properties?.properties?.__typename ===
+          'V3AskPriceUpdatedEventProperties'
+          ? {
+              seller: tokenEvent.properties.properties.seller,
+            }
+          : {};
+
       eventsList.push({
         ...common,
         ...filledAskFields,
+        ...fixedPriceFields,
         sender: tokenEvent.properties.address,
         marketAddress: tokenEvent.properties.collectionAddress,
         blockInfo: {

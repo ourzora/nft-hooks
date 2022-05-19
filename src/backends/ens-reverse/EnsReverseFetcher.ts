@@ -77,15 +77,13 @@ export async function reverseResolveEnsAddresses(
   const fetcher = new FetchWithTimeout(timeout, 'application/json');
   const result = await fetcher.fetch(endpoint, requestOptions);
   const json = await result.json();
-  console.log('json', {json})
   const resultAddresses = processReturnData(json.result);
-  console.log('results', {resultAddresses})
   if (resultAddresses.length !== mappingKeys.length) {
     throw new Error('Wrong address return length');
   }
 
   return mappingKeys.reduce((last, at, index) => {
-    last[at] = resultAddresses[index];
+    last[at] = resultAddresses[index] || undefined;
     return last;
-  }, {} as { [name: string]: string });
+  }, {} as { [name: string]: string | undefined });
 }
