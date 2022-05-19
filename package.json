@@ -56,14 +56,14 @@
     }
   },
   "peerDependencies": {
-    "react": "17.x",
-    "react-dom": "17.x"
+    "react": "17.x || 18.x",
+    "react-dom": "17.x || 18.x"
   },
   "dependencies": {
     "@ethersproject/address": "^5.6.0",
     "@ethersproject/bytes": "^5.6.1",
     "@types/deepmerge": "^2.2.0",
-    "@zoralabs/zdk-alpha": "0.0.36",
+    "@zoralabs/zdk-alpha": "^0.0.38",
     "big.js": "^6.1.0",
     "cross-fetch": "^3.1.4",
     "dataloader": "^2.0.0",
