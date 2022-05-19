@@ -48,7 +48,8 @@ describe('useNFT', () => {
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
   });
-  it('test zora indexer media load', async () => {
+
+  xit('test zora indexer media load', async () => {
     const zoraV2Strategy = new ZoraV2IndexerStrategy(Networks.MAINNET);
 
     const NetworkWrapper = ({ children }: any) => (
