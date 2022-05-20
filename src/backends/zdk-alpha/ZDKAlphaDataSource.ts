@@ -549,16 +549,14 @@ export function transformNFTZDKAlpha(
           }
         : undefined,
     large:
-      (token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' ||
-        token.image?.mediaEncoding?.__typename === 'VideoEncodingTypes') &&
+      token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
       token.image.mediaEncoding.large
         ? {
             uri: token.image.mediaEncoding.large,
           }
         : undefined,
     poster:
-      (token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' ||
-        token.image?.mediaEncoding?.__typename === 'VideoEncodingTypes') &&
+      token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
       token.image.mediaEncoding.poster
         ? {
             uri: token.image.mediaEncoding.poster,
@@ -570,12 +568,38 @@ export function transformNFTZDKAlpha(
           uri: token.image.url,
         }
       : undefined,
-    content: token.content?.url
-      ? {
-          mime: token.content.mimeType || undefined,
-          uri: token.content.url,
-        }
-      : undefined,
+  };
+
+  object.content = {
+    source: MEDIA_SOURCES.ZORA,
+    original:
+      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      token.content.mediaEncoding.original
+        ? {
+            uri: token.content.mediaEncoding.original,
+          }
+        : undefined,
+    large:
+      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      token.content.mediaEncoding.large
+        ? {
+            uri: token.content.mediaEncoding.large,
+          }
+        : undefined,
+    poster:
+      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      token.content.mediaEncoding.poster
+        ? {
+            uri: token.content.mediaEncoding.poster,
+          }
+        : undefined,
+    thumbnail:
+      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      token.content.mediaEncoding.thumbnail
+        ? {
+            uri: token.content.mediaEncoding.thumbnail,
+          }
+        : undefined,
   };
 
   if (!object.rawData) {
