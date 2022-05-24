@@ -254,12 +254,20 @@ export type NFTObject = {
     component: string;
   };
   media?: {
-    thumbnail?: MediaObject;
+    source: MEDIA_SOURCES;
     image?: MediaObject;
     large?: MediaObject;
     poster?: MediaObject;
+    thumbnail?: MediaObject;
+    // backwards compatibility
     content?: MediaObject;
+  };
+  content?: {
     source: MEDIA_SOURCES;
+    original?: MediaObject;
+    large?: MediaObject;
+    poster?: MediaObject;
+    thumbnail?: MediaObject;
   };
   nft?: {
     tokenId: string;

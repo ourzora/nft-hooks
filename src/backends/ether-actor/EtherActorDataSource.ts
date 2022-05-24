@@ -66,12 +66,6 @@ export class EtherActorDataSource implements EtherActorDataInterface {
     object.metadata = asset.metadata;
 
     object.media = {
-      content: asset.contentURL
-        ? {
-            uri: asset.contentURL,
-            mime: asset.contentURLMimeType,
-          }
-        : undefined,
       image: asset.imageURL
         ? {
             uri: asset.imageURL,
@@ -79,7 +73,23 @@ export class EtherActorDataSource implements EtherActorDataInterface {
           }
         : undefined,
       source: MEDIA_SOURCES.DERIVED,
+      content: asset.contentURL
+        ? {
+            uri: asset.contentURL,
+            mime: asset.contentURLMimeType,
+          }
+        : undefined,
     };
+
+    if (asset.contentURL) {
+      object.content = {
+        source: MEDIA_SOURCES.DERIVED,
+        original: {
+          uri: asset.contentURL,
+          mime: asset.contentURLMimeType,
+        },
+      };
+    }
 
     object.media = {
       image:
@@ -89,12 +99,6 @@ export class EtherActorDataSource implements EtherActorDataInterface {
               mime: asset.imageURLMimeType || asset.contentURLMimeType,
             }
           : undefined,
-      content: asset.contentURL
-        ? {
-            uri: asset.contentURL,
-            mime: asset.contentURLMimeType,
-          }
-        : undefined,
       source: MEDIA_SOURCES.DERIVED,
     };
 
