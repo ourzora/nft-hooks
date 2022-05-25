@@ -1,4 +1,7 @@
-import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+import {
+  Currency,
+  EventInfoFragment,
+} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
 export enum KNOWN_CONTRACTS {
@@ -80,6 +83,21 @@ export type CurrencyValue = {
   address: ETHAddress;
 };
 
+export type MarketInfo = {
+  raw: any;
+  amount?: CurrencyValue;
+  // pending - inactive pending some event
+  // active - can be filled / auction is ongoing
+  // completed - auction end fill complete
+  // canceled - user cancels at some point
+  status: MARKET_INFO_STATUSES;
+  createdAt: TimedAction;
+  createdBy?: string;
+  finishedAt?: TimedAction;
+  canceledAt?: TimedAction;
+  marketContract?: ETHAddress;
+};
+
 export type TimedAction = {
   timestamp: string;
   blockNumber?: number;
@@ -126,21 +144,6 @@ export type EditionLike = {
   editionSize: number;
   purchases: readonly EditionPurchaseEvent[];
 } & MarketInfo;
-
-export type MarketInfo = {
-  raw: any;
-  amount?: CurrencyValue;
-  // pending - inactive pending some event
-  // active - can be filled / auction is ongoing
-  // completed - auction end fill complete
-  // canceled - user cancels at some point
-  status: MARKET_INFO_STATUSES;
-  createdAt: TimedAction;
-  createdBy?: string;
-  finishedAt?: TimedAction;
-  canceledAt?: TimedAction;
-  marketContract?: ETHAddress;
-};
 
 export type MarketModule = AuctionLike | FixedPriceLike | EditionLike;
 
@@ -207,6 +210,11 @@ type MarketFixedPriceEvent = SharedMarketEventData & {
   side: FIXED_SIDE_TYPES;
   buyer?: ETHAddress;
   seller?: ETHAddress;
+  // TODO: make price data non-optional
+  usd?: CurrencyAmount;
+  amount?: Currency;
+  symbol?: string;
+  // TODO: make price data non-optional
   raw:
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;
