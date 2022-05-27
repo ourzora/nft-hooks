@@ -70,7 +70,7 @@ export function transformNFTZDKAlpha(
 
   // Response of tokens (plural) query
   if (tokenResponse.__typename === 'TokenWithMarketsSummaryConnection') {
-    object.markets = getMarkets(tokenResponse.marketsSummary);
+    object.markets = processMarkets(tokenResponse.marketsSummary);
   }
 
   object.metadata = {
