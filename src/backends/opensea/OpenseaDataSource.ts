@@ -83,13 +83,18 @@ export class OpenseaDataSource implements OpenseaInterface {
               uri: asset.animation_url || asset.image_url!,
             }
           : undefined,
-      content: asset.animation_url
-        ? {
-            uri: asset.animation_url || asset.image_original_url!,
-          }
-        : undefined,
       source: MEDIA_SOURCES.OPENSEA,
     };
+    if (asset.animation_url) {
+      object.content = {
+        source: MEDIA_SOURCES.OPENSEA,
+        original: asset.animation_url
+          ? {
+              uri: asset.animation_url || asset.image_original_url!,
+            }
+          : undefined,
+      };
+    }
     if (!object.rawData) {
       object.rawData = {};
     }

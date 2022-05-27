@@ -73,8 +73,12 @@ export function transformNFTZoraGraph(
   };
   // TODO: load from CDN
   object.media = {
-    content: { uri: asset.contentURI, mime: metadata.mimeType },
     source: MEDIA_SOURCES.DERIVED,
+    content: { uri: asset.contentURI, mime: metadata.mimeType },
+  };
+  object.content = {
+    source: MEDIA_SOURCES.DERIVED,
+    original: { uri: asset.contentURI, mime: metadata.mimeType },
   };
   object.metadata = metadata;
   if (!object.rawData) {
