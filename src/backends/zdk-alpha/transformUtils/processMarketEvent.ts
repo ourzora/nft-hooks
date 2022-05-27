@@ -47,9 +47,9 @@ export function processMarketEvent(e: EventInfoFragment): NormalizedEvent | unde
   return {
     // FIXME: address === sender???
     sender: e.properties.address,
+    ...extractPrice(e),
     marketAddress: e.properties.collectionAddress,
     event,
-    ...extractPrice(e),
     eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
     side: FIXED_SIDE_TYPES.ASK,
     blockInfo: {

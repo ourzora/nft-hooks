@@ -1,7 +1,4 @@
-import {
-  Currency,
-  EventInfoFragment,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
 import { NFTQuery } from '../types/NFTQuery';
 
 export enum KNOWN_CONTRACTS {
@@ -210,11 +207,12 @@ type MarketFixedPriceEvent = SharedMarketEventData & {
   side: FIXED_SIDE_TYPES;
   buyer?: ETHAddress;
   seller?: ETHAddress;
-  // TODO: make price data non-optional
-  usd?: CurrencyAmount;
-  amount?: Currency;
-  symbol?: string;
-  // TODO: make price data non-optional
+  price?: {
+    symbol: string;
+    amount: number;
+    usdcPrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
+    nativePrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
+  };
   raw:
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;

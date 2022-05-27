@@ -8,16 +8,16 @@ export function extractPrice(e: EventInfoFragment) {
       e.properties.properties.__typename === 'V1MarketAskRemovedEventProperties')
   ) {
     const p = e.properties.properties;
-    return p.price.usdcPrice
-      ? {
-          usd: {
-            raw: p.price.usdcPrice.raw,
-            value: p.price.usdcPrice.decimal,
-          },
-          amount: p.price.nativePrice.currency,
-          symbol: p.price.nativePrice.currency.name,
-        }
-      : {};
+    return {
+      price: p.price.usdcPrice
+        ? {
+            symbol: p.price.nativePrice.currency.name,
+            amount: p.price.nativePrice.decimal,
+            usdcPrice: p.price.usdcPrice,
+            nativePrice: p.price.nativePrice,
+          }
+        : undefined,
+    };
   }
 
   if (
@@ -28,16 +28,16 @@ export function extractPrice(e: EventInfoFragment) {
       e.properties.properties.__typename === 'V2AuctionCreatedEventProperties')
   ) {
     const p = e.properties.properties;
-    return p.price.usdcPrice
-      ? {
-          usd: {
-            raw: p.price.usdcPrice.raw,
-            value: p.price.usdcPrice.decimal,
-          },
-          amount: p.price.nativePrice.currency,
-          symbol: 'USDC',
-        }
-      : {};
+    return {
+      price: p.price.usdcPrice
+        ? {
+            symbol: p.price.nativePrice.currency.name,
+            amount: p.price.nativePrice.decimal,
+            usdcPrice: p.price.usdcPrice,
+            nativePrice: p.price.nativePrice,
+          }
+        : undefined,
+    };
   }
 
   if (
@@ -47,18 +47,19 @@ export function extractPrice(e: EventInfoFragment) {
       e.properties.properties.__typename === 'V3AskFilledEventProperties' ||
       e.properties.properties.__typename === 'V3AskPriceUpdatedEventProperties')
   ) {
-    const p = e.properties.properties;
-    return p.price.usdcPrice
-      ? {
-          usd: {
-            raw: p.price.usdcPrice.raw,
-            value: p.price.usdcPrice.decimal,
-          },
-          amount: p.price.nativePrice.currency,
-          symbol: 'USDC',
-        }
-      : {};
+    const p = e.properties.properties.price;
+
+    return {
+      price: p.usdcPrice
+        ? {
+            symbol: p.nativePrice.currency.name,
+            amount: p.nativePrice.decimal,
+            usdcPrice: p.usdcPrice,
+            nativePrice: p.nativePrice,
+          }
+        : undefined,
+    };
   }
 
-  return {};
+  return { price: undefined };
 }
