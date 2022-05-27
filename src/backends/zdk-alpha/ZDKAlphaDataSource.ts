@@ -522,7 +522,7 @@ export function transformNFTZDKAlpha(
   }
 
   // Response of tokens (plural) query
-  if (tokenResponse.__typename === 'TokenWithMarketsSummary') {
+  if (tokenResponse.__typename === 'TokenWithMarketsSummaryConnection') {
     object.markets = getMarkets(tokenResponse.marketsSummary);
   }
 
