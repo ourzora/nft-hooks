@@ -33,10 +33,10 @@ export function getStandardMarketData({
             },
           }
         : undefined,
-      eth: amount!.ethPrice
+      eth: amount!.nativePrice
         ? {
-            raw: amount!.ethPrice?.raw,
-            value: amount!.ethPrice.decimal,
+            raw: amount!.nativePrice?.raw,
+            value: amount!.nativePrice.decimal,
             currency: {
               address: ZERO_ADDRESS,
               decimals: 18,
