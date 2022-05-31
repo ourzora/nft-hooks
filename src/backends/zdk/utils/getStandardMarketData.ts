@@ -2,7 +2,7 @@ import {
   MarketDetailsFragment,
   MarketInfoFragment,
   PriceSummaryFragment,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { ZERO_ADDRESS } from '../../../constants/addresses';
 import { dateToISO } from './dateToISO';
 
@@ -33,10 +33,10 @@ export function getStandardMarketData({
             },
           }
         : undefined,
-      eth: amount!.ethPrice
+      eth: amount!.nativePrice
         ? {
-            raw: amount!.ethPrice?.raw,
-            value: amount!.ethPrice.decimal,
+            raw: amount!.nativePrice?.raw,
+            value: amount!.nativePrice.decimal,
             currency: {
               address: ZERO_ADDRESS,
               decimals: 18,

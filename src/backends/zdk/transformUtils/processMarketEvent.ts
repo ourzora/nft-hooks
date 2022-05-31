@@ -2,7 +2,7 @@ import {
   EventInfoFragment,
   EventType,
   V1MarketEventType,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { extractPrice } from '../utils/extractPrice';
 import {
   FIXED_PRICE_EVENT_TYPES,
@@ -26,7 +26,7 @@ export function processMarketEvent(e: EventInfoFragment): NormalizedEvent | unde
   // FIXME: what to do when unable to map to FIXED_PRICE_EVENT_TYPES?
   let event: FIXED_PRICE_EVENT_TYPES | undefined = undefined;
 
-  switch (e.properties.marketEventType) {
+  switch (e.properties.v1MarketEventType) {
     case V1MarketEventType.V1MarketAskCreated:
       event = FIXED_PRICE_EVENT_TYPES.FIXED_PRICE_CREATED;
       break;

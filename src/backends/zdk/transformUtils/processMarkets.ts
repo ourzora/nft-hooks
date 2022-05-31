@@ -3,7 +3,7 @@ import {
   V1MarketEntityStatus,
   V3AskStatus,
   V2AuctionStatus,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import {
   AUCTION_SOURCE_TYPES,
   FIXED_PRICE_MARKET_SOURCES,
@@ -67,7 +67,7 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
         side: FIXED_SIDE_TYPES.ASK,
         // TODO(iain): fix naming
-        status: getV1MarketFixedPriceStatus(market.properties.offerStatus),
+        status: getV1MarketFixedPriceStatus(market.properties.v1AskStatus),
         ...getStandardMarketData({ market, amount: market.properties.amount }),
       });
     }
@@ -79,7 +79,7 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
         side: FIXED_SIDE_TYPES.OFFER,
-        status: getV1MarketFixedPriceStatus(market.properties.offerStatus),
+        status: getV1MarketFixedPriceStatus(market.properties.v1OfferStatus),
         ...getStandardMarketData({ market, amount: market.properties.amount }),
       });
     }
@@ -92,7 +92,7 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
       marketResponse.push({
         type: MARKET_TYPES.AUCTION,
         source: AUCTION_SOURCE_TYPES.ZORA_RESERVE_V2,
-        status: getReserveAuctionStatus(market.properties.auctionStatus),
+        status: getReserveAuctionStatus(market.properties.v2AuctionStatus),
         auctionId: market.properties.auctionId,
         // Duration shouldn't be able to overflow
         duration: parseInt(market.properties.duration, 10),
@@ -122,10 +122,10 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
                         decimals: 18,
                       }
                     : undefined,
-                  eth: market.properties.highestBidPrice.ethPrice
+                  eth: market.properties.highestBidPrice.nativePrice
                     ? {
-                        value: market.properties.highestBidPrice.ethPrice.decimal,
-                        raw: market.properties.highestBidPrice.ethPrice.raw,
+                        value: market.properties.highestBidPrice.nativePrice.decimal,
+                        raw: market.properties.highestBidPrice.nativePrice.raw,
                         decimals: 18,
                       }
                     : undefined,
@@ -156,7 +156,7 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
         side: FIXED_SIDE_TYPES.ASK,
-        status: getV3AskStatus(market.properties.askStatus),
+        status: getV3AskStatus(market.properties.v3AskStatus),
         ...getStandardMarketData({ market, amount: market.properties.askPrice }),
       });
     }

@@ -3,7 +3,7 @@ import {
   EventInfoFragment,
   V2AuctionEventType,
   V3AskEventType,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import {
   AUCTION_EVENT_TYPES,
   AUCTION_SOURCE_TYPES,
@@ -85,7 +85,7 @@ export function processEvents(events: EventInfoFragment[]): NormalizedEvent[] {
     ) {
       let event: AUCTION_EVENT_TYPES | undefined = undefined;
 
-      switch (tokenEvent.properties.auctionEventType) {
+      switch (tokenEvent.properties.v2AuctionEventType) {
         case V2AuctionEventType.V2AuctionCreated:
           event = AUCTION_EVENT_TYPES.AUCTION_CREATED;
           break;

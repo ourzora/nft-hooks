@@ -37,20 +37,23 @@ function MyNFT() {
 
 | Hook | Usage |
 | -- | -- |
-| [useNFT](docs/useNFT.md) | Fetches on-chain NFT data for either zora or non-zora NFTs |
-| [useNFTQuery](docs/useZNFTQuery.md) | Fetches on-chain zora zNFT data (most likely want to use useNFT) |
-| [useNFTContent](docs/useNFTContent.md) | Fetches text content from server for rendering from content URL |
+| [useNFT](docs/useNFT.md) | Fetches on-chain NFT data using a configured backend strategy
+| [useNFTQuery](docs/useNFTQuery.md) | Queries for NFTs using a configured backend strategy
+| [useNFTMetadata](docs/useNFTMetadata.md) | Fetches off-chain metadata (not required for most indexers)
+| [useNFTContent](docs/useNFTContent.md) | Fetches off-chain content (useful for some text content, but less often used)
 
 ### Configuration:
 
 To set the network configuration, wrap the hooks used with the `NFTFetchConfiguration` component.
 
 ```ts
-import {Networks, NFTFetchConfiguration} from '@zoralabs/nft-hooks';
+import {Networks, NFTFetchConfiguration, Strategies} from '@zoralabs/nft-hooks';
+
+const zdkStrategy = Strategies.ZDKFetchStrategy();
 
 function NFTGallery() {
   return (
-    <NFTFetchConfiguration network={Networks.MAINNET}>
+    <NFTFetchConfiguration strategy={zdkStrategy} network={Networks.MAINNET}>
       <NFTList>
     </NFTFetchConfiguration>
   );
@@ -59,10 +62,12 @@ function NFTGallery() {
 
 ### Data sources:
 
-Currently data is fetched from:
-1. TheGraph for auction information, zNFT information, and currency information
-2. Direct metadata URIs for zNFT metadata
-3. Opensea for non-zora tracked NFTs
+Provided strategies are:
+1. ZDKFetchStrategy from the zora indexer (recommended)
+2. ZoraV2Indexer strategy from the legacy zora indexer (deprecated)
+3. ZoraGraphStrategy strategy from the zora subgraph (not recommended)
+4. EtherActorStrategy using ether.actor as a nft backend (not recommended)
+5. OpenseaStrategy using opensea's api as a nft backend (not recommended)
 
 Links direct to zora.co interfaces, but can be overridden to directly use the [zdk](https://github.com/ourzora/zdk) instead.
 
