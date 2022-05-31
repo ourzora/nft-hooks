@@ -3,7 +3,7 @@ import {
   MarketInfoFragment,
   PriceSummaryFragment,
 } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
-import { ZERO_ADDRESS } from 'src/constants/addresses';
+import { ZERO_ADDRESS } from '../../../constants/addresses';
 import { dateToISO } from './dateToISO';
 
 // This shows the return type for a market item with both details and info

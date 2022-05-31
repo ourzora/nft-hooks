@@ -3,7 +3,6 @@
 exports[`useNFT test opensea media load 1`] = `
 Object {
   "media": Object {
-    "content": undefined,
     "image": Object {
       "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     },
@@ -199,7 +198,6 @@ Object {
 exports[`useNFT test zora graph media load 1`] = `
 Object {
   "media": Object {
-    "content": undefined,
     "image": Object {
       "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     },
