@@ -1,4 +1,4 @@
-import { EventInfoFragment } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+import { EventInfoFragment } from '@zoralabs/zdk/dist/queries/queries-sdk';
 
 export function extractPrice(e: EventInfoFragment) {
   if (

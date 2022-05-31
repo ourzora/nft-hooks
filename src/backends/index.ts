@@ -13,8 +13,8 @@ export { GenericMediaInterface } from './generic-media/GenericMediaInterface';
 export { OpenseaDataSource } from './opensea/OpenseaDataSource';
 export { OpenseaInterface } from './opensea/OpenseaInterface';
 
-export { ZDKAlphaDataInterface } from './zdk-alpha/ZDKAlphaDataInterface';
-export { ZDKAlphaDataSource, transformNFTZDKAlpha } from './zdk-alpha/ZDKAlphaDataSource';
+export { ZDKDataInterface } from './zdk/ZDKDataInterface';
+export { ZDKDataSource, transformNFTZDKAlpha } from './zdk/ZDKDataSource';
 
 export { GraphAuctionDataSource } from './zora-graph/GraphAuctionDataSource';
 export { GraphAuctionInterface } from './zora-graph/GraphAuctionInterface';

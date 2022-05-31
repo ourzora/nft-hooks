@@ -2,7 +2,7 @@ import {
   EventInfoFragment,
   EventType,
   V1MarketEventType,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { extractPrice } from '../utils/extractPrice';
 import {
   FIXED_PRICE_EVENT_TYPES,

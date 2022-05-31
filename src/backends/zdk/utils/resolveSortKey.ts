@@ -1,4 +1,4 @@
-import { TokenSortKey } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+import { TokenSortKey } from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { SortField } from '../../../types/NFTQuery';
 
 export function resolveSortKey(sortField: SortField) {

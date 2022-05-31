@@ -3,7 +3,7 @@ import {
   EventInfoFragment,
   V2AuctionEventType,
   V3AskEventType,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import {
   AUCTION_EVENT_TYPES,
   AUCTION_SOURCE_TYPES,

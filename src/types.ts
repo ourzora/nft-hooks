@@ -3,7 +3,7 @@ export { ENSInterface } from './backends';
 export { EtherActorDataInterface } from './backends';
 export { GenericMediaInterface } from './backends';
 export { OpenseaInterface } from './backends';
-export { ZDKAlphaDataInterface } from './backends';
+export { ZDKDataInterface } from './backends';
 export { GraphAuctionInterface } from './backends';
 export { ZoraGraphDataInterface } from './backends';
 export { ZoraIndexerV1Interface } from './backends';

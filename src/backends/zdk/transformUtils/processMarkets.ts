@@ -3,7 +3,7 @@ import {
   V1MarketEntityStatus,
   V3AskStatus,
   V2AuctionStatus,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import {
   AUCTION_SOURCE_TYPES,
   FIXED_PRICE_MARKET_SOURCES,

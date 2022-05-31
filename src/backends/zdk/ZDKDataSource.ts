@@ -1,6 +1,6 @@
-import { NetworkIDs, NFTObject } from '../../';
-import { SharedTokenResponse, ZDKAlphaDataInterface } from './ZDKAlphaDataInterface';
-import { ZDK } from '@zoralabs/zdk-alpha/dist/index';
+import { NetworkIDs, NFTObject } from '../..';
+import { SharedTokenResponse, ZDKDataInterface } from './ZDKDataInterface';
+import { ZDK } from '@zoralabs/zdk/dist/index';
 import {
   Chain,
   MarketType as ZDKMarketType,
@@ -9,7 +9,7 @@ import {
   TokensQueryInput,
   TokensQueryFilter,
   TokenSortInput,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { MarketType, NFTQuery, SortDirection } from '../../types/NFTQuery';
 import { MEDIA_SOURCES, NFTIdentifier } from '../../types';
 import { NotFoundError } from '../../fetcher/ErrorUtils';
@@ -28,7 +28,7 @@ export {
   NFTQuery,
 } from '../../types/NFTQuery';
 
-export function transformNFTZDKAlpha(
+export function transformNFTZDK(
   tokenResponse: SharedTokenResponse,
   object?: NFTObject
 ) {
@@ -156,7 +156,7 @@ export function transformNFTZDKAlpha(
   return object;
 }
 
-export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
+export class ZDKDataSource implements ZDKDataInterface {
   zdk: ZDK;
 
   constructor(chainId: NetworkIDs, endpoint?: string) {
@@ -170,7 +170,7 @@ export class ZDKAlphaDataSource implements ZDKAlphaDataInterface {
   }
 
   transformNFT(token: SharedTokenResponse, object?: NFTObject) {
-    return transformNFTZDKAlpha(token, object);
+    return transformNFTZDK(token, object);
   }
 
   loadNFT = async ({

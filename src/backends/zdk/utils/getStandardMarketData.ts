@@ -2,7 +2,7 @@ import {
   MarketDetailsFragment,
   MarketInfoFragment,
   PriceSummaryFragment,
-} from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
+} from '@zoralabs/zdk/dist/queries/queries-sdk';
 import { ZERO_ADDRESS } from '../../../constants/addresses';
 import { dateToISO } from './dateToISO';
 
