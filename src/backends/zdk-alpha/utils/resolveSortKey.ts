@@ -1,5 +1,5 @@
 import { TokenSortKey } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
-import { SortField } from 'src/types/NFTQuery';
+import { SortField } from '../../../types/NFTQuery';
 
 export function resolveSortKey(sortField: SortField) {
   if (sortField === SortField.MINTED) {

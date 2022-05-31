@@ -1,5 +1,5 @@
 import { Chain } from '@zoralabs/zdk-alpha/dist/queries/queries-sdk';
-import { NetworkIDs } from 'src/constants/networks';
+import { NetworkIDs } from '../../../constants/networks';
 
 export function getChainFromNetwork(network: NetworkIDs) {
   switch (network) {
