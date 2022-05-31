@@ -17,7 +17,7 @@ type useAuctions = {
   curators: string[];
   approved: true | false | undefined;
 }
-
+ 
 type useAuctionsResponse = {
   loading: boolean;
   error: ResponseError | undefined;

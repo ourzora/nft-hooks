@@ -1,29 +1,23 @@
 import { useContext } from 'react';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
-import { NFTDataType } from '../fetcher/AuctionInfoTypes';
-import { useOpenseaNFT } from './useOpenseaNFT';
-import { ZORA_MEDIA_CONTRACT_BY_NETWORK } from '../constants/addresses';
-import { useZNFT } from './useZNFT';
-import { useNFTIndexer } from './useNFTIndexer';
+import merge from 'deepmerge';
+import useSWR, { SWRConfiguration } from 'swr';
+import { NFTStrategy } from '../strategies/NFTStrategy';
+import { NFTObject } from '../types/NFTInterface';
 
 export type useNFTType = {
   currencyLoaded: boolean;
-  error?: string;
-  data?: NFTDataType;
+  error?: any;
+  marketError?: any;
+  data?: NFTObject;
 };
 
-type OptionsType = {
-  refreshInterval?: number;
-  initialData?: any;
-  loadCurrencyInfo?: boolean;
-  useBetaIndexer?: boolean;
-};
 
 /**
- * Fetches on-chain NFT data and pricing for the given zNFT id
+ * Fetches on-chain NFT data and pricing for the given nft contract address and id
  *
- * @param contractAddress address of the contract, if null and tokenID is passed in, a ZNFT is assumed
+ * @param contractAddress address of the contract, if null and tokenID is passed in, a NFT is assumed
  * @param tokenId id of NFT to fetch blockchain information for
  * @param options SWR flags and an option to load currency info
  * @returns useNFTType hook results include loading, error, and chainNFT data.
@@ -31,45 +25,37 @@ type OptionsType = {
 export function useNFT(
   contractAddress?: string,
   tokenId?: string,
-  options: OptionsType = {}
+  options: SWRConfiguration = {},
+  marketOptions: SWRConfiguration = {}
 ): useNFTType {
-  const fetcher = useContext(NFTFetchContext);
+  const dataContext = useContext(NFTFetchContext);
 
-  const resolvedContractAddress = !contractAddress
-    ? ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId]
-    : contractAddress;
+  const strategy: NFTStrategy = dataContext.strategy;
 
-  const isZoraContractAddress =
-    resolvedContractAddress === ZORA_MEDIA_CONTRACT_BY_NETWORK[fetcher.networkId];
-
-  const openseaNFT = useOpenseaNFT(
-    !options.useBetaIndexer && !isZoraContractAddress
-      ? resolvedContractAddress
-      : undefined,
-    !options.useBetaIndexer && !isZoraContractAddress ? tokenId : undefined,
+  // Fetch media data
+  const { data: nftData, error: nftError } = useSWR(
+    contractAddress && tokenId ? ['fetchNFTData', contractAddress, tokenId] : null,
+    (_, address: string, tokenId: string) => strategy.fetchNFT(address, tokenId),
     options
   );
 
-  const betaIndexerNFT = useNFTIndexer(
-    options.useBetaIndexer ? resolvedContractAddress : undefined,
-    options.useBetaIndexer ? tokenId : undefined,
-    options
+  // Fetch market data (if needed)
+  const { data: nftMarketData, error: nftMarketError } = useSWR(
+    contractAddress &&
+      tokenId &&
+      strategy.hasSecondaryData({ contract: contractAddress, id: tokenId })
+      ? ['fetchSecondaryData', contractAddress, tokenId]
+      : null,
+    (_, address: string, tokenId: string) =>
+      strategy.fetchSecondaryData(address, tokenId, nftData),
+    marketOptions
   );
-
-  const zoraNFT = useZNFT(
-    !options.useBetaIndexer && isZoraContractAddress ? tokenId : undefined,
-    options
-  );
-
-  let data = options.useBetaIndexer
-    ? betaIndexerNFT
-    : isZoraContractAddress
-    ? zoraNFT
-    : openseaNFT;
 
   return {
-    currencyLoaded: !!data.currencyLoaded,
-    error: data.error,
-    data: data.data,
+    data:
+      nftData || nftMarketData ? merge(nftData || {}, nftMarketData || {}) : undefined,
+    currencyLoaded: false,
+    error: nftError,
+    marketError: nftMarketError,
   };
 }

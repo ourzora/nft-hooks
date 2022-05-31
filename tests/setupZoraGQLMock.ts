@@ -7,8 +7,8 @@ import zoraSchema from '../graph-schemas/zora-graph.graphql';
 // @ts-ignore
 import uniswapSchema from '../graph-schemas/uniswap.graphql';
 
-
 import fetchMock from './setupFetchMock';
+
 
 export type SchemaName = 'Zora' | 'Uniswap';
 

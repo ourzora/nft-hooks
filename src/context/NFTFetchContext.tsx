@@ -1,31 +1,49 @@
-import React, { useContext, useMemo } from 'react';
-import { Networks, NetworkIDs } from '../constants/networks';
+import React, { useMemo } from 'react';
+
 import { MediaFetchAgent } from '../fetcher/MediaFetchAgent';
+import { NFTStrategy } from '../strategies/NFTStrategy';
+import { NetworkIDs, Networks } from '../constants/networks';
+import { ZoraV2IndexerStrategy } from '../strategies';
 
-export type FetchContext = InstanceType<typeof MediaFetchAgent>;
+export type FetchContext = { strategy: typeof NFTStrategy };
 
-export const defaultFetchAgent = new MediaFetchAgent(Networks.MAINNET);
+const defaultNetwork = Networks.MAINNET;
 
-export const NFTFetchContext = React.createContext(defaultFetchAgent);
+export const defaultFetchAgent: { strategy: any; fetcher: any } = {
+  strategy: new ZoraV2IndexerStrategy(defaultNetwork),
+  fetcher: new MediaFetchAgent(defaultNetwork),
+};
+
+export const NFTFetchContext = React.createContext<{
+  strategy: NFTStrategy | ZoraV2IndexerStrategy;
+  fetcher: MediaFetchAgent;
+}>(defaultFetchAgent);
 
 type NFTFetchConfigurationProps = {
+  strategy?: NFTStrategy;
   networkId: NetworkIDs;
-  // TODO(iain): fix children type
   children: React.ReactNode;
 };
 
 export const NFTFetchConfiguration = ({
-  networkId,
+  strategy: userStrategy,
   children,
+  networkId,
 }: NFTFetchConfigurationProps) => {
-  const lastFetchContext = useContext(NFTFetchContext);
-  const fetchAgent = useMemo(() => {
-    if (lastFetchContext.networkId === networkId) {
-      return lastFetchContext;
+  const strategy = useMemo(() => {
+    if (userStrategy) {
+      return userStrategy;
     }
+    return new ZoraV2IndexerStrategy(networkId);
+  }, [userStrategy]);
+
+  const fetcher = useMemo(() => {
     return new MediaFetchAgent(networkId);
   }, [networkId]);
+
   return (
-    <NFTFetchContext.Provider value={fetchAgent}>{children}</NFTFetchContext.Provider>
+    <NFTFetchContext.Provider value={{ strategy, fetcher }}>
+      {children}
+    </NFTFetchContext.Provider>
   );
 };

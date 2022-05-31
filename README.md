@@ -38,9 +38,7 @@ function MyNFT() {
 | Hook | Usage |
 | -- | -- |
 | [useNFT](docs/useNFT.md) | Fetches on-chain NFT data for either zora or non-zora NFTs |
-| [useZNFT](docs/useZNFT.md) | Fetches on-chain zora zNFT data (most likely want to use useNFT) |
-| [useAuctions](docs/useAuctions.md) | Fetches list of auctions given one or more curators from the Zora auction house |
-| [useNFTMetadata](docs/useNFTMetadata.md) | Fetches NFT metadata from a URL |
+| [useNFTQuery](docs/useZNFTQuery.md) | Fetches on-chain zora zNFT data (most likely want to use useNFT) |
 | [useNFTContent](docs/useNFTContent.md) | Fetches text content from server for rendering from content URL |
 
 ### Configuration:

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import { NFTFetchContext } from '../context/NFTFetchContext';
 
@@ -17,12 +17,15 @@ export type useNFTMetadataType = {
  * @param uri URI of metadata to fetch
  * @returns @type useNFTMetadataType
  */
-export function useNFTMetadata(uri?: string, initialData?: any): useNFTMetadataType {
-  const fetcher = useContext(NFTFetchContext);
+export function useNFTMetadata(
+  uri?: string,
+  options?: SWRConfiguration
+): useNFTMetadataType {
+  const { fetcher } = useContext(NFTFetchContext);
   const { error, data } = useSWR(
     uri ? ['loadMetadata', uri] : null,
     (_, uri) => fetcher.fetchIPFSMetadata(uri),
-    { initialData }
+    options
   );
 
   return {

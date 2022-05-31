@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
 
-import { MediaContentType } from '../fetcher/FetchResultTypes';
+import { MediaContentType } from '../backends/generic-media/GenericMediaInterface';
 import { NFTFetchContext } from '../context/NFTFetchContext';
 
 export type useNFTContentType = {
@@ -23,7 +23,7 @@ export function useNFTContent(
   mimeType?: string,
   options?: SWRConfiguration<MediaContentType>
 ): useNFTContentType {
-  const fetcher = useContext(NFTFetchContext);
+  const { fetcher } = useContext(NFTFetchContext);
   const mimeTypeFetched = useSWR(
     uri && !mimeType ? ['fetchContentMimeType', uri] : null,
     (_, uri) => fetcher.fetchContentMimeType(uri)
@@ -32,7 +32,7 @@ export function useNFTContent(
   const content = useSWR(
     uri && mimeTypeResult ? ['fetchContent', uri, mimeTypeResult] : null,
     (_, uri, mimeTypeResult) => fetcher.fetchContent(uri, mimeTypeResult),
-    options,
+    options
   );
 
   const error = mimeTypeFetched.error || content.error;

@@ -115,6 +115,7 @@ type Auction {
 
   """An object relationship"""
   createdEvent: AuctionCreatedEvent
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -168,6 +169,8 @@ type Auction {
 
   """An object relationship"""
   media: Media
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
 
   """An array relationship"""
@@ -284,6 +287,7 @@ input Auction_bool_exp {
   bidEvents: AuctionBidEvent_bool_exp
   canceledEvent: AuctionCanceledEvent_bool_exp
   createdEvent: AuctionCreatedEvent_bool_exp
+  creatorBidShareBeforeAuctionCreated: String_comparison_exp
   curator: String_comparison_exp
   curatorFee: String_comparison_exp
   curatorFeePercentage: Int_comparison_exp
@@ -296,6 +300,8 @@ input Auction_bool_exp {
   lastBidAmount: String_comparison_exp
   lastBidder: String_comparison_exp
   media: Media_bool_exp
+  ownerBidShareBeforeAuctionCreated: String_comparison_exp
+  prevOwnerBidShareBeforeAuctionCreated: String_comparison_exp
   reservePrice: String_comparison_exp
   reservePriceUpdatedEvents: AuctionReservePriceUpdatedEvent_bool_exp
   status: auction_status_enum_comparison_exp
@@ -311,6 +317,7 @@ type Auction_max_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
   auctionId: String
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -319,6 +326,8 @@ type Auction_max_fields {
   firstBidTime: String
   lastBidAmount: String
   lastBidder: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
   tokenContract: String
   tokenId: String
@@ -333,6 +342,7 @@ input Auction_max_order_by {
   amountTokenOwnerReceived: order_by
   auctionCurrency: order_by
   auctionId: order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -341,6 +351,8 @@ input Auction_max_order_by {
   firstBidTime: order_by
   lastBidAmount: order_by
   lastBidder: order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   tokenContract: order_by
   tokenId: order_by
@@ -353,6 +365,7 @@ type Auction_min_fields {
   amountTokenOwnerReceived: String
   auctionCurrency: String
   auctionId: String
+  creatorBidShareBeforeAuctionCreated: String
   curator: String
   curatorFee: String
   curatorFeePercentage: Int
@@ -361,6 +374,8 @@ type Auction_min_fields {
   firstBidTime: String
   lastBidAmount: String
   lastBidder: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
   reservePrice: String
   tokenContract: String
   tokenId: String
@@ -375,6 +390,7 @@ input Auction_min_order_by {
   amountTokenOwnerReceived: order_by
   auctionCurrency: order_by
   auctionId: order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -383,6 +399,8 @@ input Auction_min_order_by {
   firstBidTime: order_by
   lastBidAmount: order_by
   lastBidder: order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   tokenContract: order_by
   tokenId: order_by
@@ -400,6 +418,7 @@ input Auction_order_by {
   bidEvents_aggregate: AuctionBidEvent_aggregate_order_by
   canceledEvent: AuctionCanceledEvent_order_by
   createdEvent: AuctionCreatedEvent_order_by
+  creatorBidShareBeforeAuctionCreated: order_by
   curator: order_by
   curatorFee: order_by
   curatorFeePercentage: order_by
@@ -412,6 +431,8 @@ input Auction_order_by {
   lastBidAmount: order_by
   lastBidder: order_by
   media: Media_order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
   reservePrice: order_by
   reservePriceUpdatedEvents_aggregate: AuctionReservePriceUpdatedEvent_aggregate_order_by
   status: order_by
@@ -439,6 +460,9 @@ enum Auction_select_column {
   auctionId
 
   """column name"""
+  creatorBidShareBeforeAuctionCreated
+
+  """column name"""
   curator
 
   """column name"""
@@ -461,6 +485,12 @@ enum Auction_select_column {
 
   """column name"""
   lastBidder
+
+  """column name"""
+  ownerBidShareBeforeAuctionCreated
+
+  """column name"""
+  prevOwnerBidShareBeforeAuctionCreated
 
   """column name"""
   reservePrice
@@ -3218,6 +3248,349 @@ type Currency_variance_fields {
 }
 
 """
+columns and relationships of "event"
+"""
+type Event {
+  address: String!
+  blockNumber: Int!
+  blockTimestamp: timestamp!
+  details(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  eventType: event_eventtype_enum!
+  id: String!
+  logIndex: Int!
+  parentEntityId: String!
+  parentEntityType: event_parententitytype_enum!
+  tokenContract: String
+  tokenId: String
+  transactionHash: String!
+}
+
+"""
+aggregated selection of "event"
+"""
+type Event_aggregate {
+  aggregate: Event_aggregate_fields
+  nodes: [Event!]!
+}
+
+"""
+aggregate fields of "event"
+"""
+type Event_aggregate_fields {
+  avg: Event_avg_fields
+  count(columns: [Event_select_column!], distinct: Boolean): Int!
+  max: Event_max_fields
+  min: Event_min_fields
+  stddev: Event_stddev_fields
+  stddev_pop: Event_stddev_pop_fields
+  stddev_samp: Event_stddev_samp_fields
+  sum: Event_sum_fields
+  var_pop: Event_var_pop_fields
+  var_samp: Event_var_samp_fields
+  variance: Event_variance_fields
+}
+
+"""
+order by aggregate values of table "event"
+"""
+input Event_aggregate_order_by {
+  avg: Event_avg_order_by
+  count: order_by
+  max: Event_max_order_by
+  min: Event_min_order_by
+  stddev: Event_stddev_order_by
+  stddev_pop: Event_stddev_pop_order_by
+  stddev_samp: Event_stddev_samp_order_by
+  sum: Event_sum_order_by
+  var_pop: Event_var_pop_order_by
+  var_samp: Event_var_samp_order_by
+  variance: Event_variance_order_by
+}
+
+"""aggregate avg on columns"""
+type Event_avg_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by avg() on columns of table "event"
+"""
+input Event_avg_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "event". All fields are combined with a logical 'AND'.
+"""
+input Event_bool_exp {
+  _and: [Event_bool_exp!]
+  _not: Event_bool_exp
+  _or: [Event_bool_exp!]
+  address: String_comparison_exp
+  blockNumber: Int_comparison_exp
+  blockTimestamp: timestamp_comparison_exp
+  details: jsonb_comparison_exp
+  eventType: event_eventtype_enum_comparison_exp
+  id: String_comparison_exp
+  logIndex: Int_comparison_exp
+  parentEntityId: String_comparison_exp
+  parentEntityType: event_parententitytype_enum_comparison_exp
+  tokenContract: String_comparison_exp
+  tokenId: String_comparison_exp
+  transactionHash: String_comparison_exp
+}
+
+scalar event_eventtype_enum
+
+"""
+Boolean expression to compare columns of type "event_eventtype_enum". All fields are combined with logical 'AND'.
+"""
+input event_eventtype_enum_comparison_exp {
+  _eq: event_eventtype_enum
+  _gt: event_eventtype_enum
+  _gte: event_eventtype_enum
+  _in: [event_eventtype_enum!]
+  _is_null: Boolean
+  _lt: event_eventtype_enum
+  _lte: event_eventtype_enum
+  _neq: event_eventtype_enum
+  _nin: [event_eventtype_enum!]
+}
+
+"""aggregate max on columns"""
+type Event_max_fields {
+  address: String
+  blockNumber: Int
+  blockTimestamp: timestamp
+  id: String
+  logIndex: Int
+  parentEntityId: String
+  tokenContract: String
+  tokenId: String
+  transactionHash: String
+}
+
+"""
+order by max() on columns of table "event"
+"""
+input Event_max_order_by {
+  address: order_by
+  blockNumber: order_by
+  blockTimestamp: order_by
+  id: order_by
+  logIndex: order_by
+  parentEntityId: order_by
+  tokenContract: order_by
+  tokenId: order_by
+  transactionHash: order_by
+}
+
+"""aggregate min on columns"""
+type Event_min_fields {
+  address: String
+  blockNumber: Int
+  blockTimestamp: timestamp
+  id: String
+  logIndex: Int
+  parentEntityId: String
+  tokenContract: String
+  tokenId: String
+  transactionHash: String
+}
+
+"""
+order by min() on columns of table "event"
+"""
+input Event_min_order_by {
+  address: order_by
+  blockNumber: order_by
+  blockTimestamp: order_by
+  id: order_by
+  logIndex: order_by
+  parentEntityId: order_by
+  tokenContract: order_by
+  tokenId: order_by
+  transactionHash: order_by
+}
+
+"""Ordering options when selecting data from "event"."""
+input Event_order_by {
+  address: order_by
+  blockNumber: order_by
+  blockTimestamp: order_by
+  details: order_by
+  eventType: order_by
+  id: order_by
+  logIndex: order_by
+  parentEntityId: order_by
+  parentEntityType: order_by
+  tokenContract: order_by
+  tokenId: order_by
+  transactionHash: order_by
+}
+
+scalar event_parententitytype_enum
+
+"""
+Boolean expression to compare columns of type "event_parententitytype_enum". All fields are combined with logical 'AND'.
+"""
+input event_parententitytype_enum_comparison_exp {
+  _eq: event_parententitytype_enum
+  _gt: event_parententitytype_enum
+  _gte: event_parententitytype_enum
+  _in: [event_parententitytype_enum!]
+  _is_null: Boolean
+  _lt: event_parententitytype_enum
+  _lte: event_parententitytype_enum
+  _neq: event_parententitytype_enum
+  _nin: [event_parententitytype_enum!]
+}
+
+"""
+select columns of table "event"
+"""
+enum Event_select_column {
+  """column name"""
+  address
+
+  """column name"""
+  blockNumber
+
+  """column name"""
+  blockTimestamp
+
+  """column name"""
+  details
+
+  """column name"""
+  eventType
+
+  """column name"""
+  id
+
+  """column name"""
+  logIndex
+
+  """column name"""
+  parentEntityId
+
+  """column name"""
+  parentEntityType
+
+  """column name"""
+  tokenContract
+
+  """column name"""
+  tokenId
+
+  """column name"""
+  transactionHash
+}
+
+"""aggregate stddev on columns"""
+type Event_stddev_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by stddev() on columns of table "event"
+"""
+input Event_stddev_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type Event_stddev_pop_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by stddev_pop() on columns of table "event"
+"""
+input Event_stddev_pop_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type Event_stddev_samp_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by stddev_samp() on columns of table "event"
+"""
+input Event_stddev_samp_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate sum on columns"""
+type Event_sum_fields {
+  blockNumber: Int
+  logIndex: Int
+}
+
+"""
+order by sum() on columns of table "event"
+"""
+input Event_sum_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate var_pop on columns"""
+type Event_var_pop_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by var_pop() on columns of table "event"
+"""
+input Event_var_pop_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate var_samp on columns"""
+type Event_var_samp_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by var_samp() on columns of table "event"
+"""
+input Event_var_samp_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""aggregate variance on columns"""
+type Event_variance_fields {
+  blockNumber: Float
+  logIndex: Float
+}
+
+"""
+order by variance() on columns of table "event"
+"""
+input Event_variance_order_by {
+  blockNumber: order_by
+  logIndex: order_by
+}
+
+"""
 columns and relationships of "raw_log"
 """
 type EventLog {
@@ -3596,10 +3969,16 @@ input Int_comparison_exp {
 
 scalar jsonb
 
+input jsonb_cast_exp {
+  String: String_comparison_exp
+}
+
 """
 Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
 """
 input jsonb_comparison_exp {
+  _cast: jsonb_cast_exp
+
   """is the column contained in the given json value"""
   _contained_in: jsonb
 
@@ -5207,7 +5586,10 @@ type Media {
   creatorBidShare: String
 
   """An object relationship"""
-  metadata: MediaMetadata
+  currentMarketAsk: MarketAsk
+
+  """An object relationship"""
+  metadata: TokenMetadata
   metadataHash: String
   metadataURI: String
   mintTransferEventId: String
@@ -5363,7 +5745,8 @@ input Media_bool_exp {
   contentURI: String_comparison_exp
   creator: String_comparison_exp
   creatorBidShare: String_comparison_exp
-  metadata: MediaMetadata_bool_exp
+  currentMarketAsk: MarketAsk_bool_exp
+  metadata: TokenMetadata_bool_exp
   metadataHash: String_comparison_exp
   metadataURI: String_comparison_exp
   mintTransferEventId: String_comparison_exp
@@ -5424,7 +5807,8 @@ input Media_order_by {
   contentURI: order_by
   creator: order_by
   creatorBidShare: order_by
-  metadata: MediaMetadata_order_by
+  currentMarketAsk: MarketAsk_order_by
+  metadata: TokenMetadata_order_by
   metadataHash: order_by
   metadataURI: order_by
   mintTransferEventId: order_by
@@ -7085,6 +7469,26 @@ type query_root {
   Currency_by_pk(address: String!): Currency
 
   """
+  fetch data from the table: "event"
+  """
+  Event(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """
   fetch data from the table: "raw_log"
   """
   EventLog(
@@ -7126,6 +7530,29 @@ type query_root {
 
   """fetch data from the table: "raw_log" using primary key columns"""
   EventLog_by_pk(id: String!): EventLog
+
+  """
+  fetch aggregated fields from the table: "event"
+  """
+  Event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
+
+  """fetch data from the table: "event" using primary key columns"""
+  Event_by_pk(id: String!): Event
 
   """
   fetch data from the table: "ask"
@@ -7814,6 +8241,94 @@ type query_root {
 
   """fetch data from the table: "transaction" using primary key columns"""
   Transaction_by_pk(hash: String!): Transaction
+
+  """
+  fetch data from the table: "v3_ask"
+  """
+  V3Ask(
+    """distinct select on columns"""
+    distinct_on: [V3Ask_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3Ask_order_by!]
+
+    """filter the rows returned"""
+    where: V3Ask_bool_exp
+  ): [V3Ask!]!
+
+  """
+  fetch aggregated fields from the table: "v3_ask"
+  """
+  V3Ask_aggregate(
+    """distinct select on columns"""
+    distinct_on: [V3Ask_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3Ask_order_by!]
+
+    """filter the rows returned"""
+    where: V3Ask_bool_exp
+  ): V3Ask_aggregate!
+
+  """fetch data from the table: "v3_ask" using primary key columns"""
+  V3Ask_by_pk(id: String!): V3Ask
+
+  """
+  fetch data from the table: "v3_reserve_auction"
+  """
+  V3ReserveAuction(
+    """distinct select on columns"""
+    distinct_on: [V3ReserveAuction_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3ReserveAuction_order_by!]
+
+    """filter the rows returned"""
+    where: V3ReserveAuction_bool_exp
+  ): [V3ReserveAuction!]!
+
+  """
+  fetch aggregated fields from the table: "v3_reserve_auction"
+  """
+  V3ReserveAuction_aggregate(
+    """distinct select on columns"""
+    distinct_on: [V3ReserveAuction_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3ReserveAuction_order_by!]
+
+    """filter the rows returned"""
+    where: V3ReserveAuction_bool_exp
+  ): V3ReserveAuction_aggregate!
+
+  """
+  fetch data from the table: "v3_reserve_auction" using primary key columns
+  """
+  V3ReserveAuction_by_pk(id: String!): V3ReserveAuction
 }
 
 """
@@ -8272,6 +8787,26 @@ type subscription_root {
   Currency_by_pk(address: String!): Currency
 
   """
+  fetch data from the table: "event"
+  """
+  Event(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """
   fetch data from the table: "raw_log"
   """
   EventLog(
@@ -8313,6 +8848,29 @@ type subscription_root {
 
   """fetch data from the table: "raw_log" using primary key columns"""
   EventLog_by_pk(id: String!): EventLog
+
+  """
+  fetch aggregated fields from the table: "event"
+  """
+  Event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
+
+  """fetch data from the table: "event" using primary key columns"""
+  Event_by_pk(id: String!): Event
 
   """
   fetch data from the table: "ask"
@@ -9001,6 +9559,94 @@ type subscription_root {
 
   """fetch data from the table: "transaction" using primary key columns"""
   Transaction_by_pk(hash: String!): Transaction
+
+  """
+  fetch data from the table: "v3_ask"
+  """
+  V3Ask(
+    """distinct select on columns"""
+    distinct_on: [V3Ask_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3Ask_order_by!]
+
+    """filter the rows returned"""
+    where: V3Ask_bool_exp
+  ): [V3Ask!]!
+
+  """
+  fetch aggregated fields from the table: "v3_ask"
+  """
+  V3Ask_aggregate(
+    """distinct select on columns"""
+    distinct_on: [V3Ask_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3Ask_order_by!]
+
+    """filter the rows returned"""
+    where: V3Ask_bool_exp
+  ): V3Ask_aggregate!
+
+  """fetch data from the table: "v3_ask" using primary key columns"""
+  V3Ask_by_pk(id: String!): V3Ask
+
+  """
+  fetch data from the table: "v3_reserve_auction"
+  """
+  V3ReserveAuction(
+    """distinct select on columns"""
+    distinct_on: [V3ReserveAuction_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3ReserveAuction_order_by!]
+
+    """filter the rows returned"""
+    where: V3ReserveAuction_bool_exp
+  ): [V3ReserveAuction!]!
+
+  """
+  fetch aggregated fields from the table: "v3_reserve_auction"
+  """
+  V3ReserveAuction_aggregate(
+    """distinct select on columns"""
+    distinct_on: [V3ReserveAuction_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [V3ReserveAuction_order_by!]
+
+    """filter the rows returned"""
+    where: V3ReserveAuction_bool_exp
+  ): V3ReserveAuction_aggregate!
+
+  """
+  fetch data from the table: "v3_reserve_auction" using primary key columns
+  """
+  V3ReserveAuction_by_pk(id: String!): V3ReserveAuction
 }
 
 scalar timestamp
@@ -9078,6 +9724,9 @@ type Token {
     """filter the rows returned"""
     where: Auction_bool_exp
   ): Auction_aggregate!
+
+  """An object relationship"""
+  currentAuction: Auction
   id: String!
 
   """An object relationship"""
@@ -9136,6 +9785,48 @@ type Token {
     """filter the rows returned"""
     where: TokenTransferEvent_bool_exp
   ): TokenTransferEvent_aggregate!
+
+  """An object relationship"""
+  v3Ask: V3Ask
+
+  """An array relationship"""
+  v3Events(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """An aggregate relationship"""
+  v3Events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
+
+  """An object relationship"""
+  v3ReserveAuction: V3ReserveAuction
 }
 
 """
@@ -9164,6 +9855,7 @@ input Token_bool_exp {
   _or: [Token_bool_exp!]
   address: String_comparison_exp
   auctions: Auction_bool_exp
+  currentAuction: Auction_bool_exp
   id: String_comparison_exp
   media: Media_bool_exp
   metadata: TokenMetadata_bool_exp
@@ -9179,6 +9871,9 @@ input Token_bool_exp {
   tokenId: String_comparison_exp
   tokenURI: String_comparison_exp
   transferEvents: TokenTransferEvent_bool_exp
+  v3Ask: V3Ask_bool_exp
+  v3Events: Event_bool_exp
+  v3ReserveAuction: V3ReserveAuction_bool_exp
 }
 
 """aggregate max on columns"""
@@ -9213,6 +9908,7 @@ type Token_min_fields {
 input Token_order_by {
   address: order_by
   auctions_aggregate: Auction_aggregate_order_by
+  currentAuction: Auction_order_by
   id: order_by
   media: Media_order_by
   metadata: TokenMetadata_order_by
@@ -9228,6 +9924,9 @@ input Token_order_by {
   tokenId: order_by
   tokenURI: order_by
   transferEvents_aggregate: TokenTransferEvent_aggregate_order_by
+  v3Ask: V3Ask_order_by
+  v3Events_aggregate: Event_aggregate_order_by
+  v3ReserveAuction: V3ReserveAuction_order_by
 }
 
 """
@@ -10655,5 +11354,583 @@ input uuid_comparison_exp {
   _lte: uuid
   _neq: uuid
   _nin: [uuid!]
+}
+
+scalar v3_ask_status_enum
+
+"""
+Boolean expression to compare columns of type "v3_ask_status_enum". All fields are combined with logical 'AND'.
+"""
+input v3_ask_status_enum_comparison_exp {
+  _eq: v3_ask_status_enum
+  _gt: v3_ask_status_enum
+  _gte: v3_ask_status_enum
+  _in: [v3_ask_status_enum!]
+  _is_null: Boolean
+  _lt: v3_ask_status_enum
+  _lte: v3_ask_status_enum
+  _neq: v3_ask_status_enum
+  _nin: [v3_ask_status_enum!]
+}
+
+"""
+columns and relationships of "v3_ask"
+"""
+type V3Ask {
+  address: String!
+  askCurrency: String!
+  askPrice: String!
+  buyer: String
+
+  """An array relationship"""
+  events(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """An aggregate relationship"""
+  events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
+  finder: String
+  findersFeeBps: Int!
+  id: String!
+
+  """An object relationship"""
+  lastFilledEvent: Event
+  seller: String!
+  sellerFundsRecipient: String!
+  status: v3_ask_status_enum!
+  tokenContract: String!
+  tokenId: String!
+}
+
+"""
+aggregated selection of "v3_ask"
+"""
+type V3Ask_aggregate {
+  aggregate: V3Ask_aggregate_fields
+  nodes: [V3Ask!]!
+}
+
+"""
+aggregate fields of "v3_ask"
+"""
+type V3Ask_aggregate_fields {
+  avg: V3Ask_avg_fields
+  count(columns: [V3Ask_select_column!], distinct: Boolean): Int!
+  max: V3Ask_max_fields
+  min: V3Ask_min_fields
+  stddev: V3Ask_stddev_fields
+  stddev_pop: V3Ask_stddev_pop_fields
+  stddev_samp: V3Ask_stddev_samp_fields
+  sum: V3Ask_sum_fields
+  var_pop: V3Ask_var_pop_fields
+  var_samp: V3Ask_var_samp_fields
+  variance: V3Ask_variance_fields
+}
+
+"""aggregate avg on columns"""
+type V3Ask_avg_fields {
+  findersFeeBps: Float
+}
+
+"""
+Boolean expression to filter rows from the table "v3_ask". All fields are combined with a logical 'AND'.
+"""
+input V3Ask_bool_exp {
+  _and: [V3Ask_bool_exp!]
+  _not: V3Ask_bool_exp
+  _or: [V3Ask_bool_exp!]
+  address: String_comparison_exp
+  askCurrency: String_comparison_exp
+  askPrice: String_comparison_exp
+  buyer: String_comparison_exp
+  events: Event_bool_exp
+  finder: String_comparison_exp
+  findersFeeBps: Int_comparison_exp
+  id: String_comparison_exp
+  lastFilledEvent: Event_bool_exp
+  seller: String_comparison_exp
+  sellerFundsRecipient: String_comparison_exp
+  status: v3_ask_status_enum_comparison_exp
+  tokenContract: String_comparison_exp
+  tokenId: String_comparison_exp
+}
+
+"""aggregate max on columns"""
+type V3Ask_max_fields {
+  address: String
+  askCurrency: String
+  askPrice: String
+  buyer: String
+  finder: String
+  findersFeeBps: Int
+  id: String
+  seller: String
+  sellerFundsRecipient: String
+  tokenContract: String
+  tokenId: String
+}
+
+"""aggregate min on columns"""
+type V3Ask_min_fields {
+  address: String
+  askCurrency: String
+  askPrice: String
+  buyer: String
+  finder: String
+  findersFeeBps: Int
+  id: String
+  seller: String
+  sellerFundsRecipient: String
+  tokenContract: String
+  tokenId: String
+}
+
+"""Ordering options when selecting data from "v3_ask"."""
+input V3Ask_order_by {
+  address: order_by
+  askCurrency: order_by
+  askPrice: order_by
+  buyer: order_by
+  events_aggregate: Event_aggregate_order_by
+  finder: order_by
+  findersFeeBps: order_by
+  id: order_by
+  lastFilledEvent: Event_order_by
+  seller: order_by
+  sellerFundsRecipient: order_by
+  status: order_by
+  tokenContract: order_by
+  tokenId: order_by
+}
+
+"""
+select columns of table "v3_ask"
+"""
+enum V3Ask_select_column {
+  """column name"""
+  address
+
+  """column name"""
+  askCurrency
+
+  """column name"""
+  askPrice
+
+  """column name"""
+  buyer
+
+  """column name"""
+  finder
+
+  """column name"""
+  findersFeeBps
+
+  """column name"""
+  id
+
+  """column name"""
+  seller
+
+  """column name"""
+  sellerFundsRecipient
+
+  """column name"""
+  status
+
+  """column name"""
+  tokenContract
+
+  """column name"""
+  tokenId
+}
+
+"""aggregate stddev on columns"""
+type V3Ask_stddev_fields {
+  findersFeeBps: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type V3Ask_stddev_pop_fields {
+  findersFeeBps: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type V3Ask_stddev_samp_fields {
+  findersFeeBps: Float
+}
+
+"""aggregate sum on columns"""
+type V3Ask_sum_fields {
+  findersFeeBps: Int
+}
+
+"""aggregate var_pop on columns"""
+type V3Ask_var_pop_fields {
+  findersFeeBps: Float
+}
+
+"""aggregate var_samp on columns"""
+type V3Ask_var_samp_fields {
+  findersFeeBps: Float
+}
+
+"""aggregate variance on columns"""
+type V3Ask_variance_fields {
+  findersFeeBps: Float
+}
+
+"""
+columns and relationships of "v3_reserve_auction"
+"""
+type V3ReserveAuction {
+  address: String!
+  creatorBidShareBeforeAuctionCreated: String
+  currency: String!
+  duration: String!
+
+  """An array relationship"""
+  events(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): [Event!]!
+
+  """An aggregate relationship"""
+  events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Event_order_by!]
+
+    """filter the rows returned"""
+    where: Event_bool_exp
+  ): Event_aggregate!
+  expiresAt: timestamptz
+  finder: String
+  findersFeeBps: Int
+  firstBidTime: String
+  highestBid: String
+  highestBidder: String
+  id: String!
+  listingFeeBps: Int
+  listingFeeRecipient: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
+  reservePrice: String!
+  seller: String!
+  sellerFundsRecipient: String!
+  startTime: String!
+  status: String!
+  tokenContract: String!
+  tokenId: String!
+  winner: String
+}
+
+"""
+aggregated selection of "v3_reserve_auction"
+"""
+type V3ReserveAuction_aggregate {
+  aggregate: V3ReserveAuction_aggregate_fields
+  nodes: [V3ReserveAuction!]!
+}
+
+"""
+aggregate fields of "v3_reserve_auction"
+"""
+type V3ReserveAuction_aggregate_fields {
+  avg: V3ReserveAuction_avg_fields
+  count(columns: [V3ReserveAuction_select_column!], distinct: Boolean): Int!
+  max: V3ReserveAuction_max_fields
+  min: V3ReserveAuction_min_fields
+  stddev: V3ReserveAuction_stddev_fields
+  stddev_pop: V3ReserveAuction_stddev_pop_fields
+  stddev_samp: V3ReserveAuction_stddev_samp_fields
+  sum: V3ReserveAuction_sum_fields
+  var_pop: V3ReserveAuction_var_pop_fields
+  var_samp: V3ReserveAuction_var_samp_fields
+  variance: V3ReserveAuction_variance_fields
+}
+
+"""aggregate avg on columns"""
+type V3ReserveAuction_avg_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""
+Boolean expression to filter rows from the table "v3_reserve_auction". All fields are combined with a logical 'AND'.
+"""
+input V3ReserveAuction_bool_exp {
+  _and: [V3ReserveAuction_bool_exp!]
+  _not: V3ReserveAuction_bool_exp
+  _or: [V3ReserveAuction_bool_exp!]
+  address: String_comparison_exp
+  creatorBidShareBeforeAuctionCreated: String_comparison_exp
+  currency: String_comparison_exp
+  duration: String_comparison_exp
+  events: Event_bool_exp
+  expiresAt: timestamptz_comparison_exp
+  finder: String_comparison_exp
+  findersFeeBps: Int_comparison_exp
+  firstBidTime: String_comparison_exp
+  highestBid: String_comparison_exp
+  highestBidder: String_comparison_exp
+  id: String_comparison_exp
+  listingFeeBps: Int_comparison_exp
+  listingFeeRecipient: String_comparison_exp
+  ownerBidShareBeforeAuctionCreated: String_comparison_exp
+  prevOwnerBidShareBeforeAuctionCreated: String_comparison_exp
+  reservePrice: String_comparison_exp
+  seller: String_comparison_exp
+  sellerFundsRecipient: String_comparison_exp
+  startTime: String_comparison_exp
+  status: String_comparison_exp
+  tokenContract: String_comparison_exp
+  tokenId: String_comparison_exp
+  winner: String_comparison_exp
+}
+
+"""aggregate max on columns"""
+type V3ReserveAuction_max_fields {
+  address: String
+  creatorBidShareBeforeAuctionCreated: String
+  currency: String
+  duration: String
+  expiresAt: timestamptz
+  finder: String
+  findersFeeBps: Int
+  firstBidTime: String
+  highestBid: String
+  highestBidder: String
+  id: String
+  listingFeeBps: Int
+  listingFeeRecipient: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
+  reservePrice: String
+  seller: String
+  sellerFundsRecipient: String
+  startTime: String
+  status: String
+  tokenContract: String
+  tokenId: String
+  winner: String
+}
+
+"""aggregate min on columns"""
+type V3ReserveAuction_min_fields {
+  address: String
+  creatorBidShareBeforeAuctionCreated: String
+  currency: String
+  duration: String
+  expiresAt: timestamptz
+  finder: String
+  findersFeeBps: Int
+  firstBidTime: String
+  highestBid: String
+  highestBidder: String
+  id: String
+  listingFeeBps: Int
+  listingFeeRecipient: String
+  ownerBidShareBeforeAuctionCreated: String
+  prevOwnerBidShareBeforeAuctionCreated: String
+  reservePrice: String
+  seller: String
+  sellerFundsRecipient: String
+  startTime: String
+  status: String
+  tokenContract: String
+  tokenId: String
+  winner: String
+}
+
+"""Ordering options when selecting data from "v3_reserve_auction"."""
+input V3ReserveAuction_order_by {
+  address: order_by
+  creatorBidShareBeforeAuctionCreated: order_by
+  currency: order_by
+  duration: order_by
+  events_aggregate: Event_aggregate_order_by
+  expiresAt: order_by
+  finder: order_by
+  findersFeeBps: order_by
+  firstBidTime: order_by
+  highestBid: order_by
+  highestBidder: order_by
+  id: order_by
+  listingFeeBps: order_by
+  listingFeeRecipient: order_by
+  ownerBidShareBeforeAuctionCreated: order_by
+  prevOwnerBidShareBeforeAuctionCreated: order_by
+  reservePrice: order_by
+  seller: order_by
+  sellerFundsRecipient: order_by
+  startTime: order_by
+  status: order_by
+  tokenContract: order_by
+  tokenId: order_by
+  winner: order_by
+}
+
+"""
+select columns of table "v3_reserve_auction"
+"""
+enum V3ReserveAuction_select_column {
+  """column name"""
+  address
+
+  """column name"""
+  creatorBidShareBeforeAuctionCreated
+
+  """column name"""
+  currency
+
+  """column name"""
+  duration
+
+  """column name"""
+  expiresAt
+
+  """column name"""
+  finder
+
+  """column name"""
+  findersFeeBps
+
+  """column name"""
+  firstBidTime
+
+  """column name"""
+  highestBid
+
+  """column name"""
+  highestBidder
+
+  """column name"""
+  id
+
+  """column name"""
+  listingFeeBps
+
+  """column name"""
+  listingFeeRecipient
+
+  """column name"""
+  ownerBidShareBeforeAuctionCreated
+
+  """column name"""
+  prevOwnerBidShareBeforeAuctionCreated
+
+  """column name"""
+  reservePrice
+
+  """column name"""
+  seller
+
+  """column name"""
+  sellerFundsRecipient
+
+  """column name"""
+  startTime
+
+  """column name"""
+  status
+
+  """column name"""
+  tokenContract
+
+  """column name"""
+  tokenId
+
+  """column name"""
+  winner
+}
+
+"""aggregate stddev on columns"""
+type V3ReserveAuction_stddev_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type V3ReserveAuction_stddev_pop_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type V3ReserveAuction_stddev_samp_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""aggregate sum on columns"""
+type V3ReserveAuction_sum_fields {
+  findersFeeBps: Int
+  listingFeeBps: Int
+}
+
+"""aggregate var_pop on columns"""
+type V3ReserveAuction_var_pop_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""aggregate var_samp on columns"""
+type V3ReserveAuction_var_samp_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
+}
+
+"""aggregate variance on columns"""
+type V3ReserveAuction_variance_fields {
+  findersFeeBps: Float
+  listingFeeBps: Float
 }
 
