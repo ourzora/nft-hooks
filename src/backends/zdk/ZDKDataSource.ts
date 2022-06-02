@@ -28,10 +28,7 @@ export {
   NFTQuery,
 } from '../../types/NFTQuery';
 
-export function transformNFTZDK(
-  tokenResponse: SharedTokenResponse,
-  object?: NFTObject
-) {
+export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
   if (!object) {
     object = { rawData: {} };
   }
@@ -120,14 +117,16 @@ export function transformNFTZDK(
   object.content = {
     source: MEDIA_SOURCES.ZORA,
     original:
-      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      (token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' ||
+        token.content?.mediaEncoding?.__typename === 'AudioEncodingTypes') &&
       token.content.mediaEncoding.original
         ? {
             uri: token.content.mediaEncoding.original,
           }
         : undefined,
     large:
-      token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' &&
+      (token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' ||
+        token.content?.mediaEncoding?.__typename === 'AudioEncodingTypes') &&
       token.content.mediaEncoding.large
         ? {
             uri: token.content.mediaEncoding.large,
