@@ -46,7 +46,13 @@ import {
   BY_OWNER,
 } from './zora-indexer';
 import { ArgumentsError } from '../../fetcher/ErrorUtils';
-import { MarketType, NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import {
+  MarketType,
+  NFTQuery,
+  NFTQueryResult,
+  SortDirection,
+  SortField,
+} from '../../types/NFTQuery';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
 function unixToISO(unix?: string | number) {
@@ -537,8 +543,8 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
 
     let offset = 0;
     let limit = 100;
-    if (pagination?.offset) {
-      offset = pagination.offset;
+    if (pagination?.after) {
+      offset = parseInt(pagination.after, 10);
     }
     if (pagination?.limit) {
       limit = pagination.limit;
@@ -551,7 +557,14 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       limit,
     });
     const tokens = result.Token as IndexerTokenWithAuctionFragment[];
-    return tokens;
+    let pageInfo: NFTQueryResult['pageInfo'] = {};
+    pageInfo.last = (offset + limit).toString();
+    pageInfo.limit = limit;
+
+    return {
+      pageInfo,
+      results: tokens.map((nft) => this.transformNFT(nft)),
+    };
   };
 
   /**

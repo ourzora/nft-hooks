@@ -17,7 +17,8 @@ export class ZDKFetchStrategy extends NFTStrategy {
     return this.source.transformNFT(result, { rawData: {} });
   };
 
-  queryNFTs = async (_: NFTQuery): Promise<NFTObject[]> => {
-    throw new Error('Not implemented');
+  queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {
+    const nfts = await this.source.queryNFTs(query);
+    return nfts.map((nft) => this.source.transformNFT(nft));
   };
 }
