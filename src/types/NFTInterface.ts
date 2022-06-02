@@ -277,6 +277,7 @@ export type NFTObject = {
   };
   nft?: {
     tokenId: string;
+    tokenUrlMimeType?: string;
     contract: {
       address: ETHAddress;
       name?: string;
