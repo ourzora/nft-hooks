@@ -2,7 +2,6 @@ import { NetworkIDs, NFTObject } from '../..';
 import { SharedTokenResponse, ZDKDataInterface } from './ZDKDataInterface';
 import { ZDK } from '@zoralabs/zdk/dist/index';
 import {
-  Chain,
   MarketType as ZDKMarketType,
   Network,
   SortDirection as ZDKSortDirection,
@@ -18,6 +17,7 @@ import { dateToISO } from './utils/dateToISO';
 import { processEvents } from './transformUtils/processEvents';
 import { processMarkets } from './transformUtils/processMarkets';
 import { getChainFromNetwork } from './utils/getChainFromNetwork';
+import DataLoader from 'dataloader';
 
 // this enums are params for useNFTQuery()
 export {
@@ -28,10 +28,7 @@ export {
   NFTQuery,
 } from '../../types/NFTQuery';
 
-export function transformNFTZDK(
-  tokenResponse: SharedTokenResponse,
-  object?: NFTObject
-) {
+export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
   if (!object) {
     object = { rawData: {} };
   }
@@ -158,8 +155,10 @@ export function transformNFTZDK(
 
 export class ZDKDataSource implements ZDKDataInterface {
   zdk: ZDK;
+  nftDataLoader: DataLoader<NFTIdentifier, SharedTokenResponse>;
 
   constructor(chainId: NetworkIDs, endpoint?: string) {
+    this.nftDataLoader = new DataLoader(this.fetchNFTs);
     this.zdk = new ZDK(endpoint, [
       { network: Network.Ethereum, chain: getChainFromNetwork(chainId) },
     ]);
@@ -173,39 +172,45 @@ export class ZDKDataSource implements ZDKDataInterface {
     return transformNFTZDK(token, object);
   }
 
+  loadNFTs = async (nfts: readonly NFTIdentifier[]) => {
+    return await this.nftDataLoader.loadMany(nfts);
+  };
+
+  fetchNFTs = async (mediaIds: readonly NFTIdentifier[]) => {
+    const response = await this.zdk.tokens({
+      includeFullDetails: true,
+      where: {
+        tokens: mediaIds.map((mediaId) => {
+          return {
+            tokenId: mediaId.id,
+            address: mediaId.contract,
+          };
+        }),
+      },
+    });
+
+    return mediaIds.map((key) => {
+      return (
+        response.tokens.nodes.find(
+          (token) =>
+            token.token.tokenId === key.id &&
+            token.token.collectionAddress === key.contract
+        ) || new NotFoundError('Missing record')
+      );
+    });
+  };
+
   loadNFT = async ({
     contract,
     id,
   }: NFTIdentifier): Promise<SharedTokenResponse | Error> => {
-    const response = await this.zdk.token({
-      network: { network: Network.Ethereum, chain: Chain.Mainnet },
-      includeFullDetails: true,
-      token: {
-        tokenId: id,
-        address: contract,
+    const nfts = await this.loadNFTs([
+      {
+        contract,
+        id,
       },
-    });
-
-    if (!response.token) {
-      throw new NotFoundError('Cannot find token entity');
-    }
-
-    return response.token;
-  };
-
-  loadNFTs = async (
-    nfts: readonly NFTIdentifier[]
-  ): Promise<(Error | SharedTokenResponse)[]> => {
-    const tokens = await this.zdk.tokens({
-      where: {
-        tokens: nfts.map((item) => ({
-          address: item.contract,
-          tokenId: item.id,
-        })),
-      },
-    });
-
-    return tokens.tokens.nodes;
+    ]);
+    return nfts[0];
   };
 
   queryNFTs = async (query: NFTQuery) => {
