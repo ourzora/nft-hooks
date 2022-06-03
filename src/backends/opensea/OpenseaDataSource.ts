@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { NFTQuery } from '../../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../../types/NFTQuery';
 import { NetworkIDs } from '../../constants/networks';
 import { OPENSEA_API_URL_BY_NETWORK } from '../../constants/urls';
 import { FetchWithTimeout } from '../../fetcher/FetchWithTimeout';
@@ -130,7 +130,7 @@ export class OpenseaDataSource implements OpenseaInterface {
     );
   };
 
-  queryNFTs(_: NFTQuery): Promise<Error | OpenseaAsset[]> {
+  queryNFTs(_: NFTQuery): Promise<NFTQueryResult> {
     throw new Error('not implemented');
   }
 }

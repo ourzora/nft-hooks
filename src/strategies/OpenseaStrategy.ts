@@ -22,7 +22,7 @@ export class OpenseaStrategy extends NFTStrategy {
     if (openseaNFT instanceof Error) {
       throw openseaNFT;
     }
-    return this.openseaBackend.transformNFT(openseaNFT, {} as any);
+    return this.openseaBackend.transformNFT(openseaNFT);
   };
 
   hasSecondaryData = () => true;
@@ -32,12 +32,6 @@ export class OpenseaStrategy extends NFTStrategy {
   };
 
   queryNFTs = async (query: NFTQuery) => {
-    const response = await this.openseaBackend.queryNFTs(query);
-    if (response instanceof Error) {
-      throw response;
-    }
-    return response.map((item) =>
-      this.openseaBackend.transformNFT(item, { rawData: {} })
-    );
+    return await this.openseaBackend.queryNFTs(query);
   };
 }

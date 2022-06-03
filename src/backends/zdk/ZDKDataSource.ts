@@ -9,8 +9,14 @@ import {
   TokensQueryInput,
   TokensQueryFilter,
   TokenSortInput,
+  PaginationInput,
 } from '@zoralabs/zdk/dist/queries/queries-sdk';
-import { MarketType, NFTQuery, SortDirection } from '../../types/NFTQuery';
+import {
+  MarketType,
+  NFTQuery,
+  NFTQueryResult,
+  SortDirection,
+} from '../../types/NFTQuery';
 import { MEDIA_SOURCES, NFTIdentifier } from '../../types';
 import { NotFoundError } from '../../fetcher/ErrorUtils';
 import { resolveSortKey } from './utils/resolveSortKey';
@@ -259,16 +265,35 @@ export class ZDKDataSource implements ZDKDataInterface {
       });
     }
 
+    let pagination: PaginationInput = {};
+    if (query.pagination) {
+      if (query.pagination.limit) {
+        pagination.limit = query.pagination.limit;
+      }
+      if (query.pagination.after) {
+        pagination.after = query.pagination.after;
+      }
+    }
+
     const results = await this.zdk.tokens({
       where: marketsQuery,
       filter: marketsFilter,
       sort: marketsSort,
       includeFullDetails: true,
+      pagination,
       includeSalesHistory: !!query.additional.includeSaleHistory,
     });
+    let paginationResult: NFTQueryResult['pageInfo'] = {};
     if (results.tokens.nodes) {
-      return results.tokens.nodes;
+      if (results.tokens.nodes.length) {
+        paginationResult.last = results.tokens.pageInfo.endCursor || undefined;
+        paginationResult.limit = results.tokens.pageInfo.limit;
+      }
+      return {
+        pageInfo: paginationResult,
+        results: results.tokens.nodes.map((nft) => this.transformNFT(nft)),
+      };
     }
-    return [];
+    return { results: [], pageInfo: paginationResult };
   };
 }

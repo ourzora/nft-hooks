@@ -6,7 +6,7 @@ import {
   EtherActorServerResponse,
 } from './EtherActorDataInterface';
 import { MEDIA_SOURCES, NFTIdentifier, NFTObject } from '../../types/NFTInterface';
-import { NFTQuery } from '../../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
@@ -125,7 +125,7 @@ export class EtherActorDataSource implements EtherActorDataInterface {
     return [responseJson];
   };
 
-  queryNFTs(_: NFTQuery): Promise<Error | EtherActorServerResponse[]> {
+  queryNFTs(_: NFTQuery): Promise<NFTQueryResult> {
     throw new Error('not impld');
   }
 }
