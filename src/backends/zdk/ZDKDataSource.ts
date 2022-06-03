@@ -35,6 +35,7 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
   const { token } = tokenResponse;
   object.nft = {
     tokenId: token.tokenId,
+    tokenUrlMimeType: token.tokenUrlMimeType || undefined,
     contract: {
       address: token.collectionAddress,
       name: token.tokenContract?.name || undefined,
