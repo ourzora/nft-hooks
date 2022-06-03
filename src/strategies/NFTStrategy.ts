@@ -1,6 +1,6 @@
 import { NetworkIDs } from 'src';
 import { NFTObject } from '../types/NFTInterface';
-import { NFTQuery } from '../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../types/NFTQuery';
 
 type FetchInfo = { contract: string; id: string };
 
@@ -12,7 +12,7 @@ export abstract class NFTStrategy {
   }
 
   abstract fetchNFT(contract: string, id: string): Promise<NFTObject>;
-  abstract queryNFTs(query: NFTQuery): Promise<NFTObject[]>;
+  abstract queryNFTs(query: NFTQuery): Promise<NFTQueryResult>;
 
   // By default don't query secondary data endpoint.
   hasSecondaryData = (_: FetchInfo) => false;

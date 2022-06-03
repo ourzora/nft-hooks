@@ -1,7 +1,7 @@
 import { NetworkIDs, NFTObject } from '..';
 import { NFTStrategy } from '.';
 import { ZDKDataSource } from '../backends';
-import { NFTQuery } from '../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../types/NFTQuery';
 
 export class ZDKFetchStrategy extends NFTStrategy {
   source: ZDKDataSource;
@@ -14,11 +14,10 @@ export class ZDKFetchStrategy extends NFTStrategy {
     if (result instanceof Error) {
       throw result;
     }
-    return this.source.transformNFT(result, { rawData: {} });
+    return this.source.transformNFT(result);
   };
 
-  queryNFTs = async (query: NFTQuery): Promise<NFTObject[]> => {
-    const nfts = await this.source.queryNFTs(query);
-    return nfts.map((nft) => this.source.transformNFT(nft));
+  queryNFTs = async (query: NFTQuery): Promise<NFTQueryResult> => {
+    return await this.source.queryNFTs(query);
   };
 }

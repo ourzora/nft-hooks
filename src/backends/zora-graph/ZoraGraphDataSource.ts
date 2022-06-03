@@ -26,7 +26,7 @@ import {
 import { GraphAuctionDataSource } from './GraphAuctionDataSource';
 import { GenericMediaData } from '../generic-media/GenericMediaData';
 import { GenericMediaInterface } from '../generic-media/GenericMediaInterface';
-import { NFTQuery, SortDirection, SortField } from '../../types/NFTQuery';
+import { NFTQuery, NFTQueryResult, SortDirection, SortField } from '../../types/NFTQuery';
 import { getAddress } from '@ethersproject/address';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
 
@@ -161,7 +161,12 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
     );
   };
 
-  queryNFTs = async ({ query, sort, pagination, additional }: NFTQuery) => {
+  queryNFTs = async ({
+    query,
+    sort,
+    pagination,
+    additional,
+  }: NFTQuery): Promise<NFTQueryResult> => {
     const userQuery: Media_Filter = {};
     if (query.minters) {
       userQuery.creator_in = query.minters;
@@ -203,8 +208,8 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
 
     let offset = 0;
     let limit = 100;
-    if (pagination?.offset) {
-      offset = pagination?.offset;
+    if (pagination?.after) {
+      offset = parseInt(pagination?.after, 10);
     }
     if (pagination?.limit) {
       limit = pagination?.limit;
@@ -228,10 +233,15 @@ export class ZoraGraphDataSource implements ZoraGraphDataInterface {
         )
       : medias.map(() => {});
 
-    return medias.map((_, indx) => ({
-      asset: response.medias[indx],
-      metadata: metadatas[indx],
-    }));
+    return {
+      results: medias
+      .map((_, indx) => ({
+        asset: response.medias[indx],
+        metadata: metadatas[indx],
+      }))
+      .map((nft) => this.transformNFT(nft)),
+      pageInfo: {limit: limit, last: (limit+medias.length).toString()}
+    }
   };
 
   /**

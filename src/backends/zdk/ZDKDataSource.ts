@@ -284,8 +284,11 @@ export class ZDKDataSource implements ZDKDataInterface {
         paginationResult.last = results.tokens.pageInfo.endCursor || undefined;
         paginationResult.limit = results.tokens.pageInfo.limit;
       }
-      return { pagination: paginationResult, results: results.tokens.nodes };
+      return {
+        pageInfo: paginationResult,
+        results: results.tokens.nodes.map((nft) => this.transformNFT(nft)),
+      };
     }
-    return { results: [], pagination: paginationResult };
+    return { results: [], pageInfo: paginationResult };
   };
 }

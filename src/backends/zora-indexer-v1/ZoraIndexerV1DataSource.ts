@@ -603,7 +603,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       limit,
     });
     const tokens = response.Token as IndexerTokenWithAuctionFragment[];
-    return tokens.map((token) => this.transformNFT(token, { rawData: {} }));
+    return tokens.map((token) => this.transformNFT(token));
   }
 
   /**
@@ -638,9 +638,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
     });
     const tokens = response.Token as IndexerTokenWithAuctionFragment[];
     return tokens.map((result) =>
-      this.transformNFT(result, {
-        rawData: {},
-      })
+      this.transformNFT(result)
     );
   };
 

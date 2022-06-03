@@ -319,7 +319,7 @@ export type NFTIdentifier = {
 export interface NFTInterface<T> {
   loadNFT(nft: NFTIdentifier): Promise<T | Error>;
   loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(T | Error)[]>;
-  queryNFTs(query: NFTQuery): Promise<NFTQueryResult | Error>;
+  queryNFTs(query: NFTQuery): Promise<NFTQueryResult>;
   canLoadNFT(nft: NFTIdentifier): boolean;
   transformNFT(response: T, currentObject?: NFTObject): NFTObject;
 }
