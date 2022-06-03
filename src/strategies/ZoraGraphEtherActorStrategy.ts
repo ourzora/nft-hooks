@@ -1,8 +1,7 @@
 import { EtherActorDataSource, GraphAuctionDataSource } from '../backends';
 import { NetworkIDs } from '../constants/networks';
 import { NFTStrategy } from './NFTStrategy';
-import { NFTObject } from '../types/NFTInterface';
-import { NFTQuery } from '../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../types/NFTQuery';
 
 export class ZoraGraphEtherActorStrategy extends NFTStrategy {
   graphAuctionData: GraphAuctionDataSource;
@@ -27,7 +26,7 @@ export class ZoraGraphEtherActorStrategy extends NFTStrategy {
     return await this.graphAuctionData.loadAuctionInfo(contract, id);
   };
 
-  queryNFTs = async (_: NFTQuery): Promise<NFTObject[]> => {
+  queryNFTs = async (_: NFTQuery): Promise<NFTQueryResult> => {
     throw new Error('Not implemented');
   };
 }

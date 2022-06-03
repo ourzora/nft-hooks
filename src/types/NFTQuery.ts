@@ -1,3 +1,5 @@
+import { NFTObject } from './NFTInterface';
+
 export enum MarketType {
   FIXED_PRICE,
   ANY_MARKET,
@@ -29,6 +31,14 @@ export enum ViewType {
   FULL,
 }
 
+export type NFTQueryResult = {
+  pageInfo: {
+    limit?: number;
+    last?: string;
+  };
+  results: NFTObject[];
+};
+
 export type NFTQuery = {
   query: {
     owners?: string[];
@@ -40,7 +50,7 @@ export type NFTQuery = {
   sort?: QuerySort[];
   pagination?: {
     limit: number;
-    offset: number;
+    after: string;
   };
   additional?: any;
 };

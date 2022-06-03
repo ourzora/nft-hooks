@@ -1,5 +1,5 @@
 import { EventInfoFragment } from '@zoralabs/zdk/dist/queries/queries-sdk';
-import { NFTQuery } from '../types/NFTQuery';
+import { NFTQuery, NFTQueryResult } from '../types/NFTQuery';
 
 export enum KNOWN_CONTRACTS {
   ZORA = 'zora',
@@ -260,6 +260,7 @@ export type NFTObject = {
     component: string;
   };
   media?: {
+    mimeType?: string;
     source: MEDIA_SOURCES;
     image?: MediaObject;
     large?: MediaObject;
@@ -269,6 +270,7 @@ export type NFTObject = {
     content?: MediaObject;
   };
   content?: {
+    mimeType?: string;
     source: MEDIA_SOURCES;
     original?: MediaObject;
     large?: MediaObject;
@@ -277,6 +279,7 @@ export type NFTObject = {
   };
   nft?: {
     tokenId: string;
+    tokenUrlMimeType?: string;
     contract: {
       address: ETHAddress;
       name?: string;
@@ -319,7 +322,7 @@ export type NFTIdentifier = {
 export interface NFTInterface<T> {
   loadNFT(nft: NFTIdentifier): Promise<T | Error>;
   loadNFTs(nfts: readonly NFTIdentifier[]): Promise<(T | Error)[]>;
-  queryNFTs(query: NFTQuery): Promise<T[] | Error>;
+  queryNFTs(query: NFTQuery): Promise<NFTQueryResult>;
   canLoadNFT(nft: NFTIdentifier): boolean;
   transformNFT(response: T, currentObject?: NFTObject): NFTObject;
 }
