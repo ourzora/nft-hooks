@@ -260,6 +260,7 @@ export type NFTObject = {
     component: string;
   };
   media?: {
+    mimeType?: string;
     source: MEDIA_SOURCES;
     image?: MediaObject;
     large?: MediaObject;
@@ -269,6 +270,7 @@ export type NFTObject = {
     content?: MediaObject;
   };
   content?: {
+    mimeType?: string;
     source: MEDIA_SOURCES;
     original?: MediaObject;
     large?: MediaObject;

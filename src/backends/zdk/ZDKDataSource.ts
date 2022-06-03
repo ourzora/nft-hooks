@@ -86,6 +86,7 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
 
   object.media = {
     source: MEDIA_SOURCES.ZORA,
+    mimeType: token.image?.mimeType || undefined,
     thumbnail:
       token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
       token.image.mediaEncoding.thumbnail
@@ -117,6 +118,7 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
 
   object.content = {
     source: MEDIA_SOURCES.ZORA,
+    mimeType: token.content?.mimeType || undefined,
     original:
       (token.content?.mediaEncoding?.__typename === 'VideoEncodingTypes' ||
         token.content?.mediaEncoding?.__typename === 'AudioEncodingTypes') &&
