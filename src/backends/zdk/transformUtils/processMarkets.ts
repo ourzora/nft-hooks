@@ -144,7 +144,7 @@ export function processMarkets(markets: MarketResponseFragmentItem[]) {
             : undefined,
         ...getStandardMarketData({
           market,
-          amount: market.properties.reservePrice || market.properties.highestBidPrice,
+          amount: market.properties.highestBidPrice || market.properties.reservePrice,
         }),
       });
     }

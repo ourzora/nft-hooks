@@ -205,7 +205,7 @@ export class ZDKDataSource implements ZDKDataInterface {
         response.tokens.nodes.find(
           (token) =>
             token.token.tokenId === key.id &&
-            token.token.collectionAddress === key.contract
+            token.token.collectionAddress.toLowerCase() === key.contract.toLowerCase()
         ) || new NotFoundError('Missing record')
       );
     });
