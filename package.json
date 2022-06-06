@@ -1,6 +1,6 @@
 {
   "name": "@zoralabs/nft-hooks",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Generic react hooks for fetching zora auctions, nfts, and data on arbitary 721s. Powers nft-components.",
   "repository": "https://github.com/ourzora/nft-hooks",
   "homepage": "https://github.com/ourzora/nft-hooks#README",
@@ -61,8 +61,8 @@
     }
   },
   "peerDependencies": {
-    "react": "17.x",
-    "react-dom": "17.x"
+    "react": ">= 17 < 19",
+    "react-dom": ">= 17 < 19"
   },
   "dependencies": {
     "@ethersproject/address": "^5.6.0",
