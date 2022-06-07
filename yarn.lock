@@ -1812,10 +1812,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@zoralabs/zdk@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@zoralabs/zdk/-/zdk-2.0.1.tgz#c7d3145588ff9e8abe6eca671f4a392a9f7ae790"
-  integrity sha512-VPontguf4uoVXb/eH1qULcvvDHuqMaiWmNbHAedu7hTIyPqbeBA/HJ9+UIVihNTy3QByISfRESOGv8mseuupXg==
+"@zoralabs/zdk@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@zoralabs/zdk/-/zdk-2.1.1.tgz#c71174fb0dd811c7ec4276c50126aebbb7a10b37"
+  integrity sha512-RIndkupgDrbU1gWjPvtDgP4Mponecivf6V9o+DLcBn9Zlw7JDIvIbE8W1Zo6nqpMMDmA0fNrH/bzItd/oV2gFQ==
   dependencies:
     big.js "^6.1.0"
     graphql "^16.5.0"

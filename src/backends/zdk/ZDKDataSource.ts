@@ -164,15 +164,22 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
   return object;
 }
 
+type ZDKOptions = {
+  apiKey?: string;
+  endpoint?: string;
+};
+
 export class ZDKDataSource implements ZDKDataInterface {
   zdk: ZDK;
   nftDataLoader: DataLoader<NFTIdentifier, SharedTokenResponse>;
 
-  constructor(chainId: NetworkIDs, endpoint?: string) {
+  constructor(chainId: NetworkIDs, { apiKey, endpoint }: ZDKOptions) {
     this.nftDataLoader = new DataLoader(this.fetchNFTs);
-    this.zdk = new ZDK(endpoint, [
-      { network: Network.Ethereum, chain: getChainFromNetwork(chainId) },
-    ]);
+    this.zdk = new ZDK({
+      endpoint,
+      apiKey,
+      networks: [{ network: Network.Ethereum, chain: getChainFromNetwork(chainId) }],
+    });
   }
 
   canLoadNFT(_: NFTIdentifier) {
