@@ -164,7 +164,7 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
   return object;
 }
 
-type ZDKOptions = {
+export type ZDKOptions = {
   apiKey?: string;
   endpoint?: string;
 };
