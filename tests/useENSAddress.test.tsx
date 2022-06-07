@@ -6,7 +6,7 @@ import { Networks, NFTFetchConfiguration, useENSAddress } from '../src';
 describe('useENSAddress', () => {
   beforeEach(() => {});
 
-  it('loads an ens correctly on mainnet', async () => {
+  xit('loads an ens correctly on mainnet', async () => {
     const NetworkWrapper = ({ children }: any) => (
       <SWRConfig value={{ provider: () => new Map() }}>
         <NFTFetchConfiguration networkId={Networks.RINKEBY}>

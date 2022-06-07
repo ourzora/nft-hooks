@@ -4,11 +4,11 @@ exports[`useNFT test opensea media load 1`] = `
 Object {
   "media": Object {
     "image": Object {
-      "uri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+      "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     },
     "source": "opensea",
     "thumbnail": Object {
-      "uri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=128&w=128&auto=format",
+      "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s128",
     },
   },
   "metadata": Object {
@@ -36,7 +36,7 @@ Object {
     ],
     "contentUri": undefined,
     "description": undefined,
-    "imageUri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+    "imageUri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     "name": undefined,
   },
   "nft": Object {
@@ -133,9 +133,9 @@ Object {
       "external_link": null,
       "id": 8971515,
       "image_original_url": "https://nftredzone.mypinata.cloud/ipfs/QmRz5q1Lxc7THrSTEFrQGbrveN4PhGB7Z24Qe9fFwiTPdo/Card-Donkeys-Flex.jpg",
-      "image_preview_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=250&w=250&auto=format",
-      "image_thumbnail_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=128&w=128&auto=format",
-      "image_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+      "image_preview_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s250",
+      "image_thumbnail_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s128",
+      "image_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
       "is_nsfw": false,
       "is_presale": false,
       "last_sale": null,
@@ -199,11 +199,11 @@ exports[`useNFT test zora graph media load 1`] = `
 Object {
   "media": Object {
     "image": Object {
-      "uri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+      "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     },
     "source": "opensea",
     "thumbnail": Object {
-      "uri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=128&w=128&auto=format",
+      "uri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s128",
     },
   },
   "metadata": Object {
@@ -231,7 +231,7 @@ Object {
     ],
     "contentUri": undefined,
     "description": undefined,
-    "imageUri": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+    "imageUri": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
     "name": undefined,
   },
   "nft": Object {
@@ -328,9 +328,9 @@ Object {
       "external_link": null,
       "id": 8971515,
       "image_original_url": "https://nftredzone.mypinata.cloud/ipfs/QmRz5q1Lxc7THrSTEFrQGbrveN4PhGB7Z24Qe9fFwiTPdo/Card-Donkeys-Flex.jpg",
-      "image_preview_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=250&w=250&auto=format",
-      "image_thumbnail_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?h=128&w=128&auto=format",
-      "image_url": "https://img.seadn.io/files/245aca1a7a2cd6a446587694d7cc6968.jpg?fit=max&h=1200&w=1200&auto=format",
+      "image_preview_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s250",
+      "image_thumbnail_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0=s128",
+      "image_url": "https://lh3.googleusercontent.com/bZpqjmaSdi_TyP8F64YoIjlN_wfdSIs89FHZQ2KonJ7rI1hVXUxZ-ViCHawCydK-6uTiYWCZP2z9HWUxm_IHW_IvtjvBk4jyGGw0",
       "is_nsfw": false,
       "is_presale": false,
       "last_sale": null,

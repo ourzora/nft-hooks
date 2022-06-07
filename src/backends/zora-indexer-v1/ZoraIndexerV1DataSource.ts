@@ -54,6 +54,7 @@ import {
   SortField,
 } from '../../types/NFTQuery';
 import { NFT_ID_SEPERATOR } from '../../constants/shared';
+import { dateToISO } from '../zdk/utils/dateToISO';
 
 function unixToISO(unix?: string | number) {
   if (!unix) {
@@ -62,14 +63,6 @@ function unixToISO(unix?: string | number) {
 
   const unixNumber: number = typeof unix === 'string' ? parseInt(unix, 10) : unix;
   return new Date(unixNumber * 1000).toISOString();
-}
-
-function dateToISO(date: string) {
-  if (!date.endsWith('Z')) {
-    date += 'Z';
-  }
-
-  return new Date(date).toISOString();
 }
 
 function getLast<T>(items: T[]) {
