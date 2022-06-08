@@ -153,7 +153,7 @@ function extractAsk(ask: V3AskPartFragment): FixedPriceLike {
     type: MARKET_TYPES.FIXED_PRICE,
     canceledAt: undefined,
     createdAt: {
-      timestamp: unixToISO(created.blockTimestamp)!,
+      timestamp: dateToISO(created.blockTimestamp)!,
       blockNumber: created.blockNumber,
       transactionHash: created.transactionHash,
     },
@@ -178,12 +178,12 @@ function extractAskEvents(askEvents: V3EventPartFragment[]): NormalizedEvent[] {
     return {
       at: {
         blockNumber: askEvent.blockNumber,
-        timestamp: unixToISO(askEvent.blockTimestamp)!,
+        timestamp: dateToISO(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
       blockInfo: {
         blockNumber: askEvent.blockNumber,
-        timestamp: unixToISO(askEvent.blockTimestamp)!,
+        timestamp: dateToISO(askEvent.blockTimestamp)!,
         transactionHash: askEvent.transactionHash,
       },
       sender: askEvent.details.sender,
@@ -258,7 +258,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     raw: auction,
     auctionId: auction.auctionId,
     createdAt: {
-      timestamp: unixToISO(auction.createdEvent!.blockTimestamp)!,
+      timestamp: dateToISO(auction.createdEvent!.blockTimestamp)!,
       blockNumber: auction.createdEvent!.blockNumber,
       transactionHash: auction.createdEvent!.transactionHash,
     },
@@ -266,7 +266,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
     type: MARKET_TYPES.AUCTION,
     finishedAt: auction.endedEvent
       ? {
-          timestamp: unixToISO(auction.endedEvent.blockTimestamp)!,
+          timestamp: dateToISO(auction.endedEvent.blockTimestamp)!,
           blockNumber: auction.endedEvent.blockNumber,
           transactionHash: auction.endedEvent.transactionHash,
         }
@@ -278,7 +278,7 @@ function extractAuction(auction: IndexerAuctionPartFragment) {
       : undefined,
     canceledAt: auction.canceledEvent
       ? {
-          timestamp: unixToISO(auction.canceledEvent.blockTimestamp)!,
+          timestamp: dateToISO(auction.canceledEvent.blockTimestamp)!,
           blockNumber: auction.canceledEvent.blockNumber,
           transactionHash: auction.canceledEvent.transactionHash,
         }
@@ -319,7 +319,7 @@ function extractTransferEvents(
     tokenId: transferEvent.tokenId,
     eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT,
     at: {
-      timestamp: unixToISO(transferEvent.blockTimestamp)!,
+      timestamp: dateToISO(transferEvent.blockTimestamp)!,
       blockNumber: transferEvent.blockNumber,
       transactionHash: transferEvent.transactionHash,
     },
@@ -630,9 +630,7 @@ export class ZoraIndexerV1DataSource implements ZoraIndexerV1Interface {
       limit,
     });
     const tokens = response.Token as IndexerTokenWithAuctionFragment[];
-    return tokens.map((result) =>
-      this.transformNFT(result)
-    );
+    return tokens.map((result) => this.transformNFT(result));
   };
 
   getClient() {
