@@ -53,7 +53,7 @@ const zdkStrategy = Strategies.ZDKFetchStrategy();
 
 function NFTGallery() {
   return (
-    <NFTFetchConfiguration strategy={zdkStrategy} network={Networks.MAINNET}>
+    <NFTFetchConfiguration strategy={zdkStrategy} networkId={Networks.MAINNET}>
       <NFTList>
     </NFTFetchConfiguration>
   );
