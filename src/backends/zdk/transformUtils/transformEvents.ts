@@ -17,9 +17,9 @@ import {
 } from '../../../types';
 import { ZERO_ADDRESS } from '../../../constants/addresses';
 import { dateToISO } from '../utils/dateToISO';
-import { processMarketEvent } from './processMarketEvent';
+import { transformMarketEvent } from './transformMarketEvent';
 
-export function processEvents(events: EventInfoFragment[]): NormalizedEvent[] {
+export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] {
   const eventsList: NormalizedEvent[] = [];
 
   events.forEach((tokenEvent) => {
@@ -72,7 +72,7 @@ export function processEvents(events: EventInfoFragment[]): NormalizedEvent[] {
       tokenEvent.eventType === EventType.V1MarketEvent &&
       tokenEvent.properties.__typename === 'V1MarketEvent'
     ) {
-      const e = processMarketEvent(tokenEvent);
+      const e = transformMarketEvent(tokenEvent);
 
       if (e) {
         eventsList.push(e);

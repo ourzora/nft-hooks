@@ -5,6 +5,7 @@ import merge from 'deepmerge';
 import useSWR, { SWRConfiguration } from 'swr';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { NFTObject } from '../types/NFTInterface';
+import { log } from '../utils/logger';
 
 export type useNFTType = {
   currencyLoaded: boolean;
@@ -12,7 +13,6 @@ export type useNFTType = {
   marketError?: any;
   data?: NFTObject;
 };
-
 
 /**
  * Fetches on-chain NFT data and pricing for the given nft contract address and id
