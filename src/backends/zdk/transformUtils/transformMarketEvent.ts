@@ -13,7 +13,7 @@ import {
 } from '../../../types';
 import { dateToISO } from '../utils/dateToISO';
 
-export function processMarketEvent(e: EventInfoFragment): NormalizedEvent | undefined {
+export function transformMarketEvent(e: EventInfoFragment): NormalizedEvent | undefined {
   if (
     !(
       e.eventType === EventType.V1MarketEvent &&

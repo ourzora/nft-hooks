@@ -13,7 +13,6 @@ export type useNFTType = {
   data?: NFTObject;
 };
 
-
 /**
  * Fetches on-chain NFT data and pricing for the given nft contract address and id
  *

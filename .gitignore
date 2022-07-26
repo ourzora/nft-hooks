@@ -3,3 +3,6 @@ yarn-error.log
 node_modules/
 .DS_Store
 .husky
+notes.md
+yalc.lock
+.yalc

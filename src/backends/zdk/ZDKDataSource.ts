@@ -20,8 +20,8 @@ import { MEDIA_SOURCES, NFTIdentifier } from '../../types';
 import { NotFoundError } from '../../fetcher/ErrorUtils';
 import { resolveSortKey } from './utils/resolveSortKey';
 import { dateToISO } from './utils/dateToISO';
-import { processEvents } from './transformUtils/processEvents';
-import { processMarkets } from './transformUtils/processMarkets';
+import { transformEvents } from './transformUtils/transformEvents';
+import { transformMarkets } from './transformUtils/transformMarkets';
 import { getChainFromNetwork } from './utils/getChainFromNetwork';
 import DataLoader from 'dataloader';
 
@@ -34,7 +34,9 @@ export {
   NFTQuery,
 } from '../../types/NFTQuery';
 
-export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
+export { transformNFTZDK, transformEvents, transformMarkets };
+
+function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
   if (!object) {
     object = { rawData: {} };
   }
@@ -68,13 +70,13 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
 
   // Response of token query
   if (tokenResponse.__typename === 'TokenWithFullMarketHistory') {
-    object.markets = processMarkets(tokenResponse.markets);
-    object.events = processEvents(tokenResponse.events);
+    object.markets = transformMarkets(tokenResponse.markets);
+    object.events = transformEvents(tokenResponse.events);
   }
 
   // Response of tokens (plural) query
   if (tokenResponse.__typename === 'TokenWithMarketsSummary') {
-    object.markets = processMarkets(tokenResponse.marketsSummary);
+    object.markets = transformMarkets(tokenResponse.marketsSummary);
   }
 
   object.metadata = {
@@ -90,30 +92,69 @@ export function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFT
     raw: token.metadata,
   };
 
+  let thumbnail = undefined;
+
+  if (
+    token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.image.mediaEncoding.thumbnail
+  ) {
+    thumbnail = {
+      uri: token.image.mediaEncoding.thumbnail,
+    };
+  }
+
+  if (
+    token.content?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.content.mediaEncoding.thumbnail
+  ) {
+    thumbnail = {
+      uri: token.content.mediaEncoding.thumbnail,
+    };
+  }
+
+  let large = undefined;
+  if (
+    token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.image.mediaEncoding.large
+  ) {
+    large = {
+      uri: token.image.mediaEncoding.large,
+    };
+  }
+  if (
+    token.content?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.content.mediaEncoding.large
+  ) {
+    large = {
+      uri: token.content.mediaEncoding.large,
+    };
+  }
+
+  let poster = undefined;
+  if (
+    token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.image.mediaEncoding.poster
+  ) {
+    poster = {
+      uri: token.image.mediaEncoding.poster,
+    };
+  }
+
+  if (
+    token.content?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
+    token.content.mediaEncoding.poster
+  ) {
+    poster = {
+      uri: token.content.mediaEncoding.poster,
+    };
+  }
+
   object.media = {
     source: MEDIA_SOURCES.ZORA,
     mimeType: token.image?.mimeType || undefined,
-    thumbnail:
-      token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
-      token.image.mediaEncoding.thumbnail
-        ? {
-            uri: token.image.mediaEncoding.thumbnail,
-          }
-        : undefined,
-    large:
-      token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
-      token.image.mediaEncoding.large
-        ? {
-            uri: token.image.mediaEncoding.large,
-          }
-        : undefined,
-    poster:
-      token.image?.mediaEncoding?.__typename === 'ImageEncodingTypes' &&
-      token.image.mediaEncoding.poster
-        ? {
-            uri: token.image.mediaEncoding.poster,
-          }
-        : undefined,
+    thumbnail,
+    large,
+    poster,
     image: token.image?.url
       ? {
           mime: token.image.mimeType || undefined,

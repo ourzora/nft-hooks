@@ -18,7 +18,7 @@ import {
   MarketResponseFragmentItem,
 } from '../utils/getStandardMarketData';
 
-export function processMarkets(markets: MarketResponseFragmentItem[]) {
+export function transformMarkets(markets: MarketResponseFragmentItem[]) {
   const getReserveAuctionStatus = (status: V2AuctionStatus) => {
     if (status === V2AuctionStatus.Active) {
       return MARKET_INFO_STATUSES.ACTIVE;
