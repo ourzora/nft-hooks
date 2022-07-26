@@ -5,7 +5,6 @@ import merge from 'deepmerge';
 import useSWR, { SWRConfiguration } from 'swr';
 import { NFTStrategy } from '../strategies/NFTStrategy';
 import { NFTObject } from '../types/NFTInterface';
-import { log } from '../utils/logger';
 
 export type useNFTType = {
   currencyLoaded: boolean;
