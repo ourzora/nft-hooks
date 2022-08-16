@@ -174,24 +174,25 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
             }
           : {};
 
-      eventsList.push({
-        ...common,
-        ...filledAskFields,
-        ...fixedPriceFields,
-        sender: tokenEvent.properties.address,
-        marketAddress: tokenEvent.properties.collectionAddress,
-        blockInfo: {
-          timestamp: tokenEvent.transactionInfo.blockTimestamp,
-          blockNumber: tokenEvent.transactionInfo.blockNumber,
-        },
-        event,
-        eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
-        side: FIXED_SIDE_TYPES.ASK,
-        raw: {
-          source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
-          data: tokenEvent,
-        },
-      });
+      event &&
+        eventsList.push({
+          ...common,
+          ...filledAskFields,
+          ...fixedPriceFields,
+          sender: tokenEvent.properties.address,
+          marketAddress: tokenEvent.properties.collectionAddress,
+          blockInfo: {
+            timestamp: tokenEvent.transactionInfo.blockTimestamp,
+            blockNumber: tokenEvent.transactionInfo.blockNumber,
+          },
+          event,
+          eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
+          side: FIXED_SIDE_TYPES.ASK,
+          raw: {
+            source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3,
+            data: tokenEvent,
+          },
+        });
     }
   });
 
