@@ -1,9 +1,4 @@
-import {
-  MarketType as ZDKMarketType,
-  V1MarketEntityStatus,
-  V3AskStatus,
-  V2AuctionStatus,
-} from '@zoralabs/zdk/dist/queries/queries-sdk';
+import { MarketType as ZDKMarketType } from '@zoralabs/zdk/dist/queries/queries-sdk';
 import {
   AUCTION_SOURCE_TYPES,
   FIXED_PRICE_MARKET_SOURCES,
@@ -19,38 +14,38 @@ import {
 } from '../utils/getStandardMarketData';
 
 export function transformMarkets(markets: MarketResponseFragmentItem[]) {
-  const getReserveAuctionStatus = (status: V2AuctionStatus) => {
-    if (status === V2AuctionStatus.Active) {
+  const getReserveAuctionStatus = (status: string) => {
+    if (status === 'ACTIVE') {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
-    if (status === V2AuctionStatus.Canceled) {
+    if (status === 'CANCELED') {
       return MARKET_INFO_STATUSES.CANCELED;
     }
-    if (status === V2AuctionStatus.Completed) {
+    if (status === 'COMPLETED') {
       return MARKET_INFO_STATUSES.COMPLETE;
     }
     return MARKET_INFO_STATUSES.UNKNOWN;
   };
-  const getV1MarketFixedPriceStatus = (status: V1MarketEntityStatus) => {
-    if (status === V1MarketEntityStatus.Active) {
+  const getV1MarketFixedPriceStatus = (status: string) => {
+    if (status === 'ACTIVE') {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
-    if (status === V1MarketEntityStatus.Canceled) {
+    if (status === 'CANCELED') {
       return MARKET_INFO_STATUSES.CANCELED;
     }
-    if (status === V1MarketEntityStatus.Completed) {
+    if (status === 'COMPLETED') {
       return MARKET_INFO_STATUSES.COMPLETE;
     }
     return MARKET_INFO_STATUSES.UNKNOWN;
   };
-  const getV3AskStatus = (status: V3AskStatus) => {
-    if (status === V3AskStatus.Active) {
+  const getV3AskStatus = (status: string) => {
+    if (status === 'ACTIVE') {
       return MARKET_INFO_STATUSES.ACTIVE;
     }
-    if (status === V3AskStatus.Canceled) {
+    if (status === 'CANCELED') {
       return MARKET_INFO_STATUSES.CANCELED;
     }
-    if (status === V3AskStatus.Completed) {
+    if (status === 'COMPLETED') {
       return MARKET_INFO_STATUSES.COMPLETE;
     }
     return MARKET_INFO_STATUSES.UNKNOWN;
@@ -60,20 +55,20 @@ export function transformMarkets(markets: MarketResponseFragmentItem[]) {
   markets.forEach((market) => {
     if (
       market.marketType === ZDKMarketType.V1Ask &&
-      market.properties.__typename === 'V1Ask'
+      market?.properties?.__typename === 'V1Ask'
     ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V1,
         side: FIXED_SIDE_TYPES.ASK,
         // TODO(iain): fix naming
-        status: getV1MarketFixedPriceStatus(market.properties.v1AskStatus),
+        status: getV1MarketFixedPriceStatus(market?.properties?.v1AskStatus),
         ...getStandardMarketData({ market, amount: market.properties.amount }),
       });
     }
     if (
       market.marketType === ZDKMarketType.V1Offer &&
-      market.properties.__typename === 'V1Offer'
+      market?.properties?.__typename === 'V1Offer'
     ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,
@@ -85,7 +80,7 @@ export function transformMarkets(markets: MarketResponseFragmentItem[]) {
     }
     if (
       market.marketType === ZDKMarketType.V2Auction &&
-      market.properties.__typename === 'V2Auction'
+      market?.properties?.__typename === 'V2Auction'
     ) {
       const expiresAt = market.properties.estimatedExpirationTime;
 
@@ -150,7 +145,7 @@ export function transformMarkets(markets: MarketResponseFragmentItem[]) {
     }
     if (
       market.marketType === ZDKMarketType.V3Ask &&
-      market.properties.__typename === 'V3Ask'
+      market?.properties?.__typename === 'V3Ask'
     ) {
       marketResponse.push({
         type: MARKET_TYPES.FIXED_PRICE,

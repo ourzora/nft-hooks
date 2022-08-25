@@ -175,17 +175,18 @@ export type TokenTransferEvent = {
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_TRANSFER_EVENT;
 };
 
-type TransferEvent = TokenTransferEvent & {
+export type TransferEvent = TokenTransferEvent & {
   raw: {
     source: MEDIA_SOURCES;
     data: any;
   };
 };
 
-type MarketAuctionEvent = SharedMarketEventData & {
+export type MarketAuctionEvent = SharedMarketEventData & {
   event: AUCTION_EVENT_TYPES;
   at: TimedAction;
   amount?: number;
+  winner?: string;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
   raw:
     | {
@@ -200,7 +201,7 @@ type MarketAuctionEvent = SharedMarketEventData & {
       };
 };
 
-type MarketFixedPriceEvent = SharedMarketEventData & {
+export type MarketFixedPriceEvent = SharedMarketEventData & {
   at: TimedAction;
   event: FIXED_PRICE_EVENT_TYPES;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
