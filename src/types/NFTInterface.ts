@@ -39,6 +39,12 @@ export enum TOKEN_TRANSFER_EVENT_TYPES {
   SALE = 'sale',
 }
 
+export enum TOKEN_EVENT_TYPES {
+  TRANSFER = 'transfer',
+  AUCTION = 'auction',
+  FIXED_PRICE = 'fixed_price',
+};
+
 export enum FIXED_PRICE_MARKET_SOURCES {
   ZNFT_PERPETUAL = 'ZNFTPerpetual',
   ZORA_ASK_V1 = 'ZoraAskV1',
@@ -182,11 +188,19 @@ export type TransferEvent = TokenTransferEvent & {
   };
 };
 
+export type PriceType = {
+  symbol: string;
+  amount: number;
+  usdcPrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
+  nativePrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
+};
+
 export type MarketAuctionEvent = SharedMarketEventData & {
   event: AUCTION_EVENT_TYPES;
   at: TimedAction;
-  amount?: number;
   winner?: string;
+  price?: PriceType;
+  amount?: number;
   eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT;
   raw:
     | {
@@ -208,12 +222,8 @@ export type MarketFixedPriceEvent = SharedMarketEventData & {
   side: FIXED_SIDE_TYPES;
   buyer?: ETHAddress;
   seller?: ETHAddress;
-  price?: {
-    symbol: string;
-    amount: number;
-    usdcPrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
-    nativePrice?: Pick<CurrencyAmount, 'decimals' | 'raw'>;
-  };
+  amount?: number;
+  price?: PriceType;
   raw:
     | {
         source: FIXED_PRICE_MARKET_SOURCES.ZORA_ASK_V3;

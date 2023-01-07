@@ -1351,3 +1351,742 @@ In life, we hear more no’s than yes’s which amplifies the importance of the 
   },
 }
 `;
+
+exports[`useNFT test zora indexer v3 load 1`] = `
+Object {
+  "content": Object {
+    "large": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/large",
+    },
+    "mimeType": "video/quicktime",
+    "original": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/original",
+    },
+    "poster": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/poster",
+    },
+    "source": "zora",
+    "thumbnail": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/thumbnail",
+    },
+  },
+  "events": Array [
+    Object {
+      "at": Object {
+        "blockNumber": 16345861,
+        "timestamp": "2023-01-06T06:09:59.000Z",
+        "transactionHash": "0xf78676344b7a1e2ad30cb12ac3261d663fa8bf04fb29c4ed8b7cc17216c4d577",
+      },
+      "blockInfo": Object {
+        "blockNumber": 16345861,
+        "timestamp": "2023-01-06T06:09:59+00:00",
+      },
+      "event": "AuctionBid",
+      "eventType": "TokenMarketEvent",
+      "marketAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "raw": Object {
+        "raw": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "V2_AUCTION_EVENT",
+          "properties": Object {
+            "__typename": "V2AuctionEvent",
+            "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+            "auctionId": 7623,
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "properties": Object {
+              "__typename": "V2AuctionBidEventProperties",
+              "extended": false,
+              "firstBid": false,
+              "price": Object {
+                "blockNumber": 16345861,
+                "chainTokenPrice": Object {
+                  "decimal": 0.0105,
+                  "raw": "10500000000000000",
+                },
+                "nativePrice": Object {
+                  "currency": Object {
+                    "address": "0x0000000000000000000000000000000000000000",
+                    "decimals": 18,
+                    "name": "ETH",
+                  },
+                  "decimal": 0.0105,
+                  "raw": "10500000000000000",
+                },
+                "usdcPrice": Object {
+                  "decimal": 13.109973014476063,
+                  "raw": "13109973014476062720",
+                },
+              },
+              "sender": "0x28070825e54674d0b14ae65223b5ee9cccff4c6e",
+              "value": "10500000000000000",
+            },
+            "tokenId": "1598",
+            "v2AuctionEventType": "V2_AUCTION_BID",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 16345861,
+            "blockTimestamp": "2023-01-06T06:09:59+00:00",
+            "logIndex": 204,
+            "transactionHash": "0xf78676344b7a1e2ad30cb12ac3261d663fa8bf04fb29c4ed8b7cc17216c4d577",
+          },
+        },
+        "source": "ZoraReserveV2",
+      },
+      "sender": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 16345511,
+        "timestamp": "2023-01-06T04:58:59.000Z",
+        "transactionHash": "0xcc2ae2c2b0b11ae24a57bfe051f2e558d492d56b8b87907b0f86bf31e5f79760",
+      },
+      "blockInfo": Object {
+        "blockNumber": 16345511,
+        "timestamp": "2023-01-06T04:58:59+00:00",
+      },
+      "event": "AuctionBid",
+      "eventType": "TokenMarketEvent",
+      "marketAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "raw": Object {
+        "raw": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "V2_AUCTION_EVENT",
+          "properties": Object {
+            "__typename": "V2AuctionEvent",
+            "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+            "auctionId": 7623,
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "properties": Object {
+              "__typename": "V2AuctionBidEventProperties",
+              "extended": false,
+              "firstBid": true,
+              "price": Object {
+                "blockNumber": 16345511,
+                "chainTokenPrice": Object {
+                  "decimal": 0.01,
+                  "raw": "10000000000000000",
+                },
+                "nativePrice": Object {
+                  "currency": Object {
+                    "address": "0x0000000000000000000000000000000000000000",
+                    "decimals": 18,
+                    "name": "ETH",
+                  },
+                  "decimal": 0.01,
+                  "raw": "10000000000000000",
+                },
+                "usdcPrice": Object {
+                  "decimal": 12.500239025123507,
+                  "raw": "12500239025123508224",
+                },
+              },
+              "sender": "0x33c24130e22ef032c46568c7e29c690e1b93b534",
+              "value": "10000000000000000",
+            },
+            "tokenId": "1598",
+            "v2AuctionEventType": "V2_AUCTION_BID",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 16345511,
+            "blockTimestamp": "2023-01-06T04:58:59+00:00",
+            "logIndex": 262,
+            "transactionHash": "0xcc2ae2c2b0b11ae24a57bfe051f2e558d492d56b8b87907b0f86bf31e5f79760",
+          },
+        },
+        "source": "ZoraReserveV2",
+      },
+      "sender": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 16335461,
+        "timestamp": "2023-01-04T19:17:23.000Z",
+        "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+      },
+      "blockInfo": Object {
+        "blockNumber": 16335461,
+        "timestamp": "2023-01-04T19:17:23+00:00",
+      },
+      "event": "AuctionApproved",
+      "eventType": "TokenMarketEvent",
+      "marketAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "raw": Object {
+        "raw": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "V2_AUCTION_EVENT",
+          "properties": Object {
+            "__typename": "V2AuctionEvent",
+            "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+            "auctionId": 7623,
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "properties": Object {
+              "__typename": "V2AuctionApprovalUpdatedEventProperties",
+              "approved": true,
+            },
+            "tokenId": "1598",
+            "v2AuctionEventType": "V2_AUCTION_APPROVAL_UPDATED",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 16335461,
+            "blockTimestamp": "2023-01-04T19:17:23+00:00",
+            "logIndex": 356,
+            "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+          },
+        },
+        "source": "ZoraReserveV2",
+      },
+      "sender": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 16335461,
+        "timestamp": "2023-01-04T19:17:23.000Z",
+        "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+      },
+      "blockInfo": Object {
+        "blockNumber": 16335461,
+        "timestamp": "2023-01-04T19:17:23+00:00",
+      },
+      "event": "AuctionCreated",
+      "eventType": "TokenMarketEvent",
+      "marketAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "raw": Object {
+        "raw": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "V2_AUCTION_EVENT",
+          "properties": Object {
+            "__typename": "V2AuctionEvent",
+            "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+            "auctionId": 7623,
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "properties": Object {
+              "__typename": "V2AuctionCreatedEventProperties",
+              "auctionCurrency": "0x0000000000000000000000000000000000000000",
+              "curator": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+              "curatorFeePercentage": 0,
+              "duration": "864000",
+              "price": Object {
+                "blockNumber": 16335461,
+                "chainTokenPrice": Object {
+                  "decimal": 0.3,
+                  "raw": "300000000000000000",
+                },
+                "nativePrice": Object {
+                  "currency": Object {
+                    "address": "0x0000000000000000000000000000000000000000",
+                    "decimals": 18,
+                    "name": "ETH",
+                  },
+                  "decimal": 0.3,
+                  "raw": "300000000000000000",
+                },
+                "usdcPrice": Object {
+                  "decimal": 377.23825180150385,
+                  "raw": "377238251801503858688",
+                },
+              },
+              "reservePrice": "300000000000000000",
+              "tokenOwner": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+            },
+            "tokenId": "1598",
+            "v2AuctionEventType": "V2_AUCTION_CREATED",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 16335461,
+            "blockTimestamp": "2023-01-04T19:17:23+00:00",
+            "logIndex": 355,
+            "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+          },
+        },
+        "source": "ZoraReserveV2",
+      },
+      "sender": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 16335461,
+        "timestamp": "2023-01-04T19:17:23.000Z",
+        "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+      },
+      "eventType": "TokenTransferEvent",
+      "from": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+      "raw": Object {
+        "data": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "TRANSFER_EVENT",
+          "properties": Object {
+            "__typename": "TransferEvent",
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "fromAddress": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+            "toAddress": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+            "tokenId": "1598",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 16335461,
+            "blockTimestamp": "2023-01-04T19:17:23+00:00",
+            "logIndex": 354,
+            "transactionHash": "0x12ffe35144f85a60ef45a65720cfefa1ef56f9891a050bf6174b6155df5c5c1a",
+          },
+        },
+        "source": "zora",
+      },
+      "to": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+      "type": "transfer",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 15122605,
+        "timestamp": "2022-07-11T17:17:01.000Z",
+        "transactionHash": "0x4484969dc8a1423945ae98b2fbb9bb1a2aabe91c76ba1da18031df8bb72c2f00",
+      },
+      "eventType": "TokenTransferEvent",
+      "from": "0x5c6e1b0e60d4a1493ca8dd9bbf7a31d65eeec094",
+      "raw": Object {
+        "data": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "TRANSFER_EVENT",
+          "properties": Object {
+            "__typename": "TransferEvent",
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "fromAddress": "0x5c6e1b0e60d4a1493ca8dd9bbf7a31d65eeec094",
+            "toAddress": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+            "tokenId": "1598",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 15122605,
+            "blockTimestamp": "2022-07-11T17:17:01+00:00",
+            "logIndex": 233,
+            "transactionHash": "0x4484969dc8a1423945ae98b2fbb9bb1a2aabe91c76ba1da18031df8bb72c2f00",
+          },
+        },
+        "source": "zora",
+      },
+      "to": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+      "type": "transfer",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 15046315,
+        "timestamp": "2022-06-29T18:27:58.000Z",
+        "transactionHash": "0x7ebae6d8992c622a7c1cc4e1c9ffeca109d61cef63c4ff8dd19b420b54251395",
+      },
+      "eventType": "TokenTransferEvent",
+      "from": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+      "raw": Object {
+        "data": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "TRANSFER_EVENT",
+          "properties": Object {
+            "__typename": "TransferEvent",
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "fromAddress": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+            "toAddress": "0x5c6e1b0e60d4a1493ca8dd9bbf7a31d65eeec094",
+            "tokenId": "1598",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 15046315,
+            "blockTimestamp": "2022-06-29T18:27:58+00:00",
+            "logIndex": 135,
+            "transactionHash": "0x7ebae6d8992c622a7c1cc4e1c9ffeca109d61cef63c4ff8dd19b420b54251395",
+          },
+        },
+        "source": "zora",
+      },
+      "to": "0x5c6e1b0e60d4a1493ca8dd9bbf7a31d65eeec094",
+      "type": "transfer",
+    },
+    Object {
+      "at": Object {
+        "blockNumber": 14971574,
+        "timestamp": "2022-06-16T05:12:06.000Z",
+        "transactionHash": "0x16ceaba905cda247b28e03fac28ed4f4c97d55fb5217197717bc28ed3dd20054",
+      },
+      "eventType": "TokenTransferEvent",
+      "from": "0x0000000000000000000000000000000000000000",
+      "raw": Object {
+        "data": Object {
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "eventType": "MINT_EVENT",
+          "properties": Object {
+            "__typename": "MintEvent",
+            "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+            "originatorAddress": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+            "price": Object {
+              "blockNumber": 14971574,
+              "chainTokenPrice": Object {
+                "decimal": 0.44,
+                "raw": "440000000000000000",
+              },
+              "nativePrice": Object {
+                "currency": Object {
+                  "address": "0x0000000000000000000000000000000000000000",
+                  "decimals": 18,
+                  "name": "ETH",
+                },
+                "decimal": 0.44,
+                "raw": "440000000000000000",
+              },
+              "usdcPrice": Object {
+                "decimal": 522.9648599756794,
+                "raw": "522964859975679344640",
+              },
+            },
+            "toAddress": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+            "tokenId": "1598",
+          },
+          "tokenId": "1598",
+          "transactionInfo": Object {
+            "blockNumber": 14971574,
+            "blockTimestamp": "2022-06-16T05:12:06+00:00",
+            "logIndex": 485,
+            "transactionHash": "0x16ceaba905cda247b28e03fac28ed4f4c97d55fb5217197717bc28ed3dd20054",
+          },
+        },
+        "source": "zora",
+      },
+      "to": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+      "type": "mint",
+    },
+  ],
+  "markets": Array [
+    Object {
+      "amount": Object {
+        "address": "0x0000000000000000000000000000000000000000",
+        "amount": Object {
+          "amount": Object {
+            "raw": "10500000000000000",
+            "value": 0.0105,
+          },
+          "currency": Object {
+            "address": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "ETH",
+          },
+          "decimal": 0.0105,
+          "raw": "10500000000000000",
+          "value": 0.0105,
+        },
+        "decimals": 18,
+        "eth": Object {
+          "currency": Object {
+            "address": "0x0000000000000000000000000000000000000000",
+            "decimals": 18,
+            "name": "ETH",
+          },
+          "raw": "10500000000000000",
+          "value": 0.0105,
+        },
+        "symbol": "ETH",
+        "usd": Object {
+          "currency": Object {
+            "raw": "10500000000000000",
+            "value": 0.0105,
+          },
+          "raw": "13109973014476062720",
+          "value": 13.109973014476063,
+        },
+      },
+      "auctionId": "7623",
+      "bids": Array [],
+      "createdAt": Object {
+        "blockNumber": 16345861,
+        "timestamp": "2023-01-06T06:09:59.000Z",
+        "transactionHash": "0xf78676344b7a1e2ad30cb12ac3261d663fa8bf04fb29c4ed8b7cc17216c4d577",
+      },
+      "currentBid": Object {
+        "amount": Object {
+          "address": "0x0000000000000000000000000000000000000000",
+          "amount": Object {
+            "decimals": 18,
+            "raw": "10500000000000000",
+            "value": 0.0105,
+          },
+          "eth": Object {
+            "decimals": 18,
+            "raw": "10500000000000000",
+            "value": 0.0105,
+          },
+          "name": "ETH",
+          "symbol": "ETH",
+          "usd": Object {
+            "decimals": 18,
+            "raw": "13109973014476062720",
+            "value": 13.109973014476063,
+          },
+        },
+        "created": Object {
+          "timestamp": "2023-01-06T06:09:59.000Z",
+        },
+        "creator": "0x28070825e54674d0b14ae65223b5ee9cccff4c6e",
+      },
+      "duration": 864000,
+      "endsAt": Object {
+        "timestamp": "2023-01-16T04:58:59.000Z",
+      },
+      "raw": Object {
+        "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+        "marketAddress": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+        "marketType": "V2_AUCTION",
+        "networkInfo": Object {
+          "chain": "MAINNET",
+          "network": "ETHEREUM",
+        },
+        "price": Object {
+          "blockNumber": 16345861,
+          "chainTokenPrice": Object {
+            "decimal": 0.0105,
+            "raw": "10500000000000000",
+          },
+          "nativePrice": Object {
+            "currency": Object {
+              "address": "0x0000000000000000000000000000000000000000",
+              "decimals": 18,
+              "name": "ETH",
+            },
+            "decimal": 0.0105,
+            "raw": "10500000000000000",
+          },
+          "usdcPrice": Object {
+            "decimal": 13.109973014476063,
+            "raw": "13109973014476062720",
+          },
+        },
+        "properties": Object {
+          "__typename": "V2Auction",
+          "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+          "approved": true,
+          "auctionCurrency": "0x0000000000000000000000000000000000000000",
+          "auctionId": "7623",
+          "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+          "curator": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+          "curatorFeePercentage": 0,
+          "duration": "864000",
+          "estimatedExpirationTime": "2023-01-16T04:58:59+00:00",
+          "firstBidTime": "2023-01-06T04:58:59+00:00",
+          "highestBidPrice": Object {
+            "blockNumber": 16345861,
+            "chainTokenPrice": Object {
+              "decimal": 0.0105,
+              "raw": "10500000000000000",
+            },
+            "nativePrice": Object {
+              "currency": Object {
+                "address": "0x0000000000000000000000000000000000000000",
+                "decimals": 18,
+                "name": "ETH",
+              },
+              "decimal": 0.0105,
+              "raw": "10500000000000000",
+            },
+            "usdcPrice": Object {
+              "decimal": 13.109973014476063,
+              "raw": "13109973014476062720",
+            },
+          },
+          "highestBidder": "0x28070825e54674d0b14ae65223b5ee9cccff4c6e",
+          "reservePrice": Object {
+            "blockNumber": 16345491,
+            "chainTokenPrice": Object {
+              "decimal": 0.01,
+              "raw": "10000000000000000",
+            },
+            "nativePrice": Object {
+              "currency": Object {
+                "address": "0x0000000000000000000000000000000000000000",
+                "decimals": 18,
+                "name": "ETH",
+              },
+              "decimal": 0.01,
+              "raw": "10000000000000000",
+            },
+            "usdcPrice": Object {
+              "decimal": 12.498528340049564,
+              "raw": "12498528340049563648",
+            },
+          },
+          "tokenId": "1598",
+          "tokenOwner": "0xc3fdadbae46798cd8762185a09c5b672a7aa36bb",
+          "v2AuctionStatus": "ACTIVE",
+        },
+        "status": "ACTIVE",
+        "transactionInfo": Object {
+          "blockNumber": 16345861,
+          "blockTimestamp": "2023-01-06T06:09:59+00:00",
+          "logIndex": 204,
+          "transactionHash": "0xf78676344b7a1e2ad30cb12ac3261d663fa8bf04fb29c4ed8b7cc17216c4d577",
+        },
+      },
+      "source": "ZoraReserveV2",
+      "startedAt": Object {
+        "timestamp": "2023-01-06T04:58:59+00:00",
+      },
+      "status": "active",
+      "type": "Auction",
+    },
+  ],
+  "media": Object {
+    "image": Object {
+      "mime": "image/png",
+      "uri": "ipfs://bafybeiakedwjtkbzzcjlrq2vwdghrciojrnjaprcezzkflhhk35fai5g74?id=1598",
+    },
+    "large": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/large",
+    },
+    "mimeType": "image/png",
+    "poster": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/poster",
+    },
+    "source": "zora",
+    "thumbnail": Object {
+      "uri": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/thumbnail",
+    },
+  },
+  "metadata": Object {
+    "attributes": Array [
+      Object {
+        "display": undefined,
+        "name": "name",
+        "value": "Nouns Vision Glasses",
+      },
+    ],
+    "contentUri": "ipfs://bafybeihylcilbpy76p5ms5ouigprjfywfalitgywmwmct22ccun3x37gcu?id=1598",
+    "description": "This is an NFT collection of a physical, luxury version of the iconic nouns glasses. Each NFT is permanently burned to redeem a physical pair of sunglasses.",
+    "imageUri": "ipfs://bafybeiakedwjtkbzzcjlrq2vwdghrciojrnjaprcezzkflhhk35fai5g74?id=1598",
+    "name": "Nouns Vision Glasses 1598/8250",
+    "raw": Object {
+      "animation_url": "ipfs://bafybeihylcilbpy76p5ms5ouigprjfywfalitgywmwmct22ccun3x37gcu?id=1598",
+      "description": "This is an NFT collection of a physical, luxury version of the iconic nouns glasses. Each NFT is permanently burned to redeem a physical pair of sunglasses.",
+      "image": "ipfs://bafybeiakedwjtkbzzcjlrq2vwdghrciojrnjaprcezzkflhhk35fai5g74?id=1598",
+      "name": "Nouns Vision Glasses 1598/8250",
+      "properties": Object {
+        "name": "Nouns Vision Glasses",
+        "number": 1598,
+      },
+    },
+  },
+  "nft": Object {
+    "contentURI": "ipfs://bafybeihylcilbpy76p5ms5ouigprjfywfalitgywmwmct22ccun3x37gcu?id=1598",
+    "contract": Object {
+      "address": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "name": "Nouns Vision Glasses",
+      "symbol": "GLASSES",
+    },
+    "metadataURI": "data:application/json;base64,eyJuYW1lIjogIk5vdW5zIFZpc2lvbiBHbGFzc2VzIDE1OTgvODI1MCIsICJkZXNjcmlwdGlvbiI6ICJUaGlzIGlzIGFuIE5GVCBjb2xsZWN0aW9uIG9mIGEgcGh5c2ljYWwsIGx1eHVyeSB2ZXJzaW9uIG9mIHRoZSBpY29uaWMgbm91bnMgZ2xhc3Nlcy4gRWFjaCBORlQgaXMgcGVybWFuZW50bHkgYnVybmVkIHRvIHJlZGVlbSBhIHBoeXNpY2FsIHBhaXIgb2Ygc3VuZ2xhc3Nlcy4iLCAiaW1hZ2UiOiAiaXBmczovL2JhZnliZWlha2Vkd2p0a2J6emNqbHJxMnZ3ZGdocmNpb2pybmphcHJjZXp6a2ZsaGhrMzVmYWk1Zzc0P2lkPTE1OTgiLCAiYW5pbWF0aW9uX3VybCI6ICJpcGZzOi8vYmFmeWJlaWh5bGNpbGJweTc2cDVtczVvdWlncHJqZnl3ZmFsaXRneXdtd21jdDIyY2N1bjN4MzdnY3U/aWQ9MTU5OCIsICJwcm9wZXJ0aWVzIjogeyJudW1iZXIiOiAxNTk4LCAibmFtZSI6ICJOb3VucyBWaXNpb24gR2xhc3NlcyJ9fQ==",
+    "minted": Object {
+      "address": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+      "at": Object {
+        "blockNumber": 14971574,
+        "timestamp": "2022-06-16T05:12:06.000Z",
+        "transactionHash": "0x16ceaba905cda247b28e03fac28ed4f4c97d55fb5217197717bc28ed3dd20054",
+      },
+    },
+    "owner": Object {
+      "address": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+    },
+    "tokenId": "1598",
+    "tokenUrlMimeType": "video/quicktime",
+  },
+  "rawData": Object {
+    "APIIndexer": Object {
+      "__typename": "Token",
+      "attributes": Array [
+        Object {
+          "displayType": null,
+          "traitType": "name",
+          "value": "Nouns Vision Glasses",
+        },
+      ],
+      "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+      "content": Object {
+        "mediaEncoding": Object {
+          "__typename": "VideoEncodingTypes",
+          "large": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/large",
+          "original": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/original",
+          "poster": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/poster",
+          "preview": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/preview",
+          "thumbnail": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/content/thumbnail",
+        },
+        "mimeType": "video/quicktime",
+        "size": "11189311",
+        "url": "ipfs://bafybeihylcilbpy76p5ms5ouigprjfywfalitgywmwmct22ccun3x37gcu?id=1598",
+      },
+      "description": "This is an NFT collection of a physical, luxury version of the iconic nouns glasses. Each NFT is permanently burned to redeem a physical pair of sunglasses.",
+      "image": Object {
+        "mediaEncoding": Object {
+          "__typename": "ImageEncodingTypes",
+          "large": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/large",
+          "original": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/original",
+          "poster": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/poster",
+          "thumbnail": "https://api.zora.co/media/ETHEREUM-MAINNET/0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d/1598/image/thumbnail",
+        },
+        "mimeType": "image/png",
+        "size": "3942111",
+        "url": "ipfs://bafybeiakedwjtkbzzcjlrq2vwdghrciojrnjaprcezzkflhhk35fai5g74?id=1598",
+      },
+      "lastRefreshTime": "2023-01-04T19:19:12.043000+00:00",
+      "metadata": Object {
+        "animation_url": "ipfs://bafybeihylcilbpy76p5ms5ouigprjfywfalitgywmwmct22ccun3x37gcu?id=1598",
+        "description": "This is an NFT collection of a physical, luxury version of the iconic nouns glasses. Each NFT is permanently burned to redeem a physical pair of sunglasses.",
+        "image": "ipfs://bafybeiakedwjtkbzzcjlrq2vwdghrciojrnjaprcezzkflhhk35fai5g74?id=1598",
+        "name": "Nouns Vision Glasses 1598/8250",
+        "properties": Object {
+          "name": "Nouns Vision Glasses",
+          "number": 1598,
+        },
+      },
+      "mintInfo": Object {
+        "mintContext": Object {
+          "__typename": "TransactionInfo",
+          "blockNumber": 14971574,
+          "blockTimestamp": "2022-06-16T05:12:06+00:00",
+          "logIndex": 485,
+          "transactionHash": "0x16ceaba905cda247b28e03fac28ed4f4c97d55fb5217197717bc28ed3dd20054",
+        },
+        "originatorAddress": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+        "price": Object {
+          "__typename": "PriceAtTime",
+          "blockNumber": 14971574,
+          "chainTokenPrice": Object {
+            "decimal": 0.44,
+            "raw": "440000000000000000",
+          },
+          "nativePrice": Object {
+            "currency": Object {
+              "address": "0x0000000000000000000000000000000000000000",
+              "decimals": 18,
+              "name": "ETH",
+            },
+            "decimal": 0.44,
+            "raw": "440000000000000000",
+          },
+          "usdcPrice": Object {
+            "decimal": 522.9648599756794,
+            "raw": "522964859975679344640",
+          },
+        },
+        "toAddress": "0x0e95a1820a60bec58028bfae23ec830ac8ade0cf",
+      },
+      "name": "Nouns Vision Glasses 1598/8250",
+      "owner": "0xe468ce99444174bd3bbbed09209577d25d1ad673",
+      "tokenContract": Object {
+        "chain": 1,
+        "collectionAddress": "0xd8e6b954f7d3f42570d3b0adb516f2868729ec4d",
+        "description": null,
+        "name": "Nouns Vision Glasses",
+        "network": "ETHEREUM",
+        "symbol": "GLASSES",
+      },
+      "tokenId": "1598",
+      "tokenUrl": "data:application/json;base64,eyJuYW1lIjogIk5vdW5zIFZpc2lvbiBHbGFzc2VzIDE1OTgvODI1MCIsICJkZXNjcmlwdGlvbiI6ICJUaGlzIGlzIGFuIE5GVCBjb2xsZWN0aW9uIG9mIGEgcGh5c2ljYWwsIGx1eHVyeSB2ZXJzaW9uIG9mIHRoZSBpY29uaWMgbm91bnMgZ2xhc3Nlcy4gRWFjaCBORlQgaXMgcGVybWFuZW50bHkgYnVybmVkIHRvIHJlZGVlbSBhIHBoeXNpY2FsIHBhaXIgb2Ygc3VuZ2xhc3Nlcy4iLCAiaW1hZ2UiOiAiaXBmczovL2JhZnliZWlha2Vkd2p0a2J6emNqbHJxMnZ3ZGdocmNpb2pybmphcHJjZXp6a2ZsaGhrMzVmYWk1Zzc0P2lkPTE1OTgiLCAiYW5pbWF0aW9uX3VybCI6ICJpcGZzOi8vYmFmeWJlaWh5bGNpbGJweTc2cDVtczVvdWlncHJqZnl3ZmFsaXRneXdtd21jdDIyY2N1bjN4MzdnY3U/aWQ9MTU5OCIsICJwcm9wZXJ0aWVzIjogeyJudW1iZXIiOiAxNTk4LCAibmFtZSI6ICJOb3VucyBWaXNpb24gR2xhc3NlcyJ9fQ==",
+      "tokenUrlMimeType": "video/quicktime",
+    },
+  },
+}
+`;
