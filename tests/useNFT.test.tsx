@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { Networks, NFTFetchConfiguration, useNFT } from '../src';
+import { ZDKFetchStrategy } from '../src/strategies';
 import { OpenseaStrategy } from '../src/strategies/OpenseaStrategy';
 import { ZoraGraphStrategy } from '../src/strategies/ZoraGraphStrategy';
 import { ZoraV2IndexerStrategy } from '../src/strategies/ZoraV2IndexerStrategy';
@@ -86,6 +87,27 @@ describe('useNFT', () => {
 
     const { waitFor, result } = renderHook(
       () => useNFT('0xCa21d4228cDCc68D4e23807E5e370C07577Dd152', '54382'),
+      { wrapper: NetworkWrapper }
+    );
+
+    await waitFor(() => {
+      return !!result.current.data;
+    });
+
+    expect(result.current.error).toBeUndefined();
+    expect(result.current.data).toMatchSnapshot();
+  });
+  fit('test zora indexer v3 load', async () => {
+    const zdkStrategy = new ZDKFetchStrategy(Networks.MAINNET);
+
+    const NetworkWrapper = ({ children }: any) => (
+      <NFTFetchConfiguration networkId={Networks.GOERLI} strategy={zdkStrategy}>
+        {children}
+      </NFTFetchConfiguration>
+    );
+
+    const { waitFor, result } = renderHook(
+      () => useNFT('0xd8e6b954f7d3F42570D3B0adB516f2868729eC4D', '1598'),
       { wrapper: NetworkWrapper }
     );
 

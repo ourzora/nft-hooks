@@ -12,12 +12,14 @@ import {
   FIXED_SIDE_TYPES,
   MEDIA_SOURCES,
   NormalizedEvent,
+  PriceType,
   TOKEN_TRANSFER_EVENT_CONTEXT_TYPES,
   TOKEN_TRANSFER_EVENT_TYPES,
 } from '../../../types';
 import { ZERO_ADDRESS } from '../../../constants/addresses';
 import { dateToISO } from '../utils/dateToISO';
 import { transformMarketEvent } from './transformMarketEvent';
+import { extractPrice } from '../utils/extractPrice';
 
 export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] {
   const eventsList: NormalizedEvent[] = [];
@@ -84,9 +86,11 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
       tokenEvent.properties.__typename === 'V2AuctionEvent'
     ) {
       let event: AUCTION_EVENT_TYPES | undefined = undefined;
+      let amount: { price?: PriceType } = {};
 
       switch (tokenEvent.properties.v2AuctionEventType) {
         case V2AuctionEventType.V2AuctionCreated:
+          amount = extractPrice(tokenEvent);
           event = AUCTION_EVENT_TYPES.AUCTION_CREATED;
           break;
 
@@ -95,7 +99,13 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
           break;
 
         case V2AuctionEventType.V2AuctionBid:
+          amount = extractPrice(tokenEvent);
           event = AUCTION_EVENT_TYPES.AUCTION_BID;
+          break;
+        
+        case V2AuctionEventType.V2AuctionReservePriceUpdated:
+          amount = extractPrice(tokenEvent);
+          event = AUCTION_EVENT_TYPES.AUCTION_UPDATED;
           break;
 
         case V2AuctionEventType.V2AuctionApprovalUpdated:
@@ -122,6 +132,7 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
 
       eventsList.push({
         ...common,
+        ...amount,
         event: event,
         sender: tokenEvent.properties.address,
         marketAddress: tokenEvent.properties.collectionAddress,

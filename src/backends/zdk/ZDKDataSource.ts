@@ -37,6 +37,7 @@ export {
 export { transformNFTZDK, transformEvents, transformMarkets };
 
 function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
+  console.log({tokenResponse})
   if (!object) {
     object = { rawData: {} };
   }
@@ -71,12 +72,14 @@ function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject)
   // Response of token query
   if (tokenResponse.__typename === 'TokenWithFullMarketHistory') {
     object.markets = transformMarkets(tokenResponse.markets);
-    object.events = transformEvents(tokenResponse.events);
   }
-
   // Response of tokens (plural) query
   if (tokenResponse.__typename === 'TokenWithMarketsSummary') {
     object.markets = transformMarkets(tokenResponse.marketsSummary);
+  }
+  // Handle events
+  if (tokenResponse.events) {
+    object.events = transformEvents(tokenResponse.events);
   }
 
   object.metadata = {
