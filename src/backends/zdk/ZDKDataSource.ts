@@ -37,7 +37,6 @@ export {
 export { transformNFTZDK, transformEvents, transformMarkets };
 
 function transformNFTZDK(tokenResponse: SharedTokenResponse, object?: NFTObject) {
-  console.log({tokenResponse})
   if (!object) {
     object = { rawData: {} };
   }

@@ -97,7 +97,7 @@ describe('useNFT', () => {
     expect(result.current.error).toBeUndefined();
     expect(result.current.data).toMatchSnapshot();
   });
-  fit('test zora indexer v3 load', async () => {
+  it('test zora indexer v3 load', async () => {
     const zdkStrategy = new ZDKFetchStrategy(Networks.MAINNET);
 
     const NetworkWrapper = ({ children }: any) => (
