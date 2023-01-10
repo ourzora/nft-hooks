@@ -87,6 +87,9 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
     ) {
       let event: AUCTION_EVENT_TYPES | undefined = undefined;
       let amount: { price?: PriceType } = {};
+      let sender: string = tokenEvent.properties.address;
+
+      tokenEvent.properties.properties
 
       switch (tokenEvent.properties.v2AuctionEventType) {
         case V2AuctionEventType.V2AuctionCreated:
@@ -124,6 +127,34 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
         case V2AuctionEventType.V2AuctionEnded:
           event = AUCTION_EVENT_TYPES.AUCTION_ENDED;
           break;
+      
+      }
+
+      const eventProperties = tokenEvent.properties.properties;
+      switch (eventProperties.__typename) {
+        case 'V2AuctionApprovalUpdatedEventProperties':
+          sender = tokenEvent.properties.collectionAddress
+          break;
+        case 'V2AuctionBidEventProperties':
+          sender = eventProperties.sender;
+          amount = extractPrice(tokenEvent)
+          break;
+        case 'V2AuctionApprovalUpdatedEventProperties':
+          if (eventProperties.approved === false) {
+            return;
+          }
+          break;
+        case 'V2AuctionCreatedEventProperties':
+          sender = eventProperties.tokenOwner;
+          amount = extractPrice(tokenEvent);
+          break;
+        case 'V2AuctionEndedEventProperties':
+          sender = eventProperties.winner;
+          amount = extractPrice(tokenEvent);
+          break;
+        case 'V2AuctionReservePriceUpdatedEventProperties':
+          sender = tokenEvent.collectionAddress;
+          break;
       }
 
       if (!event) {
@@ -134,8 +165,8 @@ export function transformEvents(events: EventInfoFragment[]): NormalizedEvent[] 
         ...common,
         ...amount,
         event: event,
-        sender: tokenEvent.properties.address,
-        marketAddress: tokenEvent.properties.collectionAddress,
+        sender: sender,
+        marketAddress: tokenEvent.properties.address,
         eventType: TOKEN_TRANSFER_EVENT_CONTEXT_TYPES.TOKEN_MARKET_EVENT,
         blockInfo: {
           timestamp: tokenEvent.transactionInfo.blockTimestamp,
